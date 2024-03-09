@@ -1,4 +1,12 @@
 {pkgs, ...}: {
+  imports = [
+    ./apps.nix
+    ./dev.nix
+    ./direenv.nix
+    ./git.nix
+    ./starship.nix
+    ./zsh.nix
+  ];
   home = rec {
     username = "turtton";
     homeDirectory = "/home/${username}";

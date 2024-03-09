@@ -148,37 +148,6 @@
   programs = {
     git = {
       enable = true;
-      # Enable after installing homemanager
-      # userName = "turtton";
-      # userEmail = "top.gear7509@turtton.net";
-      # signing = {
-      #   key = "8152FC5D0B5A76E1";
-      #   signByDefault = true;
-      # };
-      # delta = {
-      #   enable = true;
-      #   options = {
-      #     navigate = true;
-      #     light = false;
-      #     line-numbers = true;
-      #   };
-      # };
-      # extraConfig = {
-      #   init.defaultBranch = "main";
-      #   core = {
-      #     autocrlf = "input";
-      #     editor = "kate";
-      #     pager = "delta";
-      #   };
-      #   pack = {
-      #     windowMemory = "2g";
-      #     packSizeLimit = "1g";
-      #   };
-      #   interactive.diffFilter = "delta --color-only";
-      # };
-    };
-    starship = {
-      enable = true;
     };
     zsh = {
       enable = true;
