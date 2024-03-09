@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./1password.nix
       inputs.xremap.nixosModules.default
     ]
     ++ (with inputs.nixos-hardware.nixosModules; [
