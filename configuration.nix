@@ -2,18 +2,25 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ inputs, config, pkgs, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-    ];
+      inputs.xremap.nixosModules.default
+    ]
+    ++ (with inputs.nixos-hardware.nixosModules; [
+      common-cpu-amd
+      common-gpu-nvidia
+      common-pc-ssd
+    ]);
 
   # Bootloader.
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = true;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -24,6 +31,11 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+  networking.firewall = {
+    enable = true;
+    # trustedInterfaces = ["tailscale0"];
+    # allowedUDPPorts = [config.services.tailscale.port];
+  };
 
   # Set your time zone.
   time.timeZone = "Asia/Tokyo";
@@ -54,6 +66,7 @@
       noto-fonts-cjk-sans
       noto-fonts-emoji
       nerdfonts
+      migu
     ];
     fontDir.enable = true;
     fontconfig = {
@@ -63,6 +76,24 @@
         monospace = ["JetBrainsMono Nerd Font" "Noto Color Emoji"];
         emoji = ["Noto Color Emoji"];
       };
+      localConf = ''
+       <?xml version="1.0"?>
+       <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
+       <fontconfig>
+         <description>Change default fonts for Steam client</description>
+         <match>
+           <test name="prgname">
+             <string>steamwebhelper</string>
+           </test>
+           <test name="family" qual="any">
+             <string>sans-serif</string>
+           </test>
+           <edit mode="prepend" name="family">
+             <string>Migu 1P</string>
+           </edit>
+         </match>
+       </fontconfig>
+      '';
     };
   };
 
@@ -91,9 +122,7 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
+    jack.enable = true;
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
     #media-session.enable = true;
@@ -154,6 +183,53 @@
     zsh = {
       enable = true;
     };
+    noisetorch.enable = true;
+    steam = {
+      enable = true;
+      remotePlay.openFirewall = true;
+      dedicatedServer.openFirewall = true;
+    };
+  };
+
+  services.xremap = {
+   userName = "ユーザー名";
+   serviceMode = "system";
+   config = {
+     modmap = [
+       {
+         # Replace CapsLock to Ctrl
+         name = "CapsLock is dead";
+         remap = {
+           CapsLock = "Ctrl_L";
+         };
+       }
+     ];
+     keymap = [
+       {
+         # Hook Ctrl + H as Backspace
+         name = "Ctrl+H should be enabled on all apps as BackSpace";
+         remap = {
+           C-h = "Backspace";
+         };
+         # Exclude terminal
+         application = {
+           not = ["Konsole"];
+         };
+       }
+     ];
+   };
+  };
+  services.flatpak.enable = true;
+  xdg.portal.enable = true; # required for flatpack
+
+  virtualisation = {
+   docker = {
+     enable = true;
+     rootless = {
+       enable = true;
+       setSocketVariable = true;
+     };
+   };
   };
 
   # Allow unfree packages
@@ -179,12 +255,6 @@
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
@@ -195,7 +265,13 @@
 
   nix = {
     settings = {
+      auto-optimise-store = true;
       experimental-features = ["nix-command" "flakes"];
+    };
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
     };
   };
 }

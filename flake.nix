@@ -1,6 +1,8 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master"; # Hardware settings collection
+    xremap.url = "github:xremap/nix-flake"; # KeyMap tool
   };
   outputs = inputs: {
     nixosConfigurations = {
@@ -9,6 +11,9 @@
         modules = [
           ./configuration.nix
         ];
+        specialArgs = {
+          inherit inputs;
+        };
       };
     };
   };
