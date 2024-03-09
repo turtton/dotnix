@@ -43,6 +43,29 @@
     LC_TIME = "ja_JP.UTF-8";
   };
 
+  i18n.inputMethod = {
+    enabled = "fcitx5";
+    fcitx5.addons = [pkgs.fcitx5-skk];
+  };
+
+  fonts = {
+    fonts = with pkgs; [
+      noto-fonts-cjk-serif
+      noto-fonts-cjk-sans
+      noto-fonts-emoji
+      nerdfonts
+    ];
+    fontDir.enable = true;
+    fontconfig = {
+      defaultFonts = {
+        serif = ["Noto Serif CJK JP" "Noto Color Emoji"];
+        sansSerif = ["Noto Sans CJK JP" "Noto Color Emoji"];
+        monospace = ["JetBrainsMono Nerd Font" "Noto Color Emoji"];
+        emoji = ["Noto Color Emoji"];
+      };
+    };
+  };
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
@@ -96,30 +119,34 @@
   programs = {
     git = {
       enable = true;
-      userName = "turtton";
-      userEmail = "top.gear7509@turtton.net";
-      signing = {
-        key = "8152FC5D0B5A76E1";
-        signByDefault = true;
-      };
-      extraConfig = {
-        init.defaultBranch = "main";
-        core = {
-          autocrlf = "input";
-          editor = "kate";
-          pager = "delta";
-        };
-        pack = {
-          windowMemory = "2g";
-          packSizeLimit = "1g";
-        };
-        interactive.diffFilter = "delta --color-only";
-        delta = {
-          navigate = true;
-          light = false;
-          line-numbers = true;
-        };
-      };
+      # Enable after installing homemanager
+      # userName = "turtton";
+      # userEmail = "top.gear7509@turtton.net";
+      # signing = {
+      #   key = "8152FC5D0B5A76E1";
+      #   signByDefault = true;
+      # };
+      # delta = {
+      #   enable = true;
+      #   options = {
+      #     navigate = true;
+      #     light = false;
+      #     line-numbers = true;
+      #   };
+      # };
+      # extraConfig = {
+      #   init.defaultBranch = "main";
+      #   core = {
+      #     autocrlf = "input";
+      #     editor = "kate";
+      #     pager = "delta";
+      #   };
+      #   pack = {
+      #     windowMemory = "2g";
+      #     packSizeLimit = "1g";
+      #   };
+      #   interactive.diffFilter = "delta --color-only";
+      # };
     };
     starship = {
       enable = true;
