@@ -84,11 +84,49 @@
     isNormalUser = true;
     description = "turtton";
     extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.zsh;
     packages = with pkgs; [
       firefox
       kate
+      delta
     #  thunderbird
     ];
+  };
+
+  programs = {
+    git = {
+      enable = true;
+      userName = "turtton";
+      userEmail = "top.gear7509@turtton.net";
+      signing = {
+        key = "8152FC5D0B5A76E1";
+        signByDefault = true;
+      };
+      extraConfig = {
+        init.defaultBranch = "main";
+        core = {
+          autocrlf = "input";
+          editor = "kate";
+          pager = "delta";
+        };
+        pack = {
+          windowMemory = "2g";
+          packSizeLimit = "1g";
+        };
+        interactive.diffFilter = "delta --color-only";
+        delta = {
+          navigate = true;
+          light = false;
+          line-numbers = true;
+        };
+      };
+    };
+    starship = {
+      enable = true;
+    };
+    zsh = {
+      enable = true;
+    };
   };
 
   # Allow unfree packages
