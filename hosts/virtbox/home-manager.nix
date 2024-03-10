@@ -4,8 +4,8 @@
     ./../../dev.nix
     ./../../direenv.nix
     ./../../git.nix
-    ./../../plasma.nix
-    ./../../plasma_generated.nix
+    ./plasma/plasma.nix
+    ./plasma/plasma_generated.nix
     ./../../starship.nix
     ./../../zsh.nix
   ];
