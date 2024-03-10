@@ -7,34 +7,17 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    plasma-manager = {
+      url = "github:pjones/plasma-manager";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
     rust-overlay.url = "github:oxalica/rust-overlay";
   };
   outputs = inputs: {
-    nixosConfigurations = {
-      mainDeskTop = inputs.nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./configuration.nix
-        ];
-        specialArgs = {
-          inherit inputs;
-        };
-      };
-    };
-    homeConfigurations = {
-      myHome = inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = import inputs.nixpkgs {
-          system = "x86_64-linux";
-          config.allowUnfree = true;
-          overlays = [(import inputs.rust-overlay)];
-        };
-        extraSpecialArgs = {
-          inherit inputs;
-        };
-        modules = [
-          ./home.nix
-        ];
-      };
-    };
+    nixosConfigurations = (import ./hosts inputs).nixos;
+    homeConfigurations = (import ./hosts inputs).home-manager;
   };
 }
