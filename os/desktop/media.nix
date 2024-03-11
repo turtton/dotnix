@@ -1,0 +1,5 @@
+{
+  programs = {
+    noisetorch.enable = true;
+  };
+}
