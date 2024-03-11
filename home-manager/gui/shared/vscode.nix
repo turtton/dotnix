@@ -8,8 +8,8 @@ in {
       vscode-marketplace.re7rix2."50-shades-of-purple"
       vscode-marketplace.atommaterial.a-file-icon-vscode
       vscode-marketplace.me-dutour-mathieu.vscode-github-actions
-      vscode-marketplace.GitHub.copilot-chat
-      vscode-marketplace.GitHub.copilot
+      vscode-marketplace.github.copilot-chat
+      vscode-marketplace.github.copilot
       open-vsx.pinage404.nix-extension-pack
       open-vsx."42crunch".vscode-openapi
       # https://github.com/nix-community/nix-vscode-extensions/issues/31
@@ -26,6 +26,6 @@ in {
     '';
   };
   home.packages = with pkgs; [
-    nixd
+    # nixd
   ];
 }
