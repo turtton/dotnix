@@ -31,7 +31,10 @@
     enable = true;
     extensions = with pkgs; [gh-markdown-preview];
     settings = {
-      editor = "kate";
+      editor = "nvim";
     };
   };
+  home.packages = with pkgs; [
+    lazygit
+  ];
 }
