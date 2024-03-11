@@ -11,9 +11,6 @@
     };
   };
   home = {
-    packages = with pkgs; [
-      latte-dock
-    ];
     file = {
       "plasma-org.kde.plasma.desktop-appletsrc" = {
         target = ".config/plasma-org.kde.plasma.desktop-appletsrc";
