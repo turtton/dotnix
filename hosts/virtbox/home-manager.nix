@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{
   imports = [
     ./plasma/plasma.nix
     ./plasma/plasma_generated.nix

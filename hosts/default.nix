@@ -24,7 +24,7 @@ let
       };
     };
     extraSpecialArgs = {
-      inherit inputs username;
+      inherit inputs username system;
     };
     modules = modules ++ [
       {

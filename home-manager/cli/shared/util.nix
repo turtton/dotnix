@@ -10,6 +10,8 @@
     unzip
     zip
 
+    wakatime # Development timer
+
     neofetch
   ];
 }

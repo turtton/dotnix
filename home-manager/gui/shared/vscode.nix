@@ -1,6 +1,31 @@
-{pkgs, ...}: {
+{inputs, system, pkgs, ...}: 
+let
+  extension = inputs.nix-vscode-extensions.extensions."${system}";
+in {
   programs.vscode = {
     enable = true;
-    extensions = with pkgs; [];
+    extensions = with extension; [
+      vscode-marketplace.re7rix2."50-shades-of-purple"
+      vscode-marketplace.atommaterial.a-file-icon-vscode
+      vscode-marketplace.me-dutour-mathieu.vscode-github-actions
+      vscode-marketplace.GitHub.copilot-chat
+      vscode-marketplace.GitHub.copilot
+      open-vsx.pinage404.nix-extension-pack
+      open-vsx."42crunch".vscode-openapi
+      # https://github.com/nix-community/nix-vscode-extensions/issues/31
+      (vscode-marketplace.typespec.typespec-vscode.overrideAttrs (_: { sourceRoot = "extension"; }))
+      open-vsx.asvetliakov.vscode-neovim
+      open-vsx.wakatime.vscode-wakatime
+      open-vsx.redhat.vscode-yaml
+    ];
+    userSettings.text = ''
+    {
+      "workbench.productIconTheme": "a-file-icon-vscode-product-icon-theme"
+      "workbench.colorTheme": "50 Shades of Purple"
+    }
+    '';
   };
+  home.packages = with pkgs; [
+    nixd
+  ];
 }

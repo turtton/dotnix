@@ -15,6 +15,7 @@
       };
     };
     rust-overlay.url = "github:oxalica/rust-overlay";
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
   };
   outputs = inputs: {
     nixosConfigurations = (import ./hosts inputs).nixos;
