@@ -6,13 +6,38 @@
     "github-copilot"
   ];
   patched-idea = with pkgs; (jetbrains.plugins.addPlugins jetbrains.idea-ultimate plugins);
+  requiredLibPath = with pkgs; lib.makeLibraryPath [
+    libGL
+    udev
+  ];
   # Override LD_LIBREARY_PATH for minecraft mod dev(requires udev and libGL)
-  # See: LD libraries (os/core/shared/ld.nix)
-  # Script Reference: https://github.com/Mic92/nix-ld?tab=readme-ov-file#my-pythonnodejsrubyinterpreter-libraries-do-not-find-the-libraries-configured-by-nix-ld
-  idea = (pkgs.writeShellScriptBin "idea-ultimate" ''
-  export LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH
-  exec ${patched-idea}/bin/idea-ultimate "$@"
-  '');
+  # https://github.com/Gerschtli/nix-config/blob/763a8f515701ccab125174d241c2331fb72071e3/home/programs/idea-ultimate.nix#L66
+  # https://github.com/Gerschtli/nix-config/blob/763a8f515701ccab125174d241c2331fb72071e3/lib/wrap-program.nix#L4
+  idea = pkgs.symlinkJoin {
+    name = "idea-ultimate-wrapped";
+    paths = [ patched-idea ];
+    buildInputs = [ pkgs.makeWrapper ];
+    postBuild = let 
+      desktopEntryPath = "/share/applications/idea-ultimate.desktop";
+      path = "/bin/idea-ultimate";
+    in
+    ''
+    # desktop entry
+    if [[ -L "$out/share/applications" ]]; then
+      rm "$out/share/applications"
+      mkdir "$out/share/applications"
+    else
+      rm "$out${desktopEntryPath}"
+    fi
+
+    sed -e "s|Exec=${patched-idea + path}|Exec=$out${path}|" \
+      "${patched-idea + desktopEntryPath}" \
+      > "$out${desktopEntryPath}"
+
+    wrapProgram "$out${path}" \
+      --prefix LD_LIBRARY_PATH : ${requiredLibPath}
+    '';
+  };
   ides = with pkgs.jetbrains; [
     webstorm
     rust-rover
