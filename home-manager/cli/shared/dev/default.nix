@@ -1,4 +1,7 @@
 {pkgs, ...}: {
+  imports = [
+    ./cargo.nix
+  ];
   home.packages = with pkgs; [
     gcc
     go
@@ -7,5 +10,8 @@
     deno
     bun
     python312
+    jdk21
+
+    ktlint
   ];
 }

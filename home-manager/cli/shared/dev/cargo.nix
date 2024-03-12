@@ -1,13 +1,11 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     # Replaced by rust-overlay(see flake.nix
-    (rust-bin.stable.latest.default.override {
-      targets = ["wasm32-unknown-unknown" "wasm32-wasi"];
-    })
+    rust-bin.stable.latest.default
     cargo-deny
     cargo-cache
     cargo-nextest
-    cargo-workspace
+    cargo-workspaces
     crate2nix
   ];
 }
