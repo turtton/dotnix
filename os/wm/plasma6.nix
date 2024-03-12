@@ -10,4 +10,8 @@
     };
     desktopManager.plasma6.enable = true;
   };
+  users.users."${username}".packages = with pkgs; [
+    kdePackages.discover
+    kdePackages.kgpg
+  ];
 }

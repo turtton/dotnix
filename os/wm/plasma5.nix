@@ -8,6 +8,8 @@
   };
   users.users."${username}".packages = with pkgs; [
     latte-dock
+    kdePackages.discover
+    kdePackages.kgpg
     libsForQt5.applet-window-buttons
   ];
 }
