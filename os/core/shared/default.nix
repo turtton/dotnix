@@ -6,4 +6,6 @@
     ./nix.nix
     ./virtualisation.nix
   ];
+  # Fix timelag for windows
+  time.hardwareClockInLocalTime = true;
 }
