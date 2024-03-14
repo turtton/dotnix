@@ -5,7 +5,8 @@
     "nixidea"
     "github-copilot"
   ];
-  patched-idea = with pkgs; (jetbrains.plugins.addPlugins jetbrains.idea-ultimate plugins);
+  applyPlugins = ide: with pkgs; (jetbrains.plugins.addPlugins ide plugins);
+  patched-idea = with pkgs; (applyPlugins jetbrains.idea-ultimate);
   requiredLibPath = with pkgs; lib.makeLibraryPath [
     libGL
     udev
@@ -48,6 +49,7 @@ in  {
     # basically should not use toolbox because of issues(https://github.com/NixOS/nixpkgs/issues/240444) but useful to preview IDE 
     jetbrains-toolbox
   ] 
-  ++ (map (ide: (jetbrains.plugins.addPlugins ide plugins)) ides) 
+  ++ (map (ide: (applyPlugins ide)) ides) 
   ++ [idea];
+  home.file.".ideavimrc".source = ./ideavimrc;
 }
