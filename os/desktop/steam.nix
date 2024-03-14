@@ -5,7 +5,7 @@
     dedicatedServer.openFirewall = true;
   };
   fonts ={
-    fonts = with pkgs; [
+    packages = with pkgs; [
       migu
     ];
     fontconfig.localConf = ''
