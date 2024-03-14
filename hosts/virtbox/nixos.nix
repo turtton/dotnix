@@ -14,6 +14,7 @@
     ./../../os/desktop/1password.nix
     ./../../os/desktop/flatpak.nix
     ./../../os/desktop/media.nix
+    ./../../os/desktop/openrazer.nix
     ./../../os/desktop/steam.nix
   ] ++ (with inputs.nixos-hardware.nixosModules; [
     common-cpu-amd
