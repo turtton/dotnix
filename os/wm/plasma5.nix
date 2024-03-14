@@ -29,13 +29,14 @@ wallpaper-engine-kde-plugin = with pkgs; stdenv.mkDerivation rec {
     mpv lz4 vulkan-headers vulkan-tools vulkan-loader
   ] 
   ++ (with libsForQt5; with qt5; [plasma-framework qtwebsockets qtwebchannel qtx11extras qtdeclarative])
-  ++ [python311Packages.websockets];
-  cmakeFlags = [ "-DUSE_PLASMAPKG=ON" "-DCMAKE_C_COMPILER=gcc" "-DCMAKE_CXX_COMPILER=g++" ];
+  ++ [(python3.withPackages (python-pkgs: [ python-pkgs.websockets ]))];
+  cmakeFlags = [ "-DUSE_PLASMAPKG=ON" ];
   dontWrapQtApps = true;
   postPatch = ''
     rm -rf src/backend_scene/third_party/glslang
     ln -s ${glslang-submodule.src} src/backend_scene/third_party/glslang
   '';
+  #Optional informations
   meta = with lib; {
     description = "Wallpaper Engine KDE plasma plugin";
     homepage = "https://github.com/Jelgnum/wallpaper-engine-kde-plugin";
@@ -61,7 +62,7 @@ in {
     wallpaper-engine-kde-plugin
     ## these dependencies not loaded in wallpapers
     qt5.qtwebsockets
-    python311Packages.websockets
+    (python3.withPackages (python-pkgs: [ python-pkgs.websockets ]))
     ### 
   ];
 }

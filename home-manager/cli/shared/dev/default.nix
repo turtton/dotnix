@@ -9,7 +9,7 @@
     nodePackages.wrangler
     deno
     bun
-    python312
+    # python312 conflicts on os/wm/plasma5.nix#environment.systemPackages.python3Full
     jdk21
 
     ktlint
