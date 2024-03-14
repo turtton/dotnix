@@ -60,7 +60,6 @@ in {
     yakuake
     ### wallpaper-engine-plugin
     wallpaper-engine-kde-plugin
-    ## these dependencies not loaded in wallpapers
     qt5.qtwebsockets
     (python3.withPackages (python-pkgs: [ python-pkgs.websockets ]))
     ### 
