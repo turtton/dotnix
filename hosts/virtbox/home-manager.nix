@@ -7,6 +7,4 @@
     ./../../home-manager/gui/shared
     ./../../home-manager/gui/game
   ];
-
-  services.keybase.enable = true;
 }
