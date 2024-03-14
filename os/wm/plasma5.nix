@@ -19,7 +19,7 @@ wallpaper-engine-kde-plugin = with pkgs; stdenv.mkDerivation rec {
     owner = "Jelgnum";
     repo = "wallpaper-engine-kde-plugin";
     rev = version;
-    hash = "sha256-sUs+Oaf4zcLD5UHbLMQ53IlNySwjIvabvkvryq1U3SI=";
+    hash = "sha256-ff3U/TXr9umQeVHiqfEy38Wau5rJuMeJ3G/CZ9VE++g=";
     fetchSubmodules = true;
   };
   nativeBuildInputs = [
@@ -30,7 +30,7 @@ wallpaper-engine-kde-plugin = with pkgs; stdenv.mkDerivation rec {
   ] 
   ++ (with libsForQt5; with qt5; [plasma-framework qtwebsockets qtwebchannel qtx11extras qtdeclarative])
   ++ [(python3.withPackages (python-pkgs: [ python-pkgs.websockets ]))];
-  cmakeFlags = [ "-DUSE_PLASMAPKG=ON" ];
+  cmakeFlags = [ "-DUSE_PLASMAPKG=OFF" ];
   dontWrapQtApps = true;
   postPatch = ''
     rm -rf src/backend_scene/third_party/glslang
