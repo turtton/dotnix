@@ -1,4 +1,49 @@
-{username, pkgs, ...} :{
+{username, pkgs, ...} :let 
+# References: https://github.com/brianIcke/nixos-conf/blob/226c97d1b78a527eb0126a7012e27d935d4b4da0/system/BrianTUX/pkgs/wallpaper-engine-plasma-plugin.nix#L37
+glslang-submodule = with pkgs; stdenv.mkDerivation {
+  name = "glslang";
+  installPhase = ''
+    mkdir -p $out
+  '';
+  src = fetchFromGitHub {
+    owner = "KhronosGroup";
+    repo = "glslang";
+    rev = "c34bb3b6c55f6ab084124ad964be95a699700d34";
+    sha256 = "IMROcny+b5CpmzEfvKBYDB0QYYvqC5bq3n1S4EQ6sXc=";
+  };
+};
+wallpaper-engine-kde-plugin = with pkgs; stdenv.mkDerivation rec {
+  pname = "wallpaperEngineKde";
+  version = "91d8e25c0c94b4919f3d110c1f22727932240b3c";
+  src = fetchFromGitHub {
+    owner = "Jelgnum";
+    repo = "wallpaper-engine-kde-plugin";
+    rev = version;
+    hash = "sha256-sUs+Oaf4zcLD5UHbLMQ53IlNySwjIvabvkvryq1U3SI=";
+    fetchSubmodules = true;
+  };
+  nativeBuildInputs = [
+    cmake extra-cmake-modules glslang-submodule pkg-config gst_all_1.gst-libav shaderc
+  ];
+  buildInputs = [
+    mpv lz4 vulkan-headers vulkan-tools vulkan-loader
+  ] 
+  ++ (with libsForQt5; with qt5; [plasma-framework qtwebsockets qtwebchannel qtx11extras qtdeclarative])
+  ++ [python311Packages.websockets];
+  cmakeFlags = [ "-DUSE_PLASMAPKG=ON" "-DCMAKE_C_COMPILER=gcc" "-DCMAKE_CXX_COMPILER=g++" ];
+  dontWrapQtApps = true;
+  postPatch = ''
+    rm -rf src/backend_scene/third_party/glslang
+    ln -s ${glslang-submodule.src} src/backend_scene/third_party/glslang
+  '';
+  meta = with lib; {
+    description = "Wallpaper Engine KDE plasma plugin";
+    homepage = "https://github.com/Jelgnum/wallpaper-engine-kde-plugin";
+    license = licenses.gpl2Plus;
+    platforms = platforms.linux;
+  };
+};
+in {
   # Enable the X11 windowing system.
   services.xserver = {
     # Enable the KDE Plasma Desktop Environment.
@@ -6,10 +51,17 @@
     
     desktopManager.plasma5.enable = true;
   };
-  users.users."${username}".packages = with pkgs; [
+  environment.systemPackages = with pkgs; with libsForQt5; [
     latte-dock
     kdePackages.discover
     kdePackages.kgpg
-    libsForQt5.applet-window-buttons
+    applet-window-buttons
+    yakuake
+    ### wallpaper-engine-plugin
+    wallpaper-engine-kde-plugin
+    ## these dependencies not loaded in wallpapers
+    qt5.qtwebsockets
+    python311Packages.websockets
+    ### 
   ];
 }
