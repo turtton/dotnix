@@ -2,6 +2,43 @@
   programs.starship = {
     enable = true;
     settings = {
+      format = ''
+      [┌─\[$username@$hostname\]](bold blue) $directory$cmd_duration$package$status
+      [└─\[[\$](bold purple)\] <$git_branch>](bold blue) '';
+      scan_timeout = 10;
+      add_newline = false;
+      username = {
+        show_always = true;
+        format = "[$user]($style)";
+        style_user = "bold bright-green";
+      };
+      hostname = {
+        ssh_only = false;
+        format = "[$ssh_symbol$hostname]($style)";
+        style = "bold green";
+      };
+      git_branch = {
+        format = "[$symbol$branch(:$remote_branch)]($style)";
+        style = "bold blue";
+      };
+      directory = {
+        truncation_length = 100;
+        truncate_to_repo = false;
+        truncation_symbol = "…/";
+        format = ''[-](white) [\[[$path]($style)[$read_only]($read_only_style)\]](bold blue) '';
+        style = "bold white";
+      };
+      cmd_duration = {
+        format = ''[-](white) [\[[$duration]($style)\]](bold blue) '';
+        style = "bold yellow";
+      };
+      package = {
+        format = ''[-](white) [\[[$symbol$version]($style)\]](bold blue) '';
+        style = "#563C17";
+      };
+      status = {
+        format = ''[-](white) [\[[$symbol$status]($style)\]](bold blue) '';
+      };
       # Nerd Font Symbols
       aws.symbol = "  ";
       buf.symbol = " ";

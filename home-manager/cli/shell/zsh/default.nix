@@ -32,10 +32,12 @@
       #   };
       # }
     ];
+    # Used for useful history systems
     oh-my-zsh = {
       enable = true;
       plugins = [];
-      theme = "xiong-chiamiov-plus";
+      # Disabled by sharship
+      # theme = "xiong-chiamiov-plus";
     };
   };
 }
