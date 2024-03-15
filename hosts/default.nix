@@ -45,6 +45,7 @@ in {
       username = "turtton";
       modules = [
         ./maindesk/nixos.nix
+        ./../overlay
       ];
     };
     virtbox = createSystem {
@@ -53,6 +54,7 @@ in {
       username = "turtton";
       modules = [
         ./virtbox/nixos.nix
+        ./../overlay
       ];
     };
   };
@@ -64,6 +66,7 @@ in {
       modules = [
         ./maindesk/home-manager.nix
         inputs.plasma-manager.homeManagerModules.plasma-manager
+        ./../overlay
       ];
     };
     "turtton@virtbox" = createHomeManagerConfig {
@@ -73,6 +76,7 @@ in {
       modules = [
         ./virtbox/home-manager.nix
         inputs.plasma-manager.homeManagerModules.plasma-manager
+        ./../overlay
       ];
     };
   };
