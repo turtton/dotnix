@@ -7,6 +7,10 @@ on:
     branches:
       - main
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,5 +30,6 @@ jobs:
       - name: Build
         run: |
           nix build --impure --no-link --show-trace --system x86_64-linux \
-            .#nixosConfigurations.virtbox.config.system.build.toplevel
+            .#nixosConfigurations.virtbox.config.system.build.toplevel \
+            .#nixosConfigurations.maindesk.config.system.build.toplevel
           df -h
