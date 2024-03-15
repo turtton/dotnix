@@ -27,5 +27,6 @@ in {
   };
   home.packages = with pkgs; [
     # nixd
+    nil
   ];
 }
