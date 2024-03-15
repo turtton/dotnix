@@ -60,6 +60,19 @@ wallpaper-engine-kde-plugin = with pkgs; stdenv.mkDerivation rec {
     license = licenses.gpl2Plus;
     platforms = platforms.linux;
   };
+  # Not work yet
+  # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/development/libraries/applet-window-buttons/default.nix#L20
+  applet-window-buttons6 = with pkgs; libsForQt5.applet-window-buttons.overrideAttrs(old: rec {
+    version = "a7b95da32717b90a1d9478db429d6fa8a6c4605f";
+    # https://github.com/moodyhunter/applet-window-buttons6
+    src = fetchFromGitHub {
+      owner = "moodyhunter";
+      repo = "applet-window-buttons6";
+      rev = version;
+      # hash = "";
+    };
+    patches = [];
+  });
 };
 in {
   # Enable the X11 windowing system.
@@ -77,10 +90,11 @@ in {
     discover
     kgpg
     yakuake
+    applet-window-buttons6
     ### wallpaper-engine-plugin
     wallpaper-engine-kde-plugin
     qtwebsockets
     (python3.withPackages (python-pkgs: [ python-pkgs.websockets ]))
-    ### 
+    ###
   ];
 }
