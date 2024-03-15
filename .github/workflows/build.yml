@@ -20,9 +20,9 @@ jobs:
       # Original: https://github.com/natsukium/dotfiles/blob/main/.github/workflows/test.yml
       - name: GC
         run: |
-          df - h
+          df -h
           rm -rf "${AGENT_TOOLSDIRECTORY}"
-          df - h
+          df -h
       - name: Build
         run: |
           nix build --impure --no-link --show-trace --system x86_64-linux \
