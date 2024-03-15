@@ -6,5 +6,6 @@
     eza # ls
     fd # find 
     ripgrep # grep
+    delta # diff
   ];
 }
