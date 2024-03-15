@@ -7,6 +7,7 @@
       noto-fonts-emoji
       nerdfonts
       twemoji-color-font
+      rictydiminished-with-firacode
     ];
     fontDir.enable = true;
     fontconfig = {
