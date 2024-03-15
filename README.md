@@ -22,10 +22,10 @@ My dotfiles for NixOS
 
 3. Clone this repository and move it folder
 
-4. Run `sudo nixos-rebuild switch --flake .#{name}`
+4. Run `sudo nixos-rebuild switch --flake .#{name}`  
    Name: `virtbox` `maindesk`
 
-5. Run `nix run nixpkgs#home-manager -- switch --flake .#{name}`
+5. Run `nix run nixpkgs#home-manager -- switch --flake .#{name}`  
    Name: `turtton@virtbox` `turtton@maindesk`
 
 6. Reboot
