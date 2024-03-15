@@ -36,5 +36,6 @@
   };
   home.packages = with pkgs; [
     lazygit
+    gitmoji-cli
   ];
 }
