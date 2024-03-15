@@ -29,7 +29,6 @@ jobs:
           df -h
       - name: Build
         run: |
-          nix build --impure --no-link --show-trace --system x86_64-linux
-            \ .#nixosConfigurations.virtbox.config.system.build.toplevel
-        #   \ .#nixosConfigurations.maindesk.config.system.build.toplevel
+          nix build --impure --no-link --show-trace --system x86_64-linux \
+            .#nixosConfigurations.virtbox.config.system.build.toplevel
           df -h
