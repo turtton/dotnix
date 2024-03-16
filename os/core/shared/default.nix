@@ -1,5 +1,6 @@
 {
   imports = [
+    ./gpg.nix
     ./ld.nix
     ./locale.nix
     ./network.nix
