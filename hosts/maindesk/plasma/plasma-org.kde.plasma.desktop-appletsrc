@@ -173,7 +173,7 @@ immutability=1
 lastScreen=0
 location=0
 plugin=org.kde.plasma.folder
-wallpaperplugin=com.github.catsout.wallpaperEngineKde
+wallpaperplugin=com.github.casout.wallpaperEngineKde
 
 [Containments][110][ConfigDialog]
 DialogHeight=600
@@ -585,15 +585,15 @@ knownItems=org.kde.plasma.battery,org.kde.plasma.clipboard,org.kde.plasma.device
 
 [Containments][75]
 ItemGeometries-0x0=Applet-106:0,0,224,256,0;Applet-104:0,256,224,224,0;Applet-103:0,480,224,336,0;Applet-87:240,0,288,240,0;
-ItemGeometries-1920x1080=Applet-106:0,0,224,256,0;Applet-104:0,256,224,192,0;Applet-103:0,448,224,432,0;Applet-141:0,816.541,208,240,0;
-ItemGeometriesHorizontal=Applet-106:0,0,224,256,0;Applet-104:0,256,224,192,0;Applet-103:0,448,224,432,0;Applet-141:0,816.541,208,240,0;
+ItemGeometries-1920x1080=Applet-106:0,0,224,256,0;Applet-104:0,256,224,192,0;Applet-103:0,448,224,464,0;Applet-141:0,880,208,192,0;
+ItemGeometriesHorizontal=Applet-106:0,0,224,256,0;Applet-104:0,256,224,192,0;Applet-103:0,448,224,464,0;Applet-141:0,880,208,192,0;
 activityId=7ef97fa8-e655-4ce8-9573-fe85ee6a8bc0
 formfactor=0
 immutability=1
 lastScreen=1
 location=0
 plugin=org.kde.plasma.folder
-wallpaperplugin=com.github.catsout.wallpaperEngineKde
+wallpaperplugin=com.github.casout.wallpaperEngineKde
 
 [Containments][75][Applets][103]
 immutability=1
@@ -719,8 +719,8 @@ ToolBoxButtonX=384
 CustomConf=eyJmYXZvciI6W119
 PerOptChanged=true
 SteamLibraryPath[$e]=file:$HOME/.local/share/Steam
-WallpaperSource[$e]=file:$HOME/.local/share/Steam/steamapps/workshop/content/431960/2890513357/bocchi.mp4+video
-WallpaperWorkShopId=2890513357
+WallpaperSource[$e]=file:$HOME/.local/share/Steam/steamapps/workshop/content/431960/2275426628/scene.json+scene
+WallpaperWorkShopId=2275426628
 
 [Containments][75][Wallpaper][com.github.catsout.wallpaperEngineKde][General]
 SteamLibraryPath[$e]=file:$HOME/.local/share/Steam
