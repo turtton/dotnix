@@ -9,6 +9,7 @@
   imports = [
     ./hardware-configuration.nix
     ./../../os/core/shared
+    (import ./../../os/core/secureboot/preloader.nix "nvme0n1" "1")
     ./../../os/core/shell.nix
     ./../../os/wm/plasma5.nix
     ./../../os/desktop/shared
