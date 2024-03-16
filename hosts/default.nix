@@ -1,11 +1,26 @@
 inputs: 
 let
+  remoteNixpkgsPatches = [
+    {
+      meta.description = "Supports multiple efi file checkings for systemd-boot-builder.py";
+      url = "https://github.com/turtton/nixpkgs/commit/c0f29cee5621026857062faad73ffbf74b70c0f4.patch";
+      hash = "sha256-w1boi7mFeqzpyfkZngupAMJPlLrLbJ/UZuqvj9H7xTU=";
+    }
+  ];
   createSystem = {
     system,
     hostname,
     username,
     modules
-  }: inputs.nixpkgs.lib.nixosSystem {
+  }: let 
+    originPkgs = inputs.nixpkgs.legacyPackages."${system}";
+    nixpkgs = originPkgs.applyPatches {
+      name = "nixpkgs-patched";
+      src = inputs.nixpkgs;
+      patches = map originPkgs.fetchpatch remoteNixpkgsPatches;
+    };
+    nixosSystem = import (nixpkgs + "/nixos/lib/eval-config.nix");
+  in nixosSystem {
     inherit system modules;
     specialArgs = {
       inherit inputs hostname username;

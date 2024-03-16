@@ -24,9 +24,6 @@ My dotfiles for NixOS
 
 4. Run `sudo nixos-rebuild switch --flake .#{name}`  
    Name: `virtbox` `maindesk`
-   > [!WARNING]
-   > If you encounted exception like `Exception: could not find any previously installed systemd-boot`, add `--install-bootloader`  
-   > Details written in [preloader.nix](os/core/secureboot/preloader.nix)
 
 5. Run `nix run nixpkgs#home-manager -- switch --flake .#{name}`  
    Name: `turtton@virtbox` `turtton@maindesk`
