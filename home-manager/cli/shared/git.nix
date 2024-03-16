@@ -19,7 +19,7 @@
       init.defaultBranch = "main";
       core = {
         autocrlf = "input";
-        editor = "kate";
+        editor = "nvim";
       };
       pack = {
         windowMemory = "2g";
