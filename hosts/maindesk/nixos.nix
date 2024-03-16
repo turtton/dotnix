@@ -3,6 +3,7 @@
   pkgs,
   username,
   hostname,
+  config,
   ...
 }: {
   imports = [
@@ -18,19 +19,30 @@
     ./../../os/desktop/steam.nix
   ] ++ (with inputs.nixos-hardware.nixosModules; [
     common-cpu-amd
-    common-gpu-nvidia
     common-pc-ssd
   ]);
 
   boot = {
     loader = {
-      grub = {
-        enable = true;
-        device = "/dev/sda";
-        useOSProber = true;
-      };
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
     };
     kernelPackages = pkgs.linuxKernel.packages.linux_xanmod;
+  };
+
+  hardware = {
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+    };
+    nvidia = {
+      modesetting.enable = true;
+      powerManagement.enable = false;
+      open = false;
+      nvidiaSettings = true;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
+    };
   };
 
   system.stateVersion = "23.11";
@@ -38,6 +50,7 @@
   services = {
     # Enable CUPS to print documents.
     printing.enable = true;
+    xserver.videoDrivers = ["nvidia"];
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
