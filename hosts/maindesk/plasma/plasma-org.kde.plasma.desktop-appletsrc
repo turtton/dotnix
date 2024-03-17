@@ -105,7 +105,7 @@ immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][10][Applets][23][Configuration]
-PreloadWeight=26
+PreloadWeight=18
 
 [Containments][10][Applets][24]
 immutability=1
@@ -181,7 +181,7 @@ DialogWidth=800
 
 [Containments][110][General]
 ToolBoxButtonState=topcenter
-ToolBoxButtonX=134
+ToolBoxButtonX=437
 ToolBoxButtonY=20
 
 [Containments][110][Wallpaper][com.github.casout.wallpaperEngineKde][General]
@@ -312,7 +312,7 @@ immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][115][Applets][130][Configuration]
-PreloadWeight=42
+PreloadWeight=34
 
 [Containments][115][Applets][131]
 immutability=1
@@ -326,7 +326,7 @@ immutability=1
 plugin=org.kde.plasma.mediacontroller
 
 [Containments][115][Applets][132][Configuration]
-PreloadWeight=42
+PreloadWeight=10
 
 [Containments][115][Applets][144]
 immutability=1
@@ -552,7 +552,7 @@ immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][31][Applets][42][Configuration]
-PreloadWeight=2
+PreloadWeight=0
 
 [Containments][31][Applets][43]
 immutability=1
@@ -679,7 +679,7 @@ disk/all/write=92,92,136
 
 [Containments][75][Applets][106][Configuration][Sensors]
 highPrioritySensorIds=["disk/all/write","disk/all/read"]
-lowPrioritySensorIds=["disk/5b1135b9-56e9-4ed4-8ef3-d027ca92cf55/free","disk/5b1135b9-56e9-4ed4-8ef3-d027ca92cf55/used"]
+lowPrioritySensorIds=["disk/e3c6e86d-6bfd-4c01-8caf-b11e0de4b689/total","disk/e3c6e86d-6bfd-4c01-8caf-b11e0de4b689/used"]
 
 [Containments][75][Applets][141]
 immutability=1
