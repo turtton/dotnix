@@ -1,5 +1,5 @@
 # Reference: https://github.com/natsukium/dotfiles/blob/26999a221aa48e00ab979e98e63bccac381a37fa/nix/applications/nvim/default.nix
-inputs@{ pkgs, lib, ...}:
+inputs@{ pkgs, lib, ... }:
 let
   configFile = file: {
     "nvim/${file}".source = ./. + "/${file}";

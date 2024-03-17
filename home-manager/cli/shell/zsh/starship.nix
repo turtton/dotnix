@@ -3,8 +3,8 @@
     enable = true;
     settings = {
       format = ''
-      [┌─\[$username@$hostname\]](bold blue) $directory$cmd_duration$package$status
-      [└─\[[\$](bold purple)\] <$git_branch>](bold blue) '';
+        [┌─\[$username@$hostname\]](bold blue) $directory$cmd_duration$package$status
+        [└─\[[\$](bold purple)\] <$git_branch>](bold blue) '';
       scan_timeout = 10;
       add_newline = false;
       username = {

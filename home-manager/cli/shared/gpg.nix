@@ -1,4 +1,4 @@
-{ pkgs, ... }:{
+{ pkgs, ... }: {
   programs.gpg = {
     enable = true;
     settings = {
@@ -6,7 +6,7 @@
     };
   };
   services.gpg-agent = {
-      enable = true;
-      pinentryPackage = pkgs.pinentry-qt;
+    enable = true;
+    pinentryPackage = pkgs.pinentry-qt;
   };
 }

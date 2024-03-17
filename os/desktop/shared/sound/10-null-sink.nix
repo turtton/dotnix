@@ -1,7 +1,8 @@
 #https://gitlab.freedesktop.org/pipewire/pipewire/-/wikis/Virtual-Devices#coupled-streams
 {
   "context.modules" = [
-    { name = "libpipewire-module-loopback";
+    {
+      name = "libpipewire-module-loopback";
       args = {
         "audio.position" = [ "FL" "FR" ];
         "capture.props" = {

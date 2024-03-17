@@ -1,4 +1,5 @@
-{pkgs, ...}: let 
+{ pkgs, ... }:
+let
   # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/applications/editors/jetbrains/plugins/plugins.json
   plugins = [
     "ideavim"
@@ -18,38 +19,40 @@
     name = "idea-ultimate-wrapped";
     paths = [ patched-idea ];
     buildInputs = [ pkgs.makeWrapper ];
-    postBuild = let 
-      desktopEntryPath = "/share/applications/idea-ultimate.desktop";
-      path = "/bin/idea-ultimate";
-    in
-    ''
-    # desktop entry
-    if [[ -L "$out/share/applications" ]]; then
-      rm "$out/share/applications"
-      mkdir "$out/share/applications"
-    else
-      rm "$out${desktopEntryPath}"
-    fi
+    postBuild =
+      let
+        desktopEntryPath = "/share/applications/idea-ultimate.desktop";
+        path = "/bin/idea-ultimate";
+      in
+      ''
+        # desktop entry
+        if [[ -L "$out/share/applications" ]]; then
+          rm "$out/share/applications"
+          mkdir "$out/share/applications"
+        else
+          rm "$out${desktopEntryPath}"
+        fi
 
-    sed -e "s|Exec=${patched-idea + path}|Exec=$out${path}|" \
-      "${patched-idea + desktopEntryPath}" \
-      > "$out${desktopEntryPath}"
+        sed -e "s|Exec=${patched-idea + path}|Exec=$out${path}|" \
+          "${patched-idea + desktopEntryPath}" \
+          > "$out${desktopEntryPath}"
 
-    wrapProgram "$out${path}" \
-      --prefix LD_LIBRARY_PATH : ${requiredLibPath}
-    '';
+        wrapProgram "$out${path}" \
+          --prefix LD_LIBRARY_PATH : ${requiredLibPath}
+      '';
   };
   ides = with pkgs.jetbrains; [
     webstorm
     rust-rover
   ];
-in  {
+in
+{
   home.packages = with pkgs; [
     android-studio
     # basically should not use toolbox because of issues(https://github.com/NixOS/nixpkgs/issues/240444) but useful to preview IDE 
     jetbrains-toolbox
-  ] 
-  ++ (map (ide: (applyPlugins ide)) ides) 
-  ++ [idea];
+  ]
+  ++ (map (ide: (applyPlugins ide)) ides)
+  ++ [ idea ];
   home.file.".ideavimrc".source = ./ideavimrc;
 }

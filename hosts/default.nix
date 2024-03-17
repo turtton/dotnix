@@ -1,4 +1,4 @@
-inputs: 
+inputs:
 let
   remoteNixpkgsPatches = [
     {
@@ -7,52 +7,55 @@ let
       hash = "sha256-w1boi7mFeqzpyfkZngupAMJPlLrLbJ/UZuqvj9H7xTU=";
     }
   ];
-  createSystem = {
-    system,
-    hostname,
-    username,
-    modules
-  }: let 
-    originPkgs = inputs.nixpkgs.legacyPackages."${system}";
-    nixpkgs = originPkgs.applyPatches {
-      name = "nixpkgs-patched";
-      src = inputs.nixpkgs;
-      patches = map originPkgs.fetchpatch remoteNixpkgsPatches;
-    };
-    nixosSystem = import (nixpkgs + "/nixos/lib/eval-config.nix");
-  in nixosSystem {
-    inherit system modules;
-    specialArgs = {
-      inherit inputs hostname username;
-    };
-  };
-  createHomeManagerConfig = {
-    system,
-    username,
-    overlays ? [],
-    modules
-  }: inputs.home-manager.lib.homeManagerConfiguration {
-    pkgs = import inputs.nixpkgs {
-      inherit system overlays;
-      config = {
-        allowUnfree = true;
+  createSystem =
+    { system
+    , hostname
+    , username
+    , modules
+    }:
+    let
+      originPkgs = inputs.nixpkgs.legacyPackages."${system}";
+      nixpkgs = originPkgs.applyPatches {
+        name = "nixpkgs-patched";
+        src = inputs.nixpkgs;
+        patches = map originPkgs.fetchpatch remoteNixpkgsPatches;
+      };
+      nixosSystem = import (nixpkgs + "/nixos/lib/eval-config.nix");
+    in
+    nixosSystem {
+      inherit system modules;
+      specialArgs = {
+        inherit inputs hostname username;
       };
     };
-    extraSpecialArgs = {
-      inherit inputs username system;
-    };
-    modules = modules ++ [
-      {
-        home = {
-          inherit username;
-          homeDirectory = "/home/${username}";
-          stateVersion = "23.11";
+  createHomeManagerConfig =
+    { system
+    , username
+    , overlays ? [ ]
+    , modules
+    }: inputs.home-manager.lib.homeManagerConfiguration {
+      pkgs = import inputs.nixpkgs {
+        inherit system overlays;
+        config = {
+          allowUnfree = true;
         };
-        programs.home-manager.enable = true;
-      }
-    ];
-  };
-in {
+      };
+      extraSpecialArgs = {
+        inherit inputs username system;
+      };
+      modules = modules ++ [
+        {
+          home = {
+            inherit username;
+            homeDirectory = "/home/${username}";
+            stateVersion = "23.11";
+          };
+          programs.home-manager.enable = true;
+        }
+      ];
+    };
+in
+{
   nixos = {
     maindesk = createSystem {
       system = "x86_64-linux";

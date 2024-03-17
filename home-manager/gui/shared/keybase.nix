@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   services.keybase.enable = true;
-  home.packages = with pkgs; [keybase-gui];
+  home.packages = with pkgs; [ keybase-gui ];
 }

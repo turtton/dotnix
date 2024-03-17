@@ -2,10 +2,12 @@
 # Noto Fonts in nixpkgs are variable fonts, but Steam doesn't support them.
 # Issue: https://github.com/NixOS/nixpkgs/issues/178121
 # PR(unmerged): https://github.com/NixOS/nixpkgs/pull/205641
-self: prev: let
+self: prev:
+let
   pname = "noto-fonts";
   weights = "{Regular,Bold,Light,Italic,BoldItalic,LightItalic}";
-in with prev; {
+in
+with prev; {
   noto-fonts = stdenv.mkDerivation {
     inherit pname;
     version = "2020-01-23";
@@ -48,7 +50,7 @@ in with prev; {
       '';
       license = licenses.ofl;
       platforms = platforms.all;
-      maintainers = with maintainers; [mathnerd314 emily];
+      maintainers = with maintainers; [ mathnerd314 emily ];
     };
   };
 }

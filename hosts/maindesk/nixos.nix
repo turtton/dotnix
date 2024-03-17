@@ -1,10 +1,9 @@
-{
-  inputs,
-  pkgs,
-  username,
-  hostname,
-  config,
-  ...
+{ inputs
+, pkgs
+, username
+, hostname
+, config
+, ...
 }: {
   imports = [
     ./hardware-configuration.nix
@@ -51,7 +50,7 @@
   services = {
     # Enable CUPS to print documents.
     printing.enable = true;
-    xserver.videoDrivers = ["nvidia"];
+    xserver.videoDrivers = [ "nvidia" ];
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.

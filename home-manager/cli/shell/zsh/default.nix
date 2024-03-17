@@ -1,5 +1,5 @@
-{pkgs, ...}: {
-  imports = [./starship.nix];
+{ pkgs, ... }: {
+  imports = [ ./starship.nix ];
   programs.zsh = {
     enable = true;
     dotDir = ".config/zsh";
@@ -35,7 +35,7 @@
     # Used for useful history systems
     oh-my-zsh = {
       enable = true;
-      plugins = [];
+      plugins = [ ];
       # Disabled by sharship
       # theme = "xiong-chiamiov-plus";
     };

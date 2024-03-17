@@ -1,7 +1,8 @@
-{inputs, system, pkgs, ...}: 
+{ inputs, system, pkgs, ... }:
 let
   extension = inputs.nix-vscode-extensions.extensions."${system}";
-in {
+in
+{
   programs.vscode = {
     enable = true;
     extensions = with extension; [

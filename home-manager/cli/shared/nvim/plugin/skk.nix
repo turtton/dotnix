@@ -1,4 +1,5 @@
-{ pkgs, ...}: let 
+{ pkgs, ... }:
+let
   skkeleton = pkgs.vimUtils.buildVimPlugin {
     name = "skkeleton";
     src = pkgs.fetchFromGitHub {
@@ -7,26 +8,26 @@
       rev = "342f71218dd08ad3053f141302db2fb1101f1213";
       hash = "sha256-umpBr09lMSng44PQ3jauWVEi1EuVJ1A9+dOlLAONbTw=";
     };
-    dependencies = 
+    dependencies =
       with pkgs.vimPlugins; with pkgs; [ denops-vim skk-dicts ];
   };
   skkeleton-config = ''
-  function! s:skkeleton_init() abort
-	call skkeleton#config({
-        \ 'eggLikeNewline': v:true,
-        \ 'globalDictionaries': ["${pkgs.skk-dicts}/share/SKK-JISYO.L"],
-        \ })
-	call skkeleton#register_kanatable('rom', {
-        \ "z\<Space>": ["\u3000", ''\],
-        \ })
-  endfunction
-  augroup skkeleton-initialize-pre
-    autocmd!
-    autocmd User skkeleton-initialize-pre call s:skkeleton_init()
-  augroup END
+      function! s:skkeleton_init() abort
+    	call skkeleton#config({
+            \ 'eggLikeNewline': v:true,
+            \ 'globalDictionaries': ["${pkgs.skk-dicts}/share/SKK-JISYO.L"],
+            \ })
+    	call skkeleton#register_kanatable('rom', {
+            \ "z\<Space>": ["\u3000", ''\],
+            \ })
+      endfunction
+      augroup skkeleton-initialize-pre
+        autocmd!
+        autocmd User skkeleton-initialize-pre call s:skkeleton_init()
+      augroup END
 
-  imap <C-j> <Plug>(skkeleton-toggle)
-  cmap <C-j> <Plug>(skkeleton-toggle)
+      imap <C-j> <Plug>(skkeleton-toggle)
+      cmap <C-j> <Plug>(skkeleton-toggle)
   '';
   cmp-skkeleton = pkgs.vimUtils.buildVimPlugin {
     name = "cmp-skkeleton";
@@ -36,14 +37,15 @@
       rev = "ae74491bc73b868c60f69e4362d3bea29a6bf74d";
       hash = "sha256-umpBr09lMSng44PQ3jauWVEi1EuVJ1A9+dOlLAONbTw=";
     };
-    dependencies = with pkgs.vimPlugins; [ nvim-cmp ] ++ [skkeleton];
+    dependencies = with pkgs.vimPlugins; [ nvim-cmp ] ++ [ skkeleton ];
   };
   cmp-skkeleton-config = ''
-  require'cmp'.setup.sources = require'cmp'.config.sources({
-    { name = "skkeleton" }
-  })
+    require'cmp'.setup.sources = require'cmp'.config.sources({
+      { name = "skkeleton" }
+    })
   '';
-in [
+in
+[
   {
     plugin = skkeleton;
     config = skkeleton-config;

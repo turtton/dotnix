@@ -1,9 +1,8 @@
-{
-  inputs,
-  pkgs,
-  username,
-  hostname,
-  ...
+{ inputs
+, pkgs
+, username
+, hostname
+, ...
 }: {
   imports = [
     ./hardware-configuration.nix

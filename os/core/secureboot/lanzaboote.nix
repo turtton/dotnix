@@ -1,8 +1,8 @@
-{ inputs, pkgs, lib, ...} : {
-  imports = [ 
+{ inputs, pkgs, lib, ... }: {
+  imports = [
     inputs.lanzaboote.nixosModules.lanzaboote
   ];
-  environment.systemPackages = with pkgs; [ 
+  environment.systemPackages = with pkgs; [
     sbctl
   ];
   boot = {

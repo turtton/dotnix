@@ -1,4 +1,5 @@
-inputs@{pkgs, lib, ...} : let
+inputs@{ pkgs, lib, ... }:
+let
   # these settings expected structre
   # {
   #   plugins = [];
@@ -8,12 +9,13 @@ inputs@{pkgs, lib, ...} : let
     (import ./skk.nix inputs)
     (import ./toggleterm.nix inputs)
   ];
-in {
+in
+{
   plugins = with pkgs.vimPlugins; [
     {
       plugin = kanagawa-nvim;
       config = ''
-      colorscheme kanagawa
+        colorscheme kanagawa
       '';
     }
     vim-wakatime

@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   programs.git = {
     enable = true;
     userName = "turtton";
@@ -10,7 +10,7 @@
     delta = {
       enable = true;
       options = {
-      navigate = true;
+        navigate = true;
         light = false;
         line-numbers = true;
       };
@@ -29,7 +29,7 @@
   };
   programs.gh = {
     enable = true;
-    extensions = with pkgs; [gh-markdown-preview];
+    extensions = with pkgs; [ gh-markdown-preview ];
     settings = {
       editor = "nvim";
     };
