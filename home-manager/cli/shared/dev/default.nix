@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   imports = [
     ./cargo.nix
+    ./ghr.nix
   ];
   home.packages = with pkgs; [
     gcc
