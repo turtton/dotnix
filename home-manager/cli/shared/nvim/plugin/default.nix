@@ -6,6 +6,7 @@ inputs@{pkgs, lib, ...} : let
   pluginSettings = [
     (import ./nvim-cmp.nix inputs)
     (import ./skk.nix inputs)
+    (import ./toggleterm.nix inputs)
   ];
 in {
   plugins = with pkgs.vimPlugins; [
