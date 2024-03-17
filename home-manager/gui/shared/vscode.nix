@@ -18,12 +18,14 @@ in {
       open-vsx.wakatime.vscode-wakatime
       open-vsx.redhat.vscode-yaml
     ];
-    userSettings.text = ''
-    {
-      "workbench.productIconTheme": "a-file-icon-vscode-product-icon-theme"
-      "workbench.colorTheme": "50 Shades of Purple"
-    }
-    '';
+    userSettings = {
+      "workbench.productIconTheme" = "a-file-icon-vscode-product-icon-theme";
+      "workbench.colorTheme" = "50 Shades of Purple";
+      "extensions.experimental.affinity" = {
+        "asvetliakov.vscode-neovim" = 1;
+      };
+      "files.autoSave" = "off";
+    };
   };
   home.packages = with pkgs; [
     # nixd
