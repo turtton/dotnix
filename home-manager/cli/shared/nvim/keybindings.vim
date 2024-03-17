@@ -27,5 +27,6 @@ nnoremap <script> <SID>gj gj<SID>g
 nnoremap <script> <SID>gk gk<SID>g
 nmap <SID>g <Nop>
 
-" quick save
-nmap <leader>w :w
+" quick commands
+nmap <leader>w :w<CR>
+nmap <leader>q :q<CR>
