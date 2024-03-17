@@ -1,7 +1,8 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master"; # Hardware settings collection
+    nixos-hardware.url =
+      "github:NixOS/nixos-hardware/master"; # Hardware settings collection
     xremap.url = "github:xremap/nix-flake"; # KeyMap tool
     nix-ld-rs = {
       url = "github:nix-community/nix-ld-rs";
@@ -31,9 +32,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+    utils.url = "github:numtide/flake-utils";
   };
-  outputs = inputs: {
+  outputs = inputs@{ nixpkgs, flake-utils, ... }: {
     nixosConfigurations = (import ./hosts inputs).nixos;
     homeConfigurations = (import ./hosts inputs).home-manager;
-  };
+  } // flake-utils.lib.eachDefaultSystem (system:
+    let
+      pkgs = import nixpkgs { inherit system; };
+    in
+    with pkgs; {
+      formatter = nixpkgs-fmt;
+    });
 }
