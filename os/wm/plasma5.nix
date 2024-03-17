@@ -58,6 +58,7 @@ in {
     kdePackages.kgpg
     applet-window-buttons
     yakuake
+    xclip
     ### wallpaper-engine-plugin
     wallpaper-engine-kde-plugin
     qt5.qtwebsockets
