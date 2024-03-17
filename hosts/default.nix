@@ -29,7 +29,7 @@ let
   createHomeManagerConfig = {
     system,
     username,
-    overlays,
+    overlays ? [],
     modules
   }: inputs.home-manager.lib.homeManagerConfiguration {
     pkgs = import inputs.nixpkgs {
@@ -77,7 +77,6 @@ in {
     "turtton@maindesk" = createHomeManagerConfig {
       system = "x86_64-linux";
       username = "turtton";
-      overlays = [(import inputs.rust-overlay)];
       modules = [
         ./maindesk/home-manager.nix
         inputs.plasma-manager.homeManagerModules.plasma-manager
@@ -87,7 +86,6 @@ in {
     "turtton@virtbox" = createHomeManagerConfig {
       system = "x86_64-linux";
       username = "turtton";
-      overlays = [(import inputs.rust-overlay)];
       modules = [
         ./virtbox/home-manager.nix
         inputs.plasma-manager.homeManagerModules.plasma-manager

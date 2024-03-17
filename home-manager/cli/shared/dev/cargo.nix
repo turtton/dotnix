@@ -1,7 +1,6 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    # Replaced by rust-overlay(see flake.nix
-    rust-bin.stable.latest.default
+    rustup
     cargo-deny
     cargo-cache
     cargo-nextest
