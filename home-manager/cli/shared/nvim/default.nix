@@ -10,7 +10,7 @@ in
   programs.neovim = {
     enable = true;
     vimAlias = true;
-    plugins = (import ./plugin inputs).plugins;
+    inherit (import ./plugin inputs) plugins;
     extraConfig = lib.readFile ./init.vim;
     # Add line breaking to separate extraconfig and lua configs
     extraLuaConfig = "\n";

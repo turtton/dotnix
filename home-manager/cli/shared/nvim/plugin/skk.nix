@@ -43,18 +43,16 @@
     { name = "skkeleton" }
   })
   '';
-in {
-  plugins = [
-    {
-      plugin = skkeleton;
-      config = skkeleton-config;
-    }
-    {
-      plugin = cmp-skkeleton;
-      config = cmp-skkeleton-config;
-      # https://github.com/nix-community/home-manager/blob/2f0db7d418e781354d8a3c50e611e3b1cd413087/modules/programs/neovim.nix#L26
-      type = "lua";
-    }
-    cmp-skkeleton
-  ];
-}
+in [
+  {
+    plugin = skkeleton;
+    config = skkeleton-config;
+  }
+  {
+    plugin = cmp-skkeleton;
+    config = cmp-skkeleton-config;
+    # https://github.com/nix-community/home-manager/blob/2f0db7d418e781354d8a3c50e611e3b1cd413087/modules/programs/neovim.nix#L26
+    type = "lua";
+  }
+  cmp-skkeleton
+]

@@ -18,5 +18,5 @@ in {
     }
     vim-wakatime
     fidget-nvim
-  ] ++ lib.flatten (map (data: data.plugins) pluginSettings);
+  ] ++ lib.flatten pluginSettings;
 }
