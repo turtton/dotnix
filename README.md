@@ -20,7 +20,7 @@ My dotfiles for NixOS
 
 2. Run `sudo nixos-rebuild switch`
 
-3. Clone this repository and move it folder
+3. Clone this repository and move it
 
 4. Run `sudo nixos-rebuild switch --flake .#{name}`  
    Name: `virtbox` `maindesk`
@@ -32,7 +32,8 @@ My dotfiles for NixOS
 
 # References
 
-> Log: https://zenn.dev/watagame/scraps/e64841d674d16e
+> My environement log(JP):  
+> https://zenn.dev/watagame/scraps/e64841d674d16e
 
 - https://zenn.dev/asa1984/articles/nixos-is-the-best
 - https://github.com/asa1984/dotfiles/blob/main

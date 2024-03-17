@@ -1,7 +1,7 @@
 # This nix file is for installing PreLoader and HashTool to systemd-boot.
 efiSystemDrive: efiPartId: { pkgs, ...} : let 
   # Original: https://aur.archlinux.org/packages/preloader-signed
-  # See: https://wiki.archlinux.jp/index.php/Unified_Extensible_Firmware_Interface/%E3%82%BB%E3%82%AD%E3%83%A5%E3%82%A2%E3%83%96%E3%83%BC%E3%83%88#PreLoader
+  # See(JP): https://wiki.archlinux.jp/index.php/Unified_Extensible_Firmware_Interface/%E3%82%BB%E3%82%AD%E3%83%A5%E3%82%A2%E3%83%96%E3%83%BC%E3%83%88#PreLoader
   mkTool = name: hash: with pkgs; stdenv.mkDerivation rec {
     pname = name;
     version = "20130208-1";
@@ -33,7 +33,7 @@ in {
       "EFI/BOOT/BOOTx64.EFI" = "${preLoader}/share/${preLoader.pname}.efi";
     };
     extraInstallCommands = ''
-      # I dont know why, but this shell cannnot use cat command.
+      # I dont know why, but this shell cannnot use cp command.
       ${pkgs.uutils-coreutils-noprefix}/bin/cp /boot/EFI/systemd/systemd-bootx64.efi /boot/EFI/systemd/loader.efi
       # Fallback settings
       ${pkgs.uutils-coreutils-noprefix}/bin/cp /boot/EFI/systemd/systemd-bootx64.efi /boot/EFI/BOOT/loader.efi
