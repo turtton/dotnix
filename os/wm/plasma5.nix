@@ -81,6 +81,28 @@ let
       platforms = platforms.linux;
     };
   };
+  jetbrains-dolphin = with pkgs; stdenv.mkDerivation rec {
+    pname = "jetbrains-dolphin";
+    version = "1.3.0";
+    src = fetchFromGitHub {
+      owner = "alex1701c";
+      repo = "JetBrainsDolphinPlugin";
+      rev = version;
+      hash = "sha256-AqBqUfWyZN0iqTXy7hLHAtoV+N4HCv9+AGKsqnv1fGM=";
+      fetchSubmodules = true;
+    };
+
+    nativeBuildInputs = [ cmake extra-cmake-modules ];
+    buildInputs = with libsForQt5; with qt5; [ kio ];
+    dontWrapQtApps = true;
+
+    meta = with lib; {
+      description = "A Krunner Plugin which allows you to open your recent projects";
+      homepage = "https://github.com/alex1701c/JetBrainsDolphinPlugin";
+      license = licenses.gpl2;
+      platforms = platforms.linux;
+    };
+  };
 in
 {
   # Enable the X11 windowing system.
@@ -98,6 +120,7 @@ in
     yakuake
     xclip
     jetbrains-runner
+    jetbrains-dolphin
     ### wallpaper-engine-plugin
     wallpaper-engine-kde-plugin
     qt5.qtwebsockets
