@@ -54,6 +54,33 @@ let
       platforms = platforms.linux;
     };
   };
+  jetbrains-runner = with pkgs; stdenv.mkDerivation rec {
+    pname = "jetbrains-runner";
+    version = "63d6eae65a80e9969e8f613c9466e32b44b90524";
+    src = fetchFromGitHub {
+      owner = "alex1701c";
+      repo = "JetBrainsRunner";
+      rev = version;
+      hash = "sha256-KhcxkFNdHpWEs+WGZMhWP1dQZOqp5q49u4/Ez+ahwbM=";
+      fetchSubmodules = true;
+    };
+
+    nativeBuildInputs = [ cmake extra-cmake-modules pkg-config ];
+    buildInputs = with libsForQt5; with qt5; [
+      plasma-framework
+      kcmutils
+      kio
+      krunner
+    ] ++ [ libnotify ];
+    dontWrapQtApps = true;
+
+    meta = with lib; {
+      description = "A Krunner Plugin which allows you to open your recent projects";
+      homepage = "https://github.com/alex1701c/JetBrainsRunner";
+      license = licenses.lgpl3;
+      platforms = platforms.linux;
+    };
+  };
 in
 {
   # Enable the X11 windowing system.
@@ -70,6 +97,7 @@ in
     applet-window-buttons
     yakuake
     xclip
+    jetbrains-runner
     ### wallpaper-engine-plugin
     wallpaper-engine-kde-plugin
     qt5.qtwebsockets
