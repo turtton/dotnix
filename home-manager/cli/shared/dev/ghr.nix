@@ -1,4 +1,5 @@
-{ pkgs, ...}: let 
+{ pkgs, ... }:
+let
   ghr = with pkgs; rustPlatform.buildRustPackage rec {
     pname = "ghr";
     version = "0.4.2";
@@ -20,14 +21,15 @@
       license = with licenses; [ mit ];
     };
   };
-in {
+in
+{
   home.packages = [
     ghr
   ];
   programs.zsh = {
     initExtra = ''
-    source <(ghr shell bash)
-    source <(ghr shell bash --completion)
+      source <(ghr shell bash)
+      source <(ghr shell bash --completion)
     '';
   };
 }
