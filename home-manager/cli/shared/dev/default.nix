@@ -6,7 +6,7 @@
   home.packages = with pkgs; [
     gcc
     go
-    nodejs-slim
+    nodejs_21
     nodePackages.wrangler
     deno
     bun

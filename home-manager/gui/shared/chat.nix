@@ -4,6 +4,7 @@
     discord-ptb
     vesktop
     slack
+    zoom-us
   ];
   # Skip update check
   home.file.".config/discord/settings.json".text = ''
