@@ -4,7 +4,7 @@
     enable = true;
 
     workspace = {
-      clickItemTo = "open";
+      clickItemTo = "select";
       lookAndFeel = "Jolly-Global";
       cursorTheme = "breeze_cursors";
       iconTheme = "BeautyLine";
