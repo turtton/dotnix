@@ -1,4 +1,5 @@
-{ pkgs, ... }: let 
+{ pkgs, ... }:
+let
   cargo-features-manager = with pkgs; rustPlatform.buildRustPackage rec {
     pname = "cargo-features-manager";
     version = "0.6.0";
@@ -10,7 +11,8 @@
     };
     cargoHash = "sha256-Cf9n5whzwL1QzrNFIqOOz/JF+Uesn05JMbXDP0TZMCc=";
   };
-in {
+in
+{
   home.packages = with pkgs; [
     rustup
     cargo-deny # dependency license checker
