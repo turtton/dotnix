@@ -6,6 +6,16 @@ let
       url = "https://github.com/turtton/nixpkgs/commit/c0f29cee5621026857062faad73ffbf74b70c0f4.patch";
       hash = "sha256-w1boi7mFeqzpyfkZngupAMJPlLrLbJ/UZuqvj9H7xTU=";
     }
+    {
+      meta.description = "Revert xz updates";
+      url = "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/300028.patch";
+      hash = "sha256-m0UcwF7krpJJbQE4GDerWjKjGkayqqUTBaF1WGw2xPk=";
+    }
+    {
+      meta.description = "Change xz repostiory";
+      url = "https://github.com/NixOS/nixpkgs/commit/6aa50d08087b8a5265ca3a41174341245ed69fe0.patch";
+      hash = "sha256-tGYGFzM9djDyRp2M7kd8LtifxCfoHDfFE6A/DfLcc/w=";
+    }
   ];
   createSystem =
     { system
