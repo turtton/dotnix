@@ -3,6 +3,7 @@
 , username
 , hostname
 , config
+, pkgs-staging-next
 , ...
 }: {
   imports = [
@@ -60,4 +61,13 @@
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
   };
+
+  # Original: https://github.com/DarkKirb/nixos-config/pull/381
+  # Add --impure option until this removed
+  system.replaceRuntimeDependencies = [
+    {
+      original = pkgs.xz;
+      replacement = pkgs-staging-next.xz;
+    }
+  ];
 }

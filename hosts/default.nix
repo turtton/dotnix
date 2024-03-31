@@ -20,12 +20,13 @@ let
         src = inputs.nixpkgs;
         patches = map originPkgs.fetchpatch remoteNixpkgsPatches;
       };
+      pkgs-staging-next = import inputs.nixpkgs-staging-next { inherit system; };
       nixosSystem = import (nixpkgs + "/nixos/lib/eval-config.nix");
     in
     nixosSystem {
       inherit system modules;
       specialArgs = {
-        inherit inputs hostname username;
+        inherit inputs hostname username pkgs-staging-next;
       };
     };
   createHomeManagerConfig =

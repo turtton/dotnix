@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-staging-next.url = "github:NixOS/nixpkgs/staging-next";
     nixos-hardware.url =
       "github:NixOS/nixos-hardware/master"; # Hardware settings collection
     xremap.url = "github:xremap/nix-flake"; # KeyMap tool
