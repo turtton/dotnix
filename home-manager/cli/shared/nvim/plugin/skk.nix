@@ -35,7 +35,7 @@ let
       owner = "rinx";
       repo = "cmp-skkeleton";
       rev = "ae74491bc73b868c60f69e4362d3bea29a6bf74d";
-      hash = "sha256-umpBr09lMSng44PQ3jauWVEi1EuVJ1A9+dOlLAONbTw=";
+      hash = "sha256-QTknfchb9Z10Xn8JmJTRqknVu+qgXPayc/zQIBK1B5E=";
     };
     dependencies = with pkgs.vimPlugins; [ nvim-cmp ] ++ [ skkeleton ];
   };
