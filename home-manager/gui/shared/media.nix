@@ -3,6 +3,7 @@
     mpv
     vlc
     spotify
+    yt-dlp
   ];
   programs.obs-studio.enable = true;
 }
