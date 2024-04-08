@@ -2,6 +2,7 @@
   imports = [
     ./sound
     ./fonts.nix
+    ./uxplay.nix
   ];
   services.xserver = {
     # Enable the X11 windowing system.
