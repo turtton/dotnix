@@ -44,5 +44,15 @@
     in
     with pkgs; {
       formatter = nixpkgs-fmt;
+      devShells.default = mkShell {
+        packages = [
+          (writeScriptBin "switch-home" ''
+            home-manager switch --flake ".#$@"
+          '')
+          (writeScriptBin "switch-nixos" ''
+            sudo nixos-rebuild switch --flake ".#$@"
+          '')
+        ];
+      };
     });
 }
