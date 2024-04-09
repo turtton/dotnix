@@ -1,4 +1,5 @@
 { hostname
+, config
 , ...
 }: {
   networking = {
@@ -12,9 +13,13 @@
       allowedUDPPortRanges = [
         { from = 1714; to = 1764; } # KDE Connect
       ];
-      # trustedInterfaces = ["tailscale0"];
-      # allowedUDPPorts = [config.services.tailscale.port];
+      trustedInterfaces = [ "tailscale0" ];
+      allowedUDPPorts = [ config.services.tailscale.port ];
     };
+  };
+  services.tailscale = {
+    enable = true;
+    openFirewall = true;
   };
 
   # nixpkgs issue#180175
