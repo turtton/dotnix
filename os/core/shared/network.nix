@@ -1,10 +1,14 @@
 { hostname
+, pkgs
 , config
 , ...
 }: {
   networking = {
     hostName = hostname;
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      plugins = with pkgs; [ networkmanager-fortisslvpn ];
+    };
     firewall = {
       enable = true;
       allowedTCPPortRanges = [
