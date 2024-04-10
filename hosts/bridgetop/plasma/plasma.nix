@@ -17,8 +17,8 @@
         source = ./plasma-org.kde.plasma.desktop-appletsrc;
       };
     };
-    packages = with pkgs; {
+    packages = with pkgs; [
       libsForQt5.bismuth # Tiling extension
-        }
-        };
-        }
+    ];
+  };
+}
