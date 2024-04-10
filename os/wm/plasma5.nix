@@ -120,7 +120,6 @@ in
     yakuake
     xclip
     krita
-    partitionmanager
     jetbrains-runner
     jetbrains-dolphin
     ### wallpaper-engine-plugin
@@ -135,4 +134,5 @@ in
       ln -s ${wallpaper-engine-kde-plugin}/$wallpaperenginetarget /home/${username}/.local/$wallpaperenginetarget
     '';
   };
+  programs.partition-manager.enable = true;
 }
