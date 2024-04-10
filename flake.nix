@@ -46,6 +46,7 @@
       formatter = nixpkgs-fmt;
       devShells.default = mkShell {
         packages = [
+          home-manager
           (writeScriptBin "switch-home" ''
             home-manager switch --flake ".#$@"
           '')
