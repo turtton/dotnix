@@ -32,27 +32,11 @@
     kernelPackages = pkgs.linuxKernel.packages.linux_xanmod;
   };
 
-  hardware = {
-    opengl = {
-      enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
-    };
-    nvidia = {
-      modesetting.enable = true;
-      powerManagement.enable = false;
-      open = false;
-      nvidiaSettings = true;
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
-    };
-  };
-
   system.stateVersion = "23.11";
 
   services = {
     # Enable CUPS to print documents.
     printing.enable = true;
-    xserver.videoDrivers = [ "nvidia" ];
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
