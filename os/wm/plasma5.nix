@@ -120,6 +120,7 @@ in
     yakuake
     xclip
     krita
+    partitionmanager
     jetbrains-runner
     jetbrains-dolphin
     ### wallpaper-engine-plugin
