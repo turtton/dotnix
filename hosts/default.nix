@@ -67,6 +67,15 @@ in
         ./../overlay
       ];
     };
+    bridgetop = createSystem {
+      system = "x86_64-linux";
+      hostname = "bridgetop";
+      username = "turtton";
+      modules = [
+        ./bridgetop/nixos.nix
+        ./../overlay
+      ];
+    };
     virtbox = createSystem {
       system = "x86_64-linux";
       hostname = "virtbox";
@@ -83,6 +92,15 @@ in
       username = "turtton";
       modules = [
         ./maindesk/home-manager.nix
+        inputs.plasma-manager.homeManagerModules.plasma-manager
+        ./../overlay
+      ];
+    };
+    "bbridge@bridgetop" = createHomeManagerConfig {
+      system = "x86_64-linux";
+      username = "bbridge";
+      modules = [
+        ./bridgetop/home-manager.nix
         inputs.plasma-manager.homeManagerModules.plasma-manager
         ./../overlay
       ];

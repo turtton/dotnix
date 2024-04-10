@@ -1,10 +1,10 @@
+{ userName, userEmail, signingKey ? "", }:
 { pkgs, ... }: {
   programs.git = {
     enable = true;
-    userName = "turtton";
-    userEmail = "top.gear7509@turtton.net";
+    inherit userName userEmail;
     signing = {
-      key = "8152FC5D0B5A76E1";
+      key = signingKey;
       signByDefault = true;
     };
     delta = {
