@@ -16,7 +16,7 @@ in
       # https://github.com/nix-community/nix-vscode-extensions/issues/31
       (vscode-marketplace.typespec.typespec-vscode.overrideAttrs (_: { sourceRoot = "extension"; }))
       open-vsx.asvetliakov.vscode-neovim
-      open-vsx.wakatime.vscode-wakatime
+      vscode-marketplace.wakatime.vscode-wakatime
       open-vsx.redhat.vscode-yaml
     ];
     userSettings = {
