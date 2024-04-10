@@ -19,6 +19,6 @@
     };
     packages = with pkgs; {
       libsForQt5.bismuth # Tiling extension
-    }
-  };
-}
+        }
+        };
+        }
