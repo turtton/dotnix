@@ -12,7 +12,7 @@ in
       vscode-marketplace.github.copilot-chat
       vscode-marketplace.github.copilot
       open-vsx.pinage404.nix-extension-pack
-      open-vsx."42crunch".vscode-openapi
+      vscode-marketplace."42crunch".vscode-openapi
       # https://github.com/nix-community/nix-vscode-extensions/issues/31
       (vscode-marketplace.typespec.typespec-vscode.overrideAttrs (_: { sourceRoot = "extension"; }))
       open-vsx.asvetliakov.vscode-neovim
