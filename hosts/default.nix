@@ -70,7 +70,7 @@ in
     bridgetop = createSystem {
       system = "x86_64-linux";
       hostname = "bridgetop";
-      username = "bbirdge";
+      username = "bbridge";
       modules = [
         ./bridgetop/nixos.nix
         ./../overlay
