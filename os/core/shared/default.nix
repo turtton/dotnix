@@ -5,6 +5,7 @@
     ./locale.nix
     ./network.nix
     ./nix.nix
+    ./ssh.nix
     ./virtualisation.nix
   ];
   # Fix timelag for windows
