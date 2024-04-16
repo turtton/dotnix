@@ -5,6 +5,7 @@
     vesktop
     slack
     zoom-us
+    teams-for-linux
   ];
   # Skip update check
   home.file.".config/discord/settings.json".text = ''
