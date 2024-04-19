@@ -130,7 +130,7 @@ in
   system.activationScripts = {
     wallpaper-engine-kde-plugin.text = ''
       wallpaperenginetarget=share/plasma/wallpapers/com.github.casout.wallpaperEngineKde
-      ln -s ${wallpaper-engine-kde-plugin}/$wallpaperenginetarget /home/${username}/.local/$wallpaperenginetarget
+      ln -fs ${wallpaper-engine-kde-plugin}/$wallpaperenginetarget /home/${username}/.local/$wallpaperenginetarget
     '';
   };
   programs.partition-manager.enable = true;
