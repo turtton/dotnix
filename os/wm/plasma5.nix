@@ -106,11 +106,10 @@ let
 in
 {
   # Enable the X11 windowing system.
-  services.xserver = {
+  services = {
     # Enable the KDE Plasma Desktop Environment.
+    xserver.desktopManager.plasma5.enable = true;
     displayManager.sddm.enable = true;
-
-    desktopManager.plasma5.enable = true;
   };
   environment.systemPackages = with pkgs; with libsForQt5; [
     latte-dock
