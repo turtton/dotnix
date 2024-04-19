@@ -7,4 +7,10 @@
     ./../../home-manager/gui/shared
     ./../../home-manager/gui/game
   ];
+
+  home = rec {
+    username = "turtton";
+    homeDirectory = "/home/${username}";
+    stateVersion = "23.11";
+  };
 }

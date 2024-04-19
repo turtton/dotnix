@@ -7,4 +7,10 @@
     ./../../home-manager/cli/shell/zsh
     ./../../home-manager/gui/shared
   ];
+
+  home = rec {
+    username = "bbridge";
+    homeDirectory = "/home/${username}";
+    stateVersion = "23.11";
+  };
 }

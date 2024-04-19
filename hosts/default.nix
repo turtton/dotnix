@@ -8,10 +8,11 @@ let
     }
   ];
   createSystem =
-    { system
-    , hostname
-    , username
-    , modules
+    { system # String
+    , hostname # String
+    , modules # [path]
+    , homes # [{ username::String, confPath::path }] Note: this argument can set multiple users but not supported yet because of args limitation
+    , homeModules # [path]
     }:
     let
       originPkgs = inputs.nixpkgs.legacyPackages."${system}";
@@ -22,13 +23,31 @@ let
       };
       pkgs-staging-next = import inputs.nixpkgs-staging-next { inherit system; };
       nixosSystem = import (nixpkgs + "/nixos/lib/eval-config.nix");
+      usernames = map (h: h.username) homes;
+      username = originPkgs.lib.findFirst (x: true) null usernames;
+      users = originPkgs.lib.foldl (acc: elem: { "${elem.username}" = elem.confPath; } // acc) { } homes;
     in
     nixosSystem {
-      inherit system modules;
+      inherit system;
+      modules = modules ++ [
+        inputs.home-manager.nixosModules.home-manager
+        {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            sharedModules = homeModules;
+            users = users;
+            extraSpecialArgs = {
+              inherit inputs usernames username system;
+            };
+          };
+        }
+      ];
       specialArgs = {
         inherit inputs hostname username pkgs-staging-next;
       };
     };
+  # It is used for darwin or other non nixos systems
   createHomeManagerConfig =
     { system
     , username
@@ -61,58 +80,55 @@ in
     maindesk = createSystem {
       system = "x86_64-linux";
       hostname = "maindesk";
-      username = "turtton";
       modules = [
         ./maindesk/nixos.nix
         ./../overlay
+      ];
+      homes = [
+        { username = "turtton"; confPath = ./maindesk/home-manager.nix; }
+      ];
+      homeModules = [
+        inputs.plasma-manager.homeManagerModules.plasma-manager
       ];
     };
     bridgetop = createSystem {
       system = "x86_64-linux";
       hostname = "bridgetop";
-      username = "bbridge";
       modules = [
         ./bridgetop/nixos.nix
         ./../overlay
+      ];
+      homes = [
+        { username = "bbridge"; confPath = ./bridgetop/home-manager.nix; }
+      ];
+      homeModules = [
+        inputs.plasma-manager.homeManagerModules.plasma-manager
       ];
     };
     virtbox = createSystem {
       system = "x86_64-linux";
       hostname = "virtbox";
-      username = "turtton";
       modules = [
         ./virtbox/nixos.nix
         ./../overlay
       ];
+      homes = [
+        { username = "turtton"; confPath = ./virtbox/home-manager.nix; }
+      ];
+      homeModules = [
+        inputs.plasma-manager.homeManagerModules.plasma-manager
+      ];
     };
   };
   home-manager = {
-    "turtton@maindesk" = createHomeManagerConfig {
-      system = "x86_64-linux";
-      username = "turtton";
-      modules = [
-        ./maindesk/home-manager.nix
-        inputs.plasma-manager.homeManagerModules.plasma-manager
-        ./../overlay
-      ];
-    };
-    "bbridge@bridgetop" = createHomeManagerConfig {
-      system = "x86_64-linux";
-      username = "bbridge";
-      modules = [
-        ./bridgetop/home-manager.nix
-        inputs.plasma-manager.homeManagerModules.plasma-manager
-        ./../overlay
-      ];
-    };
-    "turtton@virtbox" = createHomeManagerConfig {
+    /* "turtton@virtbox" = createHomeManagerConfig {
       system = "x86_64-linux";
       username = "turtton";
       modules = [
         ./virtbox/home-manager.nix
         inputs.plasma-manager.homeManagerModules.plasma-manager
         ./../overlay
-      ];
-    };
+      ]; 
+    }; */
   };
 }
