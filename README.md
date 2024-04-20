@@ -22,12 +22,13 @@ My dotfiles for NixOS
 
 3. Clone this repository and move it
 
-4. Run `sudo nixos-rebuild switch --flake .#{name}`  
-   Name: `virtbox` `maindesk`
+4. Run `sudo nixos-rebuild switch --flake .#{name}`(`switch-nixos {name}`)  
+   Name: `virtbox` `maindesk` `bridgetop`
 
-5. Run `nix run nixpkgs#home-manager -- switch --flake .#{name}`  
-   Name: `turtton@virtbox` `turtton@maindesk`
-
+5. ~~Run `nix run nixpkgs#home-manager -- switch --flake .#{name}`(`switch-home {name}`)~~  
+   
+   > This method no longer needed, but settings still here to configure darwin system in the future.
+   
 6. Reboot
 
 # References
