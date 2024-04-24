@@ -118,7 +118,6 @@ in
     applet-window-buttons
     yakuake
     xclip
-    krita
     jetbrains-runner
     jetbrains-dolphin
     ### wallpaper-engine-plugin
