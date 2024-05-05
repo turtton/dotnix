@@ -34,6 +34,7 @@
     };
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     utils.url = "github:numtide/flake-utils";
+    attic.url = "github:zhaofengli/attic";
   };
   outputs = inputs@{ nixpkgs, flake-utils, ... }: {
     nixosConfigurations = (import ./hosts inputs).nixos;

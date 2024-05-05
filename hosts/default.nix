@@ -18,7 +18,7 @@ let
     , hostname # String
     , modules # [path]
     , homes # [{ username::String, confPath::path }] Note: this argument can set multiple users but not supported yet because of args limitation
-    , homeModules # [path]
+    , homeModules ? [] # [path]
     }:
     let
       originPkgs = inputs.nixpkgs.legacyPackages."${system}";
@@ -31,12 +31,14 @@ let
       nixosSystem = import (nixpkgs + "/nixos/lib/eval-config.nix");
       usernames = map (h: h.username) homes;
       username = originPkgs.lib.findFirst (x: true) null usernames;
+      homeconfig = originPkgs.lib.findFirst (x: true) null (map (h: h.confPath) homes);
       users = originPkgs.lib.foldl (acc: elem: { "${elem.username}" = elem.confPath; } // acc) { } homes;
     in
     nixosSystem {
       inherit system;
       modules = modules ++ [
         inputs.home-manager.nixosModules.home-manager
+      ] ++ (originPkgs.lib.optionals (homeconfig != null) [
         {
           home-manager = {
             useGlobalPkgs = true;
@@ -48,7 +50,7 @@ let
             };
           };
         }
-      ];
+      ]);
       specialArgs = {
         inherit inputs hostname username pkgs-staging-next;
       };
@@ -123,6 +125,18 @@ in
       ];
       homeModules = [
         inputs.plasma-manager.homeManagerModules.plasma-manager
+      ];
+    };
+    atticserver = createSystem {
+      system = "x86_64-linux";
+      hostname = "atticserver";
+      modules = [
+        inputs.attic.nixosModules.atticd
+        ./atticserver/nixos.nix
+        ./../overlay
+      ];
+      homes = [
+        { username = "atticserver"; confPath = null; }
       ];
     };
   };
