@@ -18,7 +18,7 @@ let
     , hostname # String
     , modules # [path]
     , homes # [{ username::String, confPath::path }] Note: this argument can set multiple users but not supported yet because of args limitation
-    , homeModules ? [] # [path]
+    , homeModules ? [ ] # [path]
     }:
     let
       originPkgs = inputs.nixpkgs.legacyPackages."${system}";
