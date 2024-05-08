@@ -31,6 +31,13 @@
     kernelPackages = pkgs.linuxKernel.packages.linux_xanmod;
   };
 
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 16 * 1024;
+    }
+  ];
+
   system.stateVersion = "23.11";
 
   services = {
