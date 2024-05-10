@@ -1,6 +1,5 @@
 {
   imports = [
-    ./dev
     ./nvim
     ./alternative.nix
     ./direenv.nix
