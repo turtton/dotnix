@@ -10,12 +10,6 @@
     # ./../../home-manager/gui/game
   ];
 
-  home = rec {
-    username = "turtton";
-    homeDirectory = "/home/${username}";
-    stateVersion = "23.11";
-  };
-
   wayland.windowManager.hyprland.settings = {
     monitor = [
       "DP-1, 2560x1440@165, 1920x0, 1"

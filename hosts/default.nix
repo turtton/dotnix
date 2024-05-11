@@ -17,7 +17,11 @@ let
     { system # String
     , hostname # String
     , modules # [path]
-    , homes # [{ username::String, confPath::path }] Note: this argument can set multiple users but not supported yet because of args limitation
+      # [{ username::String;
+      #    confPath::path;                home-manager configuration path
+      #    osUserConfig::(input: {...});  nixos user configurations
+      # }]
+    , homes
     , homeModules ? [ ] # [path]
     }:
     let
@@ -28,31 +32,61 @@ let
         patches = map originPkgs.fetchpatch remoteNixpkgsPatches;
       };
       pkgs-staging-next = import inputs.nixpkgs-staging-next { inherit system; };
+      lib = originPkgs.lib;
       nixosSystem = import (nixpkgs + "/nixos/lib/eval-config.nix");
       usernames = map (h: h.username) homes;
-      username = originPkgs.lib.findFirst (x: true) null usernames;
-      homeconfig = originPkgs.lib.findFirst (x: true) null (map (h: h.confPath) homes);
-      users = originPkgs.lib.foldl (acc: elem: { "${elem.username}" = elem.confPath; } // acc) { } homes;
+      # Targets for home-manager configurations
+      homemanageables = lib.filter (h: h.confPath or null != null) homes;
+      # Creates users basic home-manager configurations
+      users = lib.foldl
+        (acc: elem: {
+          "${elem.username}" = { ... }: {
+            home = {
+              inherit (elem) username;
+              homeDirectory = "/home/${elem.username}";
+              stateVersion = "23.11";
+            };
+            imports = [
+              elem.confPath
+            ];
+          };
+        } // acc)
+        { }
+        homemanageables;
     in
     nixosSystem {
       inherit system;
-      modules = modules ++ [
+      modules = modules ++ (lib.optionals (users != [ ]) [
         inputs.home-manager.nixosModules.home-manager
-      ] ++ (originPkgs.lib.optionals (homeconfig != null) [
+        ### home-manager configurations ####
         {
           home-manager = {
+            inherit users;
             useGlobalPkgs = true;
             useUserPackages = true;
             sharedModules = homeModules;
-            users = users;
             extraSpecialArgs = {
-              inherit inputs usernames username system;
+              inherit inputs system;
             };
           };
         }
-      ]);
+      ]) ++ lib.concatMap
+
+        ### Nixos user settings ###
+        (h:
+          [
+            ({
+              users.users."${h.username}" = {
+                description = lib.mkDefault "${h.username}";
+                isNormalUser = lib.mkDefault true;
+                extraGroups = lib.mkDefault [ "networkmanager" "wheel" ];
+              };
+            })
+          ] ++ lib.optional (h.osUserConfig or null != null) h.osUserConfig
+        )
+        homes;
       specialArgs = {
-        inherit inputs hostname username pkgs-staging-next;
+        inherit inputs hostname usernames pkgs-staging-next;
       };
     };
   # It is used for darwin or other non nixos systems
@@ -85,6 +119,7 @@ let
 in
 {
   nixos = {
+    # System configurations
     maindesk = createSystem {
       system = "x86_64-linux";
       hostname = "maindesk";
@@ -93,7 +128,21 @@ in
         ./../overlay
       ];
       homes = [
-        { username = "turtton"; confPath = ./maindesk/home-manager.nix; }
+        rec {
+          username = "turtton";
+          confPath = ./maindesk/home-manager.nix;
+          osUserConfig = { pkgs, ... }: {
+            users.users."${username}" = {
+              shell = pkgs.zsh;
+              openssh.authorizedKeys.keys = [
+                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA/8nfHCulkm71YTzMXgrvTF+G9RQ9LUvy6pKat/FXot"
+              ];
+            };
+            imports = [
+              (import ./../os/wm/plasma5.nix { inherit username; })
+            ];
+          };
+        }
       ];
       homeModules = [
         inputs.plasma-manager.homeManagerModules.plasma-manager
@@ -107,7 +156,21 @@ in
         ./../overlay
       ];
       homes = [
-        { username = "bbridge"; confPath = ./bridgetop/home-manager.nix; }
+        rec {
+          username = "bbridge";
+          confPath = ./bridgetop/home-manager.nix;
+          osUserConfig = { pkgs, ... }: {
+            users.users."${username}" = {
+              shell = pkgs.zsh;
+              openssh.authorizedKeys.keys = [
+                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA/8nfHCulkm71YTzMXgrvTF+G9RQ9LUvy6pKat/FXot"
+              ];
+            };
+            imports = [
+              (import ./../os/wm/plasma5.nix { inherit username; })
+            ];
+          };
+        }
       ];
       homeModules = [
         inputs.plasma-manager.homeManagerModules.plasma-manager
@@ -121,24 +184,51 @@ in
         ./../overlay
       ];
       homes = [
-        { username = "turtton"; confPath = ./virtbox/home-manager.nix; }
-      ];
-      homeModules = [
-        inputs.plasma-manager.homeManagerModules.plasma-manager
+        rec {
+          username = "turtton";
+          confPath = ./virtbox/home-manager.nix;
+          osUserConfig = { pkgs, ... }: {
+            users.users."${username}".shell = pkgs.zsh;
+            services.greetd = {
+              enable = true;
+              settings = {
+                default_session = {
+                  command = ''
+                    ${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland
+                  '';
+                  user = username;
+                };
+              };
+            };
+          };
+        }
+        rec {
+          username = "testuser";
+          confPath = ./virtbox/home-manager.nix;
+          osUserConfig = { pkgs, ... }: {
+            users.users."${username}".shell = pkgs.zsh;
+          };
+        }
       ];
     };
-    atticserver = createSystem {
-      system = "x86_64-linux";
-      hostname = "atticserver";
-      modules = [
-        inputs.attic.nixosModules.atticd
-        ./atticserver/nixos.nix
-        ./../overlay
-      ];
-      homes = [
-        { username = "atticserver"; confPath = null; }
-      ];
-    };
+    atticserver = createSystem
+      {
+        system = "x86_64-linux";
+        hostname = "atticserver";
+        modules = [
+          inputs.attic.nixosModules.atticd
+          ./atticserver/nixos.nix
+          ./../overlay
+        ];
+        homes = [
+          rec {
+            username = "atticserver";
+            osUserConfig = { pkgs, ... }: {
+              users.users."${username}".shell = pkgs.zsh;
+            };
+          }
+        ];
+      };
   };
   home-manager = {
     /* "turtton@virtbox" = createHomeManagerConfig {
@@ -149,6 +239,6 @@ in
         inputs.plasma-manager.homeManagerModules.plasma-manager
         ./../overlay
       ]; 
-    }; */
+        }; */
   };
 }

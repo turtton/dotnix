@@ -1,4 +1,4 @@
-{ username, pkgs, ... }:
+{ username, ... }: { pkgs, ... }:
 let
   # References: https://github.com/brianIcke/nixos-conf/blob/226c97d1b78a527eb0126a7012e27d935d4b4da0/system/BrianTUX/pkgs/wallpaper-engine-plasma-plugin.nix#L37
   glslang-submodule = with pkgs; stdenv.mkDerivation {
@@ -128,9 +128,12 @@ in
   ];
   system.activationScripts = {
     wallpaper-engine-kde-plugin.text = ''
-      wallpaperenginetarget=share/plasma/wallpapers/com.github.casout.wallpaperEngineKde
-      rm -f /home/${username}/.local/$wallpaperenginetarget
-      ln -fs ${wallpaper-engine-kde-plugin}/$wallpaperenginetarget /home/${username}/.local/$wallpaperenginetarget
+      wallpapers=share/plasma/wallpapers
+      wallpaperenginetarget=$wallpapers/com.github.casout.wallpaperEngineKde
+      mkdir -p /home/${username}/.local/$wallpapers
+      homepath=/home/${username}/.local/$wallpaperenginetarget
+      rm -f $homepath
+      ln -fs ${wallpaper-engine-kde-plugin}/$wallpaperenginetarget $homepath
     '';
   };
   programs.partition-manager.enable = true;

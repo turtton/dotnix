@@ -9,10 +9,4 @@
     ./../../home-manager/gui/shared
     ./../../home-manager/gui/dev
   ];
-
-  home = rec {
-    username = "bbridge";
-    homeDirectory = "/home/${username}";
-    stateVersion = "23.11";
-  };
 }

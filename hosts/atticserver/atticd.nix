@@ -1,13 +1,11 @@
-{ username }: {
+{ usernames }: {
   services.atticd = {
     enable = true;
 
     # Replace with absolute path to your credentials file
-    credentialsFile = "/home/${username}/atticd.env";
+    credentialsFile = "/var/atticd.env";
 
-    users = [
-      username
-    ];
+    users = usernames;
 
     settings = {
       listen = "[::]:8080";
