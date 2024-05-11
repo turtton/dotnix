@@ -8,16 +8,17 @@
     ./hardware-configuration.nix
     ./../../os/core/shared
     ./../../os/core/shell.nix
-    ./../../os/wm/plasma5.nix
+    # ./../../os/wm/plasma5.nix
+    ./../../os/wm/hyprland.nix
     ./../../os/desktop/shared
-    ./../../os/desktop/1password.nix
-    ./../../os/desktop/flatpak.nix
-    ./../../os/desktop/media.nix
-    ./../../os/desktop/openrazer.nix
-    ./../../os/desktop/steam.nix
+    # ./../../os/desktop/1password.nix
+    # ./../../os/desktop/flatpak.nix
+    # ./../../os/desktop/media.nix
+    # ./../../os/desktop/openrazer.nix
+    # ./../../os/desktop/steam.nix
   ] ++ (with inputs.nixos-hardware.nixosModules; [
     common-cpu-amd
-    common-gpu-nvidia
+    # common-gpu-nvidia
     common-pc-ssd
   ]);
 
@@ -25,11 +26,19 @@
     loader = {
       grub = {
         enable = true;
-        device = "/dev/sda";
+        device = "/dev/vda";
         useOSProber = true;
       };
     };
     kernelPackages = pkgs.linuxKernel.packages.linux_xanmod;
+  };
+
+  hardware = {
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+    };
   };
 
   system.stateVersion = "23.11";
@@ -45,5 +54,17 @@
     description = "${username}";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
+  };
+
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = ''
+          ${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland
+        '';
+        user = username;
+      };
+    };
   };
 }
