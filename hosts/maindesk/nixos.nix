@@ -29,6 +29,7 @@
       efi.canTouchEfiVariables = true;
     };
     kernelPackages = pkgs.linuxKernel.packages.linux_xanmod;
+    kernelModules = [ "pci_stub" "vfio" "vfio" "vfio_iommu_type1" "vfio_pci" "kvm" "kvm-amd" ];
   };
 
   hardware = {
