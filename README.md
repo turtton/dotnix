@@ -7,29 +7,25 @@ My dotfiles for NixOS
 1. Modify `/etc/nixos/configuration.nix`
    ```diff
    programs = {
-   + git = {
-   +   enable = true
-   + }
-   }
-   nix = {
-     settings = {
-   +   experimental-features = ["nix-command" "flakes"];
-     }
-   }
+   + git.enable = true;
+   };
+   + nix.settings.experimental-features = ["nix-command" "flakes"];
    ```
 
 2. Run `sudo nixos-rebuild switch`
 
 3. Clone this repository and move it
 
-4. Run `sudo nixos-rebuild switch --flake .#{name}`(`switch-nixos {name}`)  
+4. Run`nix develop`
+
+5. Run `switch-nixos {name}`(or `sudo nixos-rebuild switch --flake .#{name}`)  
    Name: `virtbox` `maindesk` `bridgetop`
 
-5. ~~Run `nix run nixpkgs#home-manager -- switch --flake .#{name}`(`switch-home {name}`)~~  
-   
+6. ~~Run `nix run nixpkgs#home-manager -- switch --flake .#{name}`(`switch-home {name}`)~~  
+
    > This method no longer needed, but settings still here to configure darwin system in the future.
-   
-6. Reboot
+
+7. Reboot
 
 # References
 
