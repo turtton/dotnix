@@ -44,6 +44,7 @@ let
   ides = with pkgs.jetbrains; [
     webstorm
     rust-rover
+    datagrip
     pycharm-professional
   ];
 in
