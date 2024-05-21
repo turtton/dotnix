@@ -26,6 +26,7 @@
         packSizeLimit = "1g";
       };
     };
+    ignores = [ ".idea" ".vscode" ];
   };
   programs.gh = {
     enable = true;
