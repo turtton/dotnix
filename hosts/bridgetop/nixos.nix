@@ -42,4 +42,6 @@
     # Enable CUPS to print documents.
     printing.enable = true;
   };
+
+  hardware.bluetooth.enable = true;
 }
