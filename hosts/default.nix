@@ -143,6 +143,29 @@ in
             ];
           };
         }
+        rec {
+          username = "turtton-hypr";
+          confPath = ./maindesk/home-manager-hypr.nix;
+          osUserConfig = { pkgs, ... }: {
+            users.users."${username}" = {
+              shell = pkgs.zsh;
+              openssh.authorizedKeys.keys = [
+                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA/8nfHCulkm71YTzMXgrvTF+G9RQ9LUvy6pKat/FXot"
+              ];
+            };
+            services.greetd = {
+              enable = true;
+              settings = {
+                default_session = {
+                  command = ''
+                    ${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland
+                  '';
+                  user = username;
+                };
+              };
+            };
+          };
+        }
       ];
       homeModules = [
         inputs.plasma-manager.homeManagerModules.plasma-manager
