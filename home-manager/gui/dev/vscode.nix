@@ -28,6 +28,8 @@ in
       vscode-marketplace.ms-toolsai.jupyter-keymap
       vscode-marketplace.ms-toolsai.jupyter-renderers
       vscode-marketplace.ms-toolsai.vscode-jupyter-cell-tags
+      vscode-marketplace.matt-meyers.vscode-dbml
+      vscode-marketplace.bocovo.dbml-erd-visualizer
     ];
     userSettings = {
       "workbench.productIconTheme" = "a-file-icon-vscode-product-icon-theme";
