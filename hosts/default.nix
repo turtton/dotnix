@@ -154,6 +154,9 @@ in
               ];
               hashedPassword = "$y$j9T$taLHoYEXFr6FY/rpSlP2D1$/EJYCtlRLJCXIEFWO/xl7RP2WUVcKezBBe1H7CMr3/1";
             };
+            imports = [
+              ./../os/wm/hyprland.nix
+            ];
             #services.greetd = {
             #  enable = true;
             #  settings = {
