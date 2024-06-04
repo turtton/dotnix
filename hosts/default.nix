@@ -152,112 +152,110 @@ in
               openssh.authorizedKeys.keys = [
                 "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA/8nfHCulkm71YTzMXgrvTF+G9RQ9LUvy6pKat/FXot"
               ];
-              hashedPassword = "$y$j9T$taLHoYEXFr6FY/rpSlP2D1$/EJYCtlRLJCXIEFWO/xl7RP2WUVcKezBBe1H7CMr3/1"
+              hashedPassword = "$y$j9T$taLHoYEXFr6FY/rpSlP2D1$/EJYCtlRLJCXIEFWO/xl7RP2WUVcKezBBe1H7CMr3/1";
+            };
+            #services.greetd = {
+            #  enable = true;
+            #  settings = {
+            #    default_session = {
+            #      command = ''
+            #        ${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland
+            #      '';
+            #      user = username;
+            #    };
+            #  };
+            #};
+          };
+        }
+      ];
+      homeModules = [
+        inputs.plasma-manager.homeManagerModules.plasma-manager
+      ];
+    };
+    bridgetop = createSystem {
+      system = "x86_64-linux";
+      hostname = "bridgetop";
+      modules = [
+        ./bridgetop/nixos.nix
+        ./../overlay
+      ];
+      homes = [
+        rec {
+          username = "bbridge";
+          confPath = ./bridgetop/home-manager.nix;
+          osUserConfig = { pkgs, ... }: {
+            users.users."${username}" = {
+              shell = pkgs.zsh;
+              openssh.authorizedKeys.keys = [
+                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA/8nfHCulkm71YTzMXgrvTF+G9RQ9LUvy6pKat/FXot"
+              ];
+            };
+            imports = [
+              (import ./../os/wm/plasma5.nix { inherit username; })
+            ];
+          };
+        }
+      ];
+      homeModules = [
+        inputs.plasma-manager.homeManagerModules.plasma-manager
+      ];
+    };
+    virtbox = createSystem {
+      system = "x86_64-linux";
+      hostname = "virtbox";
+      modules = [
+        ./virtbox/nixos.nix
+        ./../overlay
+      ];
+      homes = [
+        rec {
+          username = "turtton";
+          confPath = ./virtbox/home-manager.nix;
+          osUserConfig = { pkgs, ... }: {
+            users.users."${username}".shell = pkgs.zsh;
+            services.greetd = {
+              enable = true;
+              settings = {
+                default_session = {
+                  command = ''
+                    ${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland
+                  '';
+                  user = username;
                 };
-              #services.greetd = {
-              #  enable = true;
-              #  settings = {
-              #    default_session = {
-              #      command = ''
-              #        ${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland
-              #      '';
-              #      user = username;
-              #    };
-              #  };
-              #};
+              };
+            };
+          };
+        }
+        rec {
+          username = "testuser";
+          confPath = ./virtbox/home-manager.nix;
+          osUserConfig = { pkgs, ... }: {
+            users.users."${username}".shell = pkgs.zsh;
+          };
+        }
+      ];
+    };
+    atticserver = createSystem
+      {
+        system = "x86_64-linux";
+        hostname = "atticserver";
+        modules = [
+          inputs.attic.nixosModules.atticd
+          ./atticserver/nixos.nix
+          ./../overlay
+        ];
+        homes = [
+          rec {
+            username = "atticserver";
+            osUserConfig = { pkgs, ... }: {
+              users.users."${username}".shell = pkgs.zsh;
             };
           }
-            ];
-          homeModules = [
-            inputs.plasma-manager.homeManagerModules.plasma-manager
-          ];
-        };
-        bridgetop = createSystem
-        {
-          system = "x86_64-linux";
-          hostname = "bridgetop";
-          modules = [
-            ./bridgetop/nixos.nix
-            ./../overlay
-          ];
-          homes = [
-            rec {
-              username = "bbridge";
-              confPath = ./bridgetop/home-manager.nix;
-              osUserConfig = { pkgs, ... }: {
-                users.users."${username}" = {
-                  shell = pkgs.zsh;
-                  openssh.authorizedKeys.keys = [
-                    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA/8nfHCulkm71YTzMXgrvTF+G9RQ9LUvy6pKat/FXot"
-                  ];
-                };
-                imports = [
-                  (import ./../os/wm/plasma5.nix { inherit username; })
-                ];
-              };
-            }
-          ];
-          homeModules = [
-            inputs.plasma-manager.homeManagerModules.plasma-manager
-          ];
-        };
-        virtbox = createSystem
-        {
-          system = "x86_64-linux";
-          hostname = "virtbox";
-          modules = [
-            ./virtbox/nixos.nix
-            ./../overlay
-          ];
-          homes = [
-            rec {
-              username = "turtton";
-              confPath = ./virtbox/home-manager.nix;
-              osUserConfig = { pkgs, ... }: {
-                users.users."${username}".shell = pkgs.zsh;
-                services.greetd = {
-                  enable = true;
-                  settings = {
-                    default_session = {
-                      command = ''
-                        ${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland
-                      '';
-                      user = username;
-                    };
-                  };
-                };
-              };
-            }
-            rec {
-              username = "testuser";
-              confPath = ./virtbox/home-manager.nix;
-              osUserConfig = { pkgs, ... }: {
-                users.users."${username}".shell = pkgs.zsh;
-              };
-            }
-          ];
-        };
-        atticserver = createSystem
-        {
-          system = "x86_64-linux";
-          hostname = "atticserver";
-          modules = [
-            inputs.attic.nixosModules.atticd
-            ./atticserver/nixos.nix
-            ./../overlay
-          ];
-          homes = [
-            rec {
-              username = "atticserver";
-              osUserConfig = { pkgs, ... }: {
-                users.users."${username}".shell = pkgs.zsh;
-              };
-            }
-          ];
-        };
-        };
-        home-manager = {
-        /* "turtton@virtbox" = createHomeManagerConfig {
+        ];
+      };
+  };
+  home-manager = {
+    /* "turtton@virtbox" = createHomeManagerConfig {
       system = "x86_64-linux";
       username = "turtton";
       modules = [
@@ -266,5 +264,5 @@ in
         ./../overlay
       ]; 
         }; */
-      };
-        }
+  };
+}
