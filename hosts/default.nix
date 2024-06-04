@@ -152,7 +152,6 @@ in
               openssh.authorizedKeys.keys = [
                 "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA/8nfHCulkm71YTzMXgrvTF+G9RQ9LUvy6pKat/FXot"
               ];
-              hashedPassword = "$y$j9T$taLHoYEXFr6FY/rpSlP2D1$/EJYCtlRLJCXIEFWO/xl7RP2WUVcKezBBe1H7CMr3/1";
             };
             imports = [
               ./../os/wm/hyprland.nix
