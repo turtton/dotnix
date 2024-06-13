@@ -12,7 +12,7 @@
 
     wakatime # Development timer
     chezmoi # Dotfile management helper(1password cli integrated)
-    neofetch
+    fastfetch
     gnuplot_qt # graphing ulitity
   ];
 }
