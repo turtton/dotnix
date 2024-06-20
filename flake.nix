@@ -22,7 +22,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     plasma-manager = {
-      url = "github:pjones/plasma-manager";
+      # Plasma 5 support branch
+      url = "github:pjones/plasma-manager/plasma-5";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         home-manager.follows = "home-manager";
