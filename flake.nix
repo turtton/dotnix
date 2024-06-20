@@ -51,10 +51,10 @@
         packages = [
           home-manager
           (writeScriptBin "switch-home" ''
-            home-manager switch --flake ".#$@"
+            home-manager switch --flake ".#$@" --show-trace
           '')
           (writeScriptBin "switch-nixos" ''
-            sudo nixos-rebuild switch --flake ".#$@"
+            sudo nixos-rebuild switch --flake ".#$@" --show-trace
           '')
         ];
       };
