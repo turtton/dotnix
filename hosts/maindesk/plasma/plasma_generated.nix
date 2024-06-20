@@ -381,7 +381,6 @@
       "kdeglobals"."General"."accentColorFromWallpaper".value = false;
       "kdeglobals"."General"."font".value = "Noto Sans Kaithi,10,-1,5,50,0,0,0,0,0";
       "kdeglobals"."KDE"."ShowDeleteCommand".value = false;
-      "kdeglobals"."KDE"."SingleClick".value = true;
       "kdeglobals"."KDE"."widgetStyle".value = "Breeze";
       "kdeglobals"."KFileDialog Settings"."Allow Expansion".value = false;
       "kdeglobals"."KFileDialog Settings"."Automatically select filename extension".value = false;
