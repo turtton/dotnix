@@ -6,12 +6,6 @@ let
       url = "https://github.com/turtton/nixpkgs/commit/c0f29cee5621026857062faad73ffbf74b70c0f4.patch";
       hash = "sha256-w1boi7mFeqzpyfkZngupAMJPlLrLbJ/UZuqvj9H7xTU=";
     }
-    # TODO: Remove patch after this pr applied https://nixpk.gs/pr-tracker.html?pr=309011
-    {
-      meta.description = "Fix jetbrains plugin installation probrems(#304951)";
-      url = "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/309011.patch";
-      hash = "sha256-bijh4i0ZfvfWpV/Xnqrx0Sic4QAhXEhlGGsn8mlpyuI=";
-    }
   ];
   createSystem =
     { system # String
