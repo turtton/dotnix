@@ -68,6 +68,7 @@ let
             extraSpecialArgs = {
               inherit inputs system;
             };
+            backupFileExtension = "backup";
           };
         }
       ]) ++ lib.concatMap

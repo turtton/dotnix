@@ -52,4 +52,6 @@
     printing.enable = true;
     xserver.videoDrivers = [ "nvidia" ];
   };
+
+	hardware.bluetooth.enable = true;
 }
