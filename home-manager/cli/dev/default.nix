@@ -7,7 +7,7 @@
     gcc
     go
     nodejs-slim
-    nodePackages.wrangler
+    # nodePackages.wrangler
     deno
     bun
     # python312 conflicts on os/wm/plasma5.nix#environment.systemPackages.python3Full
