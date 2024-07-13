@@ -6,8 +6,6 @@
 , ...
 }: {
   imports = [
-    ./hardware-configuration.nix
-    ./atticd.nix
     ./../../os/core/shared
     ./../../os/core/shell.nix
   ];
@@ -17,8 +15,9 @@
   # ]);
 
   boot = {
+    isContainer = true;
     loader = {
-      systemd-boot.enable = true;
+      grub.enable = false;
       efi.canTouchEfiVariables = true;
     };
     kernelPackages = pkgs.linuxKernel.packages.linux_xanmod;

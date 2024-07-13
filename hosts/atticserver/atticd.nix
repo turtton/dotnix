@@ -1,22 +1,22 @@
-{ usernames }: {
+user: {
   services.atticd = {
     enable = true;
 
     # Replace with absolute path to your credentials file
     credentialsFile = "/var/atticd.env";
 
-    users = usernames;
+    inherit user;
 
     settings = {
       listen = "[::]:8080";
 
-      storage = {
-        type = "s3";
-        path = "atticd";
-        # region = "us-east-005";
-        # bucket = "turtton-attic";
-        endpoint = "https://turtton-attic.s3.us-east-005.backblazeb2.com";
-      };
+      # storage = {
+      #   type = "s3";
+      #   path = "atticd";
+      #   # region = "us-east-005";
+      #   # bucket = "turtton-attic";
+      #   endpoint = "https://turtton-attic.s3.us-east-005.backblazeb2.com";
+      # };
 
       # Data chunking
       #
