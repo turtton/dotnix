@@ -1,17 +1,11 @@
 inputs:
 let
   remoteNixpkgsPatches = [
-    # {
-    #   meta.description = "Supports multiple efi file checkings for systemd-boot-builder.py";
-    #   url = "https://github.com/NixOS/nixpkgs/pull/326695.patch";
-    #   hash = "sha256-w1boi7mFeqzpyfkZngupAMJPlLrLbJ/UZuqvj9H7xTU=";
-    # }
-    # {
-    #   # TODO: Remove this patch when the PR is merged https://nixpk.gs/pr-tracker.html?pr=319287
-    #   meta.description = "Workaround for broken electron depend from blockbench";
-    #   url = "https://github.com/NixOS/nixpkgs/pull/319287.patch";
-    #   hash = "sha256-rTUbkWwdXJeGyt0bjBjs9siujqANidwDrfiTOjOP1G4=";
-    # }
+    {
+      meta.description = "Supports multiple efi file checkings for systemd-boot-builder.py";
+      url = "https://github.com/NixOS/nixpkgs/pull/326695.patch";
+      hash = "sha256-w1boi7mFeqzpyfkZngupAMJPlLrLbJ/UZuqvj9H7xTU=";
+    }
   ];
   createSystem =
     { system # String
