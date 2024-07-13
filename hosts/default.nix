@@ -4,7 +4,7 @@ let
     {
       meta.description = "Supports multiple efi file checkings for systemd-boot-builder.py";
       url = "https://github.com/NixOS/nixpkgs/pull/326695.patch";
-      hash = "sha256-w1boi7mFeqzpyfkZngupAMJPlLrLbJ/UZuqvj9H7xTU=";
+      hash = "sha256-cwzA96OQBw6dSWON//H+MHrgQEtl/mq1SBQB/kBIlzw=";
     }
   ];
   createSystem =
