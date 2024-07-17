@@ -248,7 +248,12 @@ in
               imports = [
                 (import ./atticserver/atticd.nix username)
               ];
-              users.users."${username}".shell = pkgs.zsh;
+              users.users."${username}" = {
+                shell = pkgs.zsh;
+                hashedPassword = "$y$j9T$YBM6ZWl/jcXc0PAV6QMWd.$ZK0sLnObalAYMcFlAXRViFDdkOzkszowP3CWtEo.ky6";
+                group = "users";
+                extraGroups = [ "wheel" "networkmanager" ];
+              };
             };
           }
         ];

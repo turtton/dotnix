@@ -14,6 +14,8 @@
   # common-pc-ssd
   # ]);
 
+  users.mutableUsers = true;
+
   boot = {
     isContainer = true;
     loader = {
