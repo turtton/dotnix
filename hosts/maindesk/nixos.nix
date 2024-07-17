@@ -44,6 +44,13 @@
     };
   };
 
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 64 * 1024;
+    }
+  ];
+
   system.stateVersion = "24.04";
 
   services = {
