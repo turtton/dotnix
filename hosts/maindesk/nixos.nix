@@ -56,7 +56,10 @@
   services = {
     # Enable CUPS to print documents.
     printing.enable = true;
-    xserver.videoDrivers = [ "nvidia" ];
+    xserver = {
+      videoDrivers = [ "nvidia" ];
+      wacom.enable = true;
+    };
   };
 
 	hardware.bluetooth.enable = true;
