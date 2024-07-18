@@ -52,6 +52,7 @@ let
       inherit system;
       modules = modules ++ (lib.optionals (users != [ ]) [
         inputs.home-manager.nixosModules.home-manager
+        inputs.attic.nixosModules.atticd
         ### home-manager configurations ####
         {
           home-manager = {
@@ -237,17 +238,14 @@ in
         system = "x86_64-linux";
         hostname = "atticserver";
         modules = [
-          inputs.attic.nixosModules.atticd
           ./atticserver/nixos.nix
           ./../overlay
         ];
         homes = [
           rec {
             username = "atticserver";
+            confPath = ./atticserver/home-manager.nix;
             osUserConfig = { pkgs, ... }: {
-              imports = [
-                (import ./atticserver/atticd.nix username)
-              ];
               users.users."${username}" = {
                 shell = pkgs.zsh;
                 hashedPassword = "$y$j9T$YBM6ZWl/jcXc0PAV6QMWd.$ZK0sLnObalAYMcFlAXRViFDdkOzkszowP3CWtEo.ky6";

@@ -1,11 +1,9 @@
-user: {
+{
   services.atticd = {
     enable = true;
 
     # Replace with absolute path to your credentials file
-    credentialsFile = "/var/atticd.env";
-
-    inherit user;
+    credentialsFile = "/etc/atticd/atticd.env";
 
     settings = {
       listen = "[::]:8080";
