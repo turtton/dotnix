@@ -2,6 +2,7 @@
 { pkgs, ... }: {
   programs.git = {
     enable = true;
+    lfs.enable = true;
     inherit userName userEmail;
     signing = {
       key = signingKey;
