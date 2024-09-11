@@ -21,6 +21,8 @@ in
     cargo-workspaces # workspace management
     cargo-machete # unused dependencies detector
     cargo-features-manager # unused feature detector
+    cargo-watch # auto-reload
+    cargo-vet # crate security checker
     crate2nix
   ];
 }
