@@ -17,10 +17,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v26
-      - uses: cachix/cachix-action@v14
-        with:
-          name: turtton
-          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+      #- uses: cachix/cachix-action@v14
+      #  with:
+      #    name: turtton
+      #    authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+      - name: Use attic server
+        run: |
+          nix run github:zhaofengli/attic -- cache create home
+          nix run github:zhaofengli/attic -- login home ${{ secrets.ATTIC_TOKEN }}
+          nix run github:zhaofengli/attic -- use home
       # Original: https://github.com/natsukium/dotfiles/blob/main/.github/workflows/test.yml
       - name: GC
         run: |
@@ -32,3 +37,6 @@ jobs:
           nix build --impure --no-link --show-trace --system x86_64-linux \
             .#nixosConfigurations.maindesk.config.system.build.toplevel
           df -h
+      - name: Push
+        run: |
+          nix run github:zhaofengli/attic -- push home /nix/store/*
