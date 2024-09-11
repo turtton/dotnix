@@ -67,6 +67,9 @@ let
             backupFileExtension = "backup";
           };
         }
+        {
+          system.stateVersion = stateVersion;
+        }
       ]) ++ lib.concatMap
 
         ### Nixos user settings ###
