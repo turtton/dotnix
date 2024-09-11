@@ -3,6 +3,5 @@
     obsidian
     typora
     libsForQt5.shelf
-    libreoffice-qt
   ];
 }
