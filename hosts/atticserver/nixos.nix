@@ -26,6 +26,4 @@
     };
     kernelPackages = pkgs.linuxKernel.packages.linux_xanmod;
   };
-
-  system.stateVersion = "24.04";
 }

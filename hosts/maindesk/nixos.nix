@@ -51,8 +51,6 @@
     }
   ];
 
-  system.stateVersion = "24.04";
-
   services = {
     # Enable CUPS to print documents.
     printing.enable = true;

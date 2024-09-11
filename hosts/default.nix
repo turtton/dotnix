@@ -1,12 +1,13 @@
 inputs:
 let
   remoteNixpkgsPatches = [
-    {
-      meta.description = "Supports multiple efi file checkings for systemd-boot-builder.py";
-      url = "https://github.com/NixOS/nixpkgs/pull/326695.patch";
-      hash = "sha256-cwzA96OQBw6dSWON//H+MHrgQEtl/mq1SBQB/kBIlzw=";
-    }
+    # {
+    #   meta.description = "Supports multiple efi file checkings for systemd-boot-builder.py";
+    #   url = "https://github.com/NixOS/nixpkgs/pull/326695.patch";
+    #   hash = "sha256-cwzA96OQBw6dSWON//H+MHrgQEtl/mq1SBQB/kBIlzw=";
+    # }
   ];
+  stateVersion = "23.11";
   createSystem =
     { system # String
     , hostname # String
@@ -37,8 +38,8 @@ let
           "${elem.username}" = { ... }: {
             home = {
               inherit (elem) username;
+              inherit stateVersion;
               homeDirectory = "/home/${elem.username}";
-              stateVersion = "23.11";
             };
             imports = [
               elem.confPath
@@ -104,9 +105,8 @@ let
       modules = modules ++ [
         {
           home = {
-            inherit username;
+            inherit username stateVersion;
             homeDirectory = "/home/${username}";
-            stateVersion = "23.11";
           };
           programs.home-manager.enable = true;
         }
