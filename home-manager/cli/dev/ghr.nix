@@ -2,15 +2,15 @@
 let
   ghr = with pkgs; rustPlatform.buildRustPackage rec {
     pname = "ghr";
-    version = "0.4.2";
+    version = "0.4.4";
     src = fetchFromGitHub {
       owner = "siketyan";
       repo = "ghr";
       rev = "v${version}";
-      hash = "sha256-W5zkDNge0x/oFnwnip12SfCxtZ5nAQ5c3rUAnIMZ5L0=";
+      hash = "sha256-L9+rcdt+MGZSCOJyCE4t/TT6Fjtxvfr9LBJYyRrx208=";
     };
 
-    cargoHash = "sha256-l9bHOrfOtNk2g6Gbt+F9uH6o0yQW5+y3KXZM98uiOiI=";
+    cargoHash = "sha256-HBVMDR+3UB+zWmvZXBph36bajTOAnvVGTGYooJtk9Zg=";
 
     nativeBuildInputs = [ pkg-config ];
     buildInputs = [ openssl ];
