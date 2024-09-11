@@ -21,11 +21,6 @@ jobs:
       #  with:
       #    name: turtton
       #    authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-      - name: Use attic server
-        run: |
-          nix run github:zhaofengli/attic -- cache create home
-          nix run github:zhaofengli/attic -- login home ${{ secrets.ATTIC_TOKEN }}
-          nix run github:zhaofengli/attic -- use home
       # Original: https://github.com/natsukium/dotfiles/blob/main/.github/workflows/test.yml
       - name: GC
         run: |
@@ -38,5 +33,10 @@ jobs:
             .#nixosConfigurations.maindesk.config.system.build.toplevel
           df -h
       - name: Push
-        run: |
-          nix run github:zhaofengli/attic -- push home /nix/store/*
+        uses: Svenum/attic-builder@v1
+        with:
+          build_systems: true
+          build_packages: false
+          attic_url: https://attic.turtton.net/
+          attic_token: ${{ secrets.ATTIC_TOKEN }}
+          attic_name: home
