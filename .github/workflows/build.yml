@@ -44,4 +44,4 @@ jobs:
           build_packages: false
           attic_url: https://attic.turtton.net/
           attic_token: ${{ secrets.ATTIC_TOKEN }}
-          attic_name: home
+          attic_cache: home
