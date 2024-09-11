@@ -22,6 +22,11 @@ jobs:
       #    name: turtton
       #    authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       # Original: https://github.com/natsukium/dotfiles/blob/main/.github/workflows/test.yml
+      - uses: icewind1991/attic-action@v1
+        with:
+          name: home
+          instance: https://attic.turtton.net/
+          authToken: ${{ secrets.ATTIC_TOKEN }}
       - name: GC
         run: |
           df -h
