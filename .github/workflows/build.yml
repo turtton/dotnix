@@ -32,16 +32,8 @@ jobs:
           df -h
           rm -rf "${AGENT_TOOLSDIRECTORY}"
           df -h
-      # - name: Build
-      #   run: |
-      #     nix build --impure --no-link --show-trace --system x86_64-linux \
-      #       .#nixosConfigurations.maindesk.config.system.build.toplevel
-      #     df -h
-      - name: Push
-        uses: Svenum/attic-builder@v1
-        with:
-          build_systems: true
-          build_packages: false
-          attic_url: https://attic.turtton.net/
-          attic_token: ${{ secrets.ATTIC_TOKEN }}
-          attic_cache: home
+      - name: Build
+        run: |
+          nix build --impure --no-link --show-trace --system x86_64-linux \
+            .#nixosConfigurations.maindesk.config.system.build.toplevel
+          df -h
