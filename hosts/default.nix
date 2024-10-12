@@ -1,11 +1,11 @@
 inputs:
 let
   remoteNixpkgsPatches = [
-    # {
-    #   meta.description = "Supports multiple efi file checkings for systemd-boot-builder.py";
-    #   url = "https://github.com/NixOS/nixpkgs/pull/326695.patch";
-    #   hash = "sha256-cwzA96OQBw6dSWON//H+MHrgQEtl/mq1SBQB/kBIlzw=";
-    # }
+    {
+      meta.description = "Add gitify";
+      url = "https://github.com/NixOS/nixpkgs/pull/338744.patch";
+      hash = "sha256-7PCtFZJWTd7KnbYCnalkK35CYc2Hhivf/dKqlU9PDnY=";
+    }
   ];
   stateVersion = "23.11";
   createSystem =

@@ -7,5 +7,6 @@
     unityhub
     blockbench-electron
     insomnia
+    gitify
   ];
 }
