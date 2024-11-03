@@ -14,5 +14,6 @@
     jdk21
 
     ktlint
+    act
   ];
 }
