@@ -1,0 +1,3 @@
+[ghr]
+src.github_tag = "siketyan/ghr"
+fetch.github = "siketyan/ghr"

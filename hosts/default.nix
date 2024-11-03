@@ -20,7 +20,7 @@ let
     , homeModules ? [ ] # [path]
     }:
     let
-      originPkgs = inputs.nixpkgs.legacyPackages."${system}";
+      originPkgs = inputs.nixpkgs.legacyPackages.${system};
       nixpkgs = originPkgs.applyPatches {
         name = "nixpkgs-patched";
         src = inputs.nixpkgs;
@@ -51,7 +51,9 @@ let
     in
     nixosSystem {
       inherit system;
-      modules = modules ++ (lib.optionals (users != [ ]) [
+      modules = modules ++ [
+				./../overlay
+			] ++ (lib.optionals (users != [ ]) [
         inputs.home-manager.nixosModules.home-manager
         ### home-manager configurations ####
         {
@@ -123,7 +125,6 @@ in
       hostname = "maindesk";
       modules = [
         ./maindesk/nixos.nix
-        ./../overlay
       ];
       homes = [
         rec {
@@ -177,7 +178,6 @@ in
       hostname = "bridgetop";
       modules = [
         ./bridgetop/nixos.nix
-        ./../overlay
       ];
       homes = [
         rec {
@@ -205,7 +205,6 @@ in
       hostname = "virtbox";
       modules = [
         ./virtbox/nixos.nix
-        ./../overlay
       ];
       homes = [
         rec {
@@ -241,7 +240,6 @@ in
         hostname = "atticserver";
         modules = [
           ./atticserver/nixos.nix
-          ./../overlay
         ];
         homes = [
           rec {

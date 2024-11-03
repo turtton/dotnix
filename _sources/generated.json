@@ -1,0 +1,22 @@
+{
+    "ghr": {
+        "cargoLocks": null,
+        "date": null,
+        "extract": null,
+        "name": "ghr",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "siketyan",
+            "repo": "ghr",
+            "rev": "v0.4.4",
+            "sha256": "sha256-L9+rcdt+MGZSCOJyCE4t/TT6Fjtxvfr9LBJYyRrx208=",
+            "type": "github"
+        },
+        "version": "v0.4.4"
+    }
+}

@@ -30,7 +30,11 @@
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     utils.url = "github:numtide/flake-utils";
     turtton-neovim.url = "github:turtton/myvim.nix";
-  };
+		nvfetcher = {
+			url = "github:berberman/nvfetcher";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+	};
   outputs = inputs@{ nixpkgs, flake-utils, ... }: {
     nixosConfigurations = (import ./hosts inputs).nixos;
     homeConfigurations = (import ./hosts inputs).home-manager;
@@ -42,6 +46,7 @@
       formatter = nixpkgs-fmt;
       devShells.default = mkShell {
         packages = [
+					nvfetcher
           home-manager
           (writeScriptBin "switch-home" ''
             home-manager switch --flake ".#$@" --show-trace
