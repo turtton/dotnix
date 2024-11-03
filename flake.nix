@@ -30,27 +30,27 @@
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     utils.url = "github:numtide/flake-utils";
     turtton-neovim.url = "github:turtton/myvim.nix";
-		nvfetcher = {
-			url = "github:berberman/nvfetcher";
-			inputs.nixpkgs.follows = "nixpkgs";
-		};
-	};
+    nvfetcher = {
+      url = "github:berberman/nvfetcher";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
   outputs = inputs@{ nixpkgs, flake-utils, ... }: {
     nixosConfigurations = (import ./hosts inputs).nixos;
     homeConfigurations = (import ./hosts inputs).home-manager;
   } // flake-utils.lib.eachDefaultSystem (system:
     let
       pkgs = import nixpkgs { inherit system; };
-			overlays = pkgs.lib.attrsets.mergeAttrsList (map (overlay: overlay pkgs pkgs) (import ./overlay { inherit pkgs; }).nixpkgs.overlays);
+      overlays = pkgs.lib.attrsets.mergeAttrsList (map (overlay: overlay pkgs pkgs) (import ./overlay { inherit pkgs; }).nixpkgs.overlays);
     in
     with pkgs; {
       formatter = nixpkgs-fmt;
-			packages = {
-				ghr = overlays.ghr;
-			};
+      packages = {
+        ghr = overlays.ghr;
+      };
       devShells.default = mkShell {
         packages = [
-					nvfetcher
+          nvfetcher
           home-manager
           (writeScriptBin "switch-home" ''
             home-manager switch --flake ".#$@" --show-trace
@@ -61,6 +61,12 @@
           (writeScriptBin "gen-template" ''
             nix run github:nix-community/nixos-generators -- -f proxmox-lxc --flake ".#$@" --show-trace
           '')
+
+          # For xmonad
+          # (haskellPackages.ghcWithPackages (hpkgs: [  
+          #   hpkgs.xmonad
+          #   hpkgs.xmonad-contrib
+          # ]))
         ];
       };
     });

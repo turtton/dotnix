@@ -1,10 +1,10 @@
 gen: self: prev: {
-	ghr = with self; rustPlatform.buildRustPackage rec {
+  ghr = with self; rustPlatform.buildRustPackage rec {
     inherit (gen) pname version src;
 
-		cargoLock = {
-			lockFile = "${src}/Cargo.lock";
-		};
+    cargoLock = {
+      lockFile = "${src}/Cargo.lock";
+    };
 
     nativeBuildInputs = [ pkg-config ];
     buildInputs = [ openssl ];

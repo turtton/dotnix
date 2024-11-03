@@ -52,8 +52,8 @@ let
     nixosSystem {
       inherit system;
       modules = modules ++ [
-				./../overlay
-			] ++ (lib.optionals (users != [ ]) [
+        ./../overlay
+      ] ++ (lib.optionals (users != [ ]) [
         inputs.home-manager.nixosModules.home-manager
         ### home-manager configurations ####
         {

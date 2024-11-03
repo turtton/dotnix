@@ -1,5 +1,6 @@
-{ pkgs, ... }: let 
-	stack-wrapped = pkgs.symlinkJoin {
+{ pkgs, ... }:
+let
+  stack-wrapped = pkgs.symlinkJoin {
     name = "stack";
     paths = [ pkgs.stack ];
     buildInputs = [ pkgs.makeWrapper ];
@@ -12,7 +13,8 @@
         "
     '';
   };
-in {
+in
+{
   imports = [
     ./cargo.nix
     ./ghr.nix
@@ -30,8 +32,8 @@ in {
     ktlint
     act
 
-		# Haskell
-		ghc
-		stack-wrapped
+    # Haskell
+    ghc
+    stack-wrapped
   ];
 }
