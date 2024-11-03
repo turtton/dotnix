@@ -1,4 +1,18 @@
-{ pkgs, ... }: {
+{ pkgs, ... }: let 
+	stack-wrapped = pkgs.symlinkJoin {
+    name = "stack";
+    paths = [ pkgs.stack ];
+    buildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/stack \
+        --add-flags "\
+          --no-nix \
+          --system-ghc \
+          --no-install-ghc \
+        "
+    '';
+  };
+in {
   imports = [
     ./cargo.nix
     ./ghr.nix
@@ -15,5 +29,9 @@
 
     ktlint
     act
+
+		# Haskell
+		ghc
+		stack-wrapped
   ];
 }
