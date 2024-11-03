@@ -8,6 +8,6 @@
     blockbench-electron
     insomnia
     gitify
-		drawio
+    drawio
   ];
 }
