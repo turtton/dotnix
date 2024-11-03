@@ -6,10 +6,8 @@ in
   programs.neovim = {
     vimAlias = true;
     defaultEditor = true;
+    package = nvim-project;
   };
-  home.packages = [
-    nvim-project.default
-  ];
   home.file.".config/nvim" = {
     source = nvim-project.config;
     recursive = true;
