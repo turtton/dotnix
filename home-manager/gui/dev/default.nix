@@ -7,7 +7,7 @@
     unityhub
     blockbench-electron
     insomnia
-    gitify
+    # gitify
     drawio
   ];
 }

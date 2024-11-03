@@ -1,11 +1,11 @@
 inputs:
 let
   remoteNixpkgsPatches = [
-    {
-      meta.description = "Add gitify";
-      url = "https://github.com/NixOS/nixpkgs/pull/338744.patch";
-      hash = "sha256-7PCtFZJWTd7KnbYCnalkK35CYc2Hhivf/dKqlU9PDnY=";
-    }
+    # {
+    #   meta.description = "Add gitify";
+    #   url = "https://github.com/NixOS/nixpkgs/pull/338744.patch";
+    #   hash = "sha256-9SIE3ldGxcZxBCQxpHvCrluahWVbDwl5scEEQA+sCpI=";
+    # }
   ];
   stateVersion = "23.11";
   createSystem =
