@@ -41,9 +41,13 @@
   } // flake-utils.lib.eachDefaultSystem (system:
     let
       pkgs = import nixpkgs { inherit system; };
+			overlays = pkgs.lib.attrsets.mergeAttrsList (map (overlay: overlay pkgs pkgs) (import ./overlay { inherit pkgs; }).nixpkgs.overlays);
     in
     with pkgs; {
       formatter = nixpkgs-fmt;
+			packages = {
+				ghr = overlays.ghr;
+			};
       devShells.default = mkShell {
         packages = [
 					nvfetcher
