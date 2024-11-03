@@ -53,7 +53,6 @@ let
       inherit system;
       modules = modules ++ (lib.optionals (users != [ ]) [
         inputs.home-manager.nixosModules.home-manager
-        inputs.attic.nixosModules.atticd
         ### home-manager configurations ####
         {
           home-manager = {

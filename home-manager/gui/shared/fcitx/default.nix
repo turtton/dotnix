@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   i18n.inputMethod = {
     enabled = "fcitx5";
-    fcitx5.addons = with pkgs; [ kdePackages.fcitx5-qt fcitx5-gtk fcitx5-skk skk-dicts ];
+    fcitx5.addons = with pkgs; [ kdePackages.fcitx5-qt fcitx5-gtk fcitx5-skk libskk ];
   };
   home.file = {
     ".xprofile".text = ''
@@ -12,7 +12,7 @@
     ".config/fcitx5/config".source = ./config;
     ".config/fcitx5/conf/skk.conf".source = ./skk.conf;
     ".local/share/fcitx5/skk/dictionary_list".text = with pkgs; ''
-      file=${skk-dicts}/share/SKK-JISYO.L,mode=readonly,type=file
+      file=${libskk}/share/skk/SKK-JISYO.L,mode=readonly,type=file
     '';
   };
 }

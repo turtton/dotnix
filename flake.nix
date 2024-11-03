@@ -5,13 +5,6 @@
     nixos-hardware.url =
       "github:NixOS/nixos-hardware/master"; # Hardware settings collection
     xremap.url = "github:xremap/nix-flake"; # KeyMap tool
-    nix-ld-rs = {
-      url = "github:nix-community/nix-ld-rs";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        # flake-utils.follows = "flake-utils";
-      };
-    };
     # Secure boot
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.3.0";
@@ -36,7 +29,6 @@
     };
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     utils.url = "github:numtide/flake-utils";
-    attic.url = "github:zhaofengli/attic";
     turtton-neovim.url = "github:turtton/myvim.nix";
   };
   outputs = inputs@{ nixpkgs, flake-utils, ... }: {

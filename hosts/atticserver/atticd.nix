@@ -3,7 +3,7 @@
     enable = true;
 
     # Replace with absolute path to your credentials file
-    credentialsFile = "/etc/atticd/atticd.env";
+    environmentFile = "/etc/atticd/atticd.env";
 
     settings = {
       listen = "[::]:8080";

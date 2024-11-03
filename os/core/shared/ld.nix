@@ -1,7 +1,6 @@
 { pkgs, inputs, ... }: {
   programs.nix-ld = {
     enable = true;
-    package = inputs.nix-ld-rs.packages.${pkgs.hostPlatform.system}.nix-ld-rs;
     # From https://github.com/NixOS/nixpkgs/issues/240444#issuecomment-1988645885
     # I am not using jetbrains-toobox but these libraries useful to avoid probrems like this (https://discourse.nixos.org/t/issues-with-opengl-in-minecraft-development-environments/37532)
     libraries = with pkgs; [
