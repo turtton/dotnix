@@ -1,15 +1,15 @@
 { pkgs, config, ... }:
 let
-	# based on tokyo-night https://github.com/zatchheems/tokyo-night-alacritty-theme/blob/main/tokyo-night.toml
+  # based on tokyo-night https://github.com/zatchheems/tokyo-night-alacritty-theme/blob/main/tokyo-night.toml
   # normal colors
-	n_black = "#32344a";
-	n_red = "#f7768e";
-	n_green = "#9ece6a";
-	n_yellow = "#e0af68";
-	n_blue = "#7aa2f7";
-	n_magenta = "#ad8ee6";
-	n_cyan = "#449dab";
-	n_white = "#787c99";
+  n_black = "#32344a";
+  n_red = "#f7768e";
+  n_green = "#9ece6a";
+  n_yellow = "#e0af68";
+  n_blue = "#7aa2f7";
+  n_magenta = "#ad8ee6";
+  n_cyan = "#449dab";
+  n_white = "#787c99";
   # bright colors
   b_black = "#444b6a";
   b_red = "#ff7a93";
@@ -32,7 +32,7 @@ let
   # n_blue = b_blue;
   # #n_magenta = "#ff557f";
   # n_magenta = b_magenta;
-	# n_cyan = "#ff5555";
+  # n_cyan = "#ff5555";
   # n_white = "#b9bfc7";
   # # bright colors
   # b_black = "#4f607a";
