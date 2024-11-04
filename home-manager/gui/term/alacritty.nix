@@ -9,7 +9,7 @@ let
   n_blue = "#9191d5";
   n_magenta = "#ff557f";
   n_cyan = "#bd93f9";
-  n_white = "#d3dae3";
+  n_white = "#b9bfc7";
   # bright colors
   b_black = "#4f607a";
   b_red = "#9191d5";
@@ -46,10 +46,10 @@ in
     enable = true;
     settings = {
       window = {
-        #padding = {
-        #  x = 20;
-        #  y = 10;
-        #};
+        padding = {
+          x = 4;
+          y = 2;
+        };
         opacity = 1;
         blur = true;
       };
