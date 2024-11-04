@@ -57,8 +57,9 @@
     misc = {
       disable_hyprland_logo = true;
     };
-    master = {
-      new_is_master = true;
-    };
+    # master = {
+    #   new_status = "master";
+    # };
+    windowrulev2 = "suppressevent maximize, class:.*";
   };
 }

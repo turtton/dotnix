@@ -2,7 +2,7 @@
   wayland.windowManager.hyprland.settings = {
     "$mainMod" = "SUPER";
     "$subMod" = "ALT";
-    "$term" = "wezterm";
+    "$term" = "alacritty";
     bind = [
       "$mainMod, Return, exec, $term"
       "$mainMod SHIFT, Q, killactive"
@@ -64,7 +64,7 @@
 
       # launcher
       "$mainMod, s, exec, wofi --show drun --width 512px"
-      "$mainMod, period, exec, wofi-emoji"
+      "$mainMod, period, exec, rofi-emoji"
 
       # color picker
       "$mainMod SHIFT, c, exec, hyprpicker --autocopy"

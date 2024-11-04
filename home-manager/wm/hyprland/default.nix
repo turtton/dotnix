@@ -3,7 +3,8 @@
     ./dunst.nix
     ./key-bindings.nix
     ./settings.nix
-    ./wofi.nix
+    #./wofi.nix
+    ./rofi
   ];
 
   wayland.windowManager.hyprland = {

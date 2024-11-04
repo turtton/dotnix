@@ -1,10 +1,12 @@
 { lib, ... }: {
   imports = [
+    # ./plasma/plasma.nix
+    # ./plasma/plasma_generated.nix
     ./../../home-manager/cli/shared
     ./../../home-manager/cli/shell/zsh
     ./../../home-manager/gui/shared
-    ./../../home-manager/gui/term/wezterm
-    ./../../home-manager/wm/xmonad
+    ./../../home-manager/gui/term/alacritty.nix
+    ./../../home-manager/wm/hyprland
     # ./../../home-manager/gui/game
   ];
 

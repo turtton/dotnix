@@ -1,0 +1,118 @@
+* {
+    bg-col:  #1e1e2e;
+    bg-col-light: #1e1e2e;
+    border-col: #1e1e2e;
+    selected-col: #1e1e2e;
+    randomcolor: #eba0ac;
+    fg-col: #cdd6f4;
+    fg-col2: #a6e3a1;
+    subtext: #6c7086;
+    width: 900;
+}
+
+configuration{
+    font: "Sugar Snow 14";
+    show-icons: true;
+    terminal: "kitty";
+    drun-display-format: "{icon} {name}";
+    location: 0;
+    disable-history: false;
+    hide-scrollbar: true;
+    window-format: " [{w}]\t\t{t:0}";
+    sidebar-mode: true;
+    display-run: "ﰌ Run  ﰌ ";
+    display-drun: "󱓞 Applications 󱓞";
+    display-window: "  Tasks  ";
+    show-match: false;
+    kb-mode-previous: "Alt+h,Control+Shift+Tab";
+    kb-mode-next: "Alt+l,Control+Tab";
+    kb-row-left: "Control+Alt+h";
+    kb-row-right: "Control+Alt+l";
+    kb-row-down: "Control+Alt+j,Control+n,Down";
+    kb-row-up: "Control+Alt+k,Control+p,Up";
+    kb-remove-word-back: "Control+BackSpace";
+    modi: "run,drun,window";
+}
+
+button {
+    background-color: @bg-col-light;
+    horizontal-align: 0.5;
+    padding: 10px;
+    text-color: @subtext;
+    vertical-align: 0.5;
+}
+
+button selected {
+    background-color: @bg-col;
+    text-color: @randomcolor;
+}
+
+element {
+    background-color: @bg-col;
+    padding: 5px;
+    text-color: @fg-col;
+}
+
+element-icon {
+    size: 20px;
+}
+
+element selected {
+    background-color: @selected-col;
+    text-color: @fg-col2;
+}
+
+entry {
+    background-color: @bg-col;
+    margin: 20px 0px 0px 10px;
+    padding: 6px;
+    text-color: @fg-col;
+}
+
+inputbar {
+    background-color: @bg-col;
+    border-radius: 5px;
+    children: [prompt, entry];
+    padding: 2px;
+}
+
+listview {
+    background-color: @bg-col;
+    border: 0px 0px 0px;
+    columns: 2;
+    margin: 10px 0px 0px 20px;
+    padding: 6px 0px 0px;
+}
+
+mainbox {
+    background-color: @bg-col;
+}
+
+mode-switcher {
+    spacing: 0;
+}
+
+prompt {
+    background-color: @randomcolor;
+    border-radius: 3px;
+    margin: 20px 0px 0px 20px;
+    padding: 6px;
+    text-color: @bg-col;
+}
+
+textbox-prompt-colon {
+    expand: false;
+    str: ":";
+}
+
+window {
+    background-color: @bg-col;
+    border: 8px;
+    border-color: @border-col;
+    height: 500px;
+}
+
+element-text, element-icon, mode-switcher {
+    background-color: inherit;
+    text-color: inherit;
+}

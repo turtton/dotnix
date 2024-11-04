@@ -209,7 +209,7 @@ in
       homes = [
         rec {
           username = "turtton";
-          confPath = ./virtbox/home-manager.nix;
+          confPath = ./virtbox/home-manager-hypr.nix;
           osUserConfig = { pkgs, ... }: {
             users.users."${username}".shell = pkgs.zsh;
             services.greetd = {
@@ -225,13 +225,13 @@ in
             };
           };
         }
-        rec {
-          username = "testuser";
-          confPath = ./virtbox/home-manager.nix;
-          osUserConfig = { pkgs, ... }: {
-            users.users."${username}".shell = pkgs.zsh;
-          };
-        }
+        # rec {
+        #   username = "testuser";
+        #   confPath = ./virtbox/home-manager-hypr.nix;
+        #   osUserConfig = { pkgs, ... }: {
+        #     users.users."${username}".shell = pkgs.zsh;
+        #   };
+        # }
       ];
     };
     atticserver = createSystem
