@@ -1,24 +1,48 @@
 { pkgs, config, ... }:
 let
-  # based on Jolly-kosnole
+	# based on tokyo-night https://github.com/zatchheems/tokyo-night-alacritty-theme/blob/main/tokyo-night.toml
   # normal colors
-  n_black = "#1f1d36";
-  n_red = "#9191d5";
-  n_green = "#8be9fd";
-  n_yellow = "#f1fa8c";
-  n_blue = "#9191d5";
-  n_magenta = "#ff557f";
-  n_cyan = "#bd93f9";
-  n_white = "#b9bfc7";
+	n_black = "#32344a";
+	n_red = "#f7768e";
+	n_green = "#9ece6a";
+	n_yellow = "#e0af68";
+	n_blue = "#7aa2f7";
+	n_magenta = "#ad8ee6";
+	n_cyan = "#449dab";
+	n_white = "#787c99";
   # bright colors
-  b_black = "#4f607a";
-  b_red = "#9191d5";
-  b_green = "#7b7bb6";
-  b_yellow = "#ffff7f";
-  b_blue = "#ffb86c";
-  b_magenta = "#009ebd";
-  b_cyan = "#ff5555";
-  b_white = "#7979b3";
+  b_black = "#444b6a";
+  b_red = "#ff7a93";
+  b_green = "#b9f27c";
+  b_yellow = "#ff9e64";
+  b_blue = "#7da6ff";
+  b_magenta = "#bb9af7";
+  b_cyan = "#0db9d7";
+  b_white = "#acb0d0";
+  # custom colors 
+  base = "#1a1b26";
+  text = "#a9b1d6";
+  # # based on Jolly-kosnole
+  # # normal colors
+  # n_black = "#1f1d36";
+  # n_red = "#9191d5";
+  # n_green = "#8be9fd";
+  # n_yellow = "#f1fa8c";
+  # #n_blue = "#9191d5";
+  # n_blue = b_blue;
+  # #n_magenta = "#ff557f";
+  # n_magenta = b_magenta;
+	# n_cyan = "#ff5555";
+  # n_white = "#b9bfc7";
+  # # bright colors
+  # b_black = "#4f607a";
+  # b_red = "#9191d5";
+  # b_green = "#7b7bb6";
+  # b_yellow = "#ffff7f";
+  # b_blue = "#ffb86c";
+  # b_magenta = "#009ebd";
+  # b_cyan = "#bd93f9";
+  # b_white = "#7979b3";
   # dim colors
   d_black = "#282647";
   d_red = "#651900";
@@ -28,9 +52,9 @@ let
   d_magenta = "#006a80";
   d_cyan = "#c24141";
   d_white = "#7171a8";
-  # custom colors 
-  base = n_black;
-  text = n_white;
+  # # custom colors 
+  # base = n_black;
+  # text = n_white;
   subtext0 = "#A6ADC8";
   rosewater = "#F5E0DC";
 
@@ -62,8 +86,8 @@ in
         primary = {
           background = base;
           foreground = text;
-          dim_foreground = b_blue;
-          bright_foreground = d_cyan;
+          #dim_foreground = b_blue;
+          #bright_foreground = d_cyan;
         };
         cursor = {
           text = base;
@@ -106,9 +130,9 @@ in
           red = n_red;
           green = n_green;
           yellow = n_yellow;
-          blue = b_blue;
-          magenta = b_magenta;
-          cyan = b_cyan;
+          blue = n_blue;
+          magenta = n_magenta;
+          cyan = n_cyan;
           white = n_white;
         };
         bright = {
@@ -118,7 +142,7 @@ in
           yellow = b_yellow;
           blue = b_blue;
           magenta = b_magenta;
-          cyan = n_cyan;
+          cyan = b_cyan;
           white = b_white;
         };
         dim = {
