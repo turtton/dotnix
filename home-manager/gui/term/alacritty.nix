@@ -74,7 +74,7 @@ in
           x = 4;
           y = 2;
         };
-        opacity = 1;
+        opacity = 0.93;
         blur = true;
       };
       keyboard = {
