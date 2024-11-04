@@ -34,6 +34,7 @@ jobs:
           df -h
       - name: Build
         run: |
-          nix build --impure --no-link --show-trace --system x86_64-linux \
-            .#nixosConfigurations.maindesk.config.system.build.toplevel
+          #nix build --impure --no-link --show-trace --system x86_64-linux \
+          #  .#nixosConfigurations.maindesk.config.system.build.toplevel
+          nix flake check
           df -h
