@@ -63,8 +63,8 @@
         $mainMod SHIFT, s, exec, grimblast --notify copysave area "$HOME/Screenshots/$(date +%Y-%m-%dT%H:%M:%S).png"''
 
       # launcher
-      "$mainMod, s, exec, wofi --show drun --width 512px"
-      "$mainMod, period, exec, rofi-emoji"
+      "$mainMod, d, exec, rofi -show drun"
+      "$mainMod, period, exec, rofi -modi emoji -show emoji"
 
       # color picker
       "$mainMod SHIFT, c, exec, hyprpicker --autocopy"

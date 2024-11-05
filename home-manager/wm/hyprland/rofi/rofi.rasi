@@ -13,7 +13,7 @@
 configuration{
     font: "Sugar Snow 14";
     show-icons: true;
-    terminal: "kitty";
+    terminal: "alacritty";
     drun-display-format: "{icon} {name}";
     location: 0;
     disable-history: false;
