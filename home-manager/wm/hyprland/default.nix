@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, system, ... }: {
   imports = [
     ./dunst.nix
     ./eww
@@ -11,6 +11,10 @@
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
+    plugins = [
+      #  inputs.split-monitor-workspaces.packages.${system}.split-monitor-workspaces
+    ];
+    # package = inputs.hyprland.packages.${system}.hyprland;
   };
 
   home.packages = with pkgs; [
