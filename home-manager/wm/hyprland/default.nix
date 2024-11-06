@@ -31,6 +31,8 @@
     wf-recorder # screen recorder
     wl-clipboard # clipboard manager
   ];
+
+  xdg.userDirs.createDirectories = true;
   xdg.configFile =
     let
       settings = pkgs.writeText "settings.ini" ''
