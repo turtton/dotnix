@@ -130,7 +130,7 @@
 ;;		(label :halign "center" :limit-width 5 :text xmonad-layout)))
 
 
-(defpoll wmclass :interval "1s" `scripts/get_wm_class`)
+(deflisten wmclass :initial "..." `sh ~/.config/eww/scripts/get_wm_class`)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;; VOLUME ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

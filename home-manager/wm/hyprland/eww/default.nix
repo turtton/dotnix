@@ -8,5 +8,6 @@
     python312
     jq
     betterlockscreen
+    socat
   ];
 }
