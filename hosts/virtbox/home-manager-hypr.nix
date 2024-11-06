@@ -4,7 +4,9 @@
     # ./plasma/plasma_generated.nix
     ./../../home-manager/cli/shared
     ./../../home-manager/cli/shell/zsh
-    ./../../home-manager/gui/shared
+    # ./../../home-manager/gui/shared
+    ./../../home-manager/gui/shared/fcitx
+    ./../../home-manager/gui/shared/libskk
     ./../../home-manager/gui/term/alacritty.nix
     ./../../home-manager/gui/filemanager/thunar.nix
     ./../../home-manager/wm/hyprland
