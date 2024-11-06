@@ -1,6 +1,7 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, ... }: {
   imports = [
     ./dunst.nix
+    ./eww
     ./key-bindings.nix
     ./settings.nix
     #./wofi.nix

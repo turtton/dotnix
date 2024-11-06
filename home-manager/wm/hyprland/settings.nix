@@ -11,6 +11,7 @@
       # "hypr-helper start"
       # "discord --start-minimized"
       # "steam -silent"
+      "eww daemon && sleep 1 && eww open notifications"
     ];
     windowrule = [
       "pseudo, noblur, class:(fcitx)"

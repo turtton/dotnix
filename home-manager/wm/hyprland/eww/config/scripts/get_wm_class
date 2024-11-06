@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Ref:
+#		- https://wiki.hyprland.org/Useful-Utilities/Status-Bars/#configewwscriptsget-window-title
+#		- https://github.com/NeshHari/XMonad/blob/86a9a66cfefbee210a4ad5316ff5f76a465a2e5b/eww/.config/eww/scripts/get_wm_class
+
+# Set the output file path
+OUTPUT_FILE="/tmp/last_window.txt"
+
+hyprctl activewindow -j | jq --raw-output .title
+output=$(socat -u UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - | stdbuf -o0 awk -F '>>|,' '/^activewindow>>/{print $3}')
+
+# Read the existing output from the output file
+if [ -f "$OUTPUT_FILE" ]; then
+	last_output=$(cat "$OUTPUT_FILE")
+else
+	last_output=""
+fi
+
+# Compare the current output with the last output and reload eww if they are different
+if [ "$output" != "$last_output" ]; then
+	echo "$output" >"$OUTPUT_FILE"
+	if [ "${#output}" -lt "${#last_output}" ]; then
+		echo "$output" >"$OUTPUT_FILE"
+	fi
+fi
+
+if [ -z "$output" ]; then
+	echo "Desktop"
+else
+	echo "$output"
+fi

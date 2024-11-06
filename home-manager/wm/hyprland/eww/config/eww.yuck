@@ -1,0 +1,345 @@
+;; Original https://github.com/NeshHari/XMonad/blob/86a9a66cfefbee210a4ad5316ff5f76a465a2e5b/eww/.config/eww/eww.yuck
+;; Author: github.com/NeshHari
+
+;;;;;;;;;;;;;;;;;;;;;;;; QUOTES ;;;;;;;;;;;;;;;;;;;;;;;;
+(defpoll quote :interval "24h" "scripts/quotes --quote-and-quotee")
+
+(defwidget quote []
+	(box :class "quote-container" :orientation "v" :hexpand "false" :vexpand "true" :space-evenly "false"
+        (button :style "background-image :url('images/quote.svg');" :class "quote-img" :halign "center") 
+	    (label :class "quote" :halign "center" :wrap "true" :limit-width 300 :text quote :xalign "0.5")))
+
+(defwidget quotetoggler []
+      (box :class "bar-quote" :tooltip "Quote" :space-evenly "false"
+          (button :class "btn-quote" :onclick "scripts/customtoggle.sh showquote" "" )
+          (label  :class "btn-quote-label" :text "QUOTE")))
+
+(defwindow quotetoggler
+    :stacking "fg"
+    :windowtype "dock"
+	:geometry (geometry :x "9.75%"
+                        :y "0.75%"
+                        :height "2.8%")
+(quotetoggler))
+
+(defwindow showquote
+    :stacking "fg"
+	:geometry (geometry :x "6.5%"
+                        :y "4%"
+                        :width "10%")
+(quote))
+
+;;;;;;;;;;;;;;;;;;;;;;;; CALENDAR ;;;;;;;;;;;;;;;;;;;;;;;;
+(defpoll calendar_day :interval "10h" "date '+%d'")
+(defpoll calendar_year :interval "10h" "date '+%Y'")
+(defpoll calendar_date :interval "24h" "date '+%A, %d %B'")
+
+(defwidget cal []
+	(box :class "cal-container" 
+	(box :class "cal-inner"
+	(calendar :class "cal-inner-elems" 
+			  :day calendar_day 
+			  :year calendar_year))))
+
+(defwidget fullcal[]
+  (box :orientation "v" :space-evenly "false" :class "cal-outer-container"
+    (box :class "cal-date" "${calendar_date}")
+    (cal)
+  )
+)
+
+(defvar time-visible false)
+
+(defpoll time :interval "60s"
+              :initial "initial-value" 
+              :run-while time-visible 
+  `date +%H:%M' '%p`)
+
+(defwindow mycal
+    :stacking "fg"
+	:geometry (geometry :x "70%" 
+						:y "60%" 
+						:width "380px" 
+						:height "20px")
+(fullcal))
+
+;;;;;;;;;;;;;;;;;;;;;;;; SPOTIFY ;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defpoll spotify :interval "1s" "scripts/spotify.py")
+(defpoll playpause :interval "0.5s"  "scripts/playpause --icon")
+(defpoll songtitle :interval "0.5s" "scripts/playpause --status")
+(defpoll singer :interval "0.5s" "scripts/artist")
+(defpoll album :interval "0.5s" "scripts/album")
+(defpoll coverart :interval "0.5s" "scripts/coverart --art")
+
+(defwidget spotify []
+  (box :class "spotify-container" :orientation "h" :space-evenly "true"
+    (box :class "spotify-img" :style "background-image: url('${coverart}');")
+    (box :class "spotify-inner-right-container" :orientation "v" :valign "center" :halign "center" :space-evenly "false" 
+      (box :orientation "v" :spacing 20
+        (label :class "spotify-title" :text "${songtitle}" :limit-width "24")
+        (label :class "spotify-singer" :text "~ ${singer} ~" :limit-width "20")
+        (label :class "spotify-album" :text "${album}" :limit-width "20")
+      )
+      (box :class "spotify-controls" :orientation "h" :halign "center" :space-evenly "false" :spacing 30
+        (button :onclick "playerctl previous" "󰒮")
+        (button :onclick "playerctl -p spotify play-pause" "${playpause}")
+        (button :onclick "playerctl -p spotify next" "󰒭")
+      )
+    )
+  )
+)
+
+(defwindow spotify
+    :stacking "fg"
+	:geometry (geometry :x "38%"
+						:y "73%" 
+						)
+(spotify))
+
+;;;;;;;;;;;;;;;;;;; POWER MENU ;;;;;;;;;;;;;;;;;;;
+(defwidget poweroptions []
+  (box :class "powermenu-container" :orientation "v" :spacing 0
+    (box :class "powermenu-inner-container" :orientation "h" :spacing 30
+      (button :class "lock" :onclick "betterlockscreen -l dim" "")
+      (button :class "logout" :onclick "hyprctl dispatch exit" "")
+      (button :class "suspend" :onclick "systemctl suspend" ""))
+    (box :class "powermenu-inner-container" :orientation "h" :spacing 30
+      (button :class "restart" :onclick "reboot" "")
+      (button :class "shutdown" :onclick "shutdown -h now" "")
+    )))
+
+(defwindow powermenu
+    :stacking "fg"
+	:geometry (geometry :x "91.4%"
+						:y "84%" 
+						:width "8%"
+                        :height "8%")
+    (poweroptions)
+)
+
+;;(defpoll xmonad-layout :interval "1s" `scripts/xmonad_layout`)
+
+;;(defwidget currentlayout []
+;;	(box :class "xmonad-layout-container" :orientation "h"
+;;		(label :halign "center" :limit-width 5 :text xmonad-layout)))
+
+
+(defpoll wmclass :interval "1s" `scripts/get_wm_class`)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;; VOLUME ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defpoll volume :interval "1s" "amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%' | head -1")
+
+(defwidget showvol []
+  (box :class "metric" :orientation "h" :space-evenly "false":spacing "8" :tooltip volume
+    (button :onclick "amixer -D pulse set Master 1+ toggle" "")
+    (scale :min 0
+           :max 100
+           :value volume
+           :onchange "amixer -D pulse sset Master {}%"
+    )
+  )
+)
+
+(defwindow showvolume
+    :stacking "fg"
+    :geometry (geometry :x "91.8%"
+                        :y "0.75%" 
+                        :width "5%" 
+                        :height "2.8%")
+(showvol))
+
+
+(defpoll wifi-signal :interval "10s" "nmcli -f IN-USE,SIGNAL,SSID device wifi | awk '/^\*/{if (NR!=1) {print $2}}'")
+
+(defwidget showwifi []
+  (box :class "metric"
+       :orientation "h"
+       :space-evenly "false"
+       :active "false"
+      (box "")
+      (scale :min 0
+             :max 100
+             :active "false"
+             :value {wifi-signal != "" ? wifi-signal : "0.0"}
+      )
+  )
+)           
+
+(defpoll ram :interval "3s" "printf $(free -m | grep Mem | awk '{print ($3/$2)*100}')")
+
+(defwidget showmemory []
+  (box :class "metric"
+       :orientation "h"
+       :space-evenly "false"
+       :active "false"
+       :spacing 4
+      (box "")
+      (scale :min 0
+             :max 100
+             :value ram
+      )
+  )
+)           
+
+(defpoll cpu :interval "3s" "top -b -n 1 | grep 'Cpu(s)' | awk '{print $2}'")
+
+(defwidget showcpu []
+  (box :class "metric"
+       :orientation "h"
+       :space-evenly "false"
+       :active "false"
+       :spacing 5
+      (box "")
+      (scale :min 0
+             :max 100
+             :value cpu
+      )
+  )
+)           
+
+(defwidget sysdata []
+  (box :class "metric"
+       :orientation "v"
+       :space-evenly "false"
+       (showwifi)
+       (showcpu)
+       (showmemory)
+  )
+)           
+
+(defwindow showsysdata
+    :stacking "fg"
+	:geometry (geometry :x "90%"
+                        :y "84.5%"
+                        :height "8%")
+(sysdata))
+
+;; (defpoll upd :interval "10m" "paru -Qu 2>/dev/null | wc -l")
+
+(defwidget applications []
+  (box :orientation "v" :space-evenly "false" :class "app-outer-container"
+    (box :orientation "v" :space-evenly "false" :class "app-inner-container" :vexpand "false" :hexpand "false" :valign "center" :spacing 40
+    (box :orientation "h" :space-evenly "false" :class "app-inner-container-top" :vexpand "false" :hexpand "false" :valign "center" :spacing 24
+      (button :tooltip "Launch Brave" :style "background-image :url('images/brave.svg');" :class "brave" :onclick "scripts/applauncher.sh --brave")
+      (button :tooltip "Launch Terminal" :style "background-image :url('images/kitty.svg');" :class "kitty" :onclick "scripts/applauncher.sh --kitty")
+      (button :tooltip "Launch Thunar" :style "background-image :url('images/files.svg');" :class "thunar" :onclick "scripts/applauncher.sh --files"))
+    (box :orientation "h" :space-evenly "false" :class "app-inner-container-bottom" :vexpand "false" :hexpand "false" :valign "center" :spacing 24
+      (button :tooltip "Launch Spotify" :style "background-image :url('images/spotify.svg');" :class "spotify" :onclick "scripts/applauncher.sh --spotify")
+      (button :tooltip "Launch Discord" :style "background-image :url('images/discord.svg');" :class "discord" :onclick "scripts/applauncher.sh --discord")
+      (button :tooltip "Launch GitHub" :style "background-image :url('images/git.svg');" :class "git" :onclick "scripts/applauncher.sh --git")))))
+
+(defwindow applications
+    :stacking "fg"
+	:geometry (geometry :x "1.4%"
+                        :y "82.5%"
+                        :height 150)
+(applications))
+
+
+;; (defpoll btstatus :interval "3s" `scripts/checkbluetoothstatus.sh`)
+(defpoll btdevice :interval "2s" `scripts/checkbluetoothdevice.sh`)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; BAR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defwidget bar []
+  (box :orientation "h" :class "bar" :space-evenly "true"  :vexpand "false" :hexpand "false" :valign "center"
+    (box :orientation "h" :space-evenly "false" :class "left-of-bar"
+      (box :class "bar-launcher" :halign "center" :tooltip "Applications"
+          (button :class "btn-launcher" :onclick "scripts/customtoggle.sh applications" "" ))
+      (box :class "bar-search" :halign "center" :tooltip "Search Engines"
+          (button :class "btn-search" :onclick "scripts/search.sh &" "" ))
+;;      (box :class "bar-layout" :halign "center" :tooltip "Layout"
+;;          (button :class "btn-layout"
+;;      	      (label :class "label-layout" :halign "center" :limit-width 5 :text xmonad-layout)))
+	  (box :class "bar-wmclass" :hexpand "true" :tooltip "${wmclass}"
+          (button :class "btn-wmclass"
+	        (label :class "label-wmclass" :halign "start" :text "${wmclass}" :limit-width 30 :show-truncated "true" ))))
+    (box :orientation "h" :space-evenly "false" :class "middle-of-bar" :hexpand "true" :vexpand "false" :valign "center" :halign "center"
+      (box :class "bar-spotify"
+          (button :class "btn-spotify" :onclick "scripts/customtoggle.sh spotify" "${spotify}" )))
+    (box :orientation "h" :space-evenly "false" :class "right-of-bar" :hexpand "false" :vexpand "false" :valign "center" :halign "end"
+      (box :class "bar-time" 
+        (button :class "btn-time" :onclick "scripts/customtoggle.sh mycal" "${time}"))
+;;      (box :class "bar-update" :space-evenly "false"
+;;        (box :class "bar-update-left"
+;;          (button :class "btn-update" :tooltip "${upd} updates available"
+;;            (label :class "label-update" :halign "center" :text "")))
+;;        (box :class "bar-update-right"
+;;          (button :class "btn-update-num" :onclick "scripts/update.sh" :tooltip "${upd} updates available"
+;;            (label :class "label-update" :halign "center" :text "${upd}"))))
+      (box :class "bar-bluetooth" :space-evenly "false"
+        (box :class "bar-bluetooh-left"
+          (button :class "btn-bluetooth" :onclick "scripts/bluetooth.sh" :tooltip "${btdevice}"
+            (label :class "label-bluetooth" :halign "center" :text "")))
+        (box :class "bar-bluetooth-right"
+          (button :class "btn-bluetooth-device" :onclick "scripts/bluetooth.sh" :tooltip "${btdevice}"
+            (label :class "label-bluetooth" :halign "center" :text "${btdevice}"))))
+      (box :class "bar-sysdata" :tooltip "System Resources"
+        (button :class "btn-sysdata" :onclick "scripts/customtoggle.sh showsysdata" "" ))
+      (box :class "bar-power"
+        (button :class "btn-power" :onclick "scripts/customtoggle.sh powermenu" "" ))
+    )))
+
+
+(defwindow bar
+    :stacking "fg"
+		:exclusive true
+		:monitor 0
+	:geometry (geometry :x "1.35%"
+                        :y "6px"
+                        :width "97.3%"
+												:height "30px"
+												:anchor "top center"
+                        )
+(bar))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;; NOTIFICAITONS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defwidget mynotifications []
+  (box :class "bar-notifications" :space-evenly "false"
+     (button :class "btn-notifications" :onclick "scripts/customtoggle.sh notifications" "" )
+     (label  :class "btn-notifications-label" :text "NOTIFICATIONS")))
+
+(defwindow mynotifications
+    :stacking "fg"
+	:geometry (geometry :x "1.35%"
+                        :y "0.75%"
+                        :height "2.8%")
+(mynotifications))
+
+;;;;; custom rewrite of github.com/syndrizzle/hotfiles ;;;;;
+(defpoll notifications_stats :interval "5s" "scripts/logger.py stats")
+(deflisten notications_scroll_pane "scripts/logger.py subscribe")
+
+(defwidget notifications_layout []
+  (box :orientation "v" :space-evenly "false" :class "notifications-container"
+    (box :class "notifications-header-container" :space-evenly "true" :orientation "v"
+      (label :text "~ NOTIFICATIONS ~" :class "notifications-header" :hexpand true :halign "center"))
+    (scroll :hscroll false :vscroll true :vexpand "true" :hexpand "true" :class "notifications-scroll"
+      (literal :content notications_scroll_pane))
+      (box :class "notifications-footer" :space-evenly "true" :orientation "h"
+        (button :onclick "scripts/clearall.sh" :class "notifications-clear-container" "CLEAR ALL")
+        (button :onclick "eww close notifications" :class "notifications-close-container" "CLOSE"))))
+
+(defwidget cardimage [summary body ?limit_summary ?limit_body appname icon icon_width icon_height close ?close_action image image_width image_height timestamp urgency]
+  (eventbox :class "notifications-cards"
+    (box :orientation "v" :space-evenly false :class "notifications-cards-outer"
+      (box :class "notifications-cards-header" :space-evenly false :hexpand true :valign "center" :vexpand false
+        (label :text appname :hexpand true :halign "center" :class "notifications-card-appname")
+        (button :class "btn-card-close" :onclick close_action :timeout "1s" ""))
+      (box :space-evenly false :halign "fill"
+        (box :hexpand true :vexpand true :valign "fill" :orientation "v" :spacing 0 :class "notifications-card-body" :space-evenly false
+          (label :text summary :limit-width "${limit_summary != "" ? limit_summary : 30}" :halign "fill" :class "summary-header" :show-truncated "true" :wrap "true")
+      (box :space-evenly true :halign "fill" :class "notifications-card-body-content" :valign "center"
+          (label :text body :limit-width "${limit_body != "" ? limit_body : 50}" :wrap true :halign "center" :class "notifications-body-text")
+        (box :class "notifications-card-image-container" :halign "end"
+         (box :style "background-image: url('${image}')" :hexpand true :vexpand true :width image_width :height image_height :class "notifications-card-image")))
+          (label :text "@${timestamp}" :halign "center" :class "notifications-card-timestamp"))))))
+
+(defwindow notifications :stacking "fg" 
+  :stacking "fg"
+	:monitor 0
+  :geometry (geometry :x "2%" :width "18%" :height "80%" :anchor "left center")
+  (notifications_layout))
+
