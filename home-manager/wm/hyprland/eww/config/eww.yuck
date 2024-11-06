@@ -16,6 +16,7 @@
 
 (defwindow quotetoggler
     :stacking "fg"
+		:monitor 0
     :windowtype "dock"
 	:geometry (geometry :x "9.75%"
                         :y "0.75%"
@@ -24,6 +25,7 @@
 
 (defwindow showquote
     :stacking "fg"
+		:monitor 0
 	:geometry (geometry :x "6.5%"
                         :y "4%"
                         :width "10%")
@@ -57,6 +59,7 @@
 
 (defwindow mycal
     :stacking "fg"
+		:monitor 0
 	:geometry (geometry :x "70%" 
 						:y "60%" 
 						:width "380px" 
@@ -92,6 +95,7 @@
 
 (defwindow spotify
     :stacking "fg"
+		:monitor 0
 	:geometry (geometry :x "38%"
 						:y "73%" 
 						)
@@ -111,6 +115,7 @@
 
 (defwindow powermenu
     :stacking "fg"
+		:monitor 0
 	:geometry (geometry :x "91.4%"
 						:y "84%" 
 						:width "8%"
@@ -144,6 +149,7 @@
 
 (defwindow showvolume
     :stacking "fg"
+		:monitor 0
     :geometry (geometry :x "91.8%"
                         :y "0.75%" 
                         :width "5%" 
@@ -211,6 +217,7 @@
 
 (defwindow showsysdata
     :stacking "fg"
+		:monitor 0
 	:geometry (geometry :x "90%"
                         :y "84.5%"
                         :height "8%")
@@ -232,8 +239,9 @@
 
 (defwindow applications
     :stacking "fg"
+		:monitor 0
 	:geometry (geometry :x "1.4%"
-                        :y "82.5%"
+                        :y "17.5%"
                         :height 150)
 (applications))
 
@@ -303,6 +311,7 @@
 
 (defwindow mynotifications
     :stacking "fg"
+		:monitor 0
 	:geometry (geometry :x "1.35%"
                         :y "0.75%"
                         :height "2.8%")
