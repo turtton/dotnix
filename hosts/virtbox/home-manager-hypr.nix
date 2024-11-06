@@ -6,6 +6,7 @@
     ./../../home-manager/cli/shell/zsh
     ./../../home-manager/gui/shared
     ./../../home-manager/gui/term/alacritty.nix
+    ./../../home-manager/gui/filemanager/thunar.nix
     ./../../home-manager/wm/hyprland
     # ./../../home-manager/gui/game
   ];
