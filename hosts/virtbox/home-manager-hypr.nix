@@ -16,7 +16,7 @@
   wayland.windowManager.hyprland.settings = {
     # hyprctl monitors all
     monitor = [
-      "Virtual-1, 1280x1024, 0x0, 1"
+      "Virtual-1, 1600x900, 0x0, 1"
       ", preferred, auto, 1"
     ];
     workspace = [
