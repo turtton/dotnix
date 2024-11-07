@@ -1,4 +1,4 @@
-{ lib, ... }: {
+{ lib, pkgs, ... }: {
   wayland.windowManager.hyprland.settings = {
     env = [
       "GTK_IM_MODULE, fcitx"
@@ -6,7 +6,7 @@
       "XMODIFIERS, @im=fcitx"
     ];
     exec-once = [
-      # "swww init && swww img ~/.config/hypr/wallpaper/sea.jpg"
+      "swww init && swww img ${pkgs.wallpaper-springcity}/wall.png"
       "fcitx5 -D"
       # "hypr-helper start"
       # "discord --start-minimized"

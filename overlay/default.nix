@@ -9,5 +9,6 @@ in
     (import ./noto-fonts-cjk-sans.nix)
     (import ./noto-fonts.nix)
     (import ./ghr.nix generated.ghr)
+    (import ./wallpaper-springcity.nix generated.wallpaper-springcity)
   ];
 }

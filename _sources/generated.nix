@@ -12,4 +12,12 @@
       sha256 = "sha256-L9+rcdt+MGZSCOJyCE4t/TT6Fjtxvfr9LBJYyRrx208=";
     };
   };
+  wallpaper-springcity = {
+    pname = "wallpaper-springcity";
+    version = "Golden-hour-latest";
+    src = fetchurl {
+      url = "https://raw.githubusercontent.com/MrVivekRajan/Hypr-Dots/refs/heads/Type-2/Spring-City/.config/swww/wall.png";
+      sha256 = "sha256-mpsBjyOWLkITiGqHEWHQJacqrNvOaUSm7We5QOiDiww=";
+    };
+  };
 }

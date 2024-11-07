@@ -18,5 +18,20 @@
             "type": "github"
         },
         "version": "v0.4.4"
+    },
+    "wallpaper-springcity": {
+        "cargoLocks": null,
+        "date": null,
+        "extract": null,
+        "name": "wallpaper-springcity",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "name": null,
+            "sha256": "sha256-mpsBjyOWLkITiGqHEWHQJacqrNvOaUSm7We5QOiDiww=",
+            "type": "url",
+            "url": "https://raw.githubusercontent.com/MrVivekRajan/Hypr-Dots/refs/heads/Type-2/Spring-City/.config/swww/wall.png"
+        },
+        "version": "Golden-hour-latest"
     }
 }
