@@ -5,7 +5,9 @@
     configDir = ./config;
   };
   home.packages = with pkgs; [
-    python312
+    (python312.withPackages (ps: with ps; [
+			requests
+		]))
     jq
     betterlockscreen
     socat

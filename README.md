@@ -39,3 +39,7 @@ My dotfiles for NixOS
 - https://search.nixos.org/packages
 - https://mipmip.github.io/home-manager-option-search/
 
+Hyprland themes:
+
+- https://github.com/MrVivekRajan/Hypr-Dots/tree/Type-2?tab=readme-ov-file#spring-city
+- (waybar) https://github.com/redyf/nixdots/tree/main/home/desktop/addons/waybar/tokyonight

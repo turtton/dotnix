@@ -6,6 +6,8 @@
     ./settings.nix
     #./wofi.nix
     ./rofi
+		./waybar
+		./wlogout
   ];
 
   wayland.windowManager.hyprland = {
@@ -30,6 +32,8 @@
     wev # key event watcher
     wf-recorder # screen recorder
     wl-clipboard # clipboard manager
+		kdePackages.qt6ct
+		libsForQt5.qt5ct
   ];
 
   xdg.userDirs.createDirectories = true;
