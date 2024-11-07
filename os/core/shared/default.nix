@@ -10,4 +10,8 @@
   ];
   # Fix timelag for windows
   time.hardwareClockInLocalTime = true;
+
+  services.journald.extraConfig = ''
+    		SystemMaxFileSize=300M
+    	'';
 }
