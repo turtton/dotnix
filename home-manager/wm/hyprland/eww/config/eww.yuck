@@ -55,7 +55,7 @@
 (defpoll time :interval "60s"
               :initial "initial-value" 
               :run-while time-visible 
-  `date +%H:%M' '%p`)
+  `date +%H:%M`)
 
 (defwindow mycal
     :stacking "fg"
