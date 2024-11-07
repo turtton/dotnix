@@ -12,9 +12,9 @@
     enable = true;
     xwayland.enable = true;
     plugins = [
-      #  inputs.split-monitor-workspaces.packages.${system}.split-monitor-workspaces
+      inputs.split-monitor-workspaces.packages.${system}.split-monitor-workspaces
     ];
-    # package = inputs.hyprland.packages.${system}.hyprland;
+    package = inputs.hyprland.packages.${system}.hyprland;
   };
 
   home.packages = with pkgs; [
