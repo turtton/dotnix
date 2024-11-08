@@ -6,8 +6,8 @@
   };
   home.packages = with pkgs; [
     (python312.withPackages (ps: with ps; [
-			requests
-		]))
+      requests
+    ]))
     jq
     betterlockscreen
     socat

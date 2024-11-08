@@ -8,7 +8,7 @@
     exec-once = [
       "swww init && swww img ${pkgs.wallpaper-springcity}/wall.png"
       "${./eww/config/scripts/start.sh}"
-			"waybar"
+      "waybar"
       "fcitx5 -D"
       # "hypr-helper start"
       # "discord --start-minimized"
