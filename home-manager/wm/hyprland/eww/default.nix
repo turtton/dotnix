@@ -11,5 +11,6 @@
     jq
     betterlockscreen
     socat
+		gnome-control-center
   ];
 }

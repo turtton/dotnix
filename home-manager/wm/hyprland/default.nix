@@ -7,7 +7,6 @@
     #./wofi.nix
     ./rofi
     ./waybar
-    ./wlogout
   ];
 
   wayland.windowManager.hyprland = {

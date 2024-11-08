@@ -6,7 +6,7 @@
     bind = [
       "$mainMod, Return, exec, $term"
       "$mainMod SHIFT, Q, killactive"
-      "$mainMod SHIFT, E, exec, ${./wlogout/config/wlogout.sh}"
+      "$mainMod SHIFT, E, exec, eww open control_center"
       "$mainMod, F, fullscreen"
       "$mainMod SHIFT, F, togglefloating"
 

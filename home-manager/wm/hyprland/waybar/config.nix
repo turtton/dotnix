@@ -139,7 +139,7 @@
     "custom/wmname" = {
       format = " ";
       tooltip = "false";
-      on-click = "${./../wlogout/config/wlogout.sh}";
+      on-click = "eww open control_center";
       on-click-right = "$HOME/.config/hypr/Scripts/screenshot";
       on-click-middle = "$HOME/.config/hypr/Scripts/wallpaper-switch";
     };
