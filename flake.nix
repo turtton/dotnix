@@ -59,6 +59,7 @@
       formatter = nixpkgs-fmt;
       packages = {
         ghr = overlays.ghr;
+        jetbrains-dolphin = overlays.jetbrains-dolphin;
         wallpaper-springcity = overlays.wallpaper-springcity;
       };
       devShells.default = mkShell {

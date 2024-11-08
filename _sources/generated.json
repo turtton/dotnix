@@ -19,6 +19,26 @@
         },
         "version": "v0.4.4"
     },
+    "jetbrains-dolphin": {
+        "cargoLocks": null,
+        "date": null,
+        "extract": null,
+        "name": "jetbrains-dolphin",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": true,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "alex1701c",
+            "repo": "JetBrainsDolphinPlugin",
+            "rev": "1.4.2",
+            "sha256": "sha256-T8ueCqYIKDRo4Ds/o0dCeNjK3dD8fNT9oNEDfzqLg0Y=",
+            "type": "github"
+        },
+        "version": "1.4.2"
+    },
     "wallpaper-springcity": {
         "cargoLocks": null,
         "date": null,

@@ -5,3 +5,8 @@ fetch.github = "siketyan/ghr"
 [wallpaper-springcity]
 src.github = "MrVivekRajan/Hypr-Dots"
 fetch.url = "https://raw.githubusercontent.com/MrVivekRajan/Hypr-Dots/refs/heads/Type-2/Spring-City/.config/swww/wall.png"
+
+[jetbrains-dolphin]
+src.github = "alex1701c/JetBrainsDolphinPlugin"
+fetch.github = "alex1701c/JetBrainsDolphinPlugin"
+git.fetchSubmodules = true

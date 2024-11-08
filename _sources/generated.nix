@@ -12,6 +12,17 @@
       sha256 = "sha256-L9+rcdt+MGZSCOJyCE4t/TT6Fjtxvfr9LBJYyRrx208=";
     };
   };
+  jetbrains-dolphin = {
+    pname = "jetbrains-dolphin";
+    version = "1.4.2";
+    src = fetchFromGitHub {
+      owner = "alex1701c";
+      repo = "JetBrainsDolphinPlugin";
+      rev = "1.4.2";
+      fetchSubmodules = true;
+      sha256 = "sha256-T8ueCqYIKDRo4Ds/o0dCeNjK3dD8fNT9oNEDfzqLg0Y=";
+    };
+  };
   wallpaper-springcity = {
     pname = "wallpaper-springcity";
     version = "Golden-hour-latest";
