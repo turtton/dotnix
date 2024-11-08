@@ -111,7 +111,7 @@
       "$mainMod SHIFT, c, exec, hyprpicker --autocopy"
 
       # screen lock
-      "$mainMod, l, exec, swaylock --image ~/.config/hypr/wallpaper/talos-2.jpg"
+      "$mainMod, l, exec, hyprlock"
 
       # system
       "$mainMod, x, exec, systemctl suspend"

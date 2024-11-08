@@ -4,6 +4,7 @@
     ./eww
     ./key-bindings.nix
     ./settings.nix
+    ./hyprlock.nix
     #./wofi.nix
     ./rofi
     ./waybar

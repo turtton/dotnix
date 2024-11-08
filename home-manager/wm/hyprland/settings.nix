@@ -9,6 +9,7 @@
       "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
     ];
     exec-once = [
+      "hyprlock"
       "swww init && swww img ${pkgs.wallpaper-springcity}/wall.png"
       "${./eww/config/scripts/start.sh}"
       "waybar"
