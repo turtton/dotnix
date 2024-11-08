@@ -25,7 +25,7 @@
     brightnessctl # screen brightness
     grimblast # screenshot
     hyprpicker # color picker
-		bemoji # emoji picker
+    bemoji # emoji picker
     pamixer # pulseaudio mixer
     playerctl # media player control
     swww # wallpaper
