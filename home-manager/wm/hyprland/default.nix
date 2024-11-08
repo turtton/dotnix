@@ -33,17 +33,19 @@
     wl-clipboard # clipboard manager
     kdePackages.qt6ct
     libsForQt5.qt5ct
+    polkit_gnome # password prompt
   ];
 
   xdg.userDirs.createDirectories = true;
   xdg.configFile =
     let
       settings = pkgs.writeText "settings.ini" ''
-        [Settings]
-        gtk-application-prefer-dark-theme = 1
-        gtk-theme-name = Tokyonight-Dark
-        gtk-icon-theme-name = Tokyonight-Dark
-        gtk-cursor-theme-name = Tokyonight-Dark
+                [Settings]
+        				gtk-im-module = fcitx
+                gtk-application-prefer-dark-theme = 1
+                gtk-theme-name = Tokyonight-Dark
+                gtk-icon-theme-name = Tokyonight-Dark
+                gtk-cursor-theme-name = Tokyonight-Dark
       '';
     in
     {

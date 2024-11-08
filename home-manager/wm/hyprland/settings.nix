@@ -1,9 +1,12 @@
 { lib, pkgs, ... }: {
   wayland.windowManager.hyprland.settings = {
+    "plugin:split-monitor-workspaces:count" = 5;
     env = [
-      "GTK_IM_MODULE, fcitx"
-      "QT_IM_MODULE, fcitx"
+      # "GTK_IM_MODULE, fcitx"
+      # "QT_IM_MODULE, wayland;fcitx"
       "XMODIFIERS, @im=fcitx"
+      "QT_QPA_PLATFORM,wayland"
+      "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
     ];
     exec-once = [
       "swww init && swww img ${pkgs.wallpaper-springcity}/wall.png"

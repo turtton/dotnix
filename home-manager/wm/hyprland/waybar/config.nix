@@ -34,17 +34,18 @@
       all-outputs = "true";
       format = "{icon}";
       on-click = "activate";
-      format-icons = {
-        "1" = "●";
-        "2" = "●";
-        "3" = "●";
-        "4" = "●";
-        "5" = "●";
-        "6" = "●";
-        "7" = "●";
-        "8" = "●";
-        "9" = "●";
-      };
+      # format-icons = {
+      #   "1" = "●";
+      #   "2" = "●";
+      #   "3" = "●";
+      #   "4" = "●";
+      #   "5" = "●";
+      #   "6" = "●";
+      #   "7" = "●";
+      #   "8" = "●";
+      #   "9" = "●";
+      #   "10" = "●";
+      # };
     };
 
     "custom/media" = {
@@ -133,7 +134,7 @@
         default = [ " " " " " " ];
       };
       tooltip-format = "{desc} {volume}%";
-      on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
+      on-click = "${pkgs.pavucontrol}/bin/pavucontrol -t 3";
     };
 
     "custom/wmname" = {

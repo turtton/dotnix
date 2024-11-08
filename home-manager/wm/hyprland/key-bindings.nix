@@ -45,8 +45,8 @@
       "$mainMod			, 9			, split-workspace, 9"
       "$mainMod CTRL, right	,	split-cycleworkspaces, +1"
       "$mainMod CTRL, left	,	split-cycleworkspaces, -1"
-      "$mainMod CTRL, h			,	split-cycleworkspaces, +1"
-      "$mainMod CTRL, l			,	split-cycleworkspaces, -1"
+      "$mainMod CTRL, l			,	split-cycleworkspaces, +1"
+      "$mainMod CTRL, h			,	split-cycleworkspaces, -1"
       "$mainMod, mouse_down	,	split-cycleworkspaces, +1"
       "$mainMod, mouse_up		,	split-cycleworkspaces, -1"
       # # Normal
@@ -90,8 +90,8 @@
 
       "$mainMod SHIFT, right, movetoworkspace, m+1"
       "$mainMod SHIFT, left	, movetoworkspace, m-1"
-      "$mainMod SHIFT, h		, movetoworkspace, m+1"
-      "$mainMod SHIFT, l		, movetoworkspace, m-1"
+      "$mainMod SHIFT, h		, movetoworkspace, m-1"
+      "$mainMod SHIFT, l		, movetoworkspace, m+1"
 
       # toggle monitor
       "$mainMod, Tab, exec, hyprctl monitors -j|jq 'map(select(.focused|not).activeWorkspace.id)[0]'|xargs hyprctl dispatch workspace"
