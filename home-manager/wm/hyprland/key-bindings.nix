@@ -97,11 +97,11 @@
       "$mainMod, Tab, exec, hyprctl monitors -j|jq 'map(select(.focused|not).activeWorkspace.id)[0]'|xargs hyprctl dispatch workspace"
 
       # screenshot
-      ", Print, exec, grimblast --notify copy output"
+      '', Print, exec, grimblast copysave output - | swappy -f - -o /tmp/screenshot.png && zenity --question --text="Save?" && cp /tmp/screenshot.png $HOME/Screenshots/$(date +%Y-%m-%dT%H:%M:%S).png''
       ''
-        $mainMod, Print, exec, grimblast --notify copysave output "$HOME/Screenshots/$(date +%Y-%m-%dT%H:%M:%S).png"''
+        $mainMod, Print, exec, grimblast copysave active - | swappy -f - -o /tmp/screenshot.png && zenity --question --text="Save?" && cp /tmp/screenshot.png "$HOME/Screenshots/$(date +%Y-%m-%dT%H:%M:%S).png"''
       ''
-        $mainMod SHIFT, s, exec, grimblast --notify copysave area "$HOME/Screenshots/$(date +%Y-%m-%dT%H:%M:%S).png"''
+        $mainMod SHIFT, s, exec, grimblast copysave area - | swappy -f - -o /tmp/screenshot.png && zenity --question --text="Save?" && cp /tmp/screenshot.png "$HOME/Screenshots/$(date +%Y-%m-%dT%H:%M:%S).png"''
 
       # launcher
       "$mainMod, d, exec, rofi -show drun"

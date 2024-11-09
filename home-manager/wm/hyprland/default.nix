@@ -25,6 +25,8 @@
   home.packages = with pkgs; [
     brightnessctl # screen brightness
     grimblast # screenshot
+		swappy # image editor for screenshots
+		zenity # create screenshot save dialog
     hyprpicker # color picker
     bemoji # emoji picker
     pamixer # pulseaudio mixer
