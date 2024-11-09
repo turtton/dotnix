@@ -10,6 +10,7 @@ in
     (import ./noto-fonts.nix)
     (import ./ghr.nix generated.ghr)
     (import ./jetbrains-dolphin.nix generated.jetbrains-dolphin)
+    (import ./jetbrains-nautilus.nix generated.jetbrains-nautilus)
     (import ./wallpaper-springcity.nix generated.wallpaper-springcity)
   ];
 }

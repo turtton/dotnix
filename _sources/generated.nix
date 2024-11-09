@@ -23,6 +23,18 @@
       sha256 = "sha256-T8ueCqYIKDRo4Ds/o0dCeNjK3dD8fNT9oNEDfzqLg0Y=";
     };
   };
+  jetbrains-nautilus = {
+    pname = "jetbrains-nautilus";
+    version = "c79f6ab6504bd1f1a9d1068f284c24f3227f51c1";
+    src = fetchFromGitHub {
+      owner = "encounter";
+      repo = "jetbrains-nautilus";
+      rev = "c79f6ab6504bd1f1a9d1068f284c24f3227f51c1";
+      fetchSubmodules = false;
+      sha256 = "sha256-f78dMegKVe2fed5I0ogiaG+s9DkSF13s59fhhTr5U5c=";
+    };
+    date = "2021-05-17";
+  };
   wallpaper-springcity = {
     pname = "wallpaper-springcity";
     version = "Golden-hour-latest";

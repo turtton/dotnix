@@ -60,6 +60,7 @@
       packages = {
         ghr = overlays.ghr;
         jetbrains-dolphin = overlays.jetbrains-dolphin;
+        jetbrains-nautilus = overlays.jetbrains-nautilus;
         wallpaper-springcity = overlays.wallpaper-springcity;
       };
       devShells.default = mkShell {

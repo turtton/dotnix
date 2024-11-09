@@ -39,6 +39,26 @@
         },
         "version": "1.4.2"
     },
+    "jetbrains-nautilus": {
+        "cargoLocks": null,
+        "date": "2021-05-17",
+        "extract": null,
+        "name": "jetbrains-nautilus",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "encounter",
+            "repo": "jetbrains-nautilus",
+            "rev": "c79f6ab6504bd1f1a9d1068f284c24f3227f51c1",
+            "sha256": "sha256-f78dMegKVe2fed5I0ogiaG+s9DkSF13s59fhhTr5U5c=",
+            "type": "github"
+        },
+        "version": "c79f6ab6504bd1f1a9d1068f284c24f3227f51c1"
+    },
     "wallpaper-springcity": {
         "cargoLocks": null,
         "date": null,

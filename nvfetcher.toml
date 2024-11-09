@@ -10,3 +10,7 @@ fetch.url = "https://raw.githubusercontent.com/MrVivekRajan/Hypr-Dots/refs/heads
 src.github = "alex1701c/JetBrainsDolphinPlugin"
 fetch.github = "alex1701c/JetBrainsDolphinPlugin"
 git.fetchSubmodules = true
+
+[jetbrains-nautilus]
+src.git = "https://github.com/encounter/jetbrains-nautilus.git"
+fetch.github = "encounter/jetbrains-nautilus"

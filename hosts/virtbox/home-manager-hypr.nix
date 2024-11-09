@@ -8,7 +8,7 @@
     ./../../home-manager/gui/shared/fcitx
     ./../../home-manager/gui/shared/libskk
     ./../../home-manager/gui/term/alacritty.nix
-    ./../../home-manager/gui/filemanager/dolphin
+    ./../../home-manager/gui/filemanager/nautilus.nix
     ./../../home-manager/wm/hyprland
     # ./../../home-manager/gui/game
   ];
