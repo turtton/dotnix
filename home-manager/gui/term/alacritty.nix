@@ -65,12 +65,6 @@ in
   home.packages = [
     pkgs.alacritty.terminfo
   ];
-  dconf.settings = {
-    "com/github/stunkymonkey/nautilus-open-any-terminal" = {
-      keybindings = "'<Shift><F4>";
-      terminal = "alacritty";
-    };
-  };
   home.sessionVariables.TERMINFO_DIRS = "${config.home.homeDirectory}/.nix-profile/share/terminfo";
   programs.alacritty = {
     enable = true;
