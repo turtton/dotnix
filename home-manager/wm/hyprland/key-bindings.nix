@@ -1,4 +1,4 @@
-{
+{ pkgs, ... }: {
   wayland.windowManager.hyprland.settings = {
     "$mainMod" = "SUPER";
     "$subMod" = "ALT";
@@ -6,7 +6,7 @@
     bind = [
       "$mainMod, Return, exec, $term"
       "$mainMod SHIFT, Q, killactive"
-      "$mainMod SHIFT, E, exec, eww open control_center"
+      "$mainMod SHIFT, E, exec, ${pkgs.hyprpanel}/bin/hyprpanel -t powerdropdownmenu"
       "$mainMod, F, fullscreen"
       "$mainMod SHIFT, F, togglefloating"
 
@@ -111,7 +111,7 @@
       "$mainMod SHIFT, c, exec, hyprpicker --autocopy"
 
       # screen lock
-      "$mainMod, l, exec, hyprlock"
+      "$mainMod CTRL SHIFT, l, exec, hyprlock"
 
       # system
       "$mainMod, x, exec, systemctl suspend"

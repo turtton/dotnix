@@ -35,6 +35,9 @@
       url = "github:Duckonaut/split-monitor-workspaces";
       inputs.hyprland.follows = "hyprland";
     };
+    hyprpanel = {
+      url = "github:Jas-SinghFSU/HyprPanel";
+    };
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -47,7 +50,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = inputs@{ nixpkgs, flake-utils, ... }: {
+  outputs = inputs@{ nixpkgs, flake-utils, hyprpanel, ... }: {
     nixosConfigurations = (import ./hosts inputs).nixos;
     homeConfigurations = (import ./hosts inputs).home-manager;
   } // flake-utils.lib.eachDefaultSystem (system:
@@ -62,6 +65,8 @@
         jetbrains-dolphin = overlays.jetbrains-dolphin;
         jetbrains-nautilus = overlays.jetbrains-nautilus;
         wallpaper-springcity = overlays.wallpaper-springcity;
+        hyprpanel = hyprpanel.packages.${system}.default;
+        hyprpanel-tokyonight = overlays.hyprpanel-tokyonight;
       };
       devShells.default = mkShell {
         packages = [

@@ -12,7 +12,8 @@
       "hyprlock"
       "swww init && swww img ${pkgs.wallpaper-springcity}/wall.png"
       "${./eww/config/scripts/start.sh}"
-      "waybar"
+      #"waybar"
+      ''${pkgs.hyprpanel}/bin/hyprpanel -r "useTheme('${pkgs.hyprpanel-tokyonight}/tokyo_night.json')"''
       "fcitx5 -D"
       # "hypr-helper start"
       # "discord --start-minimized"

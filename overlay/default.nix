@@ -9,6 +9,7 @@ in
     (import ./noto-fonts-cjk-sans.nix)
     (import ./noto-fonts.nix)
     (import ./ghr.nix generated.ghr)
+    (import ./hyprpanel-tokyonight.nix generated.hyprpanel-tokyonight)
     (import ./jetbrains-dolphin.nix generated.jetbrains-dolphin)
     (import ./jetbrains-nautilus.nix generated.jetbrains-nautilus)
     (import ./wallpaper-springcity.nix generated.wallpaper-springcity)

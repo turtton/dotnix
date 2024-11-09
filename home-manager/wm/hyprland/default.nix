@@ -1,10 +1,11 @@
 { pkgs, inputs, system, ... }: {
   imports = [
     ./eww
+    ./hyprpanel
     ./qt
     ./rofi
-    ./waybar
-    ./dunst.nix
+    # ./waybar
+    # ./dunst.nix
     ./gtk.nix
     ./key-bindings.nix
     ./settings.nix

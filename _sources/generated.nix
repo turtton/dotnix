@@ -12,6 +12,15 @@
       sha256 = "sha256-L9+rcdt+MGZSCOJyCE4t/TT6Fjtxvfr9LBJYyRrx208=";
     };
   };
+  hyprpanel-tokyonight = {
+    pname = "hyprpanel-tokyonight";
+    version = "bc96dff4855bb069ac101ec36c59c31045b72306";
+    src = fetchurl {
+      url = "https://github.com/Jas-SinghFSU/HyprPanel/raw/refs/heads/master/themes/tokyo_night.json";
+      sha256 = "sha256-y2bUIm2xGnQ91IkNMpbiQ6RSd+il9P9Gli77eJKdmUc=";
+    };
+    date = "2024-11-08";
+  };
   jetbrains-dolphin = {
     pname = "jetbrains-dolphin";
     version = "1.4.2";

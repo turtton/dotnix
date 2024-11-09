@@ -53,6 +53,7 @@ let
       inherit system;
       modules = modules ++ [
         ./../overlay
+        { nixpkgs.overlays = [ inputs.hyprpanel.overlay ]; }
       ] ++ (lib.optionals (users != [ ]) [
         inputs.home-manager.nixosModules.home-manager
         ### home-manager configurations ####
