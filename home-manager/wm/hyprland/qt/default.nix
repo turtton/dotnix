@@ -4,7 +4,7 @@
     libsForQt5.qt5ct
     kdePackages.qtwayland
     kdePackages.qtstyleplugin-kvantum
-    kdePackages.breeze-icons
+    # kdePackages.breeze-icons
   ];
   qt = {
     enable = true;
