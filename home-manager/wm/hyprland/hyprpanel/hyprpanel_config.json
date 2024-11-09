@@ -6,7 +6,7 @@
   "theme.font.size": "14px",
   "menus.clock.time.military": true,
   "menus.clock.time.hideSeconds": false,
-  "bar.clock.format": "%y/%m/%d  %I:%M",
+  "bar.clock.format": "%y/%m/%d  %H:%M",
   "bar.media.show_active_only": true,
   "bar.notifications.show_total": false,
   "theme.bar.buttons.modules.ram.enableBorder": false,
