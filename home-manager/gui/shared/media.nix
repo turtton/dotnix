@@ -2,6 +2,7 @@
   home.packages = with pkgs; [
     mpv
     vlc
+    tauon
     spotify
     yt-dlp
     kdenlive
