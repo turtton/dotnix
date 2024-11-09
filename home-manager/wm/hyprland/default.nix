@@ -10,6 +10,7 @@
     ./key-bindings.nix
     ./settings.nix
     ./hyprlock.nix
+    ./utilapp.nix
     #./wofi.nix
   ];
 
@@ -25,8 +26,8 @@
   home.packages = with pkgs; [
     brightnessctl # screen brightness
     grimblast # screenshot
-		swappy # image editor for screenshots
-		zenity # create screenshot save dialog
+    swappy # image editor for screenshots
+    zenity # create screenshot save dialog
     hyprpicker # color picker
     bemoji # emoji picker
     pamixer # pulseaudio mixer
