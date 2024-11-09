@@ -8,7 +8,7 @@
     bluez-tools
     brightnessctl
     gpu-screen-recorder
-    hyprpicker
+    gcolor3
     grimblast
     btop
   ];
