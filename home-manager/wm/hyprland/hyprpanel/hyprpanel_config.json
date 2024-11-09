@@ -67,5 +67,6 @@
     }
   },
   "menus.dashboard.controls.enabled": false,
-  "menus.dashboard.shortcuts.enabled": true
+  "menus.dashboard.shortcuts.enabled": true,
+	"menus.clock.weather.enabled": false
 }
