@@ -62,7 +62,8 @@
       formatter = nixpkgs-fmt;
       packages = {
         ghr = overlays.ghr;
-        jetbrains-dolphin = overlays.jetbrains-dolphin;
+        jetbrains-dolphin-qt5 = overlays.jetbrains-dolphin-qt5;
+        jetbrains-dolphin-qt6 = overlays.jetbrains-dolphin-qt6;
         jetbrains-nautilus = overlays.jetbrains-nautilus;
         wallpaper-springcity = overlays.wallpaper-springcity;
         hyprpanel = hyprpanel.packages.${system}.default;
