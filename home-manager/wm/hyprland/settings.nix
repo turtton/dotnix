@@ -6,6 +6,8 @@
       # "QT_IM_MODULE, wayland;fcitx"
       "XMODIFIERS, @im=fcitx"
       "QT_QPA_PLATFORM,wayland"
+      "QT_QPA_PLATFORMTHEME,qt5ct"
+      "QT_STYLE_OVERRIDE,kvantum"
       "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
     ];
     exec-once = [

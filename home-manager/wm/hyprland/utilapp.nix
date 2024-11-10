@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
-    eog # Image viewer
+    # eog # Image viewer
+    libsForQt5.gwenview # Image viewer
   ];
 }

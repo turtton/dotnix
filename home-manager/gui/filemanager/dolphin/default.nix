@@ -1,8 +1,8 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
-    kdePackages.dolphin
-    kdePackages.dolphin-plugins
-    jetbrains-dolphin-qt6
+    libsForQt5.dolphin
+    libsForQt5.dolphin-plugins
+    jetbrains-dolphin-qt5
   ];
   xdg.dataFile."dolphin" = {
     source = ./share;

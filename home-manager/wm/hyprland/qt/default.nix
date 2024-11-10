@@ -18,5 +18,6 @@
       source = ./kvantum;
       recursive = true;
     };
+    "kdeglobals".source = ./kdeglobals;
   };
 }

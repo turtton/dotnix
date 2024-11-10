@@ -10,7 +10,7 @@
     # ./../../os/wm/plasma5.nix
     ./../../os/wm/hyprland.nix
     ./../../os/desktop/shared
-    (import ./../../os/desktop/nautilus.nix "alacritty")
+    # (import ./../../os/desktop/nautilus.nix "alacritty")
     # ./../../os/desktop/1password.nix
     # ./../../os/desktop/flatpak.nix
     # ./../../os/desktop/media.nix
