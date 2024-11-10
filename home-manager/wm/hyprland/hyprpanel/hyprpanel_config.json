@@ -17,7 +17,7 @@
         "dashboard",
         "workspaces",
         "windowtitle",
-        "cputemp",
+        "updates",
         "storage"
       ],
       "middle": [
@@ -39,5 +39,7 @@
   "menus.dashboard.controls.enabled": false,
   "menus.dashboard.shortcuts.enabled": true,
 	"menus.clock.weather.enabled": false,
-	"menus.dashboard.shortcuts.right.shortcut1.command": "gcolor3"
+	"menus.dashboard.shortcuts.right.shortcut1.command": "gcolor3",
+	"bar.customModules.updates.updateCommand": "jq '[.[].cvssv3_basescore | to_entries | add | select(.value > 5)] | length' <<< $(vulnix -S --json)",
+	"bar.customModules.updats.icon": "⚠️"
 }

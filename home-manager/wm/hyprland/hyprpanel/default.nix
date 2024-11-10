@@ -11,6 +11,8 @@
     gcolor3
     grimblast
     btop
+    jq
+    vulnix
   ];
   home.file.".cache/ags/hyprpanel/options.json".source = ./hyprpanel_config.json;
 }
