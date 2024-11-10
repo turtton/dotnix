@@ -2,6 +2,7 @@
   home.packages = with pkgs; [
     # Parsers
     jq
+    jnv # jq interactive viewer
     yq-go
 
     # Archives
