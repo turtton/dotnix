@@ -9,6 +9,7 @@
       "$mainMod SHIFT, E, exec, ${pkgs.hyprpanel}/bin/hyprpanel -t powerdropdownmenu"
       "$mainMod, F, fullscreen"
       "$mainMod SHIFT, F, togglefloating"
+      "$mainMod SHIFT, P, pin"
 
       # move focus
       "$subMod, left, movefocus, left"
