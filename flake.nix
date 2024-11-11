@@ -70,7 +70,7 @@
         hyprpanel-tokyonight = overlays.hyprpanel-tokyonight;
         # Force Wayland IME system
         vivaldi = overlays.vivaldi;
-        spotify = overlays.spotity;
+        spotify = overlays.spotify;
         obsidian = overlays.obsidian;
         discord = overlays.discord;
         discord-ptb = overlays.discord-ptb;
