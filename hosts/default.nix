@@ -141,21 +141,6 @@ in
       homes = [
         rec {
           username = "turtton";
-          confPath = ./maindesk/home-manager.nix;
-          osUserConfig = { pkgs, ... }: {
-            users.users."${username}" = {
-              shell = pkgs.zsh;
-              openssh.authorizedKeys.keys = [
-                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA/8nfHCulkm71YTzMXgrvTF+G9RQ9LUvy6pKat/FXot"
-              ];
-            };
-            imports = [
-              (import ./../os/wm/plasma5.nix { inherit username; })
-            ];
-          };
-        }
-        rec {
-          username = "turtton-hypr";
           confPath = ./maindesk/home-manager-hypr.nix;
           osUserConfig = { pkgs, ... }: {
             users.users."${username}" = {
@@ -164,20 +149,24 @@ in
                 "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA/8nfHCulkm71YTzMXgrvTF+G9RQ9LUvy6pKat/FXot"
               ];
             };
-            imports = [
-              ./../os/wm/hyprland.nix
-            ];
-            #services.greetd = {
-            #  enable = true;
-            #  settings = {
-            #    default_session = {
-            #      command = ''
-            #        ${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland
-            #      '';
-            #      user = username;
-            #    };
-            #  };
-            #};
+            # imports = [
+            #   (import ./../os/wm/plasma5.nix { inherit username; })
+            # ];
+            services.greetd = {
+              enable = true;
+              settings = {
+                initial_session = {
+                  command = "Hyprland";
+                  user = username;
+                };
+                default_session = {
+                  command = ''
+                                        ${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland
+                    									'';
+                  user = username;
+                };
+              };
+            };
           };
         }
       ];
