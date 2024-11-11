@@ -55,7 +55,7 @@
     homeConfigurations = (import ./hosts inputs).home-manager;
   } // flake-utils.lib.eachDefaultSystem (system:
     let
-      pkgs = import nixpkgs { inherit system; };
+      pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
       overlays = pkgs.lib.attrsets.mergeAttrsList (map (overlay: overlay pkgs pkgs) (import ./overlay { inherit pkgs; }).nixpkgs.overlays);
     in
     with pkgs; {
@@ -68,6 +68,14 @@
         wallpaper-springcity = overlays.wallpaper-springcity;
         hyprpanel = hyprpanel.packages.${system}.default;
         hyprpanel-tokyonight = overlays.hyprpanel-tokyonight;
+        # Force Wayland IME system
+        vivaldi = overlays.vivaldi;
+        spotify = overlays.spotity;
+        obsidian = overlays.obsidian;
+        discord = overlays.discord;
+        discord-ptb = overlays.discord-ptb;
+        slack = overlays.slack;
+        teams-for-linux = overlays.teams-for-linux;
       };
       devShells.default = mkShell {
         packages = [
