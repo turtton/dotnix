@@ -2,6 +2,10 @@
 
 My dotfiles for NixOS
 
+# Hyprland
+
+![](./docs/hypr.png)
+
 # Setup
 
 1. Modify `/etc/nixos/configuration.nix`
