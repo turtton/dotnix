@@ -37,8 +37,13 @@
     wev # key event watcher
     wf-recorder # screen recorder
     wl-clipboard # clipboard manager
-    polkit_gnome # password prompt
+    polkit
+    hyprpolkitagent # password prompt
+    libsecret # keyring
   ];
 
   xdg.userDirs.createDirectories = true;
+  services = {
+    gnome-keyring.enable = true;
+  };
 }
