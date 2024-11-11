@@ -9,6 +9,7 @@
       "QT_QPA_PLATFORMTHEME,qt5ct"
       "QT_STYLE_OVERRIDE,kvantum"
       "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
+      "NIXOS_OZONE_WL,1" # for chromium based system to force wayland
     ];
     exec-once = [
       "hyprlock"
