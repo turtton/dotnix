@@ -1,7 +1,6 @@
 { pkgs, inputs, system, ... }: {
   imports = [
     ./eww
-    ./hyprpanel
     ./qt
     ./rofi
     # ./waybar
@@ -10,6 +9,7 @@
     ./key-bindings.nix
     ./settings.nix
     ./hyprlock.nix
+    ./hyprpanel.nix
     ./utilapp.nix
     #./wofi.nix
   ];
