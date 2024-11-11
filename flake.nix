@@ -70,12 +70,14 @@
         hyprpanel-tokyonight = overlays.hyprpanel-tokyonight;
         # Force Wayland IME system
         vivaldi = overlays.vivaldi;
+        chromium = overlays.chromium;
         spotify = overlays.spotify;
         obsidian = overlays.obsidian;
         discord = overlays.discord;
         discord-ptb = overlays.discord-ptb;
         slack = overlays.slack;
         teams-for-linux = overlays.teams-for-linux;
+        vscode = overlays.vscode;
       };
       devShells.default = mkShell {
         packages = [
