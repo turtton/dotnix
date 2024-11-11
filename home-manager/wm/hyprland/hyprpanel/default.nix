@@ -13,6 +13,7 @@
     btop
     jq
     vulnix
+    pavucontrol
   ];
   home.file.".cache/ags/hyprpanel/options.json".source = ./hyprpanel_config.json;
 }

@@ -30,9 +30,9 @@
         "network",
         "bluetooth",
         "battery",
-        "notifications",
         "systray",
-        "clock"
+        "clock",
+        "notifications"
       ]
     }
   },
@@ -41,5 +41,7 @@
 	"menus.clock.weather.enabled": false,
 	"menus.dashboard.shortcuts.right.shortcut1.command": "gcolor3",
 	"bar.customModules.updates.updateCommand": "jq '[.[].cvssv3_basescore | to_entries | add | select(.value > 5)] | length' <<< $(vulnix -S --json)",
-	"bar.customModules.updates.icon": "󰋼"
+	"bar.customModules.updates.icon": "󰋼",
+	"bar.volume.rightClick": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+	"bar.volume.middleClick": "pavucontrol"
 }
