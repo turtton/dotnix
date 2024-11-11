@@ -19,12 +19,14 @@
       ''${pkgs.hyprpanel}/bin/hyprpanel -r "useTheme('${pkgs.hyprpanel-tokyonight}/tokyo_night.json')"''
       "fcitx5 -D"
       # "hypr-helper start"
-      # "discord --start-minimized"
-      # "steam -silent"
+      "systemctl --user start hyprpolkitagent"
     ];
-    windowrule = [
-      "pseudo, noblur, class:(fcitx)"
-      "noblur, class:(wofi)"
+    windowrulev2 = [
+      "pseudo noblur, class:^(fcitx)(.*)$"
+      "noblur class:(wofi)"
+      "opaque, class:^(discord)$"
+      "opaque, class:^(vivaldi-.*)$"
+      "suppressevent maximize, class:.*"
     ];
     input = {
       repeat_delay = 300;
@@ -72,6 +74,5 @@
     # master = {
     #   new_status = "master";
     # };
-    windowrulev2 = "suppressevent maximize, class:.*";
   };
 }
