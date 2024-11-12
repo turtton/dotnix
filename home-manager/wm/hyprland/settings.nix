@@ -26,7 +26,9 @@
       "pseudo noblur, class:^(fcitx)(.*)$"
       "noblur class:(wofi)"
       "opaque, class:^(discord)$"
+      "opaque, class:^(vesktop)$"
       "opaque, class:^(vivaldi-.*)$"
+      "opaque, class:^(jetbrains-.*)$"
       "suppressevent maximize, class:.*"
     ];
     input = {
