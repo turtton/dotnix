@@ -10,7 +10,7 @@
       "$mainMod, F, fullscreen"
       "$mainMod SHIFT, F, togglefloating"
       "$mainMod SHIFT, P, pin"
-      "$mainMod, V, exec, rofi -modi clipboard:${pkgs.cliphist}/bin/cliphist-rofi-img -show clipboard -show-icons -theme-str '#element-icon {size: 5ch; }'"
+      "$mainMod, V, exec, rofi -modi clipboard:${pkgs.cliphist}/bin/cliphist-rofi-img -show clipboard -show-icons -theme-str '##element-icon {size: 5ch; }'"
 
       # move focus
       "$subMod, left, movefocus, left"
