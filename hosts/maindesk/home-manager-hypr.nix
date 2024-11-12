@@ -22,7 +22,7 @@
       ",preferred,auto,1"
     ];
     input = {
-      sensitivity = lib.mkForce 0.08;
+      sensitivity = lib.mkForce 0.05;
       accel_profile = "flat";
       kb_layout = "us";
     };
