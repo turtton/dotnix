@@ -37,6 +37,7 @@
     wev # key event watcher
     wf-recorder # screen recorder
     wl-clipboard # clipboard manager
+    cliphist # clipboard history
     polkit
     hyprpolkitagent # password prompt
     libsecret # keyring

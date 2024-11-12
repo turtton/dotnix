@@ -20,6 +20,7 @@
       "fcitx5 -D"
       # "hypr-helper start"
       "systemctl --user start hyprpolkitagent"
+      "wl-paste --watch cliphist store"
     ];
     windowrulev2 = [
       "pseudo noblur, class:^(fcitx)(.*)$"
