@@ -14,6 +14,7 @@
     jq
     vulnix
     pavucontrol
+    pulseaudio
   ];
   home.file.".cache/ags/hyprpanel/options.json".text = builtins.toJSON {
     "bar.customModules.updates.pollingInterval" = 1440000;
@@ -69,9 +70,11 @@
     "menus.dashboard.shortcuts.enabled" = true;
     "menus.clock.weather.enabled" = false;
     "menus.dashboard.shortcuts.right.shortcut1.command" = "gcolor3";
+    "menus.media.displayTime" = true;
     "bar.customModules.updates.updateCommand" = "jq '[.[].cvssv3_basescore | to_entries | add | select(.value > 5)] | length' <<< $(vulnix -S --json)";
     "bar.customModules.updates.icon" = "󰋼";
     "bar.volume.rightClick" = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
     "bar.volume.middleClick" = "pavucontrol";
+    "bar.media.format" = "{title}";
   };
 }
