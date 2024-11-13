@@ -27,7 +27,10 @@
       "noblur class:(wofi)"
       "opaque, class:^(discord)$"
       "opaque, class:^(vesktop)$"
+      "opaque, class:^(Slack)$"
       "opaque, class:^(vivaldi-.*)$"
+      "opaque, class:^(chromium-.*)$"
+      "opaque, class:^(firefox)$"
       "opaque, class:^(jetbrains-.*)$"
       "suppressevent maximize, class:.*"
     ];
