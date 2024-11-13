@@ -33,6 +33,7 @@
       "opaque, class:^(firefox)$"
       "opaque, class:^(jetbrains-.*)$"
       "opaque, class:^(swappy)$"
+      "opaque, class:^(Minecraft*)$"
       "suppressevent maximize, class:.*"
     ];
     input = {
