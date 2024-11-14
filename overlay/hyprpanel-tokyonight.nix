@@ -1,6 +1,8 @@
 gen: self: prev: {
   hyprpanel-tokyonight = with self; stdenv.mkDerivation {
-    inherit (gen) pname version src;
+    inherit (gen) pname version;
+
+    src = self.writeText "tokyo_night.json" gen."themes/tokyo_night.json";
 
     dontUnpack = true;
 

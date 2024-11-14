@@ -14,12 +14,16 @@
   };
   hyprpanel-tokyonight = {
     pname = "hyprpanel-tokyonight";
-    version = "bc96dff4855bb069ac101ec36c59c31045b72306";
-    src = fetchurl {
-      url = "https://github.com/Jas-SinghFSU/HyprPanel/raw/refs/heads/master/themes/tokyo_night.json";
-      sha256 = "sha256-y2bUIm2xGnQ91IkNMpbiQ6RSd+il9P9Gli77eJKdmUc=";
+    version = "e71a2dfe2dc0418d53841f0831ce7425d9f402e1";
+    src = fetchFromGitHub {
+      owner = "Jas-SinghFSU";
+      repo = "HyprPanel";
+      rev = "e71a2dfe2dc0418d53841f0831ce7425d9f402e1";
+      fetchSubmodules = false;
+      sha256 = "sha256-Nuy9PsojpPgezPY6+mjkt1bp+PqKADcjT4iEwqygs3U=";
     };
-    date = "2024-11-08";
+    "themes/tokyo_night.json" = builtins.readFile ./hyprpanel-tokyonight-e71a2dfe2dc0418d53841f0831ce7425d9f402e1/themes/tokyo_night.json;
+    date = "2024-11-12";
   };
   jetbrains-dolphin = {
     pname = "jetbrains-dolphin";

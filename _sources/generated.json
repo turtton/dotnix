@@ -21,18 +21,25 @@
     },
     "hyprpanel-tokyonight": {
         "cargoLocks": null,
-        "date": "2024-11-08",
-        "extract": null,
+        "date": "2024-11-12",
+        "extract": {
+            "themes/tokyo_night.json": "./hyprpanel-tokyonight-e71a2dfe2dc0418d53841f0831ce7425d9f402e1/themes/tokyo_night.json"
+        },
         "name": "hyprpanel-tokyonight",
         "passthru": null,
         "pinned": false,
         "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
             "name": null,
-            "sha256": "sha256-y2bUIm2xGnQ91IkNMpbiQ6RSd+il9P9Gli77eJKdmUc=",
-            "type": "url",
-            "url": "https://github.com/Jas-SinghFSU/HyprPanel/raw/refs/heads/master/themes/tokyo_night.json"
+            "owner": "Jas-SinghFSU",
+            "repo": "HyprPanel",
+            "rev": "e71a2dfe2dc0418d53841f0831ce7425d9f402e1",
+            "sha256": "sha256-Nuy9PsojpPgezPY6+mjkt1bp+PqKADcjT4iEwqygs3U=",
+            "type": "github"
         },
-        "version": "bc96dff4855bb069ac101ec36c59c31045b72306"
+        "version": "e71a2dfe2dc0418d53841f0831ce7425d9f402e1"
     },
     "jetbrains-dolphin": {
         "cargoLocks": null,

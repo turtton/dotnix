@@ -16,5 +16,6 @@ src.git = "https://github.com/encounter/jetbrains-nautilus.git"
 fetch.github = "encounter/jetbrains-nautilus"
 
 [hyprpanel-tokyonight]
-src.git = "git@github.com:Jas-SinghFSU/HyprPanel.git"
-fetch.url = "https://github.com/Jas-SinghFSU/HyprPanel/raw/refs/heads/master/themes/tokyo_night.json"
+src.git = "https://github.com/Jas-SinghFSU/HyprPanel.git"
+fetch.github = "Jas-SinghFSU/HyprPanel"
+extract = ["themes/tokyo_night.json"]
