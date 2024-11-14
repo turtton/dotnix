@@ -29,6 +29,7 @@ My dotfiles for NixOS
 
 5. Run `switch-nixos {name}`(or `sudo nixos-rebuild switch --flake .#{name}`)  
    Name: `virtbox` `maindesk` `bridgetop`
+   > If you want to try my profile, use `virtbox` first(requires 75GB at least), and make sure [hardware-configuration.nix](https://github.com/turtton/dotnix/blob/main/hosts/virtbox/hardware-configuration.nix) is replaced your `/etc/nixos/hardware-configuration.nix` before running command.
 
 6. ~~Run `nix run nixpkgs#home-manager -- switch --flake .#{name}`(`switch-home {name}`)~~  
 
