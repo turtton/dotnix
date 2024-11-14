@@ -17,8 +17,8 @@
     # check `hyprctl monitors all`
     monitor = [
       "DP-2, 1920x1080@144, 0x0, 1"
-      "HDMI-A-1, 1920x1080@60, auto-right, 1"
-      "DP-1, 1920x1080@60, auto-up, 1"
+      "HDMI-A-1, 1920x1080@60, 1920x0, 1"
+      "DVI-D-1, 1920x1080@60, 300x-1080, 1"
       ",preferred,auto,1"
     ];
     input = {
