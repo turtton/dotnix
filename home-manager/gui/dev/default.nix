@@ -6,7 +6,8 @@
   home.packages = with pkgs; [
     unityhub
     blockbench-electron
-    insomnia
+    insomnia # RestAPI dev	tool
+    remmina # Remote desktop client
     # gitify
     drawio
   ];
