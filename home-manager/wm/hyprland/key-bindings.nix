@@ -108,7 +108,7 @@
 
       # launcher
       "$mainMod, d, exec, rofi -show drun"
-      "$mainMod, period, exec, bemoji -t"
+      "$mainMod, period, exec, bemoji"
 
       # color picker
       "$mainMod SHIFT, c, exec, hyprpicker --autocopy"
