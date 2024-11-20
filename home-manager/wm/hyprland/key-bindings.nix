@@ -3,6 +3,7 @@
     "$mainMod" = "SUPER";
     "$subMod" = "ALT";
     "$term" = "alacritty";
+    "$fileManager" = "dolphin";
     bind = [
       "$mainMod, Return, exec, $term"
       "$mainMod SHIFT, Q, killactive"

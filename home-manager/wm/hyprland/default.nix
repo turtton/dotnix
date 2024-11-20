@@ -46,6 +46,7 @@
   ];
 
   xdg.userDirs.createDirectories = true;
+  xdg.mimeApps.enable = true;
   services = {
     gnome-keyring.enable = true;
   };

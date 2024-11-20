@@ -9,4 +9,7 @@
     source = ./share;
     recursive = true;
   };
+  xdg.mimeApps.defaultApplications = {
+    "inode/directory" = [ "${pkgs.dolphin}/share/applications/org.kde.dolphin.desktop" ];
+  };
 }

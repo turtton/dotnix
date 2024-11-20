@@ -11,4 +11,7 @@ in
       recursive = true;
     };
   };
+  xdg.mimeApps.defaultApplications = {
+    "text/plain" = [ "${pkgs.neovide}/share/applications/neovide.desktop" ];
+  };
 }
