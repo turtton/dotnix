@@ -34,6 +34,7 @@
       "opaque, class:^(jetbrains-.*)$"
       "opaque, class:^(swappy)$"
       "opaque, class:^(Minecraft)(.*)$"
+      "opaque, class:^(com.obsproject.Studio)(.*)$"
       "suppressevent maximize, class:.*"
     ];
     input = {
