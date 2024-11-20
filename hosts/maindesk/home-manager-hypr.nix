@@ -29,7 +29,6 @@
     exec-once = [
       "1password"
       "[workspace 1 silent] discord"
-      "[workspace 6 silent] vivaldi"
       "steam -silent"
       "KEYBASE_AUTOSTART=1 keybase-gui"
     ];
