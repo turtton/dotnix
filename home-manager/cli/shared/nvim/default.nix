@@ -4,7 +4,7 @@ let
 in
 {
   home = {
-    packages = [ nvim-project.default ];
+    packages = [ nvim-project.default pkgs.neovide ];
     sessionVariables.EDITOR = "nvim";
     file.".config/nvim" = {
       source = nvim-project.config;
