@@ -8,7 +8,7 @@
     ./gtk.nix
     ./key-bindings.nix
     ./settings.nix
-		./hypridle.nix
+    ./hypridle.nix
     ./hyprlock.nix
     ./hyprpanel.nix
     ./utilapp.nix
