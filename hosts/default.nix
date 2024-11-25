@@ -92,7 +92,7 @@ let
               users.users."${h.username}" = {
                 description = lib.mkDefault "${h.username}";
                 isNormalUser = lib.mkDefault true;
-                extraGroups = lib.mkDefault [ "networkmanager" "wheel" ];
+                extraGroups = lib.mkDefault [ "networkmanager" "wheel" "dialout" ];
               };
             })
           ] ++ lib.optional (h.osUserConfig or null != null) h.osUserConfig
