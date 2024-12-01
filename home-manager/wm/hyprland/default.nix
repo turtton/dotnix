@@ -43,6 +43,7 @@
     polkit
     hyprpolkitagent # password prompt
     libsecret # keyring
+    networkmanagerapplet # network manager gui
   ];
 
   xdg.userDirs.createDirectories = true;
