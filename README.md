@@ -11,6 +11,8 @@ My dotfiles for NixOS
 - LockScreen: [HyprLock](https://github.com/hyprwm/hyprlock/)
 - ScreenShot: [Grimblast+swappy](https://github.com/turtton/dotnix/blob/8186fca772bfa4d22db9263a04c08541cfbeafa9/home-manager/wm/hyprland/key-bindings.nix#L102-L106)
 
+> Article(JP): https://zenn.dev/watagame/articles/hyprland-nix
+
 # Setup
 
 1. Modify `/etc/nixos/configuration.nix`
