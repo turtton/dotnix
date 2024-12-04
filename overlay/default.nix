@@ -5,6 +5,7 @@ let
 in
 {
   nixpkgs.overlays = [
+    (import ./fix-ime.nix)
     (import ./force-wayland.nix)
     (import ./noto-fonts-cjk-serif.nix)
     (import ./noto-fonts-cjk-sans.nix)

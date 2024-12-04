@@ -78,6 +78,7 @@
         slack = overlays.slack;
         teams-for-linux = overlays.teams-for-linux;
         vscode = overlays.vscode;
+        zoom-us = overlays.zoom-us;
       };
       devShells.default = mkShell {
         packages = [
