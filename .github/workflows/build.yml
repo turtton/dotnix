@@ -25,7 +25,7 @@ jobs:
       - uses: icewind1991/attic-action@v1
         with:
           name: home
-          instance: https://attic.turtton.net/
+          instance: https://attic.taile2777.ts.net
           authToken: ${{ secrets.ATTIC_TOKEN }}
       - name: GC
         run: |
