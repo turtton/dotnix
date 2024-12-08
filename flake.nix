@@ -50,7 +50,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = inputs@{ nixpkgs, flake-utils, hyprpanel, ... }: {
+  outputs = inputs@{ nixpkgs, flake-utils, hyprland, hyprpanel, ... }: {
     nixosConfigurations = (import ./hosts inputs).nixos;
     homeConfigurations = (import ./hosts inputs).home-manager;
   } // flake-utils.lib.eachDefaultSystem (system:
@@ -66,6 +66,7 @@
         jetbrains-dolphin-qt6 = overlays.jetbrains-dolphin-qt6;
         jetbrains-nautilus = overlays.jetbrains-nautilus;
         wallpaper-springcity = overlays.wallpaper-springcity;
+        hyprland = hyprland.packages.${system}.default;
         hyprpanel = hyprpanel.packages.${system}.default;
         hyprpanel-tokyonight = overlays.hyprpanel-tokyonight;
         # Force Wayland IME system

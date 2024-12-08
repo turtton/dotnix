@@ -23,6 +23,7 @@ jobs:
           - jetbrains-dolphin-qt6
           - jetbrains-nautilus
           - wallpaper-springcity
+          - hyprland
           - hyprpanel
           - hyprpanel-tokyonight
           - vivaldi
