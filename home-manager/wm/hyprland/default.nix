@@ -49,5 +49,6 @@
   xdg.userDirs.createDirectories = true;
   services = {
     gnome-keyring.enable = true;
+    kdeconnect.indicator = true;
   };
 }
