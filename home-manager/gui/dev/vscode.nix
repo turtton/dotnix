@@ -16,7 +16,6 @@ in
       vscode-marketplace."42crunch".vscode-openapi
       # https://github.com/nix-community/nix-vscode-extensions/issues/31
       (vscode-marketplace.typespec.typespec-vscode.overrideAttrs (_: { sourceRoot = "extension"; }))
-      open-vsx.asvetliakov.vscode-neovim
       vscode-marketplace.wakatime.vscode-wakatime
       open-vsx.redhat.vscode-yaml
       vscode-marketplace.ms-python.python
@@ -34,9 +33,6 @@ in
     userSettings = {
       "workbench.productIconTheme" = "a-file-icon-vscode-product-icon-theme";
       "workbench.colorTheme" = "50 Shades of Purple";
-      "extensions.experimental.affinity" = {
-        "asvetliakov.vscode-neovim" = 1;
-      };
       "files.autoSave" = "off";
     };
   };
