@@ -36,6 +36,9 @@ jobs:
           - teams-for-linux
           - vscode
           - zoom-us
+          - noto-fonts-cjk-sans
+          - noto-fonts-cjk-serif
+          - noto-fonts
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v26

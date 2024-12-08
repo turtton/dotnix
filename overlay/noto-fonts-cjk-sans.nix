@@ -15,7 +15,7 @@ with prev; {
     inherit version;
 
     src = fetchFromGitHub {
-      owner = "googlefonts";
+      owner = "notofonts";
       repo = "noto-cjk";
       inherit rev sha256;
       sparseCheckout = [ "${typeface}/OTC" "${typeface}/Mono" ];

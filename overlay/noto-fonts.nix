@@ -13,7 +13,7 @@ with prev; {
     version = "2020-01-23";
 
     src = fetchFromGitHub {
-      owner = "googlefonts";
+      owner = "notofonts";
       repo = "noto-fonts";
       rev = "f4726a2ec36169abd02a6d8abe67c8ff0236f6d8";
       sha256 = "0zc1r7zph62qmvzxqfflsprazjf6x1qnwc2ma27kyzh6v36gaykw";
