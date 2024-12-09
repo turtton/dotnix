@@ -50,8 +50,8 @@
       gaps_in = 5;
       gaps_out = 5;
       border_size = 2;
-      "col.inactive_border" = "rgb(#222436)";
-      "col.active_border" = "rgb(#82aaff)";
+      "col.inactive_border" = "0xff222436";
+      "col.active_border" = "0xff82aaff";
       resize_on_border = true;
     };
     decoration = {
