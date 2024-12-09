@@ -10,6 +10,7 @@
     ./../../os/core/shared
     (import ./../../os/core/secureboot/preloader.nix "nvme0n1" "1")
     ./../../os/core/shell.nix
+    ./../../os/wm/hyprland.nix
     ./../../os/desktop/shared
     ./../../os/desktop/1password.nix
     ./../../os/desktop/flatpak.nix

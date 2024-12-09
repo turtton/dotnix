@@ -172,7 +172,7 @@ in
       homes = [
         rec {
           username = "bbridge";
-          confPath = ./bridgetop/home-manager.nix;
+          confPath = ./bridgetop/home-manager-hypr.nix;
           osUserConfig = { pkgs, ... }: {
             users.users."${username}" = {
               shell = pkgs.zsh;
@@ -180,9 +180,24 @@ in
                 "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA/8nfHCulkm71YTzMXgrvTF+G9RQ9LUvy6pKat/FXot"
               ];
             };
-            imports = [
-              (import ./../os/wm/plasma5.nix { inherit username; })
-            ];
+            # imports = [
+            #   (import ./../os/wm/plasma5.nix { inherit username; })
+            # ];
+            services.greetd = {
+              enable = true;
+              settings = {
+                initial_session = {
+                  command = "Hyprland";
+                  user = username;
+                };
+                default_session = {
+                  command = ''
+                                        ${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland
+                    									'';
+                  user = username;
+                };
+              };
+            };
           };
         }
       ];
