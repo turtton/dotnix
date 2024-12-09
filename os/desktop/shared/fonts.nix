@@ -5,7 +5,7 @@
       noto-fonts-cjk-serif
       noto-fonts-cjk-sans
       noto-fonts-emoji
-      nerdfonts
+      nerd-fonts.jetbrains-mono
       twemoji-color-font
       rictydiminished-with-firacode
     ];

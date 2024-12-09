@@ -6,17 +6,6 @@ let
     #   url = "https://github.com/NixOS/nixpkgs/pull/338744.patch";
     #   hash = "sha256-9SIE3ldGxcZxBCQxpHvCrluahWVbDwl5scEEQA+sCpI=";
     # }
-    # Large file locale changes applied to master branch in 11/10, so it is not applied yet
-    # {
-    # 	meta.description = "Fix libskk parse error";
-    # 	url = "https://github.com/NixOS/nixpkgs/pull/355005.patch";
-    # 	hash = "sha256-z+eu/ZL2n9fWkyCIAv92JgISjLrRBBLWj65yNDNVNN8=";
-    # }
-    {
-      meta.description = "Fix libskk parse error";
-      url = "https://github.com/yadokani389/nixpkgs/commit/fdb8d34689ee8b16b009ea92ad282c2d7c23d659.patch";
-      hash = "sha256-GdoFXLJcBEjebBXxluJXSyFqTBDL41YlDD96XwUBCj0=";
-    }
   ];
   stateVersion = "23.11";
   createSystem =
