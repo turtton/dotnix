@@ -88,7 +88,7 @@ let
         )
         homes;
       specialArgs = {
-        inherit inputs hostname usernames pkgs-staging-next;
+        inherit inputs hostname usernames system pkgs-staging-next;
       };
     };
   # It is used for darwin or other non nixos systems
