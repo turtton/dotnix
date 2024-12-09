@@ -2,9 +2,11 @@
   nixConfig = {
     extra-substituters = [
       "https://hyprland.cachix.org"
+      "https://ags.cachix.org"
     ];
     extra-trusted-public-keys = [
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+      "ags.cachix.org-1:naAvMrz0CuYqeyGNyLgE010iUiuf/qx6kYrUv3NwAJ8="
     ];
   };
   inputs = {
