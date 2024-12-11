@@ -38,6 +38,7 @@
             "windowtitle"
             "updates"
             "storage"
+            "battery"
           ];
           "middle" = [
             "media"
