@@ -46,6 +46,7 @@ let
     rust-rover
     datagrip
     pycharm-professional
+    clion
   ];
 in
 {

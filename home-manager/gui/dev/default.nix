@@ -8,7 +8,7 @@
     blockbench-electron
     insomnia # RestAPI dev	tool
     remmina # Remote desktop client
-    # gitify
+    gitify
     drawio
   ];
 }
