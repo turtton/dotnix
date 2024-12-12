@@ -83,6 +83,10 @@
     misc = {
       disable_hyprland_logo = true;
     };
+    xwayland = {
+      use_nearest_neighbor = false;
+      force_zero_scaling = true;
+    };
     # master = {
     #   new_status = "master";
     # };
