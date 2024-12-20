@@ -85,6 +85,8 @@
         teams-for-linux = overlays.teams-for-linux;
         vscode = overlays.vscode;
         zoom-us = overlays.zoom-us;
+        # pake-cli = overlays.pake-cli;
+        # fastmail = overlays.fastmail;
       };
       devShells.default = mkShell {
         packages = [
