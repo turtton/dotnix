@@ -10,6 +10,7 @@
       "QT_STYLE_OVERRIDE,kvantum"
       "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
       "NIXOS_OZONE_WL,1" # for chromium based system to force wayland
+      "GIO_MODULE_DIR, ${pkgs.glib-networking}/lib/gio/modules/" # Workaround for wry https://github.com/tauri-apps/wry/issues/605
     ];
     exec-once = [
       "hyprlock"
