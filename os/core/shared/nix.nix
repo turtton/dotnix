@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ inputs, pkgs, ... }: {
   nix = {
     settings = {
       auto-optimise-store = true;
@@ -28,6 +28,7 @@
       dates = "weekly";
       options = "--delete-older-than 7d";
     };
+    registry.nixpkgs.flake = inputs.nixpkgs;
   };
 
   # Allow unfree packages
