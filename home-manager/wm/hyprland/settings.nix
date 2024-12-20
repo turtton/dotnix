@@ -22,6 +22,7 @@
       # "hypr-helper start"
       "systemctl --user start hyprpolkitagent"
       "wl-paste --watch cliphist store"
+      "${pkgs.cliphist}/bin/cliphist-rofi-img wipe"
     ];
     windowrulev2 = [
       "pseudo noblur, class:^(fcitx)(.*)$"
