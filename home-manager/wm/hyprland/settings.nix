@@ -84,6 +84,7 @@
     };
     misc = {
       disable_hyprland_logo = true;
+      focus_on_activate = true;
     };
     xwayland = {
       use_nearest_neighbor = false;
