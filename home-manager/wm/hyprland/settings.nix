@@ -39,7 +39,9 @@
       "opaque, class:^(swappy)$"
       "opaque, class:^(Minecraft)(.*)$"
       "opaque, class:^(com.obsproject.Studio)(.*)$"
+      "opaque, class:^(krita)(.*)$"
       "opaque, class:^(.*)(\.exe)$"
+      "floating, class:^(org.kde.kdeconnect.daemon)(.*)$"
       "suppressevent maximize, class:.*"
     ];
     input = {
