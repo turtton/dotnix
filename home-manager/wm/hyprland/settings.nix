@@ -47,7 +47,7 @@
         "pseudo noblur, class:^(fcitx)(.*)$"
         "noblur class:(wofi)"
         "opaque, initialTitle:^(Picture in picture)(.*)$"
-        "floating, class:^(org.kde.kdeconnect.daemon)(.*)$"
+        "float, class:^(org.kde.kdeconnect.daemon)(.*)$"
         "suppressevent maximize, class:.*"
       ];
     input = {
