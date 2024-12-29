@@ -40,6 +40,7 @@
       "opaque, class:^(Minecraft)(.*)$"
       "opaque, class:^(com.obsproject.Studio)(.*)$"
       "opaque, class:^(krita)(.*)$"
+      "opaque, class:^(factorio)(.*)$"
       "opaque, class:^(.*)(\.exe)$"
       "floating, class:^(org.kde.kdeconnect.daemon)(.*)$"
       "suppressevent maximize, class:.*"
