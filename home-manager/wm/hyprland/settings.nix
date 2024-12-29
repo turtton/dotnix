@@ -24,27 +24,32 @@
       "wl-paste --watch cliphist store"
       "${pkgs.cliphist}/bin/cliphist-rofi-img wipe"
     ];
-    windowrulev2 = [
-      "pseudo noblur, class:^(fcitx)(.*)$"
-      "noblur class:(wofi)"
-      "opaque, class:^(discord)$"
-      "opaque, class:^(vesktop)$"
-      "opaque, class:^(Slack)$"
-      "opaque, class:^(zoom)$"
-      "opaque, class:^(vivaldi-.*)$"
-      "opaque, class:^(chromium-.*)$"
-      "opaque, class:^(firefox)$"
-      "opaque, initialTitle:^(Picture in picture)(.*)$"
-      "opaque, class:^(jetbrains-.*)$"
-      "opaque, class:^(swappy)$"
-      "opaque, class:^(Minecraft)(.*)$"
-      "opaque, class:^(com.obsproject.Studio)(.*)$"
-      "opaque, class:^(krita)(.*)$"
-      "opaque, class:^(factorio)(.*)$"
-      "opaque, class:^(.*)(\.exe)$"
-      "floating, class:^(org.kde.kdeconnect.daemon)(.*)$"
-      "suppressevent maximize, class:.*"
-    ];
+    windowrulev2 =
+      let
+        opaqueClasses = [
+          "discord"
+          "vesktop"
+          "Slack"
+          "zoom"
+          "vivaldi"
+          "chromium"
+          "jetbrains"
+          "swappy"
+          "Minecraft"
+          "com.obsproject.Studio"
+          "krita"
+          "factorio"
+          ".*\.exe"
+        ];
+      in
+      map (c: "opaque, class:^(${c}.*)$") opaqueClasses
+      ++ [
+        "pseudo noblur, class:^(fcitx)(.*)$"
+        "noblur class:(wofi)"
+        "opaque, initialTitle:^(Picture in picture)(.*)$"
+        "floating, class:^(org.kde.kdeconnect.daemon)(.*)$"
+        "suppressevent maximize, class:.*"
+      ];
     input = {
       repeat_delay = 300;
       repeat_rate = 30;
