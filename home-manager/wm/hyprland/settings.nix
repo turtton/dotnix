@@ -47,6 +47,7 @@
         "pseudo noblur, class:^(fcitx)(.*)$"
         "noblur class:(wofi)"
         "opaque, initialTitle:^(Picture in picture)(.*)$"
+        "opaque, initialTitle:^(.* on QEMU/KVM)$"
         "float, class:^(org.kde.kdeconnect.daemon)(.*)$"
         "suppressevent maximize, class:.*"
       ];
