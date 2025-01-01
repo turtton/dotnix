@@ -86,6 +86,7 @@
         teams-for-linux = overlays.teams-for-linux;
         vscode = overlays.vscode;
         zoom-us = overlays.zoom-us;
+        zen-browser = inputs.zen-browser.packages.${system}.default;
         # pake-cli = overlays.pake-cli;
         # fastmail = overlays.fastmail;
       };
