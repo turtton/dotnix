@@ -23,6 +23,7 @@
       "systemctl --user start hyprpolkitagent"
       "wl-paste --watch cliphist store"
       "${pkgs.cliphist}/bin/cliphist-rofi-img wipe"
+      "${pkgs.gitify}/bin/gitify"
     ];
     windowrulev2 =
       let
