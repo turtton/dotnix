@@ -7,6 +7,9 @@
     vulnix
     pavucontrol
     pulseaudio
+    brightnessctl
+    power-profiles-daemon
+    btop
   ];
   programs.hyprpanel = {
     enable = true;
