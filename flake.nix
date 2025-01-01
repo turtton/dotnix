@@ -51,6 +51,7 @@
       url = "github:berberman/nvfetcher";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
   };
   outputs = inputs@{ nixpkgs, flake-utils, hyprland, hyprpanel, ... }: {
     nixosConfigurations = (import ./hosts inputs).nixos;
