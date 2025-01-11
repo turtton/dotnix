@@ -4,5 +4,6 @@
     # minecraft
     prismlauncher
     lutris
+    osu-lazer
   ];
 }
