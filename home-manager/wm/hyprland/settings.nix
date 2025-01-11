@@ -1,6 +1,6 @@
 { lib, pkgs, ... }: {
   wayland.windowManager.hyprland.settings = {
-    "plugin:split-monitor-workspaces:count" = 5;
+    "plugin:split-monitor-workspaces:count" = 8;
     env = [
       # "GTK_IM_MODULE, fcitx"
       # "QT_IM_MODULE, wayland;fcitx"
