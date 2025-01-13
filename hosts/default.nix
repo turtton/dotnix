@@ -52,7 +52,7 @@ let
     nixosSystem {
       inherit system;
       modules = modules ++ [
-        ./../overlay
+        ./../overlay/d-linux.nix
         { nixpkgs.overlays = [ inputs.hyprpanel.overlay ]; }
       ] ++ (lib.optionals (users != [ ]) [
         inputs.home-manager.nixosModules.home-manager
@@ -91,7 +91,46 @@ let
         inherit inputs hostname usernames system pkgs-staging-next;
       };
     };
-  # It is used for darwin or other non nixos systems
+  createDarwinConfig = { system, hostname, username, modules, homeModule }:
+    let
+      # originPkgs = inputs.nixpkgs.legacyPackages.${system};
+      # nixpkgs = originPkgs.applyPatches {
+      #   name = "nixpkgs-patched";
+      #   src = inputs.nixpkgs;
+      #   patches = map originPkgs.fetchpatch remoteNixpkgsPatches;
+      # };
+      homeDirectory = "/Users/${username}";
+    in
+    inputs.nix-darwin.lib.darwinSystem {
+      specialArgs = {
+        inherit inputs hostname username system;
+      };
+      modules = modules ++ [
+        ./../overlay/d-darwin.nix
+        inputs.home-manager.darwinModules.home-manager
+        {
+          networking.hostName = hostname;
+          users.users."${username}".home = homeDirectory;
+          nixpkgs.hostPlatform = system;
+          system.statueVersion = 5;
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            users."${username}" = homeModule // {
+              home = {
+                inherit username stateVersion homeDirectory;
+                enableNixpkgsReleaseCheck = true;
+              };
+              development.enable = true;
+            };
+            specialArgs = {
+              inherit inputs system username;
+            };
+          };
+        }
+      ];
+    };
+  # It is used for non nixos systems
   createHomeManagerConfig =
     { system
     , username
@@ -265,6 +304,17 @@ in
           }
         ];
       };
+  };
+  darwin = {
+    "dreamac" = createDarwinConfig {
+      system = "aarch64-darwin";
+      hostname = "dreamac";
+      username = "s_ohashi";
+      modules = [
+        ./dreamac/darwin.nix
+      ];
+      homeModule = import ./dreamac/home-manager.nix;
+    };
   };
   home-manager = {
     /* "turtton@virtbox" = createHomeManagerConfig {

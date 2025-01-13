@@ -1,13 +1,14 @@
-{
+{ pkgs, ... }: {
   imports = [
-    ./fcitx
-    ./libskk
     ./browser.nix
-    ./chat.nix
-    ./document.nix
-    ./image.nix
-    ./kdeconnect.nix
     ./keybase.nix
     ./media.nix
+  ] ++ pkgs.lib.optionals pkgs.hostPlatform.isLinux [
+    ./fcitx
+    ./libskk
+    ./document.nix
+    ./image.nix
+    ./chat.nix
+    ./kdeconnect.nix
   ];
 }

@@ -12,6 +12,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-staging-next.url = "github:NixOS/nixpkgs/staging-next";
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixos-hardware.url =
       "github:NixOS/nixos-hardware/master"; # Hardware settings collection
     xremap.url = "github:xremap/nix-flake"; # KeyMap tool
@@ -56,10 +60,11 @@
   outputs = inputs@{ nixpkgs, flake-utils, hyprland, hyprpanel, ... }: {
     nixosConfigurations = (import ./hosts inputs).nixos;
     homeConfigurations = (import ./hosts inputs).home-manager;
+    darwinConfigurations = (import ./hosts inputs).darwin;
   } // flake-utils.lib.eachDefaultSystem (system:
     let
       pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
-      overlays = pkgs.lib.attrsets.mergeAttrsList (map (overlay: overlay pkgs pkgs) (import ./overlay { inherit pkgs; }).nixpkgs.overlays);
+      overlays = pkgs.lib.attrsets.mergeAttrsList (map (overlay: overlay pkgs pkgs) (import ./overlay/d-linux.nix { inherit pkgs; }).nixpkgs.overlays);
     in
     with pkgs; {
       formatter = nixpkgs-fmt;
