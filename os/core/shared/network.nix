@@ -24,6 +24,7 @@
   services.tailscale = {
     enable = true;
     openFirewall = true;
+    interfaceName = "userspace-networking";
   };
 
   # nixpkgs issue#180175
