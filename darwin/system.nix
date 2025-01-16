@@ -30,7 +30,6 @@
     };
     keyboard = {
       enableKeyMapping = true;
-      swapLeftCtrlAndFn = true;
       userKeyMapping =
         let
           leftFn = 1095216660483;
@@ -53,7 +52,6 @@
             HIDKeyboardModifierMappingDst = leftFn;
           }
         ];
-      #remapCapsLockToControl = true;
     };
   };
   security.pam.enableSudoTouchIdAuth = true;
