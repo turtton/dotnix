@@ -28,6 +28,7 @@ let
       };
       pkgs-staging-next = import inputs.nixpkgs-staging-next { inherit system; };
       lib = originPkgs.lib;
+      hostPlatform = originPkgs.hostPlatform;
       nixosSystem = import (nixpkgs + "/nixos/lib/eval-config.nix");
       usernames = map (h: h.username) homes;
       # Targets for home-manager configurations
@@ -64,7 +65,7 @@ let
             useUserPackages = true;
             sharedModules = homeModules;
             extraSpecialArgs = {
-              inherit inputs system;
+              inherit inputs system hostPlatform;
             };
             backupFileExtension = "backup";
           };
@@ -88,12 +89,13 @@ let
         )
         homes;
       specialArgs = {
-        inherit inputs hostname usernames system pkgs-staging-next;
+        inherit inputs hostname usernames system pkgs-staging-next hostPlatform;
       };
     };
   createDarwinConfig = { system, hostname, username, modules, homeModule }:
     let
-      # originPkgs = inputs.nixpkgs.legacyPackages.${system};
+      originPkgs = inputs.nixpkgs.legacyPackages.${system};
+      hostPlatform = originPkgs.hostPlatform;
       # nixpkgs = originPkgs.applyPatches {
       #   name = "nixpkgs-patched";
       #   src = inputs.nixpkgs;
@@ -103,7 +105,7 @@ let
     in
     inputs.nix-darwin.lib.darwinSystem {
       specialArgs = {
-        inherit inputs hostname username system;
+        inherit inputs hostname username system hostPlatform;
       };
       modules = modules ++ [
         ./../overlay/d-darwin.nix
@@ -123,7 +125,7 @@ let
               };
             };
             extraSpecialArgs = {
-              inherit inputs system username;
+              inherit inputs system username hostPlatform;
             };
           };
         }
@@ -135,15 +137,20 @@ let
     , username
     , overlays ? [ ]
     , modules
-    }: inputs.home-manager.lib.homeManagerConfiguration {
+    }:
+    let
       pkgs = import inputs.nixpkgs {
         inherit system overlays;
         config = {
           allowUnfree = true;
         };
       };
+      hostPlatform = pkgs.hostPlatform;
+    in
+    inputs.home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
       extraSpecialArgs = {
-        inherit inputs username system;
+        inherit inputs username system hostPlatform;
       };
       modules = modules ++ [
         {

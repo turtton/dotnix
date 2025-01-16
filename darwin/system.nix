@@ -30,7 +30,31 @@
     };
     keyboard = {
       enableKeyMapping = true;
+      swapLeftCtrlAndFn = true;
+      userKeyMapping =
+        let
+          leftFn = 1095216660483;
+          leftControl = 30064771296;
+          # alt key
+          leftOption = 30064771298;
+          leftCommand = 30064771299;
+        in
+        [
+          {
+            HIDKeyboardModifierMappingSrc = leftFn;
+            HIDKeyboardModifierMappingDst = leftControl;
+          }
+          {
+            HIDKeyboardModifierMappingSrc = leftControl;
+            HIDKeyboardModifierMappingDst = leftCommand;
+          }
+          {
+            HIDKeyboardModifierMappingSrc = leftCommand;
+            HIDKeyboardModifierMappingDst = leftFn;
+          }
+        ];
       #remapCapsLockToControl = true;
     };
   };
+  security.pam.enableSudoTouchIdAuth = true;
 }
