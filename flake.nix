@@ -106,7 +106,7 @@
             sudo nixos-rebuild switch --flake ".#$@" --show-trace
           '')
           (writeScriptBin "switch-darwin" ''
-            darwin-rebuild switch --flake ".#$@" --show-trace
+            nix run nix-darwin -- switch --flake ".#$@" --show-trace
           '')
           (writeScriptBin "gen-template" ''
             nix run github:nix-community/nixos-generators -- -f proxmox-lxc --flake ".#$@" --show-trace

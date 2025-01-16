@@ -2,6 +2,7 @@
   services.nix-daemon.enable = true;
 
   nix = {
+    optimise.automatic = true;
     gc = {
       automatic = true;
       options = "--delete-older-than 14d";
@@ -12,7 +13,6 @@
       };
     };
     settings = {
-      auto-optimise-store = true;
       experimental-features = [
         "nix-command"
         "flakes"

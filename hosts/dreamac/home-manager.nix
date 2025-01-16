@@ -6,7 +6,6 @@
     ./../../home-manager/cli/shell/zsh
     ./../../home-manager/gui/dev
     ./../../home-manager/gui/shared/browser.nix
-    ./../../home-manager/gui/shared/keybase.nix
     ./../../home-manager/gui/shared/media.nix
     ./../../home-manager/gui/term/alacritty.nix
   ];

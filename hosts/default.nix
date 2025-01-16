@@ -112,7 +112,7 @@ let
           networking.hostName = hostname;
           users.users."${username}".home = homeDirectory;
           nixpkgs.hostPlatform = system;
-          system.statueVersion = 5;
+          system.stateVersion = 5;
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
@@ -121,9 +121,8 @@ let
                 inherit username stateVersion homeDirectory;
                 enableNixpkgsReleaseCheck = true;
               };
-              development.enable = true;
             };
-            specialArgs = {
+            extraSpecialArgs = {
               inherit inputs system username;
             };
           };
