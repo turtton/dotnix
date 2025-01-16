@@ -13,7 +13,6 @@
   ];
   programs.hyprpanel = {
     enable = true;
-    systemd.enable = true;
     overwrite.enable = true;
     layout = {
       "bar.layouts" =
