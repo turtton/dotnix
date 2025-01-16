@@ -1,12 +1,13 @@
 { pkgs, ... }: {
-  home.packages = (with pkgs; [
-    mpv
-    tauon
+  home.packages = with pkgs; [
     spotify
     yt-dlp
-  ]) ++ pkgs.lib.optionals pkgs.hostPlatform.isLinux [
-    pkgs.vlc
-    pkgs.kdenlive
+  ]
+  ++ lib.optionals hostPlatform.isLinux [
+    mpv
+    tauon
+    vlc
+    kdenlive
   ];
-  programs.obs-studio.enable = true;
+  programs.obs-studio.enable = pkgs.hostPlatform.isLinux;
 }

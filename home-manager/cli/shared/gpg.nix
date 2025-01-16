@@ -7,6 +7,6 @@
   };
   services.gpg-agent = {
     enable = true;
-    pinentryPackage = pkgs.pinentry-qt;
+    pinentryPackage = if pkgs.hostPlatform.isLinux then pkgs.pinentry-all else pkgs.pinentry_mac;
   };
 }

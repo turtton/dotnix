@@ -3,12 +3,12 @@
     ./idea
     ./vscode.nix
   ];
-  home.packages = (with pkgs; [
-    insomnia # RestAPI dev	tool
-    remmina # Remote desktop client
+  home.packages = with pkgs; [
+    hoppscotch # WebAPI dev	tool
     gitify
     drawio
-  ]) ++ pkgs.lib.optionals pkgs.hostPlatform.isLinux [
-    pkgs.unityhub
+  ] ++ lib.optionals hostPlatform.isLinux [
+    unityhub
+    remmina # Remote desktop client TODO: https://github.com/NixOS/nixpkgs/pull/372613
   ];
 }

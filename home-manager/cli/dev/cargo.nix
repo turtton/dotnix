@@ -22,7 +22,7 @@ in
     cargo-machete # unused dependencies detector
     cargo-features-manager # unused feature detector
     cargo-watch # auto-reload
-    cargo-vet # crate security checker
+    # cargo-vet # crate security checker TODO: https://github.com/NixOS/nixpkgs/pull/370510
     crate2nix
   ];
   # clang+mold could not resolve devEnv libraries defined in flake
