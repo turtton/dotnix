@@ -14,6 +14,8 @@
   programs.hyprpanel = {
     enable = true;
     overwrite.enable = true;
+    hyprland.enable = true;
+    theme = "catppuccin_mocha";
     layout = {
       "bar.layouts" =
         let
