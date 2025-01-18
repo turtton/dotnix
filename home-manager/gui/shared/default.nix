@@ -11,6 +11,7 @@
     ] else [ ] ++ [
       ./browser.nix
       ./media.nix
+      ./bitwarden.nix
     ];
 
   home.packages = with pkgs; lib.optionals hostPlatform.isDarwin [
