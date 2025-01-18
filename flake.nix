@@ -103,7 +103,7 @@
             home-manager switch --flake ".#$@" --show-trace
           '')
           (writeScriptBin "switch-nixos" ''
-            sudo nixos-rebuild switch --flake ".#$@" --show-trace
+            ulimit -n 4096 && sudo nixos-rebuild switch --flake ".#$@" --show-trace
           '')
           (writeScriptBin "switch-darwin" ''
             nix run nix-darwin -- switch --flake ".#$@" --show-trace
