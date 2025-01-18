@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, hostPlatform, ... }: {
   programs.gpg = {
     enable = true;
     settings = {
@@ -7,6 +7,6 @@
   };
   services.gpg-agent = {
     enable = true;
-    pinentryPackage = if pkgs.hostPlatform.isLinux then pkgs.pinentry-all else pkgs.pinentry_mac;
+    pinentryPackage = if hostPlatform.isLinux then pkgs.pinentry-qt else pkgs.pinentry_mac;
   };
 }

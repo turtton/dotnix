@@ -1,6 +1,6 @@
 { pkgs, hostPlatform, ... }: {
   imports =
-    if hostPlatform.isLinux then [
+    (if hostPlatform.isLinux then [
       ./fcitx
       ./libskk
       ./chat.nix
@@ -8,7 +8,7 @@
       ./image.nix
       ./kdeconnect.nix
       ./keybase.nix
-    ] else [ ] ++ [
+    ] else [ ]) ++ [
       ./browser.nix
       ./media.nix
       ./bitwarden.nix
