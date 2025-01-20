@@ -26,6 +26,7 @@ jobs:
           - hyprland
           - hyprpanel
           - hyprpanel-tokyonight
+          - hyprpolkitagent
           - vivaldi
           - chromium
           - spotify
