@@ -44,6 +44,7 @@
     hyprpanel = {
       url = "github:Jas-SinghFSU/HyprPanel";
     };
+    hyprpolkitagent.url = "github:hyprwm/hyprpolkitagent";
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -57,7 +58,7 @@
     };
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
   };
-  outputs = inputs@{ nixpkgs, flake-utils, hyprland, hyprpanel, ... }: {
+  outputs = inputs@{ nixpkgs, flake-utils, hyprland, hyprpanel, hyprpolkitagent, ... }: {
     nixosConfigurations = (import ./hosts inputs).nixos;
     homeConfigurations = (import ./hosts inputs).home-manager;
     darwinConfigurations = (import ./hosts inputs).darwin;
@@ -79,6 +80,7 @@
         wallpaper-springcity = overlays.wallpaper-springcity;
         hyprland = hyprland.packages.${system}.default;
         hyprpanel = hyprpanel.packages.${system}.default;
+        hyprpolkitagent = hyprpolkitagent.packages.${system}.default;
         hyprpanel-tokyonight = overlays.hyprpanel-tokyonight;
         # Force Wayland IME system
         vivaldi = overlays.vivaldi;
