@@ -41,7 +41,8 @@
     wl-clipboard # clipboard manager
     cliphist # clipboard history
     polkit
-    hyprpolkitagent # password prompt
+    # hyprpolkitagent # password prompt
+    libsForQt5.polkit-kde-agent # password prompt(kde)
     libsecret # keyring
     networkmanagerapplet # network manager gui
   ];
