@@ -14,6 +14,7 @@ let
     datagrip
     pycharm-professional
     clion
+    rider
   ];
 in
 {
