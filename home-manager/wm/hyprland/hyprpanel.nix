@@ -1,16 +1,20 @@
 { pkgs, inputs, ... }: {
   imports = [
     inputs.hyprpanel.homeManagerModules.hyprpanel
+    inputs.ags.homeManagerModules.default
   ];
   home.packages = with pkgs; [
+    power-profiles-daemon
     jq
     vulnix
     pavucontrol
     pulseaudio
     brightnessctl
-    power-profiles-daemon
     btop
   ];
+  programs.ags = {
+    enable = true;
+  };
   programs.hyprpanel = {
     enable = true;
     overwrite.enable = true;
