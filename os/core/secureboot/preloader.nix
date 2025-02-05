@@ -8,7 +8,7 @@ let
     version = "20130208-1";
     src = fetchurl {
       name = name;
-      url = "https://blog.hansenpartnership.com/wp-uploads/2013/${name}.efi";
+      url = "https://web.archive.org/blog.hansenpartnership.com/wp-uploads/2013/${name}.efi";
       inherit hash;
     };
     sourceRoot = ".";
