@@ -8,7 +8,7 @@
     taps = [
       "mtgto/macskk"
     ];
-    brews = [
+    casks = [
       "macskk"
     ];
   };
