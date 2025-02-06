@@ -16,6 +16,5 @@
 
   home.packages = with pkgs; lib.optionals hostPlatform.isDarwin [
     raycast
-    macskk
   ];
 }
