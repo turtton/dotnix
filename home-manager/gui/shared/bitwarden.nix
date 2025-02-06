@@ -7,9 +7,8 @@
       pinentry = if hostPlatform.isLinux then pkgs.pinentry-qt else pkgs.pinentry_mac;
     };
   };
-  home.packages = with pkgs; [
+  home.packages = with pkgs; lib.optionals hostPlatform.isLinux [
     bitwarden-cli
-  ] ++ lib.optionals hostPlatform.isLinux [
     bitwarden-desktop
     keyguard
   ];

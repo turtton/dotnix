@@ -29,7 +29,8 @@
       };
     };
     keyboard = {
-      enableKeyMapping = true;
+      # this settings changes not only laptop keyboard but also external keyboard
+      enableKeyMapping = false;
       userKeyMapping =
         let
           leftFn = 1095216660483;
