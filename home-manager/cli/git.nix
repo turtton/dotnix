@@ -27,7 +27,7 @@
         packSizeLimit = "1g";
       };
     };
-    ignores = [ ".idea" ".vscode" ];
+    ignores = [ ".idea" ".vscode" ".memo.local.md" ];
   };
   programs.gh = {
     enable = true;
