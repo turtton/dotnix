@@ -53,7 +53,8 @@
         "suppressevent maximize, class:.*"
         # https://github.com/hyprwm/Hyprland/issues/8395#issuecomment-2578588978
         "noinitialfocus,class:^jetbrains-.*$,title:^$,floating:1"
-        "float opaque, title:^((?!Remmina).)*"
+        # Disable opacity for Remmina connected windows
+        "opaque, class:org.remmina.Remmina,title:^(!?Remmina$)"
       ];
     input = {
       repeat_delay = 300;
