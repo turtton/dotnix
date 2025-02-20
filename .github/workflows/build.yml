@@ -41,6 +41,7 @@ jobs:
           - noto-fonts-cjk-serif
           - noto-fonts
           - zen-browser
+          - rustowl
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v26

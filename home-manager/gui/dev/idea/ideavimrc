@@ -6,6 +6,8 @@ source ~/.config/nvim/keybindings.vim
 map Q gq
 
 "" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
+map <leader>e <Action>(ActivateProjectToolWindow)
+map <C-t> <Action>(Terminal)
 "" Map \r to the Reformat Code action
 "map \r <Action>(ReformatCode)
 

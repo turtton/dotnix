@@ -1,18 +1,4 @@
-{ pkgs, ... }:
-let
-  cargo-features-manager = with pkgs; rustPlatform.buildRustPackage rec {
-    pname = "cargo-features-manager";
-    version = "0.6.0";
-    src = fetchFromGitHub {
-      owner = "ToBinio";
-      repo = "cargo-features-manager";
-      rev = "v${version}";
-      hash = "sha256-34XYDeimYY4lx/IhjrFe8ZgrvnXb7+nSjyzIcOJZjLc=";
-    };
-    cargoHash = "sha256-Cf9n5whzwL1QzrNFIqOOz/JF+Uesn05JMbXDP0TZMCc=";
-  };
-in
-{
+{ pkgs, ... }: {
   home.packages = with pkgs; [
     rustup
     cargo-deny # dependency license checker
@@ -24,6 +10,7 @@ in
     cargo-watch # auto-reload
     # cargo-vet # crate security checker TODO: https://github.com/NixOS/nixpkgs/pull/370510
     crate2nix
+    rustowl
   ];
   # clang+mold could not resolve devEnv libraries defined in flake
   # home.file.".cargo/config.toml".text = ''

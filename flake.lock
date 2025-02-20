@@ -1734,6 +1734,7 @@
         "nixpkgs-staging-next": "nixpkgs-staging-next",
         "nvfetcher": "nvfetcher",
         "plasma-manager": "plasma-manager",
+        "rust-overlay": "rust-overlay_2",
         "split-monitor-workspaces": "split-monitor-workspaces",
         "turtton-neovim": "turtton-neovim",
         "utils": "utils",
@@ -1758,6 +1759,26 @@
         "owner": "oxalica",
         "repo": "rust-overlay",
         "rev": "2c417c0460b788328220120c698630947547ee83",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "rust-overlay_2": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1740018520,
+        "narHash": "sha256-mU6H0Q1WPn0XuwBO9SLZb/1yeVMfvsifBJcXNlhB+Ts=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "7f6ecf3b7c5bfcc4730943a767630122efd09dc8",
         "type": "github"
       },
       "original": {

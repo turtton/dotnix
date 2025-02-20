@@ -14,16 +14,16 @@
   };
   hyprpanel-tokyonight = {
     pname = "hyprpanel-tokyonight";
-    version = "e71a2dfe2dc0418d53841f0831ce7425d9f402e1";
+    version = "3419315e658e67f8fb5e9f020b322e3387e2a239";
     src = fetchFromGitHub {
       owner = "Jas-SinghFSU";
       repo = "HyprPanel";
-      rev = "e71a2dfe2dc0418d53841f0831ce7425d9f402e1";
+      rev = "3419315e658e67f8fb5e9f020b322e3387e2a239";
       fetchSubmodules = false;
-      sha256 = "sha256-Nuy9PsojpPgezPY6+mjkt1bp+PqKADcjT4iEwqygs3U=";
+      sha256 = "sha256-C9iN0eOwgHJz7/SETer/tD+SrIRLOomeRIBJmkgug4o=";
     };
-    "themes/tokyo_night.json" = builtins.readFile ./hyprpanel-tokyonight-e71a2dfe2dc0418d53841f0831ce7425d9f402e1/themes/tokyo_night.json;
-    date = "2024-11-12";
+    "themes/tokyo_night.json" = builtins.readFile ./hyprpanel-tokyonight-3419315e658e67f8fb5e9f020b322e3387e2a239/themes/tokyo_night.json;
+    date = "2025-02-19";
   };
   jetbrains-dolphin = {
     pname = "jetbrains-dolphin";
@@ -47,6 +47,17 @@
       sha256 = "sha256-f78dMegKVe2fed5I0ogiaG+s9DkSF13s59fhhTr5U5c=";
     };
     date = "2021-05-17";
+  };
+  rustowl = {
+    pname = "rustowl";
+    version = "v0.1.3";
+    src = fetchFromGitHub {
+      owner = "cordx56";
+      repo = "rustowl";
+      rev = "v0.1.3";
+      fetchSubmodules = false;
+      sha256 = "sha256-BSBg1ekytSs4D17tc2J36BRW21505uDksKTBm0Jpjms=";
+    };
   };
   wallpaper-springcity = {
     pname = "wallpaper-springcity";

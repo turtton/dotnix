@@ -58,20 +58,25 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs = inputs@{ nixpkgs, flake-utils, hyprland, hyprpanel, hyprpolkitagent, ... }: {
+  outputs = inputs@{ nixpkgs, flake-utils, hyprland, hyprpanel, hyprpolkitagent, rust-overlay, ... }: {
     nixosConfigurations = (import ./hosts inputs).nixos;
     homeConfigurations = (import ./hosts inputs).home-manager;
     darwinConfigurations = (import ./hosts inputs).darwin;
   } // flake-utils.lib.eachDefaultSystem (system:
     let
-      pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
-      overlays = pkgs.lib.attrsets.mergeAttrsList (map (overlay: overlay pkgs pkgs) (import ./overlay/d-linux.nix { inherit pkgs; }).nixpkgs.overlays);
+      pkgs = import nixpkgs { inherit system; config.allowUnfree = true; overlays = [ (import rust-overlay) ]; };
+      overlays = pkgs.lib.attrsets.mergeAttrsList (map (overlay: overlay pkgs pkgs) (import ./overlay/d-linux.nix { inherit pkgs inputs; }).nixpkgs.overlays);
     in
     with pkgs; {
       formatter = nixpkgs-fmt;
       packages = {
         ghr = overlays.ghr;
+        rustowl = overlays.rustowl;
         jetbrains-dolphin-qt5 = overlays.jetbrains-dolphin-qt5;
         jetbrains-dolphin-qt6 = overlays.jetbrains-dolphin-qt6;
         jetbrains-nautilus = overlays.jetbrains-nautilus;

@@ -15,15 +15,16 @@
             "repo": "ghr",
             "rev": "v0.4.4",
             "sha256": "sha256-L9+rcdt+MGZSCOJyCE4t/TT6Fjtxvfr9LBJYyRrx208=",
+            "sparseCheckout": [],
             "type": "github"
         },
         "version": "v0.4.4"
     },
     "hyprpanel-tokyonight": {
         "cargoLocks": null,
-        "date": "2024-11-12",
+        "date": "2025-02-19",
         "extract": {
-            "themes/tokyo_night.json": "./hyprpanel-tokyonight-e71a2dfe2dc0418d53841f0831ce7425d9f402e1/themes/tokyo_night.json"
+            "themes/tokyo_night.json": "./hyprpanel-tokyonight-3419315e658e67f8fb5e9f020b322e3387e2a239/themes/tokyo_night.json"
         },
         "name": "hyprpanel-tokyonight",
         "passthru": null,
@@ -35,11 +36,12 @@
             "name": null,
             "owner": "Jas-SinghFSU",
             "repo": "HyprPanel",
-            "rev": "e71a2dfe2dc0418d53841f0831ce7425d9f402e1",
-            "sha256": "sha256-Nuy9PsojpPgezPY6+mjkt1bp+PqKADcjT4iEwqygs3U=",
+            "rev": "3419315e658e67f8fb5e9f020b322e3387e2a239",
+            "sha256": "sha256-C9iN0eOwgHJz7/SETer/tD+SrIRLOomeRIBJmkgug4o=",
+            "sparseCheckout": [],
             "type": "github"
         },
-        "version": "e71a2dfe2dc0418d53841f0831ce7425d9f402e1"
+        "version": "3419315e658e67f8fb5e9f020b322e3387e2a239"
     },
     "jetbrains-dolphin": {
         "cargoLocks": null,
@@ -57,6 +59,7 @@
             "repo": "JetBrainsDolphinPlugin",
             "rev": "1.4.2",
             "sha256": "sha256-T8ueCqYIKDRo4Ds/o0dCeNjK3dD8fNT9oNEDfzqLg0Y=",
+            "sparseCheckout": [],
             "type": "github"
         },
         "version": "1.4.2"
@@ -77,9 +80,31 @@
             "repo": "jetbrains-nautilus",
             "rev": "c79f6ab6504bd1f1a9d1068f284c24f3227f51c1",
             "sha256": "sha256-f78dMegKVe2fed5I0ogiaG+s9DkSF13s59fhhTr5U5c=",
+            "sparseCheckout": [],
             "type": "github"
         },
         "version": "c79f6ab6504bd1f1a9d1068f284c24f3227f51c1"
+    },
+    "rustowl": {
+        "cargoLocks": null,
+        "date": null,
+        "extract": null,
+        "name": "rustowl",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "cordx56",
+            "repo": "rustowl",
+            "rev": "v0.1.3",
+            "sha256": "sha256-BSBg1ekytSs4D17tc2J36BRW21505uDksKTBm0Jpjms=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "v0.1.3"
     },
     "wallpaper-springcity": {
         "cargoLocks": null,
