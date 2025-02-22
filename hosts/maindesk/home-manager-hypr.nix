@@ -27,7 +27,7 @@
       kb_layout = "us";
     };
     exec-once = [
-      "1password"
+      "bitwarden"
       "[workspace 1 silent] discord"
       "steam -silent"
       "KEYBASE_AUTOSTART=1 keybase-gui"

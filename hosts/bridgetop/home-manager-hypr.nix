@@ -23,7 +23,7 @@
       kb_layout = "us";
     };
     exec-once = [
-      "1password"
+      "bitwarden"
       "KEYBASE_AUTOSTART=1 keybase-gui"
     ];
   };
