@@ -25,7 +25,6 @@ jobs:
           - wallpaper-springcity
           - hyprland
           - hyprpanel
-          - hyprpanel-tokyonight
           - hyprpolkitagent
           - vivaldi
           - chromium

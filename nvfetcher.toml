@@ -19,8 +19,3 @@ git.fetchSubmodules = true
 [jetbrains-nautilus]
 src.git = "https://github.com/encounter/jetbrains-nautilus.git"
 fetch.github = "encounter/jetbrains-nautilus"
-
-[hyprpanel-tokyonight]
-src.git = "https://github.com/Jas-SinghFSU/HyprPanel.git"
-fetch.github = "Jas-SinghFSU/HyprPanel"
-extract = ["themes/tokyo_night.json"]

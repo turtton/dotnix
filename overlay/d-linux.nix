@@ -13,7 +13,6 @@ in
     (import ./ghr.nix generated.ghr)
     inputs.rust-overlay.overlays.default
     (import ./rustowl.nix generated.rustowl)
-    (import ./hyprpanel-tokyonight.nix generated.hyprpanel-tokyonight)
     (import ./jetbrains-dolphin.nix generated.jetbrains-dolphin)
     (import ./jetbrains-nautilus.nix generated.jetbrains-nautilus)
     (import ./wallpaper-springcity.nix generated.wallpaper-springcity)

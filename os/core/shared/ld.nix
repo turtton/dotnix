@@ -90,7 +90,6 @@
       pixman
       speex
       SDL_image
-      SDL_ttf
       SDL_mixer
       SDL2_ttf
       SDL2_mixer

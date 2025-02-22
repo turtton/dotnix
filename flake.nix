@@ -87,7 +87,6 @@
         hyprland = hyprland.packages.${system}.default;
         hyprpanel = hyprpanel.packages.${system}.default;
         hyprpolkitagent = hyprpolkitagent.packages.${system}.default;
-        hyprpanel-tokyonight = overlays.hyprpanel-tokyonight;
         # Force Wayland IME system
         vivaldi = overlays.vivaldi;
         chromium = overlays.chromium;

@@ -195,8 +195,8 @@ in
                 };
                 default_session = {
                   command = ''
-                                        ${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland
-                    									'';
+                    ${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland
+                  '';
                   user = username;
                 };
               };
@@ -237,8 +237,8 @@ in
                 };
                 default_session = {
                   command = ''
-                                        ${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland
-                    									'';
+                    ${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland
+                  '';
                   user = username;
                 };
               };
@@ -271,8 +271,8 @@ in
                 };
                 default_session = {
                   command = ''
-                                        ${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland
-                    									'';
+                    ${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland
+                  '';
                   user = username;
                 };
               };
