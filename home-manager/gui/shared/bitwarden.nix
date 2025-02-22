@@ -10,6 +10,6 @@
   home.packages = with pkgs; lib.optionals hostPlatform.isLinux [
     bitwarden-cli
     bitwarden-desktop
-    keyguard
+    # keyguard
   ];
 }
