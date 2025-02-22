@@ -20,7 +20,7 @@ in
     buildInputs = [ curl ];
 
     meta = with lib; {
-      description = "A Rust library for parsing and manipulating OWL files.";
+      description = "Rust variable ownership visualizer";
       homepage = "https://github.com/cordx56/rustowl";
       license = with licenses; [ mit ];
     };
