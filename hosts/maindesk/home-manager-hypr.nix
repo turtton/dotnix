@@ -28,7 +28,7 @@
     };
     exec-once = [
       "bitwarden"
-      "[workspace 1 silent] discord"
+      "[workspace 1 silent] vesktop"
       "steam -silent"
       "KEYBASE_AUTOSTART=1 keybase-gui"
     ];
