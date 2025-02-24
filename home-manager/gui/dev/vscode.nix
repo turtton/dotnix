@@ -29,6 +29,8 @@ in
       vscode-marketplace.ms-toolsai.vscode-jupyter-cell-tags
       vscode-marketplace.matt-meyers.vscode-dbml
       vscode-marketplace.bocovo.dbml-erd-visualizer
+      vscode-marketplace.ms-azuretools.vscode-docker
+      vscode-marketplace.saoudrizwan.claude-dev
     ];
     userSettings = {
       "workbench.productIconTheme" = "a-file-icon-vscode-product-icon-theme";
@@ -39,6 +41,6 @@ in
   home.packages = with pkgs; [
     # nixd
     nil
-    windsurf
+    code-cursor
   ];
 }
