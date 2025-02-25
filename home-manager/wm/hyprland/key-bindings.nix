@@ -13,7 +13,7 @@
       "$mainMod SHIFT, P, pin"
       "$mainMod, V, exec, rofi -modi clipboard:${pkgs.cliphist}/bin/cliphist-rofi-img -show clipboard -show-icons -theme-str '##element-icon {size: 5ch; }'"
       "$mainMod, P, exec, ${pkgs.rofi-rbw-wayland}/bin/rofi-rbw"
-      "$mainMod, C, exec, ${pkgs.zenity}/bin/zenity --entry --text='Enter text:' | wl-copy"
+      "$mainMod, C, exec, ${pkgs.zenity}/bin/zenity --entry --text='Enter text:' | sed -z 's/\\n$//' | wl-copy"
 
       # move focus
       "$subMod, left, movefocus, left"
