@@ -12,6 +12,10 @@
   time.hardwareClockInLocalTime = true;
 
   services.journald.extraConfig = ''
-    		SystemMaxFileSize=300M
-    	'';
+    SystemMaxFileSize=300M
+  '';
+
+  # Enable usb access
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
 }
