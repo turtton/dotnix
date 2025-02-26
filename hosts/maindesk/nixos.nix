@@ -76,4 +76,8 @@
   };
 
   hardware.bluetooth.enable = true;
+
+  environment.defaultPackages = [
+    pkgs.nvidia-docker
+  ];
 }
