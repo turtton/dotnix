@@ -54,6 +54,9 @@
       nvidiaSettings = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
+    nvidia-container-toolkit = {
+      enable = true;
+    };
   };
 
   swapDevices = [
