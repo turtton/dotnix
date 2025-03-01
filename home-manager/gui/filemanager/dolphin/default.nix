@@ -4,7 +4,7 @@
     libsForQt5.dolphin-plugins
     libsForQt5.kio-extras
     jetbrains-dolphin-qt5
-    ark
+    kdePackages.ark
   ];
   xdg.dataFile."dolphin" = {
     source = ./share;

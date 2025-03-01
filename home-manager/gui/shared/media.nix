@@ -7,7 +7,7 @@
     mpv
     tauon
     vlc
-    kdenlive
+    kdePackages.kdenlive
   ];
   programs.obs-studio.enable = pkgs.hostPlatform.isLinux;
 }
