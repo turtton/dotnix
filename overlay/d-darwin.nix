@@ -5,6 +5,7 @@ let
 in
 {
   nixpkgs.overlays = [
+    inputs.nix-vscode-extensions.overlays.default
     inputs.rust-overlay.overlays.default
     (import ./ghr.nix generated.ghr)
     (import ./rustowl.nix generated.rustowl)

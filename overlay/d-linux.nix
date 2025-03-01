@@ -5,13 +5,15 @@ let
 in
 {
   nixpkgs.overlays = [
+    inputs.nix-vscode-extensions.overlays.default
+    inputs.rust-overlay.overlays.default
+    inputs.hyprpanel.overlay
     (import ./fix-ime.nix)
     (import ./force-wayland.nix)
     (import ./noto-fonts-cjk-serif.nix)
     (import ./noto-fonts-cjk-sans.nix)
     (import ./noto-fonts.nix)
     (import ./ghr.nix generated.ghr)
-    inputs.rust-overlay.overlays.default
     (import ./rustowl.nix generated.rustowl)
     (import ./jetbrains-dolphin.nix generated.jetbrains-dolphin)
     (import ./jetbrains-nautilus.nix generated.jetbrains-nautilus)
