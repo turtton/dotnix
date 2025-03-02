@@ -45,7 +45,10 @@
       url = "github:Jas-SinghFSU/HyprPanel";
     };
     ags.url = "github:aylur/ags";
-    hyprpolkitagent.url = "github:hyprwm/hyprpolkitagent";
+    hyprpolkitagent = {
+      url = "github:hyprwm/hyprpolkitagent";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
