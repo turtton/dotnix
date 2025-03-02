@@ -7,8 +7,8 @@
     hoppscotch # WebAPI dev	tool
     gitify
     drawio
+    remmina
   ] ++ lib.optionals hostPlatform.isLinux [
     unityhub
-    remmina # Remote desktop client TODO: https://github.com/NixOS/nixpkgs/pull/372613
   ];
 }
