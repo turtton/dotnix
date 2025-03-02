@@ -9,7 +9,6 @@
         # AI
         github.copilot-chat
         github.copilot
-        saoudrizwan.claude-dev
         ## Languages
         ms-azuretools.vscode-docker
         redhat.vscode-yaml
@@ -21,6 +20,8 @@
         ms-toolsai.jupyter-keymap
         ms-toolsai.jupyter-renderers
         ms-toolsai.vscode-jupyter-cell-tags
+      ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
+        saoudrizwan.claude-dev
       ]) ++ (with pkgs; [
         vscode-marketplace.re7rix2."50-shades-of-purple"
         vscode-marketplace.atommaterial.a-file-icon-vscode
@@ -31,6 +32,8 @@
         vscode-marketplace.njpwerner.autodocstring
         vscode-marketplace.matt-meyers.vscode-dbml
         vscode-marketplace.bocovo.dbml-erd-visualizer
+      ] ++ lib.optionals stdenv.isLinux [
+        vscode-marketplace.rooveterinaryinc.roo-cline
       ]);
       userSettings = {
         "workbench.productIconTheme" = "a-file-icon-vscode-product-icon-theme";
@@ -46,6 +49,5 @@
   home.packages = with pkgs; [
     # nixd
     nil
-    code-cursor
   ];
 }
