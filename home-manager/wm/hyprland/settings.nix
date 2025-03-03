@@ -40,6 +40,7 @@
           "com.obsproject.Studio"
           "krita"
           "factorio"
+          "code"
           ".*\.exe"
         ];
       in
