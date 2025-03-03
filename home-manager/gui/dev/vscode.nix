@@ -6,6 +6,7 @@
         mkhl.direnv
         oderwat.indent-rainbow
         wakatime.vscode-wakatime
+        ms-vscode-remote.remote-containers
         # AI
         github.copilot-chat
         github.copilot
