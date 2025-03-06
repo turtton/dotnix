@@ -1,7 +1,6 @@
 { pkgs, ... }: {
-  services.nix-daemon.enable = true;
-
   nix = {
+    enable = true;
     optimise.automatic = true;
     gc = {
       automatic = true;
