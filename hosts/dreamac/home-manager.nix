@@ -7,5 +7,6 @@
     ./../../home-manager/gui/dev
     ./../../home-manager/gui/shared
     ./../../home-manager/gui/term/alacritty.nix
+    ./../../home-manager/wm/aerospace
   ];
 }
