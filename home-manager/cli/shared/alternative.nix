@@ -7,5 +7,8 @@
     fd # find 
     ripgrep # grep
     delta # diff
+    zoxide # cd
   ];
+  # History Search(ctrl+r in zsh)
+  programs.atuin.enable = true;
 }
