@@ -14,6 +14,7 @@
         ms-azuretools.vscode-docker
         redhat.vscode-yaml
         yoavbls.pretty-ts-errors
+        aidan-gibson.river
         ## python
         ms-python.python
         ms-python.vscode-pylance
