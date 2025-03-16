@@ -61,6 +61,13 @@
             "source.organizeImports" = "explicit";
           };
         };
+        "roo-cline.allowedCommands" = [
+          "cargo clippy"
+          "tsc"
+          "git log"
+          "git diff"
+          "git show"
+        ];
       };
     };
   };
