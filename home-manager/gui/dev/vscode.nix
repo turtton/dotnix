@@ -14,7 +14,6 @@
         ms-azuretools.vscode-docker
         redhat.vscode-yaml
         yoavbls.pretty-ts-errors
-        aidan-gibson.river
         ## python
         ms-python.python
         ms-python.vscode-pylance
@@ -40,6 +39,7 @@
         vscode-marketplace.bocovo.dbml-erd-visualizer
         vscode-marketplace.ardenivanov.svelte-intellisense
         vscode-marketplace.fivethree.vscode-svelte-snippets
+        vscode-marketplace.aidan-gibson.river
       ] ++ lib.optionals stdenv.isLinux [
         vscode-marketplace.rooveterinaryinc.roo-cline
       ]);
