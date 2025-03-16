@@ -7,7 +7,7 @@
 }: {
   imports = [
     ./atticd.nix
-    ./cloudflared.nix
+    # ./cloudflared.nix
     ./../../os/core/shared
     ./../../os/core/shell.nix
   ];

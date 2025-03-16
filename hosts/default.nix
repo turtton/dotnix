@@ -1,11 +1,11 @@
 inputs:
 let
   remoteNixpkgsPatches = [
-    {
-      meta.description = "Fix bitwarden browser bitmetrics";
-      url = "https://github.com/NixOS/nixpkgs/pull/374068.patch";
-      hash = "sha256-yh/PodxwNp36AgMLgws45TiKCw1C0gNh3H1L5KtFVIE=";
-    }
+    # {
+    #   meta.description = "Fix bitwarden browser bitmetrics";
+    #   url = "https://github.com/NixOS/nixpkgs/pull/374068.patch";
+    #   hash = "sha256-yh/PodxwNp36AgMLgws45TiKCw1C0gNh3H1L5KtFVIE=";
+    # }
   ];
   stateVersion = "23.11";
   createSystem =
