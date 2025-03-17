@@ -61,8 +61,13 @@
       editor = "nvim";
     };
   };
+  programs.lazygit = {
+    enable = true;
+    settings = {
+      git.overrideGpg = true;
+    };
+  };
   home.packages = with pkgs; [
-    lazygit
     gitmoji-cli
   ];
 }
