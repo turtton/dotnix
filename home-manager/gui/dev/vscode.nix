@@ -23,6 +23,9 @@
         ms-toolsai.jupyter-keymap
         ms-toolsai.jupyter-renderers
         ms-toolsai.vscode-jupyter-cell-tags
+        ### Javascript/TypeScript
+        esbenp.prettier-vscode
+        dbaeumer.vscode-eslint
         ### Svelte
         svelte.svelte-vscode
       ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
@@ -61,6 +64,7 @@
             "source.organizeImports" = "explicit";
           };
         };
+        "svelte.enable-ts-plugin" = true;
         "roo-cline.allowedCommands" = [
           "cargo clippy"
           "tsc"
