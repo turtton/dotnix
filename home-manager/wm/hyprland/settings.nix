@@ -34,6 +34,8 @@
           "zoom"
           "vivaldi"
           "chromium"
+          "zen"
+          "firefox"
           "jetbrains"
           "swappy"
           "Minecraft"
