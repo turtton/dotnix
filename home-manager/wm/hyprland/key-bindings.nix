@@ -20,10 +20,10 @@
       "$subMod, down, movefocus, down"
       "$subMod, up, movefocus, up"
       "$subMod, right, movefocus, right"
-      "$subMod, h, movefocus, l"
-      "$subMod, j, movefocus, d"
-      "$subMod, k, movefocus, u"
-      "$subMod, l, movefocus, r"
+      "$mainMod $subMod, h, movefocus, l"
+      "$mainMod $subMod, j, movefocus, d"
+      "$mainMod $subMod, k, movefocus, u"
+      "$mainMod $subMod, l, movefocus, r"
       "$subMod, Tab, cyclenext"
       "$subMod SHIFT, Tab, cyclenext, prev"
 
@@ -98,8 +98,10 @@
       "$mainMod SHIFT, h		, movetoworkspace, m-1"
       "$mainMod SHIFT, l		, movetoworkspace, m+1"
 
-      # toggle monitor
-      "$mainMod, Tab, exec, hyprctl monitors -j|jq 'map(select(.focused|not).activeWorkspace.id)[0]'|xargs hyprctl dispatch workspace"
+      # toggle monitor 
+      #"$mainMod, Tab, exec, hyprctl monitors -j|jq 'map(select(.focused|not).activeWorkspace.id)[0]'|xargs hyprctl dispatch workspace"
+      "$mainMod, Tab, split-changemonitor next"
+
 
       # screenshot
       '', Print, exec, grimblast save output - | swappy -f - -o /tmp/screenshot.png && zenity --question --text="Save?" && cp /tmp/screenshot.png $HOME/Pictures/$(date +%Y-%m-%dT%H:%M:%S).png''
