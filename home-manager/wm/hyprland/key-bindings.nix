@@ -99,8 +99,7 @@
       "$mainMod SHIFT, l		, movetoworkspace, m+1"
 
       # toggle monitor 
-      #"$mainMod, Tab, exec, hyprctl monitors -j|jq 'map(select(.focused|not).activeWorkspace.id)[0]'|xargs hyprctl dispatch workspace"
-      "$mainMod, Tab, split-changemonitor next"
+      "$mainMod, Tab, exec, hyprctl monitors -j|jq 'map(select(.focused|not).activeWorkspace.id)[0]'|xargs hyprctl dispatch workspace"
 
 
       # screenshot
