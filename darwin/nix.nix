@@ -23,7 +23,7 @@
       ];
       substituters = [
         "https://nix-community.cachix.org"
-        "https://attic.taile2777.ts.net"
+        "https://attic.taile2777.ts.net/home"
       ];
       trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
