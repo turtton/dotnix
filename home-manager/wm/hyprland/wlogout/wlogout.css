@@ -58,3 +58,7 @@ button span {
 #reboot {
     background-image: image(url("@reboot@"));
 }
+
+#win {
+	background-image: image(url("@win@"));
+}
