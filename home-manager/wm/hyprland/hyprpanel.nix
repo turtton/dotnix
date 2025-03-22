@@ -11,6 +11,7 @@
     pulseaudio
     brightnessctl
     btop
+    gcolor3
   ];
   programs.ags = {
     enable = true;
@@ -75,7 +76,7 @@
       menus.dashboard.controls.enabled = false;
       menus.dashboard.shortcuts.enabled = true;
       menus.clock.weather.enabled = false;
-      menus.dashboard.shortcuts.right.shortcut1.command = "gcolor3";
+      menus.dashboard.shortcuts.right.shortcut1.command = "${pkgs.gcolor3}/bin/gcolor3";
       menus.media.displayTime = true;
       menus.power.lowBatteryNotification = true;
       bar.customModules.updates.updateCommand = "jq '[.[].cvssv3_basescore | to_entries | add | select(.value > 5)] | length' <<< $(vulnix -S --json)";
