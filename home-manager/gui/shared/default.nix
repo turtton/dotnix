@@ -16,5 +16,8 @@
 
   home.packages = with pkgs; lib.optionals hostPlatform.isDarwin [
     raycast
+  ] ++ lib.optionals hostPlatform.isLinux [
+    mission-center # system monitor
+    kdePackages.filelight # disk usage pie chart
   ];
 }
