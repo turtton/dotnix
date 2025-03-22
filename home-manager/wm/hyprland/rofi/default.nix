@@ -1,4 +1,7 @@
 { pkgs, ... }: {
+  imports = [
+    ./bemoji.nix
+  ];
   programs.rofi = {
     enable = true;
     package = pkgs.rofi-wayland;

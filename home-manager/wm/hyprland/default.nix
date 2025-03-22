@@ -31,7 +31,6 @@
     swappy # image editor for screenshots
     zenity # create screenshot save dialog
     hyprpicker # color picker
-    bemoji # emoji picker
     pamixer # pulseaudio mixer
     playerctl # media player control
     swww # wallpaper
