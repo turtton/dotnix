@@ -117,10 +117,7 @@
       "$mainMod SHIFT, c, exec, hyprpicker --autocopy"
 
       # screen lock
-      "$mainMod CTRL SHIFT, l, exec, hyprlock"
-
-      # system
-      "$mainMod, x, exec, systemctl suspend"
+      #"$mainMod CTRL SHIFT, l, exec, hyprlock"
     ];
     bindm = [
       # move/resize window
