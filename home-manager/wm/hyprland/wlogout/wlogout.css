@@ -1,0 +1,36 @@
+window {
+	font-size: 24pt;
+	color: #F9E3DF;
+	background-color: #1e1e2e;
+}
+
+button {
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 20%;
+	background-color: #c8c8ff;
+	animation: gradient_f 10s ease-in infinite;
+	transition: all 0.3s cubic-bezier(.55, 0.0, .28, 1.682), box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+	border-radius: 80px;
+	border: 0px;
+	outline-style: none;
+}
+
+button:hocus {
+	background-size: 50%;
+	border: 0px;
+	outline-style: none;
+}
+
+button:hover {
+	background-color: transparent;
+	color: #a0536c;
+	background-size: 50%;
+	margin: 30px;
+	border-radius: 80px;
+	outline-style: none;
+}
+
+button span {
+	font-size: 1.2em;
+}

@@ -4,6 +4,7 @@
     ./qt
     ./rofi
     # ./waybar
+    ./wlogout
     # ./dunst.nix
     ./gtk.nix
     ./key-bindings.nix

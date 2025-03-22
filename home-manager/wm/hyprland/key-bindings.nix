@@ -7,7 +7,7 @@
     bind = [
       "$mainMod, Return, exec, $term"
       "$mainMod SHIFT, Q, killactive"
-      "$mainMod SHIFT, E, exec, ${pkgs.hyprpanel}/bin/hyprpanel -t powerdropdownmenu"
+      "$mainMod SHIFT, E, exec, wlogout"
       "$mainMod, F, fullscreen"
       "$mainMod SHIFT, F, togglefloating"
       "$mainMod SHIFT, P, pin"
