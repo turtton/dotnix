@@ -1,7 +1,18 @@
-{
+{ pkgs, ... }: {
   programs.wlogout = {
     enable = true;
-    style = ./wlogout.css;
+    style =
+      let
+        getPath = name: "${pkgs.wlogout}/share/wlogout/icons/${name}.png";
+        rawCss = builtins.readFile ./wlogout.css;
+        builtinTargets = [ "shutdown" "reboot" "suspend" "hibernate" "lock" "logout" ];
+        targetNames = builtinTargets ++ [ "win" ];
+        targets = builtins.map (name: "@${name}@") targetNames;
+        icons = builtins.map (name: getPath name) builtinTargets ++ [ "${./win.png}" ];
+        # Replace the @target@ strings in the CSS with the corresponding icon paths
+        css = builtins.replaceStrings targets icons rawCss;
+      in
+      css;
     layout = [
       {
         label = "shutdown";
@@ -20,6 +31,12 @@
         action = "systemctl suspend";
         text = "Suspend";
         keybind = "u";
+      }
+      {
+        label = "hibernate";
+        action = "systemctl hibernate";
+        text = "Hibernate";
+        keybind = "h";
       }
       {
         label = "lock";

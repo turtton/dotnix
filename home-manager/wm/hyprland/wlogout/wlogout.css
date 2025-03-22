@@ -34,3 +34,27 @@ button:hover {
 button span {
 	font-size: 1.2em;
 }
+
+#lock {
+    background-image: image(url("@lock@"));
+}
+
+#logout {
+    background-image: image(url("@logout@"));
+}
+
+#suspend {
+    background-image: image(url("@suspend@"));
+}
+
+#hibernate {
+    background-image: image(url("@hibernate@"));
+}
+
+#shutdown {
+    background-image: image(url("@shutdown@"));
+}
+
+#reboot {
+    background-image: image(url("@reboot@"));
+}
