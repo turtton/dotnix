@@ -1,4 +1,25 @@
 {
+    "beutl": {
+        "cargoLocks": null,
+        "date": null,
+        "extract": null,
+        "name": "beutl",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "b-editor",
+            "repo": "beutl",
+            "rev": "v1.0.4",
+            "sha256": "sha256-vgNr6TIQbFx/vRz8q1CCtilLPca+g5ZNC+/Bb+qrgC4=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "v1.0.4"
+    },
     "ghr": {
         "cargoLocks": null,
         "date": null,
@@ -13,12 +34,12 @@
             "name": null,
             "owner": "siketyan",
             "repo": "ghr",
-            "rev": "v0.4.4",
-            "sha256": "sha256-L9+rcdt+MGZSCOJyCE4t/TT6Fjtxvfr9LBJYyRrx208=",
+            "rev": "v0.4.5",
+            "sha256": "sha256-8DnujtAtJiSnrC3k5vGRQuk6RfC5Vn+z4HAVsEnXN7c=",
             "sparseCheckout": [],
             "type": "github"
         },
-        "version": "v0.4.4"
+        "version": "v0.4.5"
     },
     "jetbrains-dolphin": {
         "cargoLocks": null,

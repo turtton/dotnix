@@ -7,6 +7,10 @@ fetch.github = "siketyan/ghr"
 src.github = "cordx56/rustowl"
 fetch.github = "cordx56/rustowl"
 
+[beutl]
+src.github = "b-editor/beutl"
+fetch.github = "b-editor/beutl"
+
 [wallpaper-springcity]
 src.github = "MrVivekRajan/Hypr-Dots"
 fetch.url = "https://raw.githubusercontent.com/MrVivekRajan/Hypr-Dots/refs/heads/Type-2/Spring-City/.config/swww/wall.png"
