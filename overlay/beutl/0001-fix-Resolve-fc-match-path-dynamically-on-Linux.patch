@@ -1,32 +1,33 @@
-From 7f7f30f4330802bfb3c8983ea58d82fe98dd9a08 Mon Sep 17 00:00:00 2001
+From 05abf4668528956ee95e64517d2a981479046407 Mon Sep 17 00:00:00 2001
 From: turtton <top.gear7509@turtton.net>
 Date: Thu, 27 Mar 2025 10:51:39 +0900
-Subject: [PATCH] fix: Resolve fc-match path dynamically on Linux
+Subject: [PATCH 1/2] fix: Resolve fc-match path dynamically on Linux
 
 Some distributions like NixOS do not include fc-match in /usr/bin
 
 Signed-off-by: turtton <top.gear7509@turtton.net>
 ---
- src/Beutl.Engine/Media/Font/FontManager.cs | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ src/Beutl.Engine/Media/Font/FontManager.cs | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
 diff --git a/src/Beutl.Engine/Media/Font/FontManager.cs b/src/Beutl.Engine/Media/Font/FontManager.cs
-index 09ca7ac19..650b6d6d5 100644
+index 09ca7ac19..436ee4090 100644
 --- a/src/Beutl.Engine/Media/Font/FontManager.cs
 +++ b/src/Beutl.Engine/Media/Font/FontManager.cs
-@@ -25,7 +25,17 @@ public sealed class FontManager
+@@ -25,7 +25,18 @@ public sealed class FontManager
              if (OperatingSystem.IsLinux())
              {
                  var output = new StringBuilder();
 -                using Process process = Process.Start(new ProcessStartInfo("/usr/bin/fc-match", "--format %{file}")
 +                string applicationPath = "";
-+                var paths = Environment.GetEnvironmentVariable("PATH").Split(Path.PathSeparator);
++                var paths = Environment.GetEnvironmentVariable("PATH")?.Split(Path.PathSeparator) ?? [];
 +                foreach (var path in paths)
 +                {
 +                    var fullPath = Path.Combine(path, "fc-match");
 +                    if (File.Exists(fullPath))
 +                    {
 +                        applicationPath = fullPath;
++                        break;
 +                    }
 +                }
 +                using Process process = Process.Start(new ProcessStartInfo(applicationPath, "--format %{file}")

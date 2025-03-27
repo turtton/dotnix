@@ -1,5 +1,4 @@
-gen: self: prev:
-{
+gen: self: prev: {
   beutl = with self; buildDotnetModule {
     inherit (gen) src;
     pname = "Beutl";
@@ -8,16 +7,15 @@ gen: self: prev:
     projectFile = "src/Beutl/Beutl.csproj";
     nugetDeps = ./deps.json;
     mapNuGetDependencies = true;
-    # Sometimes fails with "The process cannot access the file because it is being used by another process."
-    enableParallelBuilding = false;
 
-    buildInputs = [ ffmpeg ];
-    runtimeDeps = [ ffmpeg fontconfig ];
+    buildInputs = [ ffmpeg_6-full ];
+	# Requires https://github.com/shimat/opencvsharp but not available in nixpkgs
+    runtimeDeps = [ ffmpeg_6-full fontconfig glfw opencv ];
 
     dotnet-sdk = dotnetCorePackages.sdk_9_0-bin;
     dotnet-runtime = dotnetCorePackages.runtime_9_0-bin;
 
-    selfContained = true;
+	selfContained = true;
     dotnetInstallFlags = [
       "--framework net9.0"
       "-p:IncludeSourceRevisionInInformationalVersion=false"
@@ -25,9 +23,11 @@ gen: self: prev:
 
     patches = [
       ./0001-fix-Resolve-fc-match-path-dynamically-on-Linux.patch
+	  ./0002-fix-Append-additinal-library-path-for-linux.patch
     ];
 
     #executables = [ "Beutl" "Beutl.ExceptionHandler" "Beutl.PackageTools.UI" "Beutl.WaitingDialog" ];
+	FFMPEG_PATH = "${ffmpeg_6-full}/bin/ffmpeg";
 
     meta = with lib; {
       description = "Cross-platform video editing (compositing) software.";
