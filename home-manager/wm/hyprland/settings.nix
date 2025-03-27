@@ -79,9 +79,9 @@
       inactive_opacity = 0.8;
       blur = {
         enabled = true;
-        size = 3;
+        size = 6;
         passes = 1;
-        xray = true;
+        xray = false;
         ignore_opacity = true;
         new_optimizations = true;
       };
