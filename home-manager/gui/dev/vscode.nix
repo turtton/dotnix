@@ -7,6 +7,7 @@
         oderwat.indent-rainbow
         wakatime.vscode-wakatime
         ms-vscode-remote.remote-containers
+        marp-team.marp-vscode
         # AI
         github.copilot-chat
         github.copilot
