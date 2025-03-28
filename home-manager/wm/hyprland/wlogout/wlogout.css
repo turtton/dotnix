@@ -16,7 +16,7 @@ button {
 	outline-style: none;
 }
 
-button:hocus {
+button:focus {
 	background-size: 50%;
 	border: 0px;
 	outline-style: none;
