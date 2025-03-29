@@ -8,12 +8,13 @@ button {
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 20%;
-	background-color: #c8c8ff;
+	background-color: #34344a;
 	animation: gradient_f 10s ease-in infinite;
 	transition: all 0.3s cubic-bezier(.55, 0.0, .28, 1.682), box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
 	border-radius: 80px;
 	border: 0px;
 	outline-style: none;
+	margin: 1px;
 }
 
 button:focus {
