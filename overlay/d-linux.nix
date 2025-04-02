@@ -14,6 +14,7 @@ in
     (import ./noto-fonts-cjk-sans.nix)
     (import ./noto-fonts.nix)
     (import ./ghr.nix generated.ghr)
+    (import ./isaacsim.nix)
     (import ./rustowl.nix generated.rustowl)
     (import ./beutl generated.beutl)
     (import ./jetbrains-dolphin.nix generated.jetbrains-dolphin)

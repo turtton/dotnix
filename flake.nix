@@ -103,6 +103,7 @@
         vscode = overlays.vscode;
         zoom-us = overlays.zoom-us;
         zen-browser = inputs.zen-browser.packages.${system}.default;
+        isaacsim-webrtc-streaming-client = overlays.isaacsim-webrtc-streaming-client;
         # pake-cli = overlays.pake-cli;
         # fastmail = overlays.fastmail;
       };

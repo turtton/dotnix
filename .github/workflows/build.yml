@@ -42,6 +42,7 @@ jobs:
           - zen-browser
           - rustowl
           - beutl
+          - isaacsim-webrtc-streaming-client
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v26
