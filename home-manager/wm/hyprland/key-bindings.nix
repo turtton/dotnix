@@ -117,6 +117,9 @@
       # color picker
       "$mainMod SHIFT, c, exec, hyprpicker --autocopy"
 
+      # App Volume Control
+      "$mainMod SHIFT, m, exec, ${./script/appvolume.sh}"
+
       # screen lock
       #"$mainMod CTRL SHIFT, l, exec, hyprlock"
     ];
