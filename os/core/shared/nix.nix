@@ -12,7 +12,7 @@
         "https://hyprland.cachix.org"
         "https://ags.cachix.org"
         "https://attic.turtton.net/home"
-        "https://attic.taile2777.ts.net"
+        "https://attic.taile2777.ts.net/home"
       ];
       trusted-public-keys = [
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="

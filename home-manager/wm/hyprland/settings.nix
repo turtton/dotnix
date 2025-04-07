@@ -22,7 +22,7 @@
       "systemctl --user start hyprpolkitagent"
       #"systemctl --user start plasma-polkit-agent"
       "wl-paste --watch cliphist store"
-      "${pkgs.cliphist}/bin/cliphist-rofi-img wipe"
+      "${pkgs.cliphist}/bin/cliphist wipe"
       "${pkgs.gitify}/bin/gitify"
     ];
     windowrulev2 =
