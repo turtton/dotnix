@@ -16,18 +16,18 @@ self: prev: with prev; let
           wrapPrograms = map (path: ''wrapProgram "$out${path}" --add-flags "'--enable-wayland-ime' '--enable-features=UseOzonePlatform' '--ozone-platform=wayland'"'') paths;
         in
         ''
-                    			# desktop
-                    			if [[ -L "$out/share/applications" ]]; then
-                    				rm "$out/share/applications"
-                    				mkdir -p "$out/share/applications"
-                    			else
-                    				rm "$out${desktopEntryPath}"
-                    			fi
+          # desktop
+          if [[ -L "$out/share/applications" ]]; then
+          	rm "$out/share/applications"
+          	mkdir -p "$out/share/applications"
+          else
+          	rm "$out${desktopEntryPath}"
+          fi
 
-          								${prev.lib.concatStringsSep "\n" seds}
+            ${prev.lib.concatStringsSep "\n" seds}
 
-          								${prev.lib.concatStringsSep "\n" wrapPrograms}
-                    		'';
+          	${prev.lib.concatStringsSep "\n" wrapPrograms}
+        '';
     };
   overrideCommandLine = pkg: pkg.override { commandLineArgs = [ "--enable-wayland-ime" "--enable-features=UseOzonePlatform" "--ozone-platform=wayland" ]; };
 in

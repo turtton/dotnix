@@ -16,13 +16,13 @@ self: prev: {
       extraPkgs = pkgs: [ pkgs.at-spi2-core ];
 
       extraInstallCommands = ''
-        		#mv $out/bin/${pname}-${version} $out/bin/${pname}
-        		ls ${appimageContents}
-        		mkdir -p $out/share/applications
-                install -m 444 -D ${appimageContents}/${pname}.desktop $out/share/applications/${pname}.desktop
-        		mkdir -p $out/share/icons/hicolor/512x512/apps
-                install -m 444 -D ${appimageContents}/${pname}.png $out/share/icons/hicolor/512x512/apps/${pname}.png
-                substituteInPlace $out/share/applications/${pname}.desktop --replace-fail 'Exec=AppRun' 'Exec=${pname}'
+        #mv $out/bin/${pname}-${version} $out/bin/${pname}
+        ls ${appimageContents}
+        mkdir -p $out/share/applications
+        install -m 444 -D ${appimageContents}/${pname}.desktop $out/share/applications/${pname}.desktop
+        mkdir -p $out/share/icons/hicolor/512x512/apps
+        install -m 444 -D ${appimageContents}/${pname}.png $out/share/icons/hicolor/512x512/apps/${pname}.png
+        substituteInPlace $out/share/applications/${pname}.desktop --replace-fail 'Exec=AppRun' 'Exec=${pname} --enable-wayland-ime --enable-features=UseOzonePlatform --ozone-platform=wayland'
       '';
 
       meta = with lib; {
