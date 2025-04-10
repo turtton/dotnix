@@ -1,4 +1,4 @@
-{
+{ pkgs, ... }: {
   imports = [
     ./gpg.nix
     ./ld.nix
@@ -18,6 +18,12 @@
   # Enable usb access
   services.gvfs.enable = true;
   services.udisks2.enable = true;
+
+  # Enable android rule
+  programs.adb.enable = true;
+  services.udev.packages = with pkgs; [
+    android-udev-rules
+  ];
 
   # Limit the number of boot loader configurations
   boot.loader = {
