@@ -76,7 +76,7 @@
       overlays = pkgs.lib.attrsets.mergeAttrsList (map (overlay: overlay pkgs pkgs) (import ./overlay/d-linux.nix { inherit pkgs inputs; }).nixpkgs.overlays);
     in
     with pkgs; {
-      formatter = nixpkgs-fmt;
+      formatter = nixfmt-rfc-style;
       packages = {
         ghr = overlays.ghr;
         rustowl = overlays.rustowl;

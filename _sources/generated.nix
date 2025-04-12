@@ -3,13 +3,13 @@
 {
   beutl = {
     pname = "beutl";
-    version = "v1.0.4";
+    version = "v1.0.5";
     src = fetchFromGitHub {
       owner = "b-editor";
       repo = "beutl";
-      rev = "v1.0.4";
+      rev = "v1.0.5";
       fetchSubmodules = false;
-      sha256 = "sha256-vgNr6TIQbFx/vRz8q1CCtilLPca+g5ZNC+/Bb+qrgC4=";
+      sha256 = "sha256-Lv04ep6VcoY19NrgnV/HgcyGrKDFjFczZdurLbZ0X60=";
     };
   };
   ghr = {
@@ -48,13 +48,13 @@
   };
   rustowl = {
     pname = "rustowl";
-    version = "v0.1.4";
+    version = "v0.2.0";
     src = fetchFromGitHub {
       owner = "cordx56";
       repo = "rustowl";
-      rev = "v0.1.4";
+      rev = "v0.2.0";
       fetchSubmodules = false;
-      sha256 = "sha256-va+og3rgmm1bbWPk3GQofQ8S6QKIGr39At8QyKTOA/A=";
+      sha256 = "sha256-7i/dP+8YuFn7AUXklvMrSefZok1VpnRLmga0XuFudTg=";
     };
   };
   wallpaper-springcity = {

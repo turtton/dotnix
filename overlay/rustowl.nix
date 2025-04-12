@@ -19,6 +19,8 @@ in
     nativeBuildInputs = [ pkg-config ];
     buildInputs = [ curl ];
 
+	RUSTOWL_TOOLCHAIN = "${toolchain}/bin/rust-toolchain";
+
     meta = with lib; {
       description = "Rust variable ownership visualizer";
       homepage = "https://github.com/cordx56/rustowl";
