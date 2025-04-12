@@ -1,18 +1,26 @@
 gen: self: prev:
 let
-  jetbrains-dolphin = { useQt6 }:
+  jetbrains-dolphin =
+    { useQt6 }:
     let
       targetPackages = if useQt6 then self.kdePackages else self.libsForQt5;
     in
-    with self; stdenv.mkDerivation {
+    with self;
+    stdenv.mkDerivation {
       inherit (gen) pname version src;
 
-      nativeBuildInputs = [ cmake targetPackages.extra-cmake-modules ];
+      nativeBuildInputs = [
+        cmake
+        targetPackages.extra-cmake-modules
+      ];
       buildInputs = with targetPackages; [ kio ];
       cmakeFlags =
-        if useQt6 then [
-          "-DBUILD_WITH_QT6=ON"
-        ] else [ ];
+        if useQt6 then
+          [
+            "-DBUILD_WITH_QT6=ON"
+          ]
+        else
+          [ ];
       dontWrapQtApps = true;
       meta = with lib; {
         description = "A Krunner Plugin which allows you to open your recent projects";

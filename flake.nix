@@ -16,8 +16,7 @@
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-hardware.url =
-      "github:NixOS/nixos-hardware/master"; # Hardware settings collection
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master"; # Hardware settings collection
     xremap.url = "github:xremap/nix-flake"; # KeyMap tool
     # Secure boot
     lanzaboote = {
@@ -66,70 +65,91 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = inputs@{ nixpkgs, flake-utils, hyprland, hyprpanel, hyprpolkitagent, rust-overlay, ... }: {
-    nixosConfigurations = (import ./hosts inputs).nixos;
-    homeConfigurations = (import ./hosts inputs).home-manager;
-    darwinConfigurations = (import ./hosts inputs).darwin;
-  } // flake-utils.lib.eachDefaultSystem (system:
-    let
-      pkgs = import nixpkgs { inherit system; config.allowUnfree = true; overlays = [ (import rust-overlay) ]; };
-      overlays = pkgs.lib.attrsets.mergeAttrsList (map (overlay: overlay pkgs pkgs) (import ./overlay/d-linux.nix { inherit pkgs inputs; }).nixpkgs.overlays);
-    in
-    with pkgs; {
-      formatter = nixfmt-rfc-style;
-      packages = {
-        ghr = overlays.ghr;
-        rustowl = overlays.rustowl;
-        beutl = overlays.beutl;
-        jetbrains-dolphin-qt5 = overlays.jetbrains-dolphin-qt5;
-        jetbrains-dolphin-qt6 = overlays.jetbrains-dolphin-qt6;
-        jetbrains-nautilus = overlays.jetbrains-nautilus;
-        noto-fonts-cjk-sans = overlays.noto-fonts-cjk-sans;
-        noto-fonts-cjk-serif = overlays.noto-fonts-cjk-serif;
-        noto-fonts = overlays.noto-fonts;
-        wallpaper-springcity = overlays.wallpaper-springcity;
-        hyprland = hyprland.packages.${system}.default;
-        hyprpanel = hyprpanel.packages.${system}.default;
-        hyprpolkitagent = hyprpolkitagent.packages.${system}.default;
-        # Force Wayland IME system
-        vivaldi = overlays.vivaldi;
-        chromium = overlays.chromium;
-        spotify = overlays.spotify;
-        obsidian = overlays.obsidian;
-        discord = overlays.discord;
-        discord-ptb = overlays.discord-ptb;
-        slack = overlays.slack;
-        teams-for-linux = overlays.teams-for-linux;
-        vscode = overlays.vscode;
-        zoom-us = overlays.zoom-us;
-        zen-browser = inputs.zen-browser.packages.${system}.default;
-        isaacsim-webrtc-streaming-client = overlays.isaacsim-webrtc-streaming-client;
-        # pake-cli = overlays.pake-cli;
-        # fastmail = overlays.fastmail;
-      };
-      devShells.default = mkShell {
-        packages = [
-          nvfetcher
-          home-manager
-          (writeScriptBin "switch-home" ''
-            home-manager switch --flake ".#$@" --show-trace
-          '')
-          (writeScriptBin "switch-nixos" ''
-            ulimit -n 4096 && sudo nixos-rebuild switch --flake ".#$@" --show-trace
-          '')
-          (writeScriptBin "switch-darwin" ''
-            nix run nix-darwin -- switch --flake ".#$@" --show-trace
-          '')
-          (writeScriptBin "gen-template" ''
-            nix run github:nix-community/nixos-generators -- -f proxmox-lxc --flake ".#$@" --show-trace
-          '')
+  outputs =
+    inputs@{
+      nixpkgs,
+      flake-utils,
+      hyprland,
+      hyprpanel,
+      hyprpolkitagent,
+      rust-overlay,
+      ...
+    }:
+    {
+      nixosConfigurations = (import ./hosts inputs).nixos;
+      homeConfigurations = (import ./hosts inputs).home-manager;
+      darwinConfigurations = (import ./hosts inputs).darwin;
+    }
+    // flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+          overlays = [ (import rust-overlay) ];
+        };
+        overlays = pkgs.lib.attrsets.mergeAttrsList (
+          map (overlay: overlay pkgs pkgs)
+            (import ./overlay/d-linux.nix { inherit pkgs inputs; }).nixpkgs.overlays
+        );
+      in
+      with pkgs;
+      {
+        formatter = nixfmt-rfc-style;
+        packages = {
+          ghr = overlays.ghr;
+          rustowl = overlays.rustowl;
+          beutl = overlays.beutl;
+          jetbrains-dolphin-qt5 = overlays.jetbrains-dolphin-qt5;
+          jetbrains-dolphin-qt6 = overlays.jetbrains-dolphin-qt6;
+          jetbrains-nautilus = overlays.jetbrains-nautilus;
+          noto-fonts-cjk-sans = overlays.noto-fonts-cjk-sans;
+          noto-fonts-cjk-serif = overlays.noto-fonts-cjk-serif;
+          noto-fonts = overlays.noto-fonts;
+          wallpaper-springcity = overlays.wallpaper-springcity;
+          hyprland = hyprland.packages.${system}.default;
+          hyprpanel = hyprpanel.packages.${system}.default;
+          hyprpolkitagent = hyprpolkitagent.packages.${system}.default;
+          # Force Wayland IME system
+          vivaldi = overlays.vivaldi;
+          chromium = overlays.chromium;
+          spotify = overlays.spotify;
+          obsidian = overlays.obsidian;
+          discord = overlays.discord;
+          discord-ptb = overlays.discord-ptb;
+          slack = overlays.slack;
+          teams-for-linux = overlays.teams-for-linux;
+          vscode = overlays.vscode;
+          zoom-us = overlays.zoom-us;
+          zen-browser = inputs.zen-browser.packages.${system}.default;
+          isaacsim-webrtc-streaming-client = overlays.isaacsim-webrtc-streaming-client;
+          # pake-cli = overlays.pake-cli;
+          # fastmail = overlays.fastmail;
+        };
+        devShells.default = mkShell {
+          packages = [
+            nvfetcher
+            home-manager
+            (writeScriptBin "switch-home" ''
+              home-manager switch --flake ".#$@" --show-trace
+            '')
+            (writeScriptBin "switch-nixos" ''
+              ulimit -n 4096 && sudo nixos-rebuild switch --flake ".#$@" --show-trace
+            '')
+            (writeScriptBin "switch-darwin" ''
+              nix run nix-darwin -- switch --flake ".#$@" --show-trace
+            '')
+            (writeScriptBin "gen-template" ''
+              nix run github:nix-community/nixos-generators -- -f proxmox-lxc --flake ".#$@" --show-trace
+            '')
 
-          # For xmonad
-          # (haskellPackages.ghcWithPackages (hpkgs: [  
-          #   hpkgs.xmonad
-          #   hpkgs.xmonad-contrib
-          # ]))
-        ];
-      };
-    });
+            # For xmonad
+            # (haskellPackages.ghcWithPackages (hpkgs: [
+            #   hpkgs.xmonad
+            #   hpkgs.xmonad-contrib
+            # ]))
+          ];
+        };
+      }
+    );
 }

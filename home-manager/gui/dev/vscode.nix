@@ -1,52 +1,63 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   programs.vscode = {
     enable = true;
     profiles.default = {
-      extensions = (with pkgs.vscode-extensions; [
-        mkhl.direnv
-        oderwat.indent-rainbow
-        wakatime.vscode-wakatime
-        ms-vscode-remote.remote-containers
-        marp-team.marp-vscode
-        # AI
-        github.copilot-chat
-        github.copilot
-        # Languages
-        ms-azuretools.vscode-docker
-        redhat.vscode-yaml
-        yoavbls.pretty-ts-errors
-        ## python
-        ms-python.python
-        ms-python.vscode-pylance
-        charliermarsh.ruff
-        ms-toolsai.jupyter
-        ms-toolsai.vscode-jupyter-slideshow
-        ms-toolsai.jupyter-keymap
-        ms-toolsai.jupyter-renderers
-        ms-toolsai.vscode-jupyter-cell-tags
-        ### Javascript/TypeScript
-        esbenp.prettier-vscode
-        dbaeumer.vscode-eslint
-        ### Svelte
-        svelte.svelte-vscode
-      ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
-        saoudrizwan.claude-dev
-      ]) ++ (with pkgs; [
-        vscode-marketplace.re7rix2."50-shades-of-purple"
-        vscode-marketplace.atommaterial.a-file-icon-vscode
-        vscode-marketplace.me-dutour-mathieu.vscode-github-actions
-        open-vsx.pinage404.nix-extension-pack
-        vscode-marketplace."42crunch".vscode-openapi
-        vscode-marketplace.typespec.typespec-vscode
-        vscode-marketplace.njpwerner.autodocstring
-        vscode-marketplace.matt-meyers.vscode-dbml
-        vscode-marketplace.bocovo.dbml-erd-visualizer
-        vscode-marketplace.ardenivanov.svelte-intellisense
-        vscode-marketplace.fivethree.vscode-svelte-snippets
-        vscode-marketplace.aidan-gibson.river
-      ] ++ lib.optionals stdenv.isLinux [
-        vscode-marketplace.rooveterinaryinc.roo-cline
-      ]);
+      extensions =
+        (
+          with pkgs.vscode-extensions;
+          [
+            mkhl.direnv
+            oderwat.indent-rainbow
+            wakatime.vscode-wakatime
+            ms-vscode-remote.remote-containers
+            marp-team.marp-vscode
+            # AI
+            github.copilot-chat
+            github.copilot
+            # Languages
+            ms-azuretools.vscode-docker
+            redhat.vscode-yaml
+            yoavbls.pretty-ts-errors
+            ## python
+            ms-python.python
+            ms-python.vscode-pylance
+            charliermarsh.ruff
+            ms-toolsai.jupyter
+            ms-toolsai.vscode-jupyter-slideshow
+            ms-toolsai.jupyter-keymap
+            ms-toolsai.jupyter-renderers
+            ms-toolsai.vscode-jupyter-cell-tags
+            ### Javascript/TypeScript
+            esbenp.prettier-vscode
+            dbaeumer.vscode-eslint
+            ### Svelte
+            svelte.svelte-vscode
+          ]
+          ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
+            saoudrizwan.claude-dev
+          ]
+        )
+        ++ (
+          with pkgs;
+          [
+            vscode-marketplace.re7rix2."50-shades-of-purple"
+            vscode-marketplace.atommaterial.a-file-icon-vscode
+            vscode-marketplace.me-dutour-mathieu.vscode-github-actions
+            open-vsx.pinage404.nix-extension-pack
+            vscode-marketplace."42crunch".vscode-openapi
+            vscode-marketplace.typespec.typespec-vscode
+            vscode-marketplace.njpwerner.autodocstring
+            vscode-marketplace.matt-meyers.vscode-dbml
+            vscode-marketplace.bocovo.dbml-erd-visualizer
+            vscode-marketplace.ardenivanov.svelte-intellisense
+            vscode-marketplace.fivethree.vscode-svelte-snippets
+            vscode-marketplace.aidan-gibson.river
+          ]
+          ++ lib.optionals stdenv.isLinux [
+            vscode-marketplace.rooveterinaryinc.roo-cline
+          ]
+        );
       userSettings = {
         "workbench.productIconTheme" = "a-file-icon-vscode-product-icon-theme";
         "workbench.colorTheme" = "50 Shades of Purple";

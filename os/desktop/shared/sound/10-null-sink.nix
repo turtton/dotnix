@@ -4,7 +4,10 @@
     {
       name = "libpipewire-module-loopback";
       args = {
-        "audio.position" = [ "FL" "FR" ];
+        "audio.position" = [
+          "FL"
+          "FR"
+        ];
         "capture.props" = {
           "media.class" = "Audio/Sink";
           "node.name" = "obs_sink";

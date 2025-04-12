@@ -1,4 +1,9 @@
-{ system, inputs, pkgs, ... }:
+{
+  system,
+  inputs,
+  pkgs,
+  ...
+}:
 let
   isLinux = pkgs.hostPlatform.isLinux;
 in

@@ -1,5 +1,12 @@
-self: prev: with prev; let
-  forceWaylandIme = { name, desktopName ? name, binaryNames ? [ name ] }:
+self: prev:
+with prev;
+let
+  forceWaylandIme =
+    {
+      name,
+      desktopName ? name,
+      binaryNames ? [ name ],
+    }:
     let
       targetPackege = prev.${name};
     in
@@ -12,8 +19,16 @@ self: prev: with prev; let
         let
           desktopEntryPath = "/share/applications/${desktopName}.desktop";
           paths = map (binaryName: "/bin/${binaryName}") binaryNames;
-          seds = map (path: ''sed -e "s|Exec=${prev.${name} + path}|Exec=$out${path}|" "${prev.${name} + desktopEntryPath}" > "$out${desktopEntryPath}"'') paths;
-          wrapPrograms = map (path: ''wrapProgram "$out${path}" --add-flags "'--enable-wayland-ime' '--enable-features=UseOzonePlatform' '--ozone-platform=wayland'"'') paths;
+          seds = map (
+            path:
+            ''sed -e "s|Exec=${prev.${name} + path}|Exec=$out${path}|" "${
+              prev.${name} + desktopEntryPath
+            }" > "$out${desktopEntryPath}"''
+          ) paths;
+          wrapPrograms = map (
+            path:
+            ''wrapProgram "$out${path}" --add-flags "'--enable-wayland-ime' '--enable-features=UseOzonePlatform' '--ozone-platform=wayland'"''
+          ) paths;
         in
         ''
           # desktop
@@ -29,7 +44,15 @@ self: prev: with prev; let
           	${prev.lib.concatStringsSep "\n" wrapPrograms}
         '';
     };
-  overrideCommandLine = pkg: pkg.override { commandLineArgs = [ "--enable-wayland-ime" "--enable-features=UseOzonePlatform" "--ozone-platform=wayland" ]; };
+  overrideCommandLine =
+    pkg:
+    pkg.override {
+      commandLineArgs = [
+        "--enable-wayland-ime"
+        "--enable-features=UseOzonePlatform"
+        "--ozone-platform=wayland"
+      ];
+    };
 in
 {
   vivaldi = overrideCommandLine prev.vivaldi;
@@ -37,8 +60,20 @@ in
   obsidian = overrideCommandLine prev.obsidian;
   vscode = overrideCommandLine prev.vscode;
   spotify = forceWaylandIme { name = "spotify"; };
-  discord = forceWaylandIme rec { name = "discord"; binaryNames = [ name "Discord" ]; };
-  discord-ptb = forceWaylandIme { name = "discord-ptb"; binaryNames = [ "discordptb" "DiscordPTB" ]; };
+  discord = forceWaylandIme rec {
+    name = "discord";
+    binaryNames = [
+      name
+      "Discord"
+    ];
+  };
+  discord-ptb = forceWaylandIme {
+    name = "discord-ptb";
+    binaryNames = [
+      "discordptb"
+      "DiscordPTB"
+    ];
+  };
   slack = forceWaylandIme { name = "slack"; };
   teams-for-linux = forceWaylandIme { name = "teams-for-linux"; };
 }

@@ -1,10 +1,11 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   home.packages = with pkgs; [
     bat # cat
     bottom # top
     du-dust # du
     eza # ls
-    fd # find 
+    fd # find
     ripgrep # grep
     delta # diff
   ];

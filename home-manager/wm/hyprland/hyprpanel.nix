@@ -1,4 +1,5 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, ... }:
+{
   imports = [
     inputs.hyprpanel.homeManagerModules.hyprpanel
     inputs.ags.homeManagerModules.default
@@ -24,28 +25,32 @@
       layout = {
         "bar.layouts" =
           let
-            layout = { showBattery ? true }: {
-              "left" = [
-                "dashboard"
-                "workspaces"
-                "windowtitle"
-                "updates"
-                "storage"
-              ] ++ (if showBattery then [ "battery" ] else [ ]);
-              "middle" = [
-                "media"
-              ];
-              "right" = [
-                "cpu"
-                "ram"
-                "volume"
-                "network"
-                "bluetooth"
-                "systray"
-                "clock"
-                "notifications"
-              ];
-            };
+            layout =
+              {
+                showBattery ? true,
+              }:
+              {
+                "left" = [
+                  "dashboard"
+                  "workspaces"
+                  "windowtitle"
+                  "updates"
+                  "storage"
+                ] ++ (if showBattery then [ "battery" ] else [ ]);
+                "middle" = [
+                  "media"
+                ];
+                "right" = [
+                  "cpu"
+                  "ram"
+                  "volume"
+                  "network"
+                  "bluetooth"
+                  "systray"
+                  "clock"
+                  "notifications"
+                ];
+              };
             none = {
               "left" = [ ];
               "middle" = [ ];

@@ -1,4 +1,5 @@
-{ pkgs, hostPlatform, ... }: {
+{ pkgs, hostPlatform, ... }:
+{
   programs.gpg = {
     enable = true;
     settings = {

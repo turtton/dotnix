@@ -1,4 +1,5 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, ... }:
+{
   programs.nix-ld = {
     enable = true;
     # From https://github.com/NixOS/nixpkgs/issues/240444#issuecomment-1988645885

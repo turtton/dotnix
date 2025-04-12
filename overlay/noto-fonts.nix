@@ -7,7 +7,8 @@ let
   pname = "noto-fonts";
   weights = "{Regular,Bold,Light,Italic,BoldItalic,LightItalic}";
 in
-with prev; {
+with prev;
+{
   noto-fonts = stdenv.mkDerivation {
     inherit pname;
     version = "2020-01-23";
@@ -50,7 +51,10 @@ with prev; {
       '';
       license = licenses.ofl;
       platforms = platforms.all;
-      maintainers = with maintainers; [ mathnerd314 emily ];
+      maintainers = with maintainers; [
+        mathnerd314
+        emily
+      ];
     };
   };
 }

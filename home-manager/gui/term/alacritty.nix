@@ -19,7 +19,7 @@ let
   b_magenta = "#bb9af7";
   b_cyan = "#0db9d7";
   b_white = "#acb0d0";
-  # custom colors 
+  # custom colors
   base = "#1a1b26";
   text = "#a9b1d6";
   # # based on Jolly-kosnole
@@ -52,7 +52,7 @@ let
   d_magenta = "#006a80";
   d_cyan = "#c24141";
   d_white = "#7171a8";
-  # # custom colors 
+  # # custom colors
   # base = n_black;
   # text = n_white;
   subtext0 = "#A6ADC8";
@@ -79,7 +79,11 @@ in
       };
       keyboard = {
         bindings = [
-          { key = "V"; mods = "Control | Shift"; action = "Paste"; }
+          {
+            key = "V";
+            mods = "Control | Shift";
+            action = "Paste";
+          }
         ];
       };
       colors = {
@@ -156,8 +160,14 @@ in
           white = d_white;
         };
         indexed_colors = [
-          { index = 16; color = "#FAB387"; }
-          { index = 17; color = rosewater; }
+          {
+            index = 16;
+            color = "#FAB387";
+          }
+          {
+            index = 17;
+            color = rosewater;
+          }
         ];
       };
       font = {

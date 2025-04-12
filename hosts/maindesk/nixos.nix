@@ -1,26 +1,30 @@
-{ inputs
-, pkgs
-, hostname
-, config
-, pkgs-staging-next
-, ...
-}: {
-  imports = [
-    ./hardware-configuration.nix
-    ./../../os/core/shared
-    (import ./../../os/core/secureboot/preloader.nix "nvme0n1" "1")
-    ./../../os/core/shell.nix
-    ./../../os/wm/hyprland.nix
-    ./../../os/desktop/shared
-    ./../../os/desktop/1password.nix
-    ./../../os/desktop/flatpak.nix
-    ./../../os/desktop/media.nix
-    ./../../os/desktop/openrazer.nix
-    ./../../os/desktop/steam.nix
-  ] ++ (with inputs.nixos-hardware.nixosModules; [
-    common-cpu-amd
-    common-pc-ssd
-  ]);
+{
+  inputs,
+  pkgs,
+  hostname,
+  config,
+  pkgs-staging-next,
+  ...
+}:
+{
+  imports =
+    [
+      ./hardware-configuration.nix
+      ./../../os/core/shared
+      (import ./../../os/core/secureboot/preloader.nix "nvme0n1" "1")
+      ./../../os/core/shell.nix
+      ./../../os/wm/hyprland.nix
+      ./../../os/desktop/shared
+      ./../../os/desktop/1password.nix
+      ./../../os/desktop/flatpak.nix
+      ./../../os/desktop/media.nix
+      ./../../os/desktop/openrazer.nix
+      ./../../os/desktop/steam.nix
+    ]
+    ++ (with inputs.nixos-hardware.nixosModules; [
+      common-cpu-amd
+      common-pc-ssd
+    ]);
 
   boot = {
     loader = {
@@ -28,7 +32,15 @@
       efi.canTouchEfiVariables = true;
     };
     kernelPackages = pkgs.linuxKernel.packages.linux_xanmod;
-    kernelModules = [ "pci_stub" "vfio" "vfio" "vfio_iommu_type1" "vfio_pci" "kvm" "kvm-amd" ];
+    kernelModules = [
+      "pci_stub"
+      "vfio"
+      "vfio"
+      "vfio_iommu_type1"
+      "vfio_pci"
+      "kvm"
+      "kvm-amd"
+    ];
     kernelParams = [
       "nvidia_drm.modeset=1"
       "nvidia_drm.fbdev=1"

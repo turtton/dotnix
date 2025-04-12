@@ -1,10 +1,12 @@
-{ inputs
-, pkgs
-, hostname
-, config
-, pkgs-staging-next
-, ...
-}: {
+{
+  inputs,
+  pkgs,
+  hostname,
+  config,
+  pkgs-staging-next,
+  ...
+}:
+{
   imports = [
     ./atticd.nix
     # ./cloudflared.nix

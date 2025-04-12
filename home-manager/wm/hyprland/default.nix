@@ -1,4 +1,10 @@
-{ pkgs, inputs, system, ... }: {
+{
+  pkgs,
+  inputs,
+  system,
+  ...
+}:
+{
   imports = [
     ./eww
     ./qt

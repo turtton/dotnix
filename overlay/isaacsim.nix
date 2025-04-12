@@ -10,7 +10,8 @@ self: prev: {
       };
       appimageContents = self.appimageTools.extract { inherit pname version src; };
     in
-    with self; appimageTools.wrapType2 rec {
+    with self;
+    appimageTools.wrapType2 rec {
       inherit pname version src;
 
       extraPkgs = pkgs: [ pkgs.at-spi2-core ];

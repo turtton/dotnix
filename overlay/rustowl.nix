@@ -3,28 +3,33 @@ gen: self: prev:
 let
   rust-toolchain = gen.src + "/rustowl/rust-toolchain.toml";
   toolchain = self.rust-bin.fromRustupToolchainFile rust-toolchain;
-  nightlyRustPlatform = self.makeRustPlatform { cargo = toolchain; rustc = toolchain; };
+  nightlyRustPlatform = self.makeRustPlatform {
+    cargo = toolchain;
+    rustc = toolchain;
+  };
 in
 {
-  rustowl = with self; nightlyRustPlatform.buildRustPackage rec {
-    inherit (gen) version;
-    pname = "cargo-owl";
-    name = gen.pname;
+  rustowl =
+    with self;
+    nightlyRustPlatform.buildRustPackage rec {
+      inherit (gen) version;
+      pname = "cargo-owl";
+      name = gen.pname;
 
-    src = gen.src + "/rustowl";
+      src = gen.src + "/rustowl";
 
-    cargoLock.lockFile = "${src}/Cargo.lock";
-    useFetchCargoVendor = true;
+      cargoLock.lockFile = "${src}/Cargo.lock";
+      useFetchCargoVendor = true;
 
-    nativeBuildInputs = [ pkg-config ];
-    buildInputs = [ curl ];
+      nativeBuildInputs = [ pkg-config ];
+      buildInputs = [ curl ];
 
-	RUSTOWL_TOOLCHAIN = "${toolchain}/bin/rust-toolchain";
+      RUSTOWL_TOOLCHAIN = "${toolchain}/bin/rust-toolchain";
 
-    meta = with lib; {
-      description = "Rust variable ownership visualizer";
-      homepage = "https://github.com/cordx56/rustowl";
-      license = with licenses; [ mit ];
+      meta = with lib; {
+        description = "Rust variable ownership visualizer";
+        homepage = "https://github.com/cordx56/rustowl";
+        license = with licenses; [ mit ];
+      };
     };
-  };
 }

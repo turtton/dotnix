@@ -1,4 +1,5 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, ... }:
+{
   wayland.windowManager.hyprland.settings = {
     "plugin:split-monitor-workspaces:count" = 8;
     env = [

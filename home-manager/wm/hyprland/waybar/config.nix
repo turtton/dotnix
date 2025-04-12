@@ -1,18 +1,22 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   mainBar = {
     margin-top = 6;
     margin-bottom = 2;
     margin-right = 8;
     margin-left = 8;
-    modules-left = [ "custom/wmname" "custom/media" "hyprland/workspaces" "hyprland/window" ];
+    modules-left = [
+      "custom/wmname"
+      "custom/media"
+      "hyprland/workspaces"
+      "hyprland/window"
+    ];
     modules-center = [ ];
     modules-right = [
       "battery"
       "cpu"
       "memory"
-      /*
-      "backlight"
-      */
+      # "backlight"
       "pulseaudio"
       "clock"
       "network"
@@ -90,7 +94,11 @@
 
     "backlight" = {
       format = "{icon}{percent}%";
-      format-icons = [ "󰃞 " "󰃟 " "󰃠 " ];
+      format-icons = [
+        "󰃞 "
+        "󰃟 "
+        "󰃠 "
+      ];
       on-scroll-up = "light -A 1";
       on-scroll-down = "light -U 1";
     };
@@ -105,7 +113,13 @@
       format-charging = "󰂄 {capacity}%";
       format-plugged = " ";
       format-alt = "{time} {icon}";
-      format-icons = [ "  " "  " "  " "  " "  " ];
+      format-icons = [
+        "  "
+        "  "
+        "  "
+        "  "
+        "  "
+      ];
     };
 
     "network" = {
@@ -131,7 +145,11 @@
         phone = " ";
         portable = " ";
         car = " ";
-        default = [ " " " " " " ];
+        default = [
+          " "
+          " "
+          " "
+        ];
       };
       tooltip-format = "{desc} {volume}%";
       on-click = "${pkgs.pavucontrol}/bin/pavucontrol -t 3";

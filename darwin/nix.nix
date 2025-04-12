@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   nix = {
     enable = true;
     optimise.automatic = true;

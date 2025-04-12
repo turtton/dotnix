@@ -1,4 +1,5 @@
-{ lib, ... }: {
+{ lib, ... }:
+{
   imports = [
     ./../../home-manager/cli/shared
     ./../../home-manager/cli/shell/zsh

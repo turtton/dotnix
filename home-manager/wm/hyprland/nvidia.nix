@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   home.packages = [
     pkgs.nvidia-vaapi-driver
   ];

@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   wayland.windowManager.hyprland.settings = {
     "$mainMod" = "SUPER";
     "$subMod" = "ALT";
@@ -98,17 +99,14 @@
       "$mainMod SHIFT, h		, movetoworkspace, m-1"
       "$mainMod SHIFT, l		, movetoworkspace, m+1"
 
-      # toggle monitor 
+      # toggle monitor
       "$mainMod, Tab, exec, hyprctl monitors -j|jq 'map(select(.focused|not).activeWorkspace.id)[0]'|xargs hyprctl dispatch workspace"
-
 
       # screenshot
       # https://github.com/Jas-SinghFSU/HyprPanel/issues/832
       '', Print, exec, GRIMBLAST_HIDE_CURSOR=1 grimblast save output - | swappy -f - -o /tmp/screenshot.png && zenity --question --text="Save?" && cp /tmp/screenshot.png $HOME/Pictures/$(date +%Y-%m-%dT%H:%M:%S).png''
-      ''
-        $mainMod, Print, exec, GRIMBLAST_HIDE_CURSOR=1 grimblast save active - | swappy -f - -o /tmp/screenshot.png && zenity --question --text="Save?" && cp /tmp/screenshot.png "$HOME/Pictures/$(date +%Y-%m-%dT%H:%M:%S).png"''
-      ''
-        $mainMod SHIFT, s, exec, GRIMBLAST_HIDE_CURSOR=1 grimblast save area - | swappy -f - -o /tmp/screenshot.png && zenity --question --text="Save?" && cp /tmp/screenshot.png "$HOME/Pictures/$(date +%Y-%m-%dT%H:%M:%S).png"''
+      ''$mainMod, Print, exec, GRIMBLAST_HIDE_CURSOR=1 grimblast save active - | swappy -f - -o /tmp/screenshot.png && zenity --question --text="Save?" && cp /tmp/screenshot.png "$HOME/Pictures/$(date +%Y-%m-%dT%H:%M:%S).png"''
+      ''$mainMod SHIFT, s, exec, GRIMBLAST_HIDE_CURSOR=1 grimblast save area - | swappy -f - -o /tmp/screenshot.png && zenity --question --text="Save?" && cp /tmp/screenshot.png "$HOME/Pictures/$(date +%Y-%m-%dT%H:%M:%S).png"''
 
       # launcher
       "$mainMod, d, exec, rofi -show drun"

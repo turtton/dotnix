@@ -1,4 +1,5 @@
-{ inputs, system, ... }: {
+{ inputs, system, ... }:
+{
   imports = [ inputs.hyprland.nixosModules.default ];
   programs.hyprland = {
     enable = true;

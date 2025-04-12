@@ -1,6 +1,12 @@
 self: prev:
 let
-  append-env = { env, name, desktopName ? name, binaryNames ? [ name ] }:
+  append-env =
+    {
+      env,
+      name,
+      desktopName ? name,
+      binaryNames ? [ name ],
+    }:
     let
       targetPackege = prev.${name};
     in
@@ -13,7 +19,12 @@ let
         let
           desktopEntryPath = "/share/applications/${desktopName}.desktop";
           paths = map (binaryName: "/bin/${binaryName}") binaryNames;
-          seds = map (path: ''sed -e "s|Exec=${prev.${name} + path}|Exec=$out${path}|" "${prev.${name} + desktopEntryPath}" > "$out${desktopEntryPath}"'') paths;
+          seds = map (
+            path:
+            ''sed -e "s|Exec=${prev.${name} + path}|Exec=$out${path}|" "${
+              prev.${name} + desktopEntryPath
+            }" > "$out${desktopEntryPath}"''
+          ) paths;
           wrapPrograms = map (path: ''wrapProgram "$out${path}" --prefix ${env}'') paths;
         in
         ''
@@ -34,5 +45,12 @@ let
   fix-gtk = args: append-env ({ env = ''GTK_IM_MODULE : "fcitx"''; } // args);
 in
 {
-  zoom-us = fix-qt rec { name = "zoom-us"; desktopName = "Zoom"; binaryNames = [ name "zoom" ]; };
+  zoom-us = fix-qt rec {
+    name = "zoom-us";
+    desktopName = "Zoom";
+    binaryNames = [
+      name
+      "zoom"
+    ];
+  };
 }

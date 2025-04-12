@@ -9,7 +9,8 @@ let
   rev = "9f7f3c38eab63e1d1fddd8d50937fe4f1eacdb1d";
   sha256 = "sha256-Lxm4yvyNMtOk83FuaH0TkgvCXPJyq+R0QlYMy2l4l5w=";
 in
-with prev; {
+with prev;
+{
   noto-fonts-cjk-sans = stdenv.mkDerivation {
     pname = "noto-fonts-cjk-${lib.toLower typeface}";
     inherit version;
@@ -18,7 +19,10 @@ with prev; {
       owner = "notofonts";
       repo = "noto-cjk";
       inherit rev sha256;
-      sparseCheckout = [ "${typeface}/OTC" "${typeface}/Mono" ];
+      sparseCheckout = [
+        "${typeface}/OTC"
+        "${typeface}/Mono"
+      ];
     };
 
     installPhase = ''
@@ -45,7 +49,10 @@ with prev; {
       '';
       license = licenses.ofl;
       platforms = platforms.all;
-      maintainers = with maintainers; [ mathnerd314 emily ];
+      maintainers = with maintainers; [
+        mathnerd314
+        emily
+      ];
     };
   };
 }

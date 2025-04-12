@@ -1,5 +1,10 @@
-{ userName, userEmail, signingKey ? "", }:
-{ pkgs, ... }: {
+{
+  userName,
+  userEmail,
+  signingKey ? "",
+}:
+{ pkgs, ... }:
+{
   programs.git = {
     enable = true;
     lfs.enable = true;
@@ -52,7 +57,11 @@
         updateRefs = true;
       };
     };
-    ignores = [ ".idea" ".vscode" ".memo.local.md" ];
+    ignores = [
+      ".idea"
+      ".vscode"
+      ".memo.local.md"
+    ];
   };
   programs.gh = {
     enable = true;
