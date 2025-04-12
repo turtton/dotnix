@@ -28,11 +28,6 @@ gen: self: prev: {
         "-p:IncludeSourceRevisionInInformationalVersion=false"
       ];
 
-      patches = [
-        ./0001-fix-Resolve-fc-match-path-dynamically-on-Linux.patch
-        ./0002-fix-Append-additinal-library-path-for-linux.patch
-      ];
-
       #executables = [ "Beutl" "Beutl.ExceptionHandler" "Beutl.PackageTools.UI" "Beutl.WaitingDialog" ];
       FFMPEG_PATH = "${ffmpeg_6-full}/bin/ffmpeg";
 
