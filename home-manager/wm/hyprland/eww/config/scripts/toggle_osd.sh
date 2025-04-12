@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 no_error() {
-	pkill checkvolume.sh
-	~/.config/eww/scripts/checkvolume.sh &
+  pkill checkvolume.sh
+  ~/.config/eww/scripts/checkvolume.sh &
 }
 
 error() {
-	~/.config/eww/scripts/checkvolume.sh &
+  ~/.config/eww/scripts/checkvolume.sh &
 }
 
 no_error || error
@@ -15,15 +15,14 @@ no_error || error
 
 case $1 in
 --up)
-	pamixer -u >/dev/null
-	pamixer -i 5 >/dev/null
-	;;
+  pamixer -u >/dev/null
+  pamixer -i 5 >/dev/null
+  ;;
 --down)
-	pamixer -u >/dev/null
-	pamixer -d 5 >/dev/null
-	;;
+  pamixer -u >/dev/null
+  pamixer -d 5 >/dev/null
+  ;;
 --toggle)
-	pamixer -t >/dev/null
-	;;
+  pamixer -t >/dev/null
+  ;;
 esac
-

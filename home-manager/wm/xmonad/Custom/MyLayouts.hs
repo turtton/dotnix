@@ -2,25 +2,25 @@
 
 module Custom.MyLayouts where
 
-import Custom.MyDecorations
-import XMonad
-import XMonad.Hooks.ManageDocks
-import XMonad.Layout.Accordion
-import XMonad.Layout.BinarySpacePartition
-import XMonad.Layout.BoringWindows
-import XMonad.Layout.Column
-import XMonad.Layout.MultiToggle
-import XMonad.Layout.MultiToggle.Instances
-import XMonad.Layout.NoBorders
-import XMonad.Layout.PerScreen
-import XMonad.Layout.Renamed as XLR
-import XMonad.Layout.ResizableTile
-import XMonad.Layout.ShowWName
-import XMonad.Layout.SimplestFloat
-import XMonad.Layout.Spacing
-import XMonad.Layout.SubLayouts
-import XMonad.Layout.Tabbed
-import XMonad.Layout.WindowNavigation
+import           Custom.MyDecorations
+import           XMonad
+import           XMonad.Hooks.ManageDocks
+import           XMonad.Layout.Accordion
+import           XMonad.Layout.BinarySpacePartition
+import           XMonad.Layout.BoringWindows
+import           XMonad.Layout.Column
+import           XMonad.Layout.MultiToggle
+import           XMonad.Layout.MultiToggle.Instances
+import           XMonad.Layout.NoBorders
+import           XMonad.Layout.PerScreen
+import           XMonad.Layout.Renamed               as XLR
+import           XMonad.Layout.ResizableTile
+import           XMonad.Layout.ShowWName
+import           XMonad.Layout.SimplestFloat
+import           XMonad.Layout.Spacing
+import           XMonad.Layout.SubLayouts
+import           XMonad.Layout.Tabbed
+import           XMonad.Layout.WindowNavigation
 
 mySpacing i = spacingRaw False (Border 10 10 30 30) True (Border i i i i) True
 

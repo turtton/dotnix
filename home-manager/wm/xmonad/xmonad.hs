@@ -1,26 +1,28 @@
 -- import modules in ./lib/Custom/
-import Custom.MyDecorations (myBorderWidth, myFocusedBorderColor, myNormalBorderColor)
-import Custom.MyKeys
-import Custom.MyLayouts (myLayoutHook)
-import Custom.MyManagement
-import Custom.MyMouse (myMouseBindings)
-import Custom.MyPolybar (myPolybar)
-import Custom.MyScreen (rescreenCfg)
-import Custom.MyStartupApps (myStartupHook)
-import Custom.MyWorkspaces (myWorkspaces)
+import           Custom.MyDecorations          (myBorderWidth,
+                                                myFocusedBorderColor,
+                                                myNormalBorderColor)
+import           Custom.MyKeys
+import           Custom.MyLayouts              (myLayoutHook)
+import           Custom.MyManagement
+import           Custom.MyMouse                (myMouseBindings)
+import           Custom.MyPolybar              (myPolybar)
+import           Custom.MyScreen               (rescreenCfg)
+import           Custom.MyStartupApps          (myStartupHook)
+import           Custom.MyWorkspaces           (myWorkspaces)
 
 -- given modules from xmonad and xmonad-contrib
-import XMonad
-import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.ManageDocks (docks)
-import XMonad.Hooks.OnPropertyChange (onXPropertyChange)
-import XMonad.Hooks.Rescreen (rescreenHook)
-import XMonad.Hooks.StatusBar
-import XMonad.Hooks.WindowSwallowing (swallowEventHook)
-import XMonad.Util.EZConfig
-import XMonad.Util.Hacks as Hacks
-import XMonad.Util.NamedScratchpad (scratchpadWorkspaceTag)
-import XMonad.Util.WorkspaceCompare
+import           XMonad
+import           XMonad.Hooks.EwmhDesktops
+import           XMonad.Hooks.ManageDocks      (docks)
+import           XMonad.Hooks.OnPropertyChange (onXPropertyChange)
+import           XMonad.Hooks.Rescreen         (rescreenHook)
+import           XMonad.Hooks.StatusBar
+import           XMonad.Hooks.WindowSwallowing (swallowEventHook)
+import           XMonad.Util.EZConfig
+import           XMonad.Util.Hacks             as Hacks
+import           XMonad.Util.NamedScratchpad   (scratchpadWorkspaceTag)
+import           XMonad.Util.WorkspaceCompare
 
 myEventHook = swallowEventHook (className =? "kitty") (return True) <> onXPropertyChange "WM_NAME" myManageHook <> Hacks.windowedFullscreenFixEventHook
 

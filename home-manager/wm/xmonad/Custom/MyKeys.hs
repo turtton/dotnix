@@ -2,33 +2,33 @@
 
 module Custom.MyKeys where
 
-import Custom.MyDecorations
+import           Custom.MyDecorations
 -- import Custom.MyMacAddresses
-import Custom.MyScratchpads
-import Custom.MyWorkspaces
-import Data.Map qualified as M
-import System.Exit
-import XMonad
-import XMonad.Actions.CycleWS
-import XMonad.Actions.EasyMotion
-import XMonad.Actions.PhysicalScreens
-import XMonad.Actions.Search qualified as S
-import XMonad.Actions.Submap qualified as SM
-import XMonad.Actions.WithAll
-import XMonad.Hooks.ManageDocks
-import XMonad.Layout.BinarySpacePartition as BSP
-import XMonad.Layout.BoringWindows
-import XMonad.Layout.MultiToggle
-import XMonad.Layout.MultiToggle.Instances
-import XMonad.Layout.ResizableTile
-import XMonad.Layout.Spacing
-import XMonad.Layout.SubLayouts
-import XMonad.Layout.WindowNavigation as WN
-import XMonad.Prompt.ConfirmPrompt
-import XMonad.Prompt.Man
-import XMonad.Prompt.XMonad
-import XMonad.StackSet qualified as W
-import XMonad.Util.NamedScratchpad
+import           Custom.MyScratchpads
+import           Custom.MyWorkspaces
+import qualified Data.Map                            as M
+import           System.Exit
+import           XMonad
+import           XMonad.Actions.CycleWS
+import           XMonad.Actions.EasyMotion
+import           XMonad.Actions.PhysicalScreens
+import qualified XMonad.Actions.Search               as S
+import qualified XMonad.Actions.Submap               as SM
+import           XMonad.Actions.WithAll
+import           XMonad.Hooks.ManageDocks
+import           XMonad.Layout.BinarySpacePartition  as BSP
+import           XMonad.Layout.BoringWindows
+import           XMonad.Layout.MultiToggle
+import           XMonad.Layout.MultiToggle.Instances
+import           XMonad.Layout.ResizableTile
+import           XMonad.Layout.Spacing
+import           XMonad.Layout.SubLayouts
+import           XMonad.Layout.WindowNavigation      as WN
+import           XMonad.Prompt.ConfirmPrompt
+import           XMonad.Prompt.Man
+import           XMonad.Prompt.XMonad
+import qualified XMonad.StackSet                     as W
+import           XMonad.Util.NamedScratchpad
 
 myBrowser :: String
 myBrowser = "brave-browser-nightly"

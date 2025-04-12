@@ -1,9 +1,9 @@
 module Custom.MyManagement where
 
-import Custom.MyScratchpads
-import XMonad
-import XMonad.Hooks.ManageHelpers (doCenterFloat)
-import XMonad.Util.NamedScratchpad
+import           Custom.MyScratchpads
+import           XMonad
+import           XMonad.Hooks.ManageHelpers  (doCenterFloat)
+import           XMonad.Util.NamedScratchpad
 
 myManagement =
   composeAll

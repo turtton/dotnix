@@ -64,6 +64,10 @@
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     inputs@{
@@ -73,6 +77,7 @@
       hyprpanel,
       hyprpolkitagent,
       rust-overlay,
+      treefmt-nix,
       ...
     }:
     {
@@ -95,7 +100,25 @@
       in
       with pkgs;
       {
-        formatter = nixfmt-rfc-style;
+        formatter = treefmt-nix.lib.mkWrapper pkgs {
+          projectRootFile = "flake.nix";
+          programs = {
+            nixfmt.enable = true;
+            taplo.enable = true;
+            biome.enable = true;
+            stylish-haskell.enable = true;
+            yamlfmt.enable = true;
+            mdformat.enable = true;
+            shfmt.enable = true;
+          };
+          settings = {
+            global.excludes = [
+              ".direnv/*"
+              "_sources/*"
+              "overlay/beutl/deps.json"
+            ];
+          };
+        };
         packages = {
           ghr = overlays.ghr;
           rustowl = overlays.rustowl;

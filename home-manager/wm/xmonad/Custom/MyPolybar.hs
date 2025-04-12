@@ -1,8 +1,8 @@
 module Custom.MyPolybar where
 
-import XMonad (spawn)
-import XMonad.Hooks.StatusBar
-import XMonad.Hooks.StatusBar.PP
+import           XMonad                    (spawn)
+import           XMonad.Hooks.StatusBar
+import           XMonad.Hooks.StatusBar.PP
 
 myPolybar :: StatusBarConfig
 myPolybar =

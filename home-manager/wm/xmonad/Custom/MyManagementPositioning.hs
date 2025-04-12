@@ -3,9 +3,9 @@
 -- separated module from Custom.MyManagement to prevent mutually recursive modules
 module Custom.MyManagementPositioning where
 
-import XMonad
-import XMonad.StackSet qualified as W
-import XMonad.Util.NamedScratchpad
+import           XMonad
+import qualified XMonad.StackSet             as W
+import           XMonad.Util.NamedScratchpad
 
 myCenter :: ManageHook
 myCenter = customFloating $ W.RationalRect fromLeft fromTop width height

@@ -1,7 +1,7 @@
 module Custom.MyStartupApps where
 
-import XMonad
-import XMonad.Util.SpawnOnce
+import           XMonad
+import           XMonad.Util.SpawnOnce
 
 myWallpaperPath :: String
 myWallpaperPath = "~/wallpapers/out_the_window_darker.png"

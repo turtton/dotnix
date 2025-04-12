@@ -5,6 +5,7 @@ My dotfiles for NixOS
 # [Hyprland](./home-manager/wm/hyprland/)
 
 ![](./docs/hypr.png)
+
 - Bar: [Hyprpanel](https://hyprpanel.com)
 - Editor: [Neovim](https://github.com/turtton/myvim.nix)
 - Terminal: [Alacritty](https://alacritty.org)
@@ -16,6 +17,7 @@ My dotfiles for NixOS
 # Setup
 
 1. Modify `/etc/nixos/configuration.nix`
+
    ```diff
    programs = {
    + git.enable = true;
@@ -23,32 +25,36 @@ My dotfiles for NixOS
    + nix.settings.experimental-features = ["nix-command" "flakes"];
    ```
 
-2. Run `sudo nixos-rebuild switch`
+1. Run `sudo nixos-rebuild switch`
 
-3. Clone this repository and move it
+1. Clone this repository and move it
 
-4. Run`nix develop`
+1. Run`nix develop`
 
-5. Run `switch-nixos {name}`(or `sudo nixos-rebuild switch --flake .#{name}`)  
+1. Run `switch-nixos {name}`(or `sudo nixos-rebuild switch --flake .#{name}`)\
    Name: `virtbox` `maindesk` `bridgetop`
+
    > If you want to try my profile, use `virtbox` first(requires 75GB at least), and make sure [hardware-configuration.nix](https://github.com/turtton/dotnix/blob/main/hosts/virtbox/hardware-configuration.nix) is replaced your `/etc/nixos/hardware-configuration.nix` before running command.
 
-6. ~~Run `nix run nixpkgs#home-manager -- switch --flake .#{name}`(`switch-home {name}`)~~  
+1. ~~Run `nix run nixpkgs#home-manager -- switch --flake .#{name}`(`switch-home {name}`)~~
 
    > This method no longer needed, but settings still here to configure darwin system in the future.
 
-7. Reboot
+1. Reboot
 
 # References
 
-> My environement log(JP):  
+> My environement log(JP):\
 > https://zenn.dev/watagame/scraps/e64841d674d16e
 
 - https://zenn.dev/asa1984/articles/nixos-is-the-best
+
 - https://github.com/asa1984/dotfiles/blob/main
 
 - https://nixos.wiki/wiki/
+
 - https://search.nixos.org/packages
+
 - https://mipmip.github.io/home-manager-option-search/
 
 Hyprland themes:

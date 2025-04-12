@@ -1,9 +1,9 @@
 module Custom.MyMouse where
 
-import Data.Map qualified as M
-import XMonad
-import XMonad.Actions.FlexibleResize qualified as Flex
-import XMonad.StackSet qualified as W
+import qualified Data.Map                      as M
+import           XMonad
+import qualified XMonad.Actions.FlexibleResize as Flex
+import qualified XMonad.StackSet               as W
 
 myMouseBindings :: XConfig l -> M.Map (KeyMask, Button) (Window -> X ())
 myMouseBindings XConfig {XMonad.modMask = modm} =

@@ -1,9 +1,9 @@
 module Custom.MyScratchpads where
 
-import Custom.MyManagementPositioning
-import XMonad (appName)
-import XMonad.ManageHook ((=?))
-import XMonad.Util.NamedScratchpad
+import           Custom.MyManagementPositioning
+import           XMonad                         (appName)
+import           XMonad.ManageHook              ((=?))
+import           XMonad.Util.NamedScratchpad
 
 myScratchpads :: [NamedScratchpad]
 myScratchpads =

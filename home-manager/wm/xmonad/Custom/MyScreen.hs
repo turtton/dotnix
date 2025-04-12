@@ -1,7 +1,7 @@
 module Custom.MyScreen where
 
-import XMonad
-import XMonad.Hooks.Rescreen
+import           XMonad
+import           XMonad.Hooks.Rescreen
 
 myAfterRescreenHook :: X ()
 myAfterRescreenHook = spawn "sleep 1; xmonad --restart"
