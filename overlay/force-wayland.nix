@@ -80,9 +80,23 @@ in
   claude-desktop =
     let
       claude-desktop = inputs.claude-desktop.packages.${system}.claude-desktop;
+      claude-desktop-wayland = forceWaylandIme {
+        name = claude-desktop.pname;
+        package = claude-desktop;
+      };
     in
-    forceWaylandIme {
-      name = claude-desktop.pname;
-      package = claude-desktop;
-    };
+    # https://github.com/k3d3/claude-desktop-linux-flake/blob/2b66e50045c03060d3becea838c5b57e46bbfc40/flake.nix#L24
+    # prev.buildFHSEnv {
+    #   name = "claude-desktop";
+    #   targetPkgs =
+    #     pkgs: with pkgs; [
+    #       docker
+    #       glibc
+    #       openssl
+    #       nodejs
+    #       uv
+    #     ];
+    #   runScript = "${claude-desktop-wayland}/bin/claude-desktop";
+    # };
+    claude-desktop-wayland;
 }
