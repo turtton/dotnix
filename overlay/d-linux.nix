@@ -9,7 +9,7 @@ in
     inputs.rust-overlay.overlays.default
     inputs.hyprpanel.overlay
     (import ./fix-ime.nix)
-    (import ./force-wayland.nix)
+    (import ./force-wayland.nix inputs)
     (import ./noto-fonts-cjk-serif.nix)
     (import ./noto-fonts-cjk-sans.nix)
     (import ./noto-fonts.nix)

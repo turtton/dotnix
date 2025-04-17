@@ -1,4 +1,4 @@
-self: prev:
+inputs: self: prev:
 with prev;
 let
   forceWaylandIme =
@@ -6,9 +6,10 @@ let
       name,
       desktopName ? name,
       binaryNames ? [ name ],
+      package ? null,
     }:
     let
-      targetPackege = prev.${name};
+      targetPackege = if package == null then prev.${name} else package;
     in
     prev.symlinkJoin {
       inherit (targetPackege) pname version;
@@ -21,8 +22,8 @@ let
           paths = map (binaryName: "/bin/${binaryName}") binaryNames;
           seds = map (
             path:
-            ''sed -e "s|Exec=${prev.${name} + path}|Exec=$out${path}|" "${
-              prev.${name} + desktopEntryPath
+            ''sed -e "s|Exec=${targetPackege + path}|Exec=$out${path}|" "${
+              targetPackege + desktopEntryPath
             }" > "$out${desktopEntryPath}"''
           ) paths;
           wrapPrograms = map (
@@ -76,4 +77,12 @@ in
   };
   slack = forceWaylandIme { name = "slack"; };
   teams-for-linux = forceWaylandIme { name = "teams-for-linux"; };
+  claude-desktop =
+    let
+      claude-desktop = inputs.claude-desktop.packages.${system}.claude-desktop;
+    in
+    forceWaylandIme {
+      name = claude-desktop.pname;
+      package = claude-desktop;
+    };
 }

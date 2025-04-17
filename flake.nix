@@ -68,6 +68,13 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    claude-desktop = {
+      url = "github:k3d3/claude-desktop-linux-flake";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "utils";
+      };
+    };
   };
   outputs =
     inputs@{
@@ -78,6 +85,7 @@
       hyprpolkitagent,
       rust-overlay,
       treefmt-nix,
+      claude-desktop,
       ...
     }:
     {
@@ -146,6 +154,7 @@
           zoom-us = overlays.zoom-us;
           zen-browser = inputs.zen-browser.packages.${system}.default;
           isaacsim-webrtc-streaming-client = overlays.isaacsim-webrtc-streaming-client;
+          claude-desktop = overlays.claude-desktop;
           # pake-cli = overlays.pake-cli;
           # fastmail = overlays.fastmail;
         };
