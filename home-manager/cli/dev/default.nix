@@ -27,8 +27,10 @@ in
     deno
     bun
     # python312 conflicts on os/wm/plasma5.nix#environment.systemPackages.python3Full
+    uv
     jdk21
 
+    kotlin
     ktlint
     act
 
