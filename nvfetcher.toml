@@ -2,11 +2,6 @@
 src.github_tag = "siketyan/ghr"
 fetch.github = "siketyan/ghr"
 
-# https://github.com/NixOS/nixpkgs/issues/383059
-[rustowl]
-src.github = "cordx56/rustowl"
-fetch.github = "cordx56/rustowl"
-
 [beutl]
 src.github = "b-editor/beutl"
 fetch.github = "b-editor/beutl"

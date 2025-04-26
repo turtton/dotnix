@@ -8,6 +8,7 @@ in
     inputs.nix-vscode-extensions.overlays.default
     inputs.rust-overlay.overlays.default
     inputs.hyprpanel.overlay
+    inputs.rustowl.overlays.default
     (import ./fix-ime.nix)
     (import ./force-wayland.nix inputs)
     (import ./noto-fonts-cjk-serif.nix)
@@ -15,7 +16,6 @@ in
     (import ./noto-fonts.nix)
     (import ./ghr.nix generated.ghr)
     (import ./isaacsim.nix)
-    (import ./rustowl.nix generated.rustowl)
     (import ./beutl { inherit (generated) beutl beutl-native-deps; })
     (import ./jetbrains-dolphin.nix generated.jetbrains-dolphin)
     (import ./jetbrains-nautilus.nix generated.jetbrains-nautilus)

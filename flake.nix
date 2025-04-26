@@ -75,6 +75,13 @@
         flake-utils.follows = "utils";
       };
     };
+    rustowl = {
+      url = "github:nix-community/rustowl-flake";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        rust-overlay.follows = "rust-overlay";
+      };
+    };
   };
   outputs =
     inputs@{
@@ -86,6 +93,7 @@
       rust-overlay,
       treefmt-nix,
       claude-desktop,
+      rustowl,
       ...
     }:
     {
@@ -129,7 +137,7 @@
         };
         packages = {
           ghr = overlays.ghr;
-          rustowl = overlays.rustowl;
+          rustowl = rustowl.packages.${system}.default;
           beutl = overlays.beutl;
           jetbrains-dolphin-qt5 = overlays.jetbrains-dolphin-qt5;
           jetbrains-dolphin-qt6 = overlays.jetbrains-dolphin-qt6;
