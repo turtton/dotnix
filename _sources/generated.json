@@ -13,12 +13,33 @@
             "name": null,
             "owner": "b-editor",
             "repo": "beutl",
-            "rev": "v1.0.5",
-            "sha256": "sha256-Lv04ep6VcoY19NrgnV/HgcyGrKDFjFczZdurLbZ0X60=",
+            "rev": "v1.0.6",
+            "sha256": "sha256-XuEwq3O0QyqwI6FHw4kcg8FqCjX9AWeHxcrTnVFPpt0=",
             "sparseCheckout": [],
             "type": "github"
         },
-        "version": "v1.0.5"
+        "version": "v1.0.6"
+    },
+    "beutl-native-deps": {
+        "cargoLocks": null,
+        "date": "2025-03-15",
+        "extract": null,
+        "name": "beutl-native-deps",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "b-editor",
+            "repo": "beutl-native-deps",
+            "rev": "339ad822e77365a652a0d9ac12d235ab2c53b77f",
+            "sha256": "sha256-kw8LuIu+Ygl795A5ASuStH7EpYcbtjcyhRgYc4R4jVc=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "339ad822e77365a652a0d9ac12d235ab2c53b77f"
     },
     "ghr": {
         "cargoLocks": null,
@@ -97,12 +118,12 @@
             "name": null,
             "owner": "cordx56",
             "repo": "rustowl",
-            "rev": "v0.2.0",
-            "sha256": "sha256-7i/dP+8YuFn7AUXklvMrSefZok1VpnRLmga0XuFudTg=",
+            "rev": "v0.2.2",
+            "sha256": "sha256-ZAqAGOJReATymm2aL0XbXJG+PVhmhliIupEE3/4aGZw=",
             "sparseCheckout": [],
             "type": "github"
         },
-        "version": "v0.2.0"
+        "version": "v0.2.2"
     },
     "wallpaper-springcity": {
         "cargoLocks": null,

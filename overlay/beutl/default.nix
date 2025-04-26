@@ -1,10 +1,23 @@
-gen: self: prev: {
+{ beutl, beutl-native-deps }:
+self: prev:
+let
+  runtime-libraries = self.stdenv.mkDerivation {
+    name = "runtime-libraries";
+    src = beutl-native-deps.src;
+    installPhase = ''
+      mkdir -p $out/lib
+      cp -r $src/linux-x64/* $out/lib
+    '';
+    outputs = [ "out" ];
+  };
+in
+{
   beutl =
     with self;
     buildDotnetModule {
-      inherit (gen) src;
+      inherit (beutl) src;
       pname = "Beutl";
-      version = lib.removePrefix "v" gen.version;
+      version = lib.removePrefix "v" beutl.version;
 
       projectFile = "src/Beutl/Beutl.csproj";
       nugetDeps = ./deps.json;
@@ -17,6 +30,7 @@ gen: self: prev: {
         fontconfig
         glfw
         opencv
+        runtime-libraries
       ];
 
       dotnet-sdk = dotnetCorePackages.sdk_9_0-bin;

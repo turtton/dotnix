@@ -16,7 +16,7 @@ in
     (import ./ghr.nix generated.ghr)
     (import ./isaacsim.nix)
     (import ./rustowl.nix generated.rustowl)
-    (import ./beutl generated.beutl)
+    (import ./beutl { inherit (generated) beutl beutl-native-deps; })
     (import ./jetbrains-dolphin.nix generated.jetbrains-dolphin)
     (import ./jetbrains-nautilus.nix generated.jetbrains-nautilus)
     (import ./wallpaper-springcity.nix generated.wallpaper-springcity)

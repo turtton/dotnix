@@ -11,6 +11,10 @@ fetch.github = "cordx56/rustowl"
 src.github = "b-editor/beutl"
 fetch.github = "b-editor/beutl"
 
+[beutl-native-deps]
+src.git = "https://github.com/b-editor/beutl-native-deps.git"
+fetch.github = "b-editor/beutl-native-deps"
+
 [wallpaper-springcity]
 src.github = "MrVivekRajan/Hypr-Dots"
 fetch.url = "https://raw.githubusercontent.com/MrVivekRajan/Hypr-Dots/refs/heads/Type-2/Spring-City/.config/swww/wall.png"

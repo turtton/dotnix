@@ -476,8 +476,8 @@
   },
   {
     "pname": "Microsoft.WindowsDesktop.App.Ref",
-    "version": "9.0.3",
-    "hash": "sha256-5hBff7l7uWwjF0aaT8dq+/5XWzlMZA5sFH1ziiFGppQ="
+    "version": "9.0.4",
+    "hash": "sha256-ChrKaBhfz1ARZhE6HrTbwHHAOb4H0MPjSJ9OEMpIYZU="
   },
   {
     "pname": "MonoMac.NetStandard",
