@@ -21,9 +21,9 @@
   wayland.windowManager.hyprland.settings = {
     # check `hyprctl monitors all`
     monitor = [
-      "DP-1, 1920x1080@144, 0x0, 1"
-      "HDMI-A-1, 1920x1080@60, 1920x0, 1"
-      "DVI-D-1, 1920x1080@60, -1900x-1080, 1"
+      "desc:ViewSonic Corporation VX2458-mhd VK0184700653, 1920x1080@144, 0x0, 1"
+      "desc:BNQ BenQ GL2460 J6G05593SL0, 1920x1080@60, 1920x0, 1"
+      "desc:Dell Inc. DELL E2210H J232R9A5091L, 1920x1080@60, -1920x0, 1"
       ",preferred,auto,1"
     ];
     input = {
