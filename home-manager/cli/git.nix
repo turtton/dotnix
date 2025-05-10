@@ -73,7 +73,10 @@
   programs.lazygit = {
     enable = true;
     settings = {
-      git.overrideGpg = true;
+      git = {
+        overrideGpg = true;
+        autoForwardBranches = "none";
+      };
     };
   };
   home.packages = with pkgs; [
