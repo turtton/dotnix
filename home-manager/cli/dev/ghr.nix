@@ -4,7 +4,7 @@
     pkgs.ghr
   ];
   programs.zsh = {
-    initExtra = ''
+    initContent = ''
       source <(ghr shell bash)
       source <(ghr shell bash --completion)
     '';

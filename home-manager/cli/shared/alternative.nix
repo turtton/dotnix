@@ -18,7 +18,7 @@
       flags = [ "--disable-up-arrow" ];
     };
     # Improve up-arrow search behavior
-    zsh.initExtra = ''
+    zsh.initContent = ''
       autoload -Uz history-beginning-search-backward
       zle -N history-beginning-search-backward
       bindkey '^[[A' history-beginning-search-backward
