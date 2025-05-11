@@ -7,6 +7,7 @@ in
   nixpkgs.overlays = [
     inputs.nix-vscode-extensions.overlays.default
     inputs.rust-overlay.overlays.default
+    inputs.rustowl.overlays.default
     (import ./ghr.nix generated.ghr)
   ];
 }

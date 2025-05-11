@@ -10,7 +10,7 @@ in
 {
   programs = {
     firefox = {
-      enable = true;
+      enable = isLinux;
       package = if isLinux then pkgs.firefox else pkgs.firefox-unwrapped;
     };
     chromium.enable = isLinux;

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, hostPlatform, ... }:
 let
   stack-wrapped = pkgs.symlinkJoin {
     name = "stack";
@@ -19,23 +19,27 @@ in
     ./cargo.nix
     ./ghr.nix
   ];
-  home.packages = with pkgs; [
-    gcc
-    go
-    nodejs-slim
-    # nodePackages.wrangler
-    deno
-    bun
-    # python312 conflicts on os/wm/plasma5.nix#environment.systemPackages.python3Full
-    uv
-    jdk21
+  home.packages =
+    with pkgs;
+    [
+      gcc
+      go
+      nodejs-slim
+      # nodePackages.wrangler
+      deno
+      bun
+      # python312 conflicts on os/wm/plasma5.nix#environment.systemPackages.python3Full
+      uv
+      jdk21
 
-    kotlin
-    ktlint
-    act
+      kotlin
+      ktlint
+      act
 
-    # Haskell
-    ghc
-    stack-wrapped
-  ];
+      # Haskell
+      ghc
+    ]
+    ++ pkgs.lib.optionals hostPlatform.isLinux [
+      stack-wrapped
+    ];
 }
