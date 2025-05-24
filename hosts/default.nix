@@ -1,11 +1,11 @@
 inputs:
 let
   remoteNixpkgsPatches = [
-    {
-      meta.description = "tauon 8.0.1";
-      url = "https://github.com/NixOS/nixpkgs/pull/405753.patch";
-      hash = "sha256-3/0qmo8mCS4Q54pTiD5Ee29GvEy+ao87OKAnNzVNwyg=";
-    }
+    # {
+    #   meta.description = "tauon 8.0.1";
+    #   url = "https://github.com/NixOS/nixpkgs/pull/405753.patch";
+    #   hash = "sha256-3/0qmo8mCS4Q54pTiD5Ee29GvEy+ao87OKAnNzVNwyg=";
+    # }
   ];
   stateVersion = "23.11";
   createSystem =

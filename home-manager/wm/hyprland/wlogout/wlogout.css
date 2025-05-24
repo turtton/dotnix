@@ -1,6 +1,6 @@
 window {
 	font-size: 24pt;
-	color: #F9E3DF;
+	color: #f9e3df;
 	background-color: #1e1e2e;
 }
 
@@ -10,7 +10,8 @@ button {
 	background-size: 20%;
 	background-color: #34344a;
 	animation: gradient_f 10s ease-in infinite;
-	transition: all 0.3s cubic-bezier(.55, 0.0, .28, 1.682), box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+	transition: all 0.3s cubic-bezier(0.55, 0.0, 0.28, 1.682), box-shadow 0.2s
+		ease-in-out, background-color 0.2s ease-in-out;
 	border-radius: 80px;
 	border: 0px;
 	outline-style: none;
@@ -37,27 +38,27 @@ button span {
 }
 
 #lock {
-    background-image: image(url("@lock@"));
+	background-image: image(url("@lock@"));
 }
 
 #logout {
-    background-image: image(url("@logout@"));
+	background-image: image(url("@logout@"));
 }
 
 #suspend {
-    background-image: image(url("@suspend@"));
+	background-image: image(url("@suspend@"));
 }
 
 #hibernate {
-    background-image: image(url("@hibernate@"));
+	background-image: image(url("@hibernate@"));
 }
 
 #shutdown {
-    background-image: image(url("@shutdown@"));
+	background-image: image(url("@shutdown@"));
 }
 
 #reboot {
-    background-image: image(url("@reboot@"));
+	background-image: image(url("@reboot@"));
 }
 
 #win {
