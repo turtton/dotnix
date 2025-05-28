@@ -21,7 +21,7 @@
     monitor = [
       "eDP-1, 2240x1400@60, 0x0, 1.25"
       "desc:Invalid Vendor Codename - RTK CX156A 0x00000001, preferred, -1920x0, 1"
-      "desc:Iiyama North America PL2792H 1224333611565, preferred,-860x-1080,1"
+      "desc:Iiyama North America PL2792H 1224333611565, preferred,0x-1080,1"
       ",preferred,auto,1"
     ];
     input = {
