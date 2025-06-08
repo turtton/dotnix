@@ -89,6 +89,8 @@
 
   hardware.bluetooth.enable = true;
 
+  networking.wireguard.enable = true;
+
   environment.defaultPackages = [
     pkgs.nvidia-docker
   ];
