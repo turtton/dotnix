@@ -163,6 +163,7 @@
           zen-browser = inputs.zen-browser.packages.${system}.default;
           isaacsim-webrtc-streaming-client = overlays.isaacsim-webrtc-streaming-client;
           claude-desktop = overlays.claude-desktop;
+          wifiman-desktop = overlays.wifiman-desktop;
           # pake-cli = overlays.pake-cli;
           # fastmail = overlays.fastmail;
         };
