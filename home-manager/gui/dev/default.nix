@@ -2,6 +2,7 @@
 {
   imports = [
     ./idea
+    ./ai.nix
     ./vscode.nix
   ];
   home.packages =

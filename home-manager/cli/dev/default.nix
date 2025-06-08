@@ -38,6 +38,8 @@ in
 
       # Haskell
       ghc
+
+      claude-code
     ]
     ++ pkgs.lib.optionals hostPlatform.isLinux [
       stack-wrapped
