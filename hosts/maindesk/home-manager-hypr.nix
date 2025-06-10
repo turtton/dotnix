@@ -15,7 +15,6 @@
     ./../../home-manager/gui/term/alacritty.nix
     ./../../home-manager/gui/filemanager/dolphin
     ./../../home-manager/wm/hyprland
-    ./../../home-manager/wm/hyprland/nvidia.nix
   ];
 
   wayland.windowManager.hyprland.settings = {

@@ -41,33 +41,19 @@
       "kvm"
       "kvm-amd"
     ];
-    kernelParams = [
-      "nvidia_drm.modeset=1"
-      "nvidia_drm.fbdev=1"
-      "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
-    ];
-    initrd.kernelModules = [
-      "nvidia"
-      "nvidia_modeset"
-      "nvidia_uvm"
-      "nvidia_drm"
-    ];
   };
 
   hardware = {
     graphics = {
       enable = true;
       enable32Bit = true;
-    };
-    nvidia = {
-      modesetting.enable = true;
-      powerManagement.enable = true;
-      open = false;
-      nvidiaSettings = true;
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
-    };
-    nvidia-container-toolkit = {
-      enable = true;
+      extraPackages = with pkgs; [
+        rocmPackages.clr.icd
+        amdvlk
+      ];
+      extraPackages32 = with pkgs; [
+        driversi686Linux.amdvlk
+      ];
     };
   };
 
@@ -82,7 +68,6 @@
     # Enable CUPS to print documents.
     printing.enable = true;
     xserver = {
-      videoDrivers = [ "nvidia" ];
       wacom.enable = true;
     };
   };
@@ -91,7 +76,27 @@
 
   networking.wireguard.enable = true;
 
-  environment.defaultPackages = [
-    pkgs.nvidia-docker
+  systemd = {
+    packages = with pkgs; [ lact ];
+    services.lactd.wantedBy = [ "multi-user.target" ];
+    tmpfiles.rules =
+      let
+        rocmEnv = pkgs.symlinkJoin {
+          name = "rocm-combined";
+          paths = with pkgs.rocmPackages; [
+            rocblas
+            hipblas
+            clr
+          ];
+        };
+      in
+      [
+        "L+    /opt/rocm   -    -    -     -    ${rocmEnv}"
+      ];
+  };
+
+  environment.systemPackages = with pkgs; [
+    clinfo
+    lact
   ];
 }
