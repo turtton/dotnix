@@ -31,8 +31,8 @@
       kb_layout = "us";
     };
     exec-once = [
-      "[workspace 1 silent] bitwarden"
-      "[workspace 2 silent] vesktop"
+      "[workspace 24] bitwarden"
+      "[workspace 9 silent] vesktop"
       "steam -silent"
       "KEYBASE_AUTOSTART=1 keybase-gui"
     ];
