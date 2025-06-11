@@ -60,7 +60,7 @@
           {
             "0" = layout { };
             "1" = none;
-            # "2" = layout { showBattery = false; };
+            "2" = none;
             "3" = none;
           };
       };
