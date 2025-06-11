@@ -5,6 +5,7 @@
     # minecraft
     blockbench-electron # it is not game, but related to minecraft
     prismlauncher
+    lunar-client
     lutris
     osu-lazer
   ];
