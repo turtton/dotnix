@@ -11,28 +11,29 @@
 
 {
   imports = [
-    #(modulesPath + "/installer/scan/not-detected.nix")
+    (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
   boot.initrd.availableKernelModules = [
     "nvme"
     "xhci_pci"
     "ahci"
-    "usbhid"
     "usb_storage"
+    "usbhid"
     "sd_mod"
     "sr_mod"
   ];
   boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/e3c6e86d-6bfd-4c01-8caf-b11e0de4b689";
+    device = "/dev/disk/by-uuid/3d64c8b1-93a4-44b7-a5e4-21e68af25104";
     fsType = "ext4";
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/ECA1-9342";
+    device = "/dev/disk/by-uuid/EB99-92A5";
     fsType = "vfat";
   };
 
@@ -43,7 +44,8 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp34s0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp14s0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlp15s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
