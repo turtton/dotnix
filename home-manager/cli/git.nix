@@ -60,7 +60,8 @@
     ignores = [
       ".idea"
       ".vscode"
-      ".memo.local.md"
+      "*.local.md"
+      "*.local.json"
     ];
   };
   programs.gh = {
