@@ -8,6 +8,7 @@ in
     inputs.nix-vscode-extensions.overlays.default
     inputs.rust-overlay.overlays.default
     inputs.rustowl.overlays.default
+    (import ./claude-code)
     (import ./ghr.nix generated.ghr)
   ];
 }
