@@ -2186,11 +2186,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1749641981,
-        "narHash": "sha256-j+7rLB75c+JJa66J/VeVtFCah5mHmS4OQ+vdjSlqj4w=",
+        "lastModified": 1749703286,
+        "narHash": "sha256-Y3gWPhlp941UE9HP/EdEk4fHeoKkEW74802JbroB4Uo=",
         "owner": "turtton",
         "repo": "myvim.nix",
-        "rev": "b5936dcd70608afa1c1cadf927e34ae720fdad47",
+        "rev": "47542671afc61e8a03ccc52a60007661d16d9955",
         "type": "github"
       },
       "original": {
