@@ -29,14 +29,19 @@
       "$subMod SHIFT, Tab, cyclenext, prev"
 
       # move window
-      "$mainMod, left, movewindow, left"
-      "$mainMod, down, movewindow, down"
-      "$mainMod, up, movewindow, up"
-      "$mainMod, right, movewindow, right"
-      "$mainMod, h, movewindow, l"
-      "$mainMod, j, movewindow, d"
-      "$mainMod, k, movewindow, u"
-      "$mainMod, l, movewindow, r"
+      "$mainMod, left, movewindoworgroup, left"
+      "$mainMod, down, movewindoworgroup, down"
+      "$mainMod, up, movewindoworgroup, up"
+      "$mainMod, right, movewindoworgroup, right"
+      "$mainMod, h, movewindoworgroup, l"
+      "$mainMod, j, movewindoworgroup, d"
+      "$mainMod, k, movewindoworgroup, u"
+      "$mainMod, l, movewindoworgroup, r"
+
+      # stack window
+      "$mainMod, w, togglegroup"
+      "$mainMod $subMod CTRL, l, changegroupactive, f"
+      "$mainMod $subMod CTRL, h, changegroupactive, b"
 
       # switch activeWorkspace
       # split-monitor-workspaces
