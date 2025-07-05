@@ -20,6 +20,7 @@
       ./../../os/desktop/media.nix
       ./../../os/desktop/openrazer.nix
       ./../../os/desktop/steam.nix
+      ./../../os/desktop/vr.nix
     ]
     ++ (with inputs.nixos-hardware.nixosModules; [
       common-cpu-amd
