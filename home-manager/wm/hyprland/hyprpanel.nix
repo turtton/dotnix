@@ -19,48 +19,46 @@
   programs.hyprpanel = {
     enable = true;
     settings = {
-      layout = {
-        "bar.layouts" =
-          let
-            layout =
-              {
-                showBattery ? true,
-              }:
-              {
-                "left" = [
-                  "dashboard"
-                  "workspaces"
-                  "windowtitle"
-                  "updates"
-                  "storage"
-                ] ++ (if showBattery then [ "battery" ] else [ ]);
-                "middle" = [
-                  "media"
-                ];
-                "right" = [
-                  "cpu"
-                  "ram"
-                  "volume"
-                  "network"
-                  "bluetooth"
-                  "systray"
-                  "clock"
-                  "notifications"
-                ];
-              };
-            none = {
-              "left" = [ ];
-              "middle" = [ ];
-              "right" = [ ];
+      "bar.layouts" =
+        let
+          layout =
+            {
+              showBattery ? true,
+            }:
+            {
+              "left" = [
+                "dashboard"
+                "workspaces"
+                "windowtitle"
+                "updates"
+                "storage"
+              ] ++ (if showBattery then [ "battery" ] else [ ]);
+              "middle" = [
+                "media"
+              ];
+              "right" = [
+                "cpu"
+                "ram"
+                "volume"
+                "network"
+                "bluetooth"
+                "systray"
+                "clock"
+                "notifications"
+              ];
             };
-          in
-          {
-            "0" = layout { };
-            "1" = none;
-            "2" = none;
-            "3" = none;
+          none = {
+            "left" = [ ];
+            "middle" = [ ];
+            "right" = [ ];
           };
-      };
+        in
+        {
+          "0" = layout { };
+          "1" = none;
+          "2" = none;
+          "3" = none;
+        };
       bar.customModules.updates.pollingInterval = 1440000;
       theme.name = "catppuccin_mocha";
       theme.bar.floating = false;

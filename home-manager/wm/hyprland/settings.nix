@@ -108,7 +108,7 @@
       use_nearest_neighbor = false;
       force_zero_scaling = true;
     };
-    render.explicit_sync = 0;
+    # render.explicit_sync = 0;
     # master = {
     #   new_status = "master";
     # };
