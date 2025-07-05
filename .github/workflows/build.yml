@@ -22,7 +22,6 @@ jobs:
           - jetbrains-nautilus
           - wallpaper-springcity
           - hyprland
-          - hyprpanel
           - hyprpolkitagent
           - vivaldi
           - chromium
@@ -39,7 +38,7 @@ jobs:
           - noto-fonts
           - zen-browser
           - rustowl
-          - beutl
+          # - beutl
           - isaacsim-webrtc-streaming-client
           - claude-desktop
           - claude-code
