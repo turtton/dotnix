@@ -9,10 +9,10 @@
     hostName = hostname;
     networkmanager = {
       enable = true;
-      enableStrongSwan = true;
       plugins = with pkgs; [
         networkmanager-fortisslvpn
         networkmanager-l2tp
+        networkmanager_strongswan
       ];
     };
     firewall = {

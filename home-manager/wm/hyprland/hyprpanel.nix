@@ -1,7 +1,6 @@
 { pkgs, inputs, ... }:
 {
   imports = [
-    inputs.hyprpanel.homeManagerModules.hyprpanel
     inputs.ags.homeManagerModules.default
   ];
   home.packages = with pkgs; [
@@ -19,8 +18,6 @@
   };
   programs.hyprpanel = {
     enable = true;
-    overwrite.enable = true;
-    hyprland.enable = true;
     settings = {
       layout = {
         "bar.layouts" =

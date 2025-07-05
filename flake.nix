@@ -40,9 +40,6 @@
       url = "github:Duckonaut/split-monitor-workspaces";
       inputs.hyprland.follows = "hyprland";
     };
-    hyprpanel = {
-      url = "github:Jas-SinghFSU/HyprPanel";
-    };
     ags.url = "github:aylur/ags";
     hyprpolkitagent = {
       url = "github:hyprwm/hyprpolkitagent";
@@ -88,7 +85,6 @@
       nixpkgs,
       flake-utils,
       hyprland,
-      hyprpanel,
       hyprpolkitagent,
       rust-overlay,
       treefmt-nix,
@@ -147,7 +143,6 @@
           noto-fonts = overlays.noto-fonts;
           wallpaper-springcity = overlays.wallpaper-springcity;
           hyprland = hyprland.packages.${system}.default;
-          hyprpanel = hyprpanel.packages.${system}.default;
           hyprpolkitagent = hyprpolkitagent.packages.${system}.default;
           # Force Wayland IME system
           vivaldi = overlays.vivaldi;

@@ -7,7 +7,6 @@ in
   nixpkgs.overlays = [
     inputs.nix-vscode-extensions.overlays.default
     inputs.rust-overlay.overlays.default
-    inputs.hyprpanel.overlay
     inputs.rustowl.overlays.default
     (import ./claude-code)
     (import ./fix-ime.nix)

@@ -10,8 +10,10 @@ button {
 	background-size: 20%;
 	background-color: #34344a;
 	animation: gradient_f 10s ease-in infinite;
-	transition: all 0.3s cubic-bezier(0.55, 0.0, 0.28, 1.682), box-shadow 0.2s
-		ease-in-out, background-color 0.2s ease-in-out;
+	transition:
+		all 0.3s cubic-bezier(0.55, 0, 0.28, 1.682),
+		box-shadow 0.2s ease-in-out,
+		background-color 0.2s ease-in-out;
 	border-radius: 80px;
 	border: 0px;
 	outline-style: none;
