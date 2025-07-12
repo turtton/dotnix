@@ -1,10 +1,15 @@
 inputs:
 let
   remoteNixpkgsPatches = [
+    {
+      meta.description = "jetbrains 2025.1.1 -> 2025.1.5";
+      url = "https://github.com/NixOS/nixpkgs/pull/419026.patch";
+      hash = "sha256-In5rmJNwv/ihNfbnDgxahmtECytkVIwrVAoStYsFsZE=";
+    }
     # {
-    #   meta.description = "tauon 8.0.1";
-    #   url = "https://github.com/NixOS/nixpkgs/pull/405753.patch";
-    #   hash = "sha256-3/0qmo8mCS4Q54pTiD5Ee29GvEy+ao87OKAnNzVNwyg=";
+    #   meta.description = "Fix unityhub error";
+    #   url = "https://github.com/NixOS/nixpkgs/pull/422785.patch";
+    #   hash = "sha256-omUdQnIvZgTmk4DZXJyuVXowMQNjvgAoKrcEgTHTZ9I=";
     # }
   ];
   stateVersion = "23.11";
