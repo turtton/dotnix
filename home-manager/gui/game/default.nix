@@ -8,5 +8,10 @@
     lunar-client
     lutris
     osu-lazer
+
+    # utilities
+    gamemode
+    mangohud
+    gamescope-wsi
   ];
 }
