@@ -28,4 +28,7 @@
       </fontconfig>
     '';
   };
+  environment.systemPackages = with pkgs; [
+    protonup-qt
+  ];
 }
