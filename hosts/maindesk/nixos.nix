@@ -56,6 +56,10 @@
         driversi686Linux.amdvlk
       ];
     };
+    amdgpu = {
+      overdrive.enable = true;
+      opencl.enable = true;
+    };
   };
 
   swapDevices = [
@@ -71,6 +75,7 @@
     xserver = {
       wacom.enable = true;
     };
+    lact.enable = true;
   };
 
   hardware.bluetooth.enable = true;
@@ -78,8 +83,6 @@
   networking.wireguard.enable = true;
 
   systemd = {
-    packages = with pkgs; [ lact ];
-    services.lactd.wantedBy = [ "multi-user.target" ];
     tmpfiles.rules =
       let
         rocmEnv = pkgs.symlinkJoin {
@@ -98,6 +101,5 @@
 
   environment.systemPackages = with pkgs; [
     clinfo
-    lact
   ];
 }
