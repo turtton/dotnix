@@ -6,6 +6,12 @@ let
       url = "https://github.com/NixOS/nixpkgs/pull/419026.patch";
       hash = "sha256-In5rmJNwv/ihNfbnDgxahmtECytkVIwrVAoStYsFsZE=";
     }
+    {
+      # This version has rendering issues with hyprland + mesa(https://github.com/menloresearch/jan/pull/5463)
+      meta.description = "Update jan 0.5.17 -> 0.6.4";
+      url = "https://github.com/NixOS/nixpkgs/pull/424117.patch";
+      hash = "sha256-ciEb2SVUv6UkE9Q6BEt0AhGbnvq9iTpOUv1j1ECgHXE=";
+    }
     # {
     #   meta.description = "Fix unityhub error";
     #   url = "https://github.com/NixOS/nixpkgs/pull/422785.patch";

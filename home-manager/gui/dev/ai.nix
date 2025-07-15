@@ -7,5 +7,6 @@
     ]
     ++ lib.optionals hostPlatform.isLinux [
       claude-desktop
+      jan
     ];
 }
