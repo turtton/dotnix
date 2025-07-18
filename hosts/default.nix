@@ -4,7 +4,7 @@ let
     {
       meta.description = "jetbrains 2025.1.1 -> 2025.1.5";
       url = "https://github.com/NixOS/nixpkgs/pull/419026.patch";
-      hash = "sha256-In5rmJNwv/ihNfbnDgxahmtECytkVIwrVAoStYsFsZE=";
+      hash = "sha256-O0tLkuub43rCutxoxnvE8ndzQXb4VA0CvzTsIf9FrGU=";
     }
     {
       # This version has rendering issues with hyprland + mesa(https://github.com/menloresearch/jan/pull/5463)
