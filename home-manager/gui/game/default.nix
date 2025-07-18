@@ -12,6 +12,6 @@
     # utilities
     gamemode
     mangohud
-    gamescope-wsi
+    gamescope
   ];
 }
