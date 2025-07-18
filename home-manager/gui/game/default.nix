@@ -8,6 +8,7 @@
     lunar-client
     lutris
     osu-lazer
+    r2modman
 
     # utilities
     gamemode
