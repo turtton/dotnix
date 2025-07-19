@@ -82,7 +82,12 @@ let
               useUserPackages = true;
               sharedModules = homeModules;
               extraSpecialArgs = {
-                inherit inputs system hostPlatform;
+                inherit
+                  inputs
+                  system
+                  hostPlatform
+                  pkgs-staging-next
+                  ;
               };
               backupFileExtension = "backup";
             };

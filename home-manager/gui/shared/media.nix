@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-staging-next, ... }:
 {
   home.packages =
     with pkgs;
@@ -8,7 +8,8 @@
     ]
     ++ lib.optionals hostPlatform.isLinux [
       mpv
-      tauon
+      # https://nixpkgs-tracker.ocfox.me/?pr=424658
+      pkgs-staging-next.tauon
       vlc
       kdePackages.kdenlive
     ];
