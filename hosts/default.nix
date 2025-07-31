@@ -6,11 +6,6 @@ let
       url = "https://github.com/NixOS/nixpkgs/pull/419026.patch";
       hash = "sha256-yalC7oIXi5KI+X2EoVsZlSAmbXKCLIeL8J+wOe/T+6w=";
     }
-    {
-      meta.description = "Update jan 0.5.17 -> 0.6.5";
-      url = "https://github.com/NixOS/nixpkgs/pull/424117.patch";
-      hash = "sha256-9dtSS1BzfeZ2WbUxccikgFdpwLr2dMbO0gGepLOz7aE=";
-    }
     # {
     #   meta.description = "Fix unityhub error";
     #   url = "https://github.com/NixOS/nixpkgs/pull/422785.patch";
