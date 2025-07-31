@@ -4,7 +4,7 @@ let
     {
       meta.description = "jetbrains 2025.1.1 -> 2025.1.5";
       url = "https://github.com/NixOS/nixpkgs/pull/419026.patch";
-      hash = "sha256-O0tLkuub43rCutxoxnvE8ndzQXb4VA0CvzTsIf9FrGU=";
+      hash = "sha256-yalC7oIXi5KI+X2EoVsZlSAmbXKCLIeL8J+wOe/T+6w=";
     }
     {
       meta.description = "Update jan 0.5.17 -> 0.6.5";

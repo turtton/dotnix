@@ -7,25 +7,24 @@
   ...
 }:
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ./../../os/core/shared
-      (import ./../../os/core/secureboot/preloader.nix "nvme0n1" "1")
-      ./../../os/core/shell.nix
-      ./../../os/wm/hyprland.nix
-      ./../../os/desktop/shared
-      ./../../os/desktop/1password.nix
-      ./../../os/desktop/flatpak.nix
-      ./../../os/desktop/media.nix
-      ./../../os/desktop/openrazer.nix
-      ./../../os/desktop/steam.nix
-      ./../../os/desktop/vr.nix
-    ]
-    ++ (with inputs.nixos-hardware.nixosModules; [
-      common-cpu-amd
-      common-pc-ssd
-    ]);
+  imports = [
+    ./hardware-configuration.nix
+    ./../../os/core/shared
+    (import ./../../os/core/secureboot/preloader.nix "nvme0n1" "1")
+    ./../../os/core/shell.nix
+    ./../../os/wm/hyprland.nix
+    ./../../os/desktop/shared
+    ./../../os/desktop/1password.nix
+    ./../../os/desktop/flatpak.nix
+    ./../../os/desktop/media.nix
+    ./../../os/desktop/openrazer.nix
+    ./../../os/desktop/steam.nix
+    ./../../os/desktop/vr.nix
+  ]
+  ++ (with inputs.nixos-hardware.nixosModules; [
+    common-cpu-amd
+    common-pc-ssd
+  ]);
 
   boot = {
     loader = {

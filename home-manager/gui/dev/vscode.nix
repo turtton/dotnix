@@ -58,36 +58,35 @@
             vscode-marketplace.rooveterinaryinc.roo-cline
           ]
         );
-      userSettings =
-        {
-          "workbench.productIconTheme" = "a-file-icon-vscode-product-icon-theme";
-          "workbench.colorTheme" = "50 Shades of Purple";
-          "files.autoSave" = "off";
-          "notebook.formatOnSave.enabled" = true;
-          "notebook.codeActionsOnSave" = {
-            "notebook.source.fixAll" = "explicit";
-            "notebook.source.organizeImports" = "explicit";
-          };
-          "[python]" = {
-            "editor.formatOnSave" = true;
-            "editor.defaultFormatter" = "charliermarsh.ruff";
-            "editor.codeActionsOnSave" = {
-              "source.fixAll" = "explicit";
-              "source.organizeImports" = "explicit";
-            };
-          };
-          "svelte.enable-ts-plugin" = true;
-          "roo-cline.allowedCommands" = [
-            "cargo clippy"
-            "tsc"
-            "git log"
-            "git diff"
-            "git show"
-          ];
-        }
-        // pkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
-          "cline.chromeExecutablePath" = pkgs.lib.makeBinPath [ pkgs.chromium ] + "/" + pkgs.chromium.pname;
+      userSettings = {
+        "workbench.productIconTheme" = "a-file-icon-vscode-product-icon-theme";
+        "workbench.colorTheme" = "50 Shades of Purple";
+        "files.autoSave" = "off";
+        "notebook.formatOnSave.enabled" = true;
+        "notebook.codeActionsOnSave" = {
+          "notebook.source.fixAll" = "explicit";
+          "notebook.source.organizeImports" = "explicit";
         };
+        "[python]" = {
+          "editor.formatOnSave" = true;
+          "editor.defaultFormatter" = "charliermarsh.ruff";
+          "editor.codeActionsOnSave" = {
+            "source.fixAll" = "explicit";
+            "source.organizeImports" = "explicit";
+          };
+        };
+        "svelte.enable-ts-plugin" = true;
+        "roo-cline.allowedCommands" = [
+          "cargo clippy"
+          "tsc"
+          "git log"
+          "git diff"
+          "git show"
+        ];
+      }
+      // pkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
+        "cline.chromeExecutablePath" = pkgs.lib.makeBinPath [ pkgs.chromium ] + "/" + pkgs.chromium.pname;
+      };
     };
   };
   home.file.".vscode/argv.json".text = builtins.toJSON {

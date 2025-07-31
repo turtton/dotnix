@@ -32,7 +32,8 @@
                 "windowtitle"
                 "updates"
                 "storage"
-              ] ++ (if showBattery then [ "battery" ] else [ ]);
+              ]
+              ++ (if showBattery then [ "battery" ] else [ ]);
               "middle" = [
                 "media"
               ];

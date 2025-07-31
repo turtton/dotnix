@@ -36,26 +36,25 @@ let
         gst_all_1.gst-libav
         shaderc
       ];
-      buildInputs =
+      buildInputs = [
+        mpv
+        lz4
+        vulkan-headers
+        vulkan-tools
+        vulkan-loader
+      ]
+      ++ (
+        with libsForQt5;
+        with qt5;
         [
-          mpv
-          lz4
-          vulkan-headers
-          vulkan-tools
-          vulkan-loader
+          plasma-framework
+          qtwebsockets
+          qtwebchannel
+          qtx11extras
+          qtdeclarative
         ]
-        ++ (
-          with libsForQt5;
-          with qt5;
-          [
-            plasma-framework
-            qtwebsockets
-            qtwebchannel
-            qtx11extras
-            qtdeclarative
-          ]
-        )
-        ++ [ (python3.withPackages (python-pkgs: [ python-pkgs.websockets ])) ];
+      )
+      ++ [ (python3.withPackages (python-pkgs: [ python-pkgs.websockets ])) ];
       cmakeFlags = [ "-DUSE_PLASMAPKG=OFF" ];
       dontWrapQtApps = true;
       postPatch = ''

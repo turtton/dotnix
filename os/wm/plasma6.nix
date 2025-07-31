@@ -38,35 +38,34 @@ let
         shaderc
         ninja # qwrapQtAppsHook
       ];
-      buildInputs =
+      buildInputs = [
+        mpv
+        lz4
+        vulkan-headers
+        vulkan-tools
+        vulkan-loader
+      ]
+      ++ (
+        with kdePackages;
+        with qt6Packages;
         [
-          mpv
-          lz4
-          vulkan-headers
-          vulkan-tools
-          vulkan-loader
+          qtbase
+          # plasma-sdk
+          kpackage
+          kdeclarative
+          # libplasma
+          # plasma-workspace
+          # kde-dev-utils
+          plasma5support
+          qt5compat
+          qtwebsockets
+          qtwebengine
+          qtwebchannel
+          qtmultimedia
+          qtdeclarative
         ]
-        ++ (
-          with kdePackages;
-          with qt6Packages;
-          [
-            qtbase
-            # plasma-sdk
-            kpackage
-            kdeclarative
-            # libplasma
-            # plasma-workspace
-            # kde-dev-utils
-            plasma5support
-            qt5compat
-            qtwebsockets
-            qtwebengine
-            qtwebchannel
-            qtmultimedia
-            qtdeclarative
-          ]
-        )
-        ++ [ (python3.withPackages (python-pkgs: [ python-pkgs.websockets ])) ];
+      )
+      ++ [ (python3.withPackages (python-pkgs: [ python-pkgs.websockets ])) ];
       cmakeFlags = [ "-DUSE_PLASMAPKG=OFF" ]; # "-DCMAKE_BUILD_TYPE=Release" "-DBUILD_QML=ON" "-DQT_MAJOR_VERSION=6" ];
       dontWrapQtApps = true;
       postPatch = ''
