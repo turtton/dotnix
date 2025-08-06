@@ -1,11 +1,6 @@
 inputs:
 let
   remoteNixpkgsPatches = [
-    {
-      meta.description = "jetbrains 2025.1.1 -> 2025.1.5";
-      url = "https://github.com/NixOS/nixpkgs/pull/419026.patch";
-      hash = "sha256-yalC7oIXi5KI+X2EoVsZlSAmbXKCLIeL8J+wOe/T+6w=";
-    }
     # {
     #   meta.description = "Fix unityhub error";
     #   url = "https://github.com/NixOS/nixpkgs/pull/422785.patch";

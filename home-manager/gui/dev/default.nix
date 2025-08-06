@@ -14,8 +14,7 @@
       remmina
     ]
     ++ lib.optionals hostPlatform.isLinux [
-      # https://github.com/NixOS/nixpkgs/issues/418451
-      # unityhub
+      unityhub
       isaacsim-webrtc-streaming-client
     ];
 }
