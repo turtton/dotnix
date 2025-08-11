@@ -1,4 +1,4 @@
-# biome-ignore lint: noUnknownTypeSelector
+/* biome-ignore lint:noUnknownTypeSelector */
 window {
 	font-size: 24pt;
 	color: #f9e3df;
