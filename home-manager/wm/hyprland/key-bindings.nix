@@ -6,6 +6,8 @@
     "$term" = "alacritty";
     "$fileManager" = "dolphin";
     bind = [
+      # reload for https://github.com/Duckonaut/split-monitor-workspaces/issues/200
+      "$mainMod, Escape, exec, hyprctl reload"
       "$mainMod, Return, exec, $term"
       "$mainMod SHIFT, Q, killactive"
       "$mainMod SHIFT, E, exec, wlogout"
