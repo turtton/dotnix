@@ -14,7 +14,7 @@
       remmina
     ]
     ++ lib.optionals hostPlatform.isLinux [
-      unityhub
+      # unityhub
       isaacsim-webrtc-streaming-client
     ];
 }
