@@ -27,7 +27,10 @@ let
         src = inputs.nixpkgs;
         patches = map originPkgs.fetchpatch remoteNixpkgsPatches;
       };
-      pkgs-staging-next = import inputs.nixpkgs-staging-next { inherit system; };
+      pkgs-staging-next = import inputs.nixpkgs-staging-next {
+        inherit system;
+        config.allowUnfree = true;
+      };
       lib = originPkgs.lib;
       hostPlatform = originPkgs.hostPlatform;
       nixosSystem = import (nixpkgs + "/nixos/lib/eval-config.nix");
