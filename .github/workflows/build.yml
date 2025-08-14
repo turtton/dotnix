@@ -9,8 +9,11 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+permissions:
+  contents: read
 jobs:
   build-linux:
+    name: Build packages on Linux
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -43,14 +46,18 @@ jobs:
           - claude-desktop
           - claude-code
     steps:
-      - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v26
+      - name: Checkout
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
+      - uses: cachix/install-nix-action@fc6e360bedc9ee72d75e701397f0bb30dce77568 # v31.5.2
       #- uses: cachix/cachix-action@v14
       #  with:
       #    name: turtton
       #    authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       # Original: https://github.com/natsukium/dotfiles/blob/main/.github/workflows/test.yml
-      - uses: icewind1991/attic-action@v1
+      - name: Install nix
+        uses: icewind1991/attic-action@5b92b73fc87088f54ee787189f87f57418af3f09 # v1.2.1
         with:
           name: home
           instance: https://attic.taile2777.ts.net
@@ -64,9 +71,12 @@ jobs:
         run: |
           #nix build --impure --no-link --show-trace --system x86_64-linux \
           #  .#nixosConfigurations.maindesk.config.system.build.toplevel
-          nix build .#${{ matrix.packages }}
+          nix build ".#$PACAKGE"
           df -h
+        env:
+          PACKAGE: ${{ matrix.packages }}
   build-darwin:
+    name: Build packages on Mac
     runs-on: macos-latest
     strategy:
       fail-fast: false
@@ -76,14 +86,19 @@ jobs:
           - vscode
           - rustowl
     steps:
-      - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v26
+      - name: Checkout
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
+      - name: Install nix
+        uses: cachix/install-nix-action@fc6e360bedc9ee72d75e701397f0bb30dce77568 # v31.5.2
       #- uses: cachix/cachix-action@v14
       #  with:
       #    name: turtton
       #    authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       # Original: https://github.com/natsukium/dotfiles/blob/main/.github/workflows/test.yml
-      - uses: icewind1991/attic-action@v1
+      - name: Setup attic client
+        uses: icewind1991/attic-action@5b92b73fc87088f54ee787189f87f57418af3f09 # v1.2.1
         with:
           name: home
           instance: https://attic.taile2777.ts.net
@@ -97,5 +112,7 @@ jobs:
         run: |
           #nix build --impure --no-link --show-trace --system x86_64-linux \
           #  .#nixosConfigurations.maindesk.config.system.build.toplevel
-          nix build .#${{ matrix.packages }}
+          nix build ".#${PACKAGE}"
           df -h
+        env:
+          PACKAGE: ${{ matrix.packages }}
