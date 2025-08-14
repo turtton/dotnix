@@ -1,0 +1,45 @@
+name: "flake.lock: update Nix dependencies"
+
+on:
+  workflow_dispatch: # allows manual triggering
+  schedule:
+    - cron: '0 0 * * 7' # runs weekly on Sunday at 00:00
+
+permissions:
+  contents: read
+
+jobs:
+  autoupdate:
+    name: Update flake
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
+      - name: Install nix
+        uses: cachix/install-nix-action@fc6e360bedc9ee72d75e701397f0bb30dce77568 # v31.5.2
+        with:
+          nix_path: nixpkgs=channel:nixpkgs-unstable
+
+      - name: Update nix flake
+        run: nix flake update
+
+      - name: Make metadata
+        id: meta
+        run: |
+          {
+            echo "date=$(date +%Y-%m-%d)"
+          } >> $GITHUB_OUTPUT
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # v7.0.8
+        with:
+          title: "chore(flake): update nix flake at ${{ steps.meta.outputs.date }}"
+          commit-message: "chore(flake): update nix flake at ${{ steps.meta.outputs.date }}"
+          branch: "update-nix-flake-at-${{ steps.meta.outputs.date }}"
+          add-paths: |
+            flake.lock
