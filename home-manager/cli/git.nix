@@ -62,6 +62,8 @@
       ".vscode"
       "*.local.md"
       "*.local.json"
+      ".gemini"
+      ".claude"
     ];
   };
   programs.gh = {
