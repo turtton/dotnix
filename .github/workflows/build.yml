@@ -71,7 +71,7 @@ jobs:
         run: |
           #nix build --impure --no-link --show-trace --system x86_64-linux \
           #  .#nixosConfigurations.maindesk.config.system.build.toplevel
-          nix build ".#$PACAKGE"
+          nix build ".#$PACKAGE"
           df -h
         env:
           PACKAGE: ${{ matrix.packages }}
