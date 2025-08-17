@@ -10,6 +10,7 @@
       nerd-fonts.hack
       twemoji-color-font
       rictydiminished-with-firacode
+      takao
     ];
     fontDir.enable = true;
     fontconfig = {
