@@ -14,5 +14,7 @@
     gamemode
     mangohud
     gamescope
+
+    alcom # VCC Alternative
   ];
 }
