@@ -14,7 +14,12 @@
       remmina
     ]
     ++ lib.optionals hostPlatform.isLinux [
-      # unityhub
+      unityhub
       isaacsim-webrtc-streaming-client
     ];
+  # wait until libxml2 is fixed
+  # https://nixpkgs-tracker.ocfox.me/?pr=421740
+  nixpkgs.config.permittedInsecurePackages = [
+    "libxml2-2.13.8"
+  ];
 }
