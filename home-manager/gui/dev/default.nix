@@ -15,6 +15,7 @@
     ]
     ++ lib.optionals hostPlatform.isLinux [
       unityhub
+      blender
       isaacsim-webrtc-streaming-client
     ];
 }
