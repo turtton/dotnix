@@ -1,11 +1,11 @@
 inputs:
 let
   remoteNixpkgsPatches = [
-    # {
-    #   meta.description = "Fix unityhub error";
-    #   url = "https://github.com/NixOS/nixpkgs/pull/422785.patch";
-    #   hash = "sha256-omUdQnIvZgTmk4DZXJyuVXowMQNjvgAoKrcEgTHTZ9I=";
-    # }
+    {
+      meta.description = "Fix pygls (for ms-python)";
+      url = "https://github.com/NixOS/nixpkgs/pull/437306.patch";
+      hash = "sha256-TNK3d+ecq74H+59byEJNTw/jpMVZa/m7Hz/9ldJD8wY=";
+    }
   ];
   stateVersion = "23.11";
   createSystem =

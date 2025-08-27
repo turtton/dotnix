@@ -1,10 +1,10 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    libsForQt5.dolphin
-    libsForQt5.dolphin-plugins
-    libsForQt5.kio-extras
-    jetbrains-dolphin-qt5
+    kdePackages.dolphin
+    kdePackages.dolphin-plugins
+    kdePackages.kio-extras
+    jetbrains-dolphin-qt6
     kdePackages.ark
   ];
   xdg.dataFile."dolphin" = {

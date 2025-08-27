@@ -83,6 +83,7 @@ in
       claude-desktop-wayland = forceWaylandIme {
         name = claude-desktop.pname;
         package = claude-desktop;
+        desktopName = "claude";
       };
     in
     # https://github.com/k3d3/claude-desktop-linux-flake/blob/2b66e50045c03060d3becea838c5b57e46bbfc40/flake.nix#L24
