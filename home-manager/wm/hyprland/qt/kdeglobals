@@ -1,2 +1,5 @@
 [General]
 TerminalApplication=alacritty
+
+[UiSettings]
+ColorScheme=kvantum
