@@ -9,6 +9,7 @@ in
     inputs.rust-overlay.overlays.default
     inputs.rustowl.overlays.default
     (import ./claude-code)
+    (import ./fix-dolphin-mime.nix)
     (import ./fix-ime.nix)
     (import ./force-wayland.nix inputs)
     (import ./noto-fonts-cjk-serif.nix)
