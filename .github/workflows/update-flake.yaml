@@ -7,6 +7,7 @@ permissions:
   contents: read
 jobs:
   autoupdate:
+    if: false
     name: Update flake
     runs-on: ubuntu-latest
     permissions:
