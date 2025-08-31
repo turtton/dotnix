@@ -3,9 +3,25 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - **.nix
+      - **.lock
+      - **.toml
+      - **.yaml
+      - **.yml
+      - **.json
+      - **.sh
   push:
     branches:
       - main
+    paths:
+      - **.nix
+      - **.lock
+      - **.toml
+      - **.yaml
+      - **.yml
+      - **.json
+      - **.sh
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
