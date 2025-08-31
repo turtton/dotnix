@@ -11,6 +11,7 @@
     ./hardware-configuration.nix
     ./../../os/core/shared
     (import ./../../os/core/secureboot/preloader.nix "nvme0n1" "1")
+    ./../../os/core/amdgpu.nix
     ./../../os/core/shell.nix
     ./../../os/wm/hyprland.nix
     ./../../os/desktop/shared
@@ -47,17 +48,6 @@
     graphics = {
       enable = true;
       enable32Bit = true;
-      extraPackages = with pkgs; [
-        rocmPackages.clr.icd
-        amdvlk
-      ];
-      extraPackages32 = with pkgs; [
-        driversi686Linux.amdvlk
-      ];
-    };
-    amdgpu = {
-      overdrive.enable = true;
-      opencl.enable = true;
     };
   };
 
@@ -74,31 +64,9 @@
     xserver = {
       wacom.enable = true;
     };
-    lact.enable = true;
   };
 
   hardware.bluetooth.enable = true;
 
   networking.wireguard.enable = true;
-
-  systemd = {
-    tmpfiles.rules =
-      let
-        rocmEnv = pkgs.symlinkJoin {
-          name = "rocm-combined";
-          paths = with pkgs.rocmPackages; [
-            rocblas
-            hipblas
-            clr
-          ];
-        };
-      in
-      [
-        "L+    /opt/rocm   -    -    -     -    ${rocmEnv}"
-      ];
-  };
-
-  environment.systemPackages = with pkgs; [
-    clinfo
-  ];
 }
