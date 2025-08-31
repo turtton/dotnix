@@ -159,6 +159,7 @@
           isaacsim-webrtc-streaming-client = overlays.isaacsim-webrtc-streaming-client;
           claude-desktop = overlays.claude-desktop;
           claude-code = overlays.claude-code;
+          dolphin = overlays.kdePackages.dolphin;
           # wifiman-desktop = overlays.wifiman-desktop;
           # pake-cli = overlays.pake-cli;
           # fastmail = overlays.fastmail;
