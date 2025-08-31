@@ -134,6 +134,9 @@
         packages = {
           ghr = overlays.ghr;
           rustowl = rustowl.packages.${system}.default;
+          claude-code = overlays.claude-code;
+        }
+        // lib.optionalAttrs hostPlatform.isLinux {
           beutl = overlays.beutl;
           jetbrains-dolphin-qt5 = overlays.jetbrains-dolphin-qt5;
           jetbrains-dolphin-qt6 = overlays.jetbrains-dolphin-qt6;
@@ -144,6 +147,13 @@
           wallpaper-springcity = overlays.wallpaper-springcity;
           hyprland = hyprland.packages.${system}.default;
           hyprpolkitagent = hyprpolkitagent.packages.${system}.default;
+          zen-browser = inputs.zen-browser.packages.${system}.default;
+          isaacsim-webrtc-streaming-client = overlays.isaacsim-webrtc-streaming-client;
+          claude-desktop = overlays.claude-desktop;
+          dolphin = overlays.kdePackages.dolphin;
+          # wifiman-desktop = overlays.wifiman-desktop;
+          # pake-cli = overlays.pake-cli;
+          # fastmail = overlays.fastmail;
           # Force Wayland IME system
           vivaldi = overlays.vivaldi;
           chromium = overlays.chromium;
@@ -155,14 +165,6 @@
           teams-for-linux = overlays.teams-for-linux;
           vscode = overlays.vscode;
           zoom-us = overlays.zoom-us;
-          zen-browser = inputs.zen-browser.packages.${system}.default;
-          isaacsim-webrtc-streaming-client = overlays.isaacsim-webrtc-streaming-client;
-          claude-desktop = overlays.claude-desktop;
-          claude-code = overlays.claude-code;
-          dolphin = overlays.kdePackages.dolphin;
-          # wifiman-desktop = overlays.wifiman-desktop;
-          # pake-cli = overlays.pake-cli;
-          # fastmail = overlays.fastmail;
         };
         devShells.default = mkShell {
           packages = [
