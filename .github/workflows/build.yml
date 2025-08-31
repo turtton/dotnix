@@ -12,6 +12,57 @@ concurrency:
 permissions:
   contents: read
 jobs:
+  check-linux:
+    name: Check flake definisions on Linux
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
+      - uses: cachix/install-nix-action@fc6e360bedc9ee72d75e701397f0bb30dce77568 # v31.5.2
+      - name: Install nix
+        uses: icewind1991/attic-action@5b92b73fc87088f54ee787189f87f57418af3f09 # v1.2.1
+        with:
+          name: home
+          instance: https://attic.taile2777.ts.net
+          authToken: ${{ secrets.ATTIC_TOKEN }}
+      - name: GC
+        run: |
+          df -h
+          rm -rf "${AGENT_TOOLSDIRECTORY}"
+          df -h
+      - name: Check
+        run: |
+          #nix build --impure --no-link --show-trace --system x86_64-linux \
+          #  .#nixosConfigurations.maindesk.config.system.build.toplevel
+          nix flake check
+          df -h
+  check-darwin:
+    name: Check flake definisions on Mac
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
+      - name: Install nix
+        uses: cachix/install-nix-action@fc6e360bedc9ee72d75e701397f0bb30dce77568 # v31.5.2
+      - name: Setup attic client
+        uses: icewind1991/attic-action@5b92b73fc87088f54ee787189f87f57418af3f09 # v1.2.1
+        with:
+          name: home
+          instance: https://attic.taile2777.ts.net
+          authToken: ${{ secrets.ATTIC_TOKEN }}
+      - name: GC
+        run: |
+          df -h
+          rm -rf "${AGENT_TOOLSDIRECTORY}"
+          df -h
+      - name: Check
+        run: |
+          nix flake check
+          df -h
   build-linux:
     name: Build packages on Linux
     runs-on: ubuntu-latest
@@ -93,11 +144,6 @@ jobs:
           persist-credentials: false
       - name: Install nix
         uses: cachix/install-nix-action@fc6e360bedc9ee72d75e701397f0bb30dce77568 # v31.5.2
-      #- uses: cachix/cachix-action@v14
-      #  with:
-      #    name: turtton
-      #    authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-      # Original: https://github.com/natsukium/dotfiles/blob/main/.github/workflows/test.yml
       - name: Setup attic client
         uses: icewind1991/attic-action@5b92b73fc87088f54ee787189f87f57418af3f09 # v1.2.1
         with:
