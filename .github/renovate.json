@@ -1,4 +1,7 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": ["github>turtton/renovate"]
+	"extends": ["github>turtton/renovate"],
+	"nix": {
+		"enabled": true
+	}
 }
