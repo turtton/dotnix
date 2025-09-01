@@ -2,7 +2,7 @@
 {
   home.packages = with pkgs; [
     kubectl
-    helm
+    kubernetes-helm
     talosctl
   ];
 }
