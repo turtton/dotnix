@@ -17,6 +17,7 @@ in
 {
   imports = [
     ./cargo.nix
+    ./container.nix
     ./ghr.nix
   ];
   home.packages =

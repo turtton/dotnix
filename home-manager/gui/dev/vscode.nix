@@ -12,6 +12,7 @@
             wakatime.vscode-wakatime
             ms-vscode-remote.remote-containers
             marp-team.marp-vscode
+            ms-kubernetes-tools.vscode-kubernetes-tools
             # AI
             github.copilot-chat
             github.copilot
