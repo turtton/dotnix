@@ -4,5 +4,8 @@
     kubectl
     kubernetes-helm
     talosctl
+    argocd
+    lens
+    kubeseal
   ];
 }
