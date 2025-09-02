@@ -1,5 +1,10 @@
 { pkgs, ... }:
 {
+  home.file."restart-hyprlock.sh".text = ''
+    #!/usr/bin/env bash
+    hyprctl --instance 0 'keyword misc:allow_session_lock_restore 1'
+    hyprctl --instance 0 'dispatch exec hyprlock'
+  '';
   programs.hyprlock = {
     enable = true;
     settings = {
@@ -24,8 +29,8 @@
         {
           monitor = "";
           text = ''
-            						cmd[update:1000] echo -e "$(date +"%Y")"
-            					'';
+            cmd[update:1000] echo -e "$(date +"%Y")"
+          '';
           color = "rgba(216, 222, 233, 0.70)";
           font_size = 90;
           font_family = "SF Pro Display Bold";
@@ -37,8 +42,8 @@
         {
           monitor = "";
           text = ''
-            						cmd[update:1000] echo -e "$(date +"%m/%d")"
-            					'';
+            cmd[update:1000] echo -e "$(date +"%m/%d")"
+          '';
           color = "rgba(216, 222, 233, 0.70)";
           font_size = 40;
           font_family = "SF Pro Display Bold";
@@ -50,8 +55,8 @@
         {
           monitor = "";
           text = ''
-            						cmd[update:1000] echo "<span>$(date +"- %H:%M -")</span>"
-            					'';
+            cmd[update:1000] echo "<span>$(date +"- %H:%M -")</span>"
+          '';
           color = "rgba(216, 222, 233, 0.70)";
           font_size = 20;
           font_family = "SF Pro Display Bold";
