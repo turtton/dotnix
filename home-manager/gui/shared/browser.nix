@@ -19,4 +19,14 @@ in
   home.packages = pkgs.lib.optionals isLinux [
     inputs.zen-browser.packages."${system}".default
   ];
+  xdg.mime.defaultApplications =
+    let
+      defaultBrowser = "vivaldi-stable.desktop";
+    in
+    {
+      "x-scheme-handler/http" = defaultBrowser;
+      "x-scheme-handler/https" = defaultBrowser;
+      "x-scheme-handler/about" = defaultBrowser;
+      "x-scheme-handler/unknown" = defaultBrowser;
+    };
 }
