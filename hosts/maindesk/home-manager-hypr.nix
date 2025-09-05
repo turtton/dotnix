@@ -11,6 +11,7 @@
     ./../../home-manager/cli/shell/zsh
     ./../../home-manager/gui/shared
     ./../../home-manager/gui/dev
+    ./../../home-manager/gui/dev/creative.nix
     ./../../home-manager/gui/game
     ./../../home-manager/gui/term/alacritty.nix
     ./../../home-manager/gui/filemanager/dolphin

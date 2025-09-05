@@ -41,11 +41,9 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # For unityhub. Wait until libxml2 is fixed
-  # https://nixpkgs-tracker.ocfox.me/?pr=421740
-  nixpkgs.config.permittedInsecurePackages = [
-    "libxml2-2.13.8"
-  ];
+  # nixpkgs.config.permittedInsecurePackages = [
+  #   "libxml2-2.13.8"
+  # ];
 
   environment.systemPackages = with pkgs; [
     cachix
