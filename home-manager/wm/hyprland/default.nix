@@ -51,6 +51,8 @@
     # libsForQt5.polkit-kde-agent # password prompt(kde)
     libsecret # keyring
     networkmanagerapplet # network manager gui
+    btop # system monitor
+    gcolor3 # color selector
   ];
 
   xdg.userDirs.createDirectories = true;
