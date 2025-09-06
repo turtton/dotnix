@@ -9,4 +9,7 @@
   services.swaync = {
     enable = true;
   };
+  home.packages = with pkgs; [
+    waybar-mpris
+  ];
 }

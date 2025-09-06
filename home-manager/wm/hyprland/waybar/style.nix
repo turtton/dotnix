@@ -87,6 +87,7 @@
          #memory,
          #temperature,
          #custom-media,
+         #custom-waybar-mpris,
          #custom-powermenu,
          #custom-fans,
          #clock,
@@ -147,8 +148,7 @@
            color: @background;
          }
 
-         #custom-media {
-           background-color: @background;
+         #custom-media #custom-waybar-mpris {
            padding: 0 10px;
            color: @blue;
          }

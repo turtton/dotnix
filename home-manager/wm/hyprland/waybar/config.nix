@@ -10,7 +10,8 @@
       "hyprland/window"
     ];
     modules-center = [
-      "custom/media"
+      #  "custom/media"
+      "custom/waybar-mpris"
     ];
     modules-right = [
       "battery"
@@ -59,6 +60,20 @@
       "smooth-scrolling-threshold" = "4";
       "on-scroll-up" = "playerctl next";
       "on-scroll-down" = "playerctl previous";
+    };
+    "custom/waybar-mpris" = {
+      "return-type" = "json";
+      "exec" = "waybar-mpris --position --autofocus --pause 󰏤";
+      "on-click" = "waybar-mpris --send toggle";
+      # This option will switch between players on right click.
+      "on-click-right" = "waybar-mpris --send player-next";
+      # The options below will switch the selected player on scroll
+      # "on-scroll-up" = "waybar-mpris --send player-next";
+      # "on-scroll-down" = "waybar-mpris --send player-prev";
+      # The options below will go to next/previous track on scroll
+      "on-scroll-up" = "waybar-mpris --send next";
+      "on-scroll-down" = "waybar-mpris --send prev";
+      "escape" = true;
     };
 
     "idle_inhibitor" = {
