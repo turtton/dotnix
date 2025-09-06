@@ -4,9 +4,9 @@ My dotfiles for NixOS
 
 # [Hyprland](./home-manager/wm/hyprland/)
 
-![](./docs/hypr.png)
+![](./docs/hypr-waybar.png)
 
-- Bar: [Hyprpanel](https://hyprpanel.com)
+- Bar: [waybar](https://github.com/Alexays/Waybar)
 - Editor: [Neovim](https://github.com/turtton/myvim.nix)
 - Terminal: [Alacritty](https://alacritty.org)
 - LockScreen: [HyprLock](https://github.com/hyprwm/hyprlock/)
