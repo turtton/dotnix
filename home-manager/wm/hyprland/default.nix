@@ -6,7 +6,7 @@
 }:
 {
   imports = [
-    ./eww
+    # ./eww
     ./qt
     ./rofi
     ./waybar
@@ -15,6 +15,7 @@
     ./gtk.nix
     ./key-bindings.nix
     ./settings.nix
+    ./swww.nix
     ./hypridle.nix
     ./hyprlock.nix
     #./hyprpanel.nix
@@ -39,7 +40,6 @@
     hyprpicker # color picker
     pamixer # pulseaudio mixer
     playerctl # media player control
-    swww # wallpaper
     wayvnc # vnc server
     wev # key event watcher
     wireplumber # screens sharing

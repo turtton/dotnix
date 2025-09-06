@@ -15,9 +15,6 @@
     ];
     exec-once = [
       "hyprlock"
-      "swww init && swww img ${pkgs.wallpaper-springcity}/wall.png"
-      "${./eww/config/scripts/start.sh}"
-      #"waybar"
       "fcitx5 -D"
       # "hypr-helper start"
       "systemctl --user start hyprpolkitagent"
