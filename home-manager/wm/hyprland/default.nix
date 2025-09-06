@@ -9,7 +9,7 @@
     ./eww
     ./qt
     ./rofi
-    # ./waybar
+    ./waybar
     ./wlogout
     # ./dunst.nix
     ./gtk.nix
@@ -17,7 +17,7 @@
     ./settings.nix
     ./hypridle.nix
     ./hyprlock.nix
-    ./hyprpanel.nix
+    #./hyprpanel.nix
     ./utilapp.nix
     #./wofi.nix
   ];

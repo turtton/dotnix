@@ -6,54 +6,51 @@
     margin-right = 8;
     margin-left = 8;
     modules-left = [
-      "custom/wmname"
-      "custom/media"
       "hyprland/workspaces"
       "hyprland/window"
     ];
-    modules-center = [ ];
+    modules-center = [
+      "custom/media"
+    ];
     modules-right = [
       "battery"
       "cpu"
       "memory"
       # "backlight"
       "pulseaudio"
-      "clock"
+      "bluetooth"
       "network"
       "tray"
-      "custom/powermenu"
+      "clock"
+      "custom/notification"
+    ];
+    output = [
+      "eDP-1"
+      "DP-1"
     ];
 
     "hyprland/workspaces" = {
-      "persistent-workspaces" = {
-        "1" = [ "DP-3" ];
-        "2" = [ "DP-3" ];
-        "3" = [ "DP-3" ];
-        "4" = [ "DP-3" ];
-      };
       active-only = "false";
-      on-scroll-up = "hyprctl dispatch workspace e+1";
-      on-scroll-down = "hyprctl dispatch workspace e-1";
+      on-scroll-up = "hyprctl dispatch  split-cycleworkspaces +1";
+      on-scroll-down = "hyprctl dispatch split-cycleworkspaces -1";
       disable-scroll = "false";
-      all-outputs = "true";
+      all-outputs = "false";
       format = "{icon}";
       on-click = "activate";
-      # format-icons = {
-      #   "1" = "●";
-      #   "2" = "●";
-      #   "3" = "●";
-      #   "4" = "●";
-      #   "5" = "●";
-      #   "6" = "●";
-      #   "7" = "●";
-      #   "8" = "●";
-      #   "9" = "●";
-      #   "10" = "●";
-      # };
+      format-icons = {
+        "urgent" = "";
+        "active" = "";
+        "visible" = "";
+        "default" = "";
+        "empty" = "";
+      };
+    };
+    "hyprland/window" = {
+      format = "{initialTitle}";
     };
 
     "custom/media" = {
-      "format" = " {}";
+      "format" = "  {}";
       "max-lenght" = "40";
       "interval" = "1";
       "exec" = "playerctl metadata --format '{{ artist }} - {{ title }}'";
@@ -88,7 +85,7 @@
     };
 
     "memory" = {
-      format = " {}%";
+      format = " {}%";
       on-click = "foot -e btop";
     };
 
@@ -120,6 +117,16 @@
         "  "
         "  "
       ];
+    };
+
+    "bluetooth" = {
+      # "controller" =  "controller1";  # specify the alias of the controller if there are more than 1 on the system
+      "format" = " {status}";
+      "format-disabled" = ""; # an empty format will hide the module
+      "format-connected" = " {num_connections} connected";
+      "tooltip-format" = "{controller_alias}\t{controller_address}";
+      "tooltip-format-connected" = "{controller_alias}\t{controller_address}\n\n{device_enumerate}";
+      "tooltip-format-enumerate-connected" = "{device_alias}\t{device_address}";
     };
 
     "network" = {
@@ -155,12 +162,25 @@
       on-click = "${pkgs.pavucontrol}/bin/pavucontrol -t 3";
     };
 
-    "custom/wmname" = {
-      format = " ";
-      tooltip = "false";
-      on-click = "eww open control_center";
-      on-click-right = "$HOME/.config/hypr/Scripts/screenshot";
-      on-click-middle = "$HOME/.config/hypr/Scripts/wallpaper-switch";
+    "custom/notification" = {
+      "tooltip" = false;
+      "format" = "{icon}<span><sup>{0}</sup></span>";
+      "format-icons" = {
+        "notification" = "󱅫";
+        "none" = "󰂚";
+        "dnd-notification" = "󰂛";
+        "dnd-none" = "󰂛";
+        "inhibited-notification" = "󱅫";
+        "inhibited-none" = "󰂚";
+        "dnd-inhibited-notification" = "󰂛";
+        "dnd-inhibited-none" = "󰂛";
+      };
+      "return-type" = "json";
+      "exec-if" = "which swaync-client";
+      "exec" = "swaync-client -swb";
+      "on-click" = "swaync-client -t -sw";
+      "on-click-right" = "swaync-client -d -sw";
+      "escape" = true;
     };
   };
 }

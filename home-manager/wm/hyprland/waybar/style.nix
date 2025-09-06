@@ -6,7 +6,7 @@
            *
            */
 
-           @define-color background #1a1b26;
+           @define-color background rgba(26, 27, 38, 0.5);
            @define-color foreground #c0caf5;
            @define-color alt_background #1f1f2d;
 
@@ -55,7 +55,6 @@
            */
 
          * {
-
            border: none;
            font-family: JetBrainsMono Nerd Font, sans-serif;
            font-size: 14px;
@@ -65,12 +64,12 @@
            /* background-color: rgba(18, 21, 29, 0.98); */
            background-color: @background;
            /* background-color: rgba(0, 0, 0, 0); */
-           border-radius: 6px;
+           border-radius: 3px;
            color: @foreground;
-           opacity: 1;
+           opacity: 0.8;
            transition-property: background-color;
            transition-duration: .5s;
-           margin-bottom: -7px;
+           margin-bottom: -3px;
          }
 
          window#waybar.hidden {
@@ -90,15 +89,16 @@
          #custom-media,
          #custom-powermenu,
          #custom-fans,
-         #custom-wmname,
          #clock,
          #idle_inhibitor,
          #language,
          #pulseaudio,
          #backlight,
          #battery,
+         #bluetooth,
          #network,
-         #tray {
+         #tray,
+         #custom-notification {
            background-color: @alt_background;
            padding: 0 10px;
            margin: 5px 2px 5px 2px;
