@@ -90,8 +90,8 @@
 
     "clock" = {
       tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-      format = " {:%H:%M}";
-      format-alt = "󰃰 {:%A, %B %d, %Y}";
+      format = " {:%m/%d/%H:%M}";
+      format-alt = "󰃰 {:%Y %B %d %A}";
     };
 
     "cpu" = {
