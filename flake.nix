@@ -128,6 +128,7 @@
               ".direnv/*"
               "_sources/*"
               "overlay/beutl/deps.json"
+              "home-manager/wm/hyprland/waybar/*.css"
             ];
           };
         };
