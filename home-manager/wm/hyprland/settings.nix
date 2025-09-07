@@ -100,6 +100,7 @@
     misc = {
       disable_hyprland_logo = true;
       focus_on_activate = true;
+      enable_anr_dialog = false;
     };
     xwayland = {
       use_nearest_neighbor = false;
