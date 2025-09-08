@@ -133,7 +133,6 @@
           };
         };
         packages = {
-          ghr = overlays.ghr;
           rustowl = rustowl.packages.${system}.default;
           claude-code = overlays.claude-code;
         }

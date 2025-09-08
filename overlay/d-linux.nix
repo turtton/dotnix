@@ -15,7 +15,6 @@ in
     (import ./noto-fonts-cjk-serif.nix)
     (import ./noto-fonts-cjk-sans.nix)
     (import ./noto-fonts.nix)
-    (import ./ghr.nix generated.ghr)
     (import ./isaacsim.nix)
     (import ./beutl { inherit (generated) beutl beutl-native-deps; })
     (import ./jetbrains-dolphin.nix generated.jetbrains-dolphin)

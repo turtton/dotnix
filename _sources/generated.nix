@@ -24,17 +24,6 @@
     };
     date = "2025-03-15";
   };
-  ghr = {
-    pname = "ghr";
-    version = "v0.4.5";
-    src = fetchFromGitHub {
-      owner = "siketyan";
-      repo = "ghr";
-      rev = "v0.4.5";
-      fetchSubmodules = false;
-      sha256 = "sha256-8DnujtAtJiSnrC3k5vGRQuk6RfC5Vn+z4HAVsEnXN7c=";
-    };
-  };
   jetbrains-dolphin = {
     pname = "jetbrains-dolphin";
     version = "1.4.2";
@@ -57,17 +46,6 @@
       sha256 = "sha256-f78dMegKVe2fed5I0ogiaG+s9DkSF13s59fhhTr5U5c=";
     };
     date = "2021-05-17";
-  };
-  rustowl = {
-    pname = "rustowl";
-    version = "v0.2.2";
-    src = fetchFromGitHub {
-      owner = "cordx56";
-      repo = "rustowl";
-      rev = "v0.2.2";
-      fetchSubmodules = false;
-      sha256 = "sha256-ZAqAGOJReATymm2aL0XbXJG+PVhmhliIupEE3/4aGZw=";
-    };
   };
   wallpaper-springcity = {
     pname = "wallpaper-springcity";

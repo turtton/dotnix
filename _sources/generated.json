@@ -41,27 +41,6 @@
         },
         "version": "339ad822e77365a652a0d9ac12d235ab2c53b77f"
     },
-    "ghr": {
-        "cargoLocks": null,
-        "date": null,
-        "extract": null,
-        "name": "ghr",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "siketyan",
-            "repo": "ghr",
-            "rev": "v0.4.5",
-            "sha256": "sha256-8DnujtAtJiSnrC3k5vGRQuk6RfC5Vn+z4HAVsEnXN7c=",
-            "sparseCheckout": [],
-            "type": "github"
-        },
-        "version": "v0.4.5"
-    },
     "jetbrains-dolphin": {
         "cargoLocks": null,
         "date": null,
@@ -103,27 +82,6 @@
             "type": "github"
         },
         "version": "c79f6ab6504bd1f1a9d1068f284c24f3227f51c1"
-    },
-    "rustowl": {
-        "cargoLocks": null,
-        "date": null,
-        "extract": null,
-        "name": "rustowl",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "cordx56",
-            "repo": "rustowl",
-            "rev": "v0.2.2",
-            "sha256": "sha256-ZAqAGOJReATymm2aL0XbXJG+PVhmhliIupEE3/4aGZw=",
-            "sparseCheckout": [],
-            "type": "github"
-        },
-        "version": "v0.2.2"
     },
     "wallpaper-springcity": {
         "cargoLocks": null,

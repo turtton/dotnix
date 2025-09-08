@@ -1,7 +1,3 @@
-[ghr]
-src.github_tag = "siketyan/ghr"
-fetch.github = "siketyan/ghr"
-
 [beutl]
 src.github = "b-editor/beutl"
 fetch.github = "b-editor/beutl"

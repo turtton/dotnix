@@ -9,6 +9,5 @@ in
     inputs.rust-overlay.overlays.default
     inputs.rustowl.overlays.default
     (import ./claude-code)
-    (import ./ghr.nix generated.ghr)
   ];
 }

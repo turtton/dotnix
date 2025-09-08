@@ -18,7 +18,6 @@ in
   imports = [
     ./cargo.nix
     ./container.nix
-    ./ghr.nix
   ];
   home.packages =
     with pkgs;
@@ -41,6 +40,8 @@ in
       ghc
 
       claude-code
+      # Git Repository Management
+      siketyan-ghr
     ]
     ++ pkgs.lib.optionals hostPlatform.isLinux [
       stack-wrapped
