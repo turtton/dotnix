@@ -39,7 +39,6 @@ in
       # Haskell
       ghc
 
-      claude-code
       # Git Repository Management
       siketyan-ghr
     ]
