@@ -86,7 +86,6 @@ jobs:
       fail-fast: false
       matrix:
         packages:
-          - ghr
           - jetbrains-dolphin-qt5
           - jetbrains-dolphin-qt6
           - jetbrains-nautilus
@@ -150,7 +149,6 @@ jobs:
       fail-fast: false
       matrix:
         packages:
-          - ghr
           - rustowl
           - claude-code
     steps:

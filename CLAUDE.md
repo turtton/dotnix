@@ -53,7 +53,7 @@ This is a Nix/NixOS configuration repository that manages system configurations 
 
 - nvfetcher tracks external sources defined in `nvfetcher.toml`
 - Generated sources are stored in `_sources/`
-- Custom packages include: ghr, beutl, claude-code, rustowl, various Wayland/IME fixes
+- Custom packages include: beutl, claude-code, rustowl, various Wayland/IME fixes
 
 ## Important Notes
 
