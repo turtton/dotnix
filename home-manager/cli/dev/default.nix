@@ -45,4 +45,8 @@ in
     ++ pkgs.lib.optionals hostPlatform.isLinux [
       stack-wrapped
     ];
+  programs.zsh.initContent = ''
+    source <(ghr shell)
+    source <(ghr shell --completion bash)
+  '';
 }
