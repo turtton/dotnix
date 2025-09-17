@@ -80,6 +80,10 @@
         overrideGpg = true;
         autoForwardBranches = "none";
       };
+      gui = {
+        showIcons = true;
+        nerdFontsVersion = "3";
+      };
     };
   };
   home.packages = with pkgs; [
