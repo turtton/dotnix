@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  boot.kernelModules = [ "amdgpu" ];
+  # boot.kernelModules = [ "amdgpu" ];
   hardware = {
     graphics = {
       extraPackages = with pkgs; [
