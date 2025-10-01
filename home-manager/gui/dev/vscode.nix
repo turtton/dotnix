@@ -7,6 +7,8 @@
         (
           with pkgs.vscode-extensions;
           [
+            arrterian.nix-env-selector
+            jnoortheen.nix-ide
             mkhl.direnv
             oderwat.indent-rainbow
             wakatime.vscode-wakatime
@@ -20,6 +22,7 @@
             ms-azuretools.vscode-docker
             redhat.vscode-yaml
             yoavbls.pretty-ts-errors
+            james-yu.latex-workshop
             ## python
             ms-python.python
             ms-python.vscode-pylance
@@ -45,7 +48,6 @@
             vscode-marketplace.re7rix2."50-shades-of-purple"
             vscode-marketplace.atommaterial.a-file-icon-vscode
             vscode-marketplace.me-dutour-mathieu.vscode-github-actions
-            open-vsx.pinage404.nix-extension-pack
             vscode-marketplace."42crunch".vscode-openapi
             vscode-marketplace.typespec.typespec-vscode
             vscode-marketplace.njpwerner.autodocstring
