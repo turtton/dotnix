@@ -47,7 +47,7 @@
       map (c: "opaque, class:^(${c}.*)$") opaqueClasses
       ++ [
         "pseudo noblur, class:^(fcitx)(.*)$"
-        "noblur class:(wofi)"
+        "noblur, class:(wofi)"
         "opaque, initialTitle:^(Picture in picture)(.*)$"
         "opaque, initialTitle:^(.* on QEMU/KVM)$"
         "float, class:^(org.kde.kdeconnect.daemon)(.*)$"
