@@ -1,6 +1,14 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
 	"extends": ["github>turtton/renovate"],
+	"packageRules": [
+		{
+			"matchDatasources": ["nix"],
+			"groupName": "nix fkakes",
+			"automerge": true,
+			"automergeStrategy": "squash"
+		}
+	],
 	"nix": {
 		"enabled": true
 	}
