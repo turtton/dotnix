@@ -14,6 +14,7 @@
     ./../../home-manager/gui/dev/creative.nix
     ./../../home-manager/gui/game
     ./../../home-manager/gui/term/alacritty.nix
+    ./../../home-manager/gui/term/ghostty.nix
     ./../../home-manager/gui/filemanager/dolphin
     ./../../home-manager/wm/hyprland
   ];
