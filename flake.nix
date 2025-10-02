@@ -51,7 +51,10 @@
     };
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     utils.url = "github:numtide/flake-utils";
-    turtton-neovim.url = "github:turtton/myvim.nix";
+    turtton-neovim = {
+      url = "github:turtton/myvim.nix";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+    };
     nvfetcher = {
       url = "github:berberman/nvfetcher";
       inputs.nixpkgs.follows = "nixpkgs";
