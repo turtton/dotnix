@@ -3,7 +3,7 @@
     enable = true;
     installVimSyntax = true;
     settings = {
-      theme = "catppuccin-mocha";
+      theme = "Catppuccin Mocha";
     };
   };
 }
