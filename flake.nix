@@ -69,8 +69,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     claude-desktop = {
-      #url = "github:k3d3/claude-desktop-linux-flake";
-      url = "github:turtton/claude-desktop-linux-flake/turtton";
+      url = "github:k3d3/claude-desktop-linux-flake";
+      #url = "github:turtton/claude-desktop-linux-flake/turtton";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "utils";
