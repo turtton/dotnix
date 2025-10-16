@@ -58,6 +58,7 @@ in
 {
   vivaldi = overrideCommandLine prev.vivaldi;
   chromium = overrideCommandLine prev.chromium;
+  google-chrome = overrideCommandLine prev.google-chrome;
   obsidian = overrideCommandLine prev.obsidian;
   vscode = overrideCommandLine prev.vscode;
   spotify = forceWaylandIme { name = "spotify"; };

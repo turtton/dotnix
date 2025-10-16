@@ -18,6 +18,7 @@ in
   };
   home.packages = pkgs.lib.optionals isLinux [
     inputs.zen-browser.packages."${system}".default
+    pkgs.google-chrome
   ];
   xdg.mimeApps.defaultApplications =
     let
