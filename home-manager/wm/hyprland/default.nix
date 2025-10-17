@@ -6,10 +6,14 @@
 }:
 {
   imports = [
+    ../noctalia
+    # replaced by noctalia
+    #./rofi
+    #./waybar
+    #./hyprlock.nix
+
     # ./eww
     ./qt
-    ./rofi
-    ./waybar
     ./wlogout
     # ./dunst.nix
     ./gtk.nix
@@ -17,7 +21,6 @@
     ./settings.nix
     ./swww.nix
     ./hypridle.nix
-    ./hyprlock.nix
     #./hyprpanel.nix
     ./utilapp.nix
     #./wofi.nix

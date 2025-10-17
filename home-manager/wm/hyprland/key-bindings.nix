@@ -14,8 +14,9 @@
       "$mainMod, F, fullscreen"
       "$mainMod SHIFT, F, togglefloating"
       "$mainMod SHIFT, P, pin"
-      "$mainMod, V, exec, rofi -modi clipboard:${pkgs.cliphist}/bin/cliphist-rofi-img -show clipboard -show-icons -theme-str '##element-icon {size: 5ch; }'"
-      "$mainMod, P, exec, ${pkgs.rofi-rbw-wayland}/bin/rofi-rbw"
+      # See rofi or noctalia config
+      #"$mainMod, V, exec, rofi -modi clipboard:${pkgs.cliphist}/bin/cliphist-rofi-img -show clipboard -show-icons -theme-str '##element-icon {size: 5ch; }'"
+      #"$mainMod, P, exec, ${pkgs.rofi-rbw-wayland}/bin/rofi-rbw"
       "$mainMod, C, exec, ${pkgs.zenity}/bin/zenity --entry --text='Enter text:' | sed -z 's/\\n$//' | wl-copy"
       "$mainMod CTRL, C, exec, [float] ${pkgs.zenity}/bin/zenity --text-info --editable | wl-copy"
 
@@ -116,9 +117,9 @@
       ''$mainMod, Print, exec, GRIMBLAST_HIDE_CURSOR=1 grimblast save active - | swappy -f - -o /tmp/screenshot.png && zenity --question --text="Save?" && cp /tmp/screenshot.png "$HOME/Pictures/$(date +%Y-%m-%dT%H:%M:%S).png"''
       ''$mainMod SHIFT, s, exec, GRIMBLAST_HIDE_CURSOR=1 grimblast save area - | swappy -f - -o /tmp/screenshot.png && zenity --question --text="Save?" && cp /tmp/screenshot.png "$HOME/Pictures/$(date +%Y-%m-%dT%H:%M:%S).png"''
 
-      # launcher
-      "$mainMod, d, exec, rofi -show drun"
-      "$mainMod, period, exec, bemoji"
+      # launcher see rofi or noctalia config
+      # "$mainMod, d, exec, rofi -show drun"
+      # "$mainMod, period, exec, bemoji"
 
       # color picker
       "$mainMod SHIFT, c, exec, hyprpicker --autocopy"

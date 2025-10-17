@@ -1,3 +1,8 @@
+{ config, ... }:
+let
+  lock-cmd =
+    if config.programs.hyprlock.enable then "hyprlock" else "noctalia-shell ipc call lockScreen toggle";
+in
 {
   services.hypridle = {
     enable = true;
@@ -16,7 +21,7 @@
         }
         {
           timeout = 910;
-          on-timeout = "hyprlock";
+          on-timeout = lock-cmd;
         }
         # {
         #   timeout = 1800;
