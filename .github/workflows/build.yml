@@ -4,24 +4,24 @@ on:
     branches:
       - main
     paths:
-      - '**.nix'
-      - '**.lock'
-      - '**.toml'
-      - '**.yaml'
-      - '**.yml'
-      - '**.json'
-      - '**.sh'
+      - "**.nix"
+      - "**.lock"
+      - "**.toml"
+      - "**.yaml"
+      - "**.yml"
+      - "**.json"
+      - "**.sh"
   push:
     branches:
       - main
     paths:
-      - '**.nix'
-      - '**.lock'
-      - '**.toml'
-      - '**.yaml'
-      - '**.yml'
-      - '**.json'
-      - '**.sh'
+      - "**.nix"
+      - "**.lock"
+      - "**.toml"
+      - "**.yaml"
+      - "**.yml"
+      - "**.json"
+      - "**.sh"
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -112,6 +112,7 @@ jobs:
           - claude-desktop
           - claude-code
           - dolphin
+          - noctalia-shell
     steps:
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0

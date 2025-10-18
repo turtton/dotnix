@@ -103,6 +103,7 @@
       treefmt-nix,
       claude-desktop,
       rustowl,
+      noctalia,
       ...
     }:
     {
@@ -178,6 +179,7 @@
           teams-for-linux = overlays.teams-for-linux;
           vscode = overlays.vscode;
           zoom-us = overlays.zoom-us;
+          noctalia-shell = noctalia.packages.${system}.default;
         };
         devShells.default = mkShell {
           packages = [
