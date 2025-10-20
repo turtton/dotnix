@@ -1,6 +1,9 @@
 { inputs, system, ... }:
 {
-  imports = [ inputs.hyprland.nixosModules.default ];
+  imports = [
+    inputs.hyprland.nixosModules.default
+    inputs.noctalia.nixosModules.default
+  ];
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
@@ -23,5 +26,6 @@
   services = {
     upower.enable = true;
     power-profiles-daemon.enable = true;
+    noctalia-shell.enable = true;
   };
 }

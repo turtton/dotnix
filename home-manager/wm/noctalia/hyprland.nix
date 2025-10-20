@@ -4,7 +4,6 @@ let
 in
 {
   wayland.windowManager.hyprland.settings = pkgs.lib.optionalAttrs isEnabled {
-    exec-once = [ "noctalia-shell" ];
     bind = [
       "$mainMod, V, exec, noctalia-shell ipc call launcher clipboard"
       "$mainMod, d, exec, noctalia-shell ipc call launcher toggle"
