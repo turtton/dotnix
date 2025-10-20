@@ -39,6 +39,10 @@
               id = "Bluetooth";
             }
             {
+                id = "ActiveWindow";
+                showIcon = true;
+            }
+            {
               id = "MediaMini";
             }
           ];
@@ -51,7 +55,12 @@
           ];
           right = [
             {
+                id = "Tray";
+            }
+            {
               id = "SystemMonitor";
+              showCpuTemp = true;
+              showDiskUsage = true;
             }
             {
               alwaysShowPercentage = false;
