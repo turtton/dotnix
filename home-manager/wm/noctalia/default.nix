@@ -24,6 +24,8 @@
         density = "compact";
         position = "top";
         showCapsule = false;
+        floating = true;
+        marginVertical = 0.20;
         widgets = {
           left = [
             {
