@@ -14,7 +14,6 @@
       "GIO_MODULE_DIR, ${pkgs.glib-networking}/lib/gio/modules/" # Workaround for wry https://github.com/tauri-apps/wry/issues/605
     ];
     exec-once = [
-      "hyprlock"
       "fcitx5 -D"
       # "hypr-helper start"
       "systemctl --user start hyprpolkitagent"
