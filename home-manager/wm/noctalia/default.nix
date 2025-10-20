@@ -52,12 +52,12 @@
               id = "SystemMonitor";
             }
             {
-              id = "Volume";
-            }
-            {
               alwaysShowPercentage = false;
               id = "Battery";
               warningThreshold = 20;
+            }
+            {
+              id = "Volume";
             }
             {
               formatHorizontal = "HH:mm";

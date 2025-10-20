@@ -34,4 +34,12 @@
       "KEYBASE_AUTOSTART=1 keybase-gui"
     ];
   };
+  programs.noctalia-shell.settings =
+    let
+      mainMonitor = [ "eDP-1" ];
+    in
+    {
+      bar.monitors = mainMonitor;
+      notifications.monitors = mainMonitor;
+    };
 }
