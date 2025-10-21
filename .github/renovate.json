@@ -3,13 +3,13 @@
 	"extends": ["github>turtton/renovate"],
 	"packageRules": [
 		{
-			"matchDatasources": ["nix"],
-			"groupName": "nix fkakes",
+			"matchDatasources": ["git-refs"],
+			"groupName": "nix flakes",
 			"automerge": true,
 			"automergeStrategy": "squash"
 		}
 	],
 	"nix": {
-		"enabled": true
+		"enabled": false
 	}
 }
