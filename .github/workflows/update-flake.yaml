@@ -22,7 +22,7 @@ jobs:
         with:
           nix_path: nixpkgs=channel:nixpkgs-unstable
       - name: Update nix flake
-        run: nix flake update
+        run: nix flake --accept-flake-config update
       - name: Make metadata
         id: meta
         run: |
