@@ -39,8 +39,8 @@
               id = "Bluetooth";
             }
             {
-                id = "ActiveWindow";
-                showIcon = true;
+              id = "ActiveWindow";
+              showIcon = true;
             }
             {
               id = "MediaMini";
@@ -55,7 +55,7 @@
           ];
           right = [
             {
-                id = "Tray";
+              id = "Tray";
             }
             {
               id = "SystemMonitor";
