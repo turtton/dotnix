@@ -14,9 +14,9 @@
 
       # window sharings
       remmina
-      parsec-bin
     ]
     ++ lib.optionals hostPlatform.isLinux [
       isaacsim-webrtc-streaming-client
+      parsec-bin
     ];
 }

@@ -159,6 +159,7 @@ let
           users.users."${username}".home = homeDirectory;
           nixpkgs.hostPlatform = system;
           system.stateVersion = 5;
+          system.primaryUser = username;
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;

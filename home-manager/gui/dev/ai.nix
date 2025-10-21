@@ -3,7 +3,6 @@
   home.packages =
     with pkgs;
     [
-      lmstudio
       claude-code
       gemini-cli
       codex
@@ -12,5 +11,7 @@
     ++ lib.optionals hostPlatform.isLinux [
       claude-desktop
       jan
+      # broken on darwin
+      lmstudio
     ];
 }
