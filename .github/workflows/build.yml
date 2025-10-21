@@ -1,8 +1,6 @@
 name: build configurations
 on:
   pull_request:
-    branches:
-      - main
     paths:
       - "**.nix"
       - "**.lock"
