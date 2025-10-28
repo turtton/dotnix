@@ -20,6 +20,8 @@
     settings = {
       # configure noctalia here; defaults will
       # be deep merged with these attributes.
+      settingsVersion = 16;
+      setupCompleted = true;
       bar = {
         density = "compact";
         position = "top";
