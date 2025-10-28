@@ -87,6 +87,9 @@
         defaultWallpaper = "${pkgs.wallpaper-springcity}/wall.png";
       };
       colorSchemes.predefinedScheme = "Catppuccin";
+      appLauncher = {
+        enableClipboardHistory = true;
+      };
       general = {
         avatarImage = "${pkgs.nixos-icons}/share/icons/hicolor/256x256/apps/nix-snowflake.png";
         radiusRatio = 0.2;
