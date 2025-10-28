@@ -176,3 +176,16 @@ jobs:
           df -h
         env:
           PACKAGE: ${{ matrix.packages }}
+  all-workflows-passed:
+    name: Checks all workflows passed
+    if: always()
+    needs: ["check-linux", "check-darwin", "build-linux", "build-darwin"]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check job status
+        if: ${{ needs.check-linux.result != 'success' || needs.check-darwin.result != 'success' || needs.build-linux.result != 'success' || needs.build-darwin.result != 'success' }}
+        run: |
+          echo "One or more jobs failed."
+          exit 1
+      - name: All jobs passed
+        run: echo "All jobs succeeded!"
