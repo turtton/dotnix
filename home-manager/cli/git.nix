@@ -5,87 +5,93 @@
 }:
 { pkgs, ... }:
 {
-  programs.git = {
-    enable = true;
-    lfs.enable = true;
-    inherit userName userEmail;
-    signing = {
-      key = signingKey;
-      signByDefault = true;
-    };
+  programs = {
     delta = {
       enable = true;
+      enableGitIntegration = true;
       options = {
         navigate = true;
         light = false;
         line-numbers = true;
       };
     };
-    # Some ocnfigurations reffered from https://blog.gitbutler.com/how-git-core-devs-configure-git/
-    extraConfig = {
-      column.ui = "auto";
-      branch.sort = "-committerdate";
-      tag.sort = "version:refname";
-      init.defaultBranch = "main";
-      core = {
-        autocrlf = "input";
+    git = {
+      enable = true;
+      lfs.enable = true;
+      signing = {
+        key = signingKey;
+        signByDefault = true;
+      };
+      # Some ocnfigurations reffered from https://blog.gitbutler.com/how-git-core-devs-configure-git/
+      settings = {
+        user = {
+          name = userName;
+          email = userEmail;
+        };
+        column.ui = "auto";
+        branch.sort = "-committerdate";
+        tag.sort = "version:refname";
+        init.defaultBranch = "main";
+        core = {
+          autocrlf = "input";
+          editor = "nvim";
+        };
+        pack = {
+          windowMemory = "2g";
+          packSizeLimit = "1g";
+        };
+        push = {
+          default = "simple";
+          autoSetupRemote = true;
+          followTags = true;
+        };
+        fetch = {
+          prune = true;
+          pruneTags = true;
+          all = true;
+        };
+        help.autocorrect = "prompt";
+        commit.verbose = true;
+        rerere = {
+          enabled = true;
+          autoupdate = true;
+        };
+        rebase = {
+          autoSquash = true;
+          autoStash = true;
+          updateRefs = true;
+        };
+        aliases = {
+          log-graph = "log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)<%an>%Creset' --abbrev-commit --date=format-local:'%Y/%m/%d %H:%M:%S'";
+        };
+      };
+      ignores = [
+        ".idea"
+        ".vscode"
+        "*.local.md"
+        "*.local.json"
+        ".gemini"
+        ".claude"
+      ];
+    };
+    gh = {
+      enable = true;
+      extensions = with pkgs; [ gh-markdown-preview ];
+      settings = {
         editor = "nvim";
       };
-      pack = {
-        windowMemory = "2g";
-        packSizeLimit = "1g";
-      };
-      push = {
-        default = "simple";
-        autoSetupRemote = true;
-        followTags = true;
-      };
-      fetch = {
-        prune = true;
-        pruneTags = true;
-        all = true;
-      };
-      help.autocorrect = "prompt";
-      commit.verbose = true;
-      rerere = {
-        enabled = true;
-        autoupdate = true;
-      };
-      rebase = {
-        autoSquash = true;
-        autoStash = true;
-        updateRefs = true;
-      };
     };
-    aliases = {
-      log-graph = "log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)<%an>%Creset' --abbrev-commit --date=format-local:'%Y/%m/%d %H:%M:%S'";
-    };
-    ignores = [
-      ".idea"
-      ".vscode"
-      "*.local.md"
-      "*.local.json"
-      ".gemini"
-      ".claude"
-    ];
-  };
-  programs.gh = {
-    enable = true;
-    extensions = with pkgs; [ gh-markdown-preview ];
-    settings = {
-      editor = "nvim";
-    };
-  };
-  programs.lazygit = {
-    enable = true;
-    settings = {
-      git = {
-        overrideGpg = true;
-        autoForwardBranches = "none";
-      };
-      gui = {
-        showIcons = true;
-        nerdFontsVersion = "3";
+    lazygit = {
+      enable = true;
+      settings = {
+        git = {
+          overrideGpg = true;
+          autoForwardBranches = "none";
+        };
+        gui = {
+          showIcons = true;
+          nerdFontsVersion = "3";
+        };
       };
     };
   };
