@@ -20,9 +20,6 @@
   services.gvfs.enable = true;
   services.udisks2.enable = true;
 
-  # Enable android rule
-  programs.adb.enable = true;
-
   # Limit the number of boot loader configurations
   boot.loader = {
     systemd-boot.configurationLimit = 5;

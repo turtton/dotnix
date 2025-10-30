@@ -19,6 +19,7 @@ let
       # }]
       homes,
       homeModules ? [ ], # [path]
+      sharedOptions ? { }, # Additional options to be passed to home-manager and nixos
     }:
     let
       originPkgs = inputs.nixpkgs.legacyPackages.${system};
@@ -63,6 +64,7 @@ let
         modules
         ++ [
           ./../overlay/d-linux.nix
+          ./../module
         ]
         ++ (lib.optionals (users != [ ]) [
           inputs.home-manager.nixosModules.home-manager
@@ -72,7 +74,9 @@ let
               inherit users;
               useGlobalPkgs = true;
               useUserPackages = true;
-              sharedModules = homeModules;
+              sharedModules = homeModules ++ [
+                ./../module
+              ];
               extraSpecialArgs = {
                 inherit
                   inputs
@@ -265,6 +269,9 @@ in
       homeModules = [
         inputs.plasma-manager.homeManagerModules.plasma-manager
       ];
+      sharedOptions = {
+        packs.android.enable = true;
+      };
     };
     bridgetop = createSystem {
       system = "x86_64-linux";

@@ -21,7 +21,6 @@ in
     with pkgs;
     if hostPlatform.isLinux then
       [
-        android-studio
         # basically should not use toolbox because of issues(https://github.com/NixOS/nixpkgs/issues/240444) but useful to preview IDE
         jetbrains-toolbox
       ]
