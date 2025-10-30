@@ -84,6 +84,7 @@ let
                   hostPlatform
                   pkgs-staging-next
                   ;
+                isHomeManager = true;
               };
               backupFileExtension = "backup";
             };
@@ -125,6 +126,7 @@ let
           pkgs-staging-next
           hostPlatform
           ;
+        isHomeManager = false;
       };
     };
   createDarwinConfig =

@@ -2,7 +2,7 @@
   pkgs,
   lib,
   config,
-  options,
+  isHomeManager,
   ...
 }:
 let
@@ -14,7 +14,7 @@ in
   options.packs.android.enable = mkEnableOption "Android development environment";
 
   config = mkIf cfg.enable (
-    if (builtins.hasAttr "home" options) then
+    if isHomeManager then
       {
         home.packages =
           with pkgs;
