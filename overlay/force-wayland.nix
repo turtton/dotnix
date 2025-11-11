@@ -80,7 +80,7 @@ in
   teams-for-linux = forceWaylandIme { name = "teams-for-linux"; };
   claude-desktop =
     let
-      claude-desktop = inputs.claude-desktop.packages.${system}.claude-desktop;
+      claude-desktop = inputs.claude-desktop.packages.${stdenv.system}.claude-desktop;
       claude-desktop-wayland = forceWaylandIme {
         name = claude-desktop.pname;
         package = claude-desktop;

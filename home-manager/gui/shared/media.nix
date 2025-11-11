@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, hostPlatform, ... }:
 {
   home.packages =
     with pkgs;
@@ -12,5 +12,5 @@
       vlc
       kdePackages.kdenlive
     ];
-  programs.obs-studio.enable = pkgs.hostPlatform.isLinux;
+  programs.obs-studio.enable = hostPlatform.isLinux;
 }

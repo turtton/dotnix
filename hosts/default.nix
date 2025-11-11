@@ -33,7 +33,7 @@ let
         config.allowUnfree = true;
       };
       lib = originPkgs.lib;
-      hostPlatform = originPkgs.hostPlatform;
+      hostPlatform = originPkgs.stdenv.hostPlatform;
       nixosSystem = import (nixpkgs + "/nixos/lib/eval-config.nix");
       usernames = map (h: h.username) homes;
       # Targets for home-manager configurations
@@ -139,7 +139,7 @@ let
     }:
     let
       originPkgs = inputs.nixpkgs.legacyPackages.${system};
-      hostPlatform = originPkgs.hostPlatform;
+      hostPlatform = originPkgs.stdenv.hostPlatform;
       # nixpkgs = originPkgs.applyPatches {
       #   name = "nixpkgs-patched";
       #   src = inputs.nixpkgs;
@@ -202,7 +202,7 @@ let
           allowUnfree = true;
         };
       };
-      hostPlatform = pkgs.hostPlatform;
+      hostPlatform = pkgs.stdenv.hostPlatform;
     in
     inputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;

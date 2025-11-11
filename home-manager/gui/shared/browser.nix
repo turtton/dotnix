@@ -2,10 +2,11 @@
   system,
   inputs,
   pkgs,
+  hostPlatform,
   ...
 }:
 let
-  isLinux = pkgs.hostPlatform.isLinux;
+  isLinux = hostPlatform.isLinux;
 in
 {
   programs = {

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, hostPlatform, ... }:
 let
   # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/applications/editors/jetbrains/plugins/plugins.json
   plugins = [
