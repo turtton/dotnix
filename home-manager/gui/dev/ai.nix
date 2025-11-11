@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, hostPlatform, ... }:
 {
   home.packages =
     with pkgs;

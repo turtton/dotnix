@@ -3,6 +3,7 @@
   lib,
   config,
   isHomeManager,
+  hostPlatform,
   ...
 }:
 let

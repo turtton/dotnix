@@ -150,7 +150,7 @@
           rustowl = rustowl.packages.${system}.default;
           claude-code = overlays.claude-code;
         }
-        // lib.optionalAttrs hostPlatform.isLinux {
+        // lib.optionalAttrs stdenv.hostPlatform.isLinux {
           beutl = overlays.beutl;
           jetbrains-dolphin-qt5 = overlays.jetbrains-dolphin-qt5;
           jetbrains-dolphin-qt6 = overlays.jetbrains-dolphin-qt6;

@@ -5,7 +5,7 @@
   ...
 }:
 let
-  nvim-project = inputs.turtton-neovim.packages.${pkgs.system};
+  nvim-project = inputs.turtton-neovim.packages.${pkgs.stdenv.system};
 in
 {
   home = {

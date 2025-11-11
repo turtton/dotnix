@@ -12,7 +12,7 @@
     unzip
     zip
 
-    wakatime # Development timer
+    wakatime-cli # Development timer
     chezmoi # Dotfile management helper(1password cli integrated)
     fastfetch
     gnuplot_qt # graphing ulitity
