@@ -85,6 +85,17 @@
           ];
         };
       };
+      dock = {
+        enabled = true;
+        displayMode = "auto_hide";
+        backgroundOpacity = 0.8;
+        floatingRatio = 1;
+        size = 1;
+        onlySameOutput = true;
+        monitors = [ ];
+        pinnedApps = [ ];
+        colorizeIcons = false;
+      };
       wallpaper = {
         defaultWallpaper = "${pkgs.wallpaper-springcity}/wall.png";
       };
