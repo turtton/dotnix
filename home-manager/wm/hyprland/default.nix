@@ -43,7 +43,6 @@
     hyprpicker # color picker
     pamixer # pulseaudio mixer
     playerctl # media player control
-    wayvnc # vnc server
     wev # key event watcher
     wireplumber # screens sharing
     wf-recorder # screen recorder

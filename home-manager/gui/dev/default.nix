@@ -17,6 +17,8 @@
     ]
     ++ lib.optionals hostPlatform.isLinux [
       isaacsim-webrtc-streaming-client
-      parsec-bin
+      # parsec is not supported to host on linux, only the client
+      # parsec-bin
     ];
+  services.wayvnc.enable = hostPlatform.isLinux;
 }
