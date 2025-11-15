@@ -11,14 +11,8 @@
       hoppscotch # WebAPI dev	tool
       gitify
       drawio
-
-      # window sharings
-      remmina
     ]
     ++ lib.optionals hostPlatform.isLinux [
       isaacsim-webrtc-streaming-client
-      # parsec is not supported to host on linux, only the client
-      # parsec-bin
     ];
-  services.wayvnc.enable = hostPlatform.isLinux;
 }

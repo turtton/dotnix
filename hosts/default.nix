@@ -273,6 +273,10 @@ in
       ];
       sharedOptions = {
         packs.android.enable = true;
+        packs.remote-desktop = {
+          enable = true;
+          server = true;
+        };
       };
     };
     bridgetop = createSystem {
@@ -318,6 +322,9 @@ in
       homeModules = [
         inputs.plasma-manager.homeManagerModules.plasma-manager
       ];
+      sharedOptions = {
+        packs.remote-desktop.enable = true;
+      };
     };
     virtbox = createSystem {
       system = "x86_64-linux";
