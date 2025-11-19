@@ -22,7 +22,7 @@
       "${pkgs.cliphist}/bin/cliphist wipe"
       "${pkgs.gitify}/bin/gitify"
     ];
-    windowrulev2 =
+    windowrule =
       let
         opaqueClasses = [
           "discord"
@@ -43,18 +43,18 @@
           ".*\.exe"
         ];
       in
-      map (c: "opaque, class:^(${c}.*)$") opaqueClasses
+      map (c: "match:class ^(${c}.*)$, opaque true") opaqueClasses
       ++ [
-        "pseudo noblur, class:^(fcitx)(.*)$"
-        "noblur, class:(wofi)"
-        "opaque, initialTitle:^(Picture in picture)(.*)$"
-        "opaque, initialTitle:^(.* on QEMU/KVM)$"
-        "float, class:^(org.kde.kdeconnect.daemon)(.*)$"
-        "suppressevent maximize, class:.*"
+        "pseudo no_blur true, match:class ^(fcitx)(.*)$"
+        "no_blur true, match:class (wofi)"
+        "opaque true, match:initial_title ^(Picture in picture)(.*)$"
+        "opaque true, match:initial_title ^(.* on QEMU/KVM)$"
+        "float true, match:class ^(org.kde.kdeconnect.daemon)(.*)$"
+        "suppress_event maximize, match:class .*"
         # https://github.com/hyprwm/Hyprland/issues/8395#issuecomment-2578588978
-        "noinitialfocus,class:^jetbrains-.*$,title:^$,floating:1"
+        "no_initial_focus true,match:class ^jetbrains-.*$,match:title ^$,match:float true"
         # Disable opacity for Remmina connected windows
-        "opaque, class:org.remmina.Remmina,title:^(!?Remmina$)"
+        "opaque true, match:class org.remmina.Remmina,match:title ^(!?Remmina$)"
       ];
     input = {
       repeat_delay = 300;
