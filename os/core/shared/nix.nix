@@ -2,6 +2,7 @@
 {
   nix = {
     settings = {
+      download-buffer-size = 524288000; # 500 MiB
       auto-optimise-store = true;
       experimental-features = [
         "nix-command"
@@ -13,6 +14,7 @@
       ];
       accept-flake-config = true;
       substituters = [
+        "https://aseipp-nix-cache.freetls.fastly.net"
         "https://cache.nixos.org"
         "https://nix-community.cachix.org"
         # "https://turtton.cachix.org"

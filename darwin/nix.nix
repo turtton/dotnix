@@ -23,6 +23,7 @@
         "@admin"
       ];
       substituters = [
+        "https://aseipp-nix-cache.freetls.fastly.net"
         "https://nix-community.cachix.org"
         "https://attic.taile2777.ts.net/home"
       ];
