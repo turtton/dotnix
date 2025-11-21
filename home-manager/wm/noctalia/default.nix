@@ -86,7 +86,7 @@
         };
       };
       dock = {
-        enabled = true;
+        enabled = false;
         displayMode = "auto_hide";
         backgroundOpacity = 0.8;
         floatingRatio = 1;
