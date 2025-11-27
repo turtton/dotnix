@@ -8,7 +8,7 @@ in
     inputs.nix-vscode-extensions.overlays.default
     inputs.rust-overlay.overlays.default
     inputs.rustowl.overlays.default
-    (import ./claude-code)
+    (import ./claude-code inputs)
     (import ./fix-dolphin-mime.nix)
     (import ./fix-ime.nix)
     (import ./force-wayland.nix inputs)

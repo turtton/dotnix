@@ -76,6 +76,13 @@
         flake-utils.follows = "utils";
       };
     };
+    claude-code-overlay = {
+      url = "github:ryoppippi/claude-code-overlay";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "utils";
+      };
+    };
     rustowl = {
       url = "github:nix-community/rustowl-flake";
       inputs = {
@@ -180,6 +187,7 @@
           vscode = overlays.vscode;
           zoom-us = overlays.zoom-us;
           noctalia-shell = noctalia.packages.${system}.default;
+          claude-code = overlays.claude-code;
         };
         devShells.default = mkShell {
           packages = [

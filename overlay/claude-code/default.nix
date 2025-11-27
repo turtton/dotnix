@@ -1,6 +1,6 @@
-self: prev:
+inputs: self: prev:
 let
-  original = prev.claude-code;
+  original = inputs.claude-code-overlay.packages.${prev.stdenv.hostPlatform.system}.claude;
   wrapper-script = self.substitute {
     src = ./claude-code-profile-manager.sh;
     substitutions = [

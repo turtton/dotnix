@@ -204,5 +204,36 @@ main() {
   done
 }
 
-# Run main function
+# Check if profile number was provided as first argument
+if [ -n "$1" ]; then
+  if [[ $1 =~ ^[0-9]+$ ]]; then
+    # Handle default profile
+    if [ "$1" = "0" ]; then
+      echo "Launching Claude Code with default profile..."
+      @claude-code@
+      exit 0
+    fi
+
+    # Get profile info
+    profile_info=$(sed -n "${1}p" "$PROFILES_FILE")
+    if [ -n "$profile_info" ]; then
+      profile_name=$(echo "$profile_info" | cut -d'|' -f1)
+      profile_path=$(echo "$profile_info" | cut -d'|' -f2)
+      echo "Launching Claude Code with profile '$profile_name'..."
+      CLAUDE_CONFIG_DIR="$profile_path" @claude-code@
+      exit 0
+    else
+      echo "Error: Invalid profile number '$1'"
+      echo "Available profiles:"
+      list_profiles
+      exit 1
+    fi
+  else
+    echo "Error: Profile number must be a valid number"
+    echo "Usage: $0 [profile_number]"
+    exit 1
+  fi
+fi
+
+# Run main function if no arguments provided
 main
