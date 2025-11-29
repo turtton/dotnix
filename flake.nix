@@ -77,7 +77,8 @@
       };
     };
     claude-code-overlay = {
-      url = "github:ryoppippi/claude-code-overlay";
+      # url = "github:ryoppippi/claude-code-overlay";
+      url = "github:turtton/claude-code-overlay/fix/binarypath";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "utils";
@@ -187,7 +188,6 @@
           vscode = overlays.vscode;
           zoom-us = overlays.zoom-us;
           noctalia-shell = noctalia.packages.${system}.default;
-          claude-code = overlays.claude-code;
         };
         devShells.default = mkShell {
           packages = [

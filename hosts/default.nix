@@ -75,6 +75,7 @@ let
               useGlobalPkgs = true;
               useUserPackages = true;
               sharedModules = homeModules ++ [
+                inputs.claude-code-overlay.homeManagerModules.default
                 ./../module
               ];
               extraSpecialArgs = {
