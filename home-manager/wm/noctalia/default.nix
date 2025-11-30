@@ -97,7 +97,7 @@
         colorizeIcons = false;
       };
       wallpaper = {
-        defaultWallpaper = "${pkgs.wallpaper-springcity}/wall.png";
+        directory = "${pkgs.wallpaper-springcity}";
       };
       colorSchemes.predefinedScheme = "Catppuccin";
       appLauncher = {
