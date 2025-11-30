@@ -120,16 +120,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1764402703,
+        "lastModified": 1764511011,
         "narHash": "sha256-A3ijYNVttUke78A8t/mw8+LvlnXo6EkEGJGl0tJ6jTo=",
-        "owner": "turtton",
+        "owner": "ryoppippi",
         "repo": "claude-code-overlay",
-        "rev": "2d932ec895e0925f9894b05ee0bf49da3bdd5221",
+        "rev": "d217c3c2e13cb7159dbc393ef18b540f8e8628f5",
         "type": "github"
       },
       "original": {
-        "owner": "turtton",
-        "ref": "fix/binarypath",
+        "owner": "ryoppippi",
         "repo": "claude-code-overlay",
         "type": "github"
       }
