@@ -75,7 +75,12 @@ jobs:
           df -h
       - name: Check
         run: |
-          nix flake check
+          # Check only Darwin-compatible outputs to avoid building Linux packages
+          # (nix flake check tries to evaluate nixosConfigurations which requires Linux derivations)
+          nix eval .#darwinConfigurations.dreamac.config.system.build.toplevel
+          nix eval .#devShells.aarch64-darwin.default
+          nix eval .#packages.aarch64-darwin --apply 'x: builtins.attrNames x'
+          nix eval .#formatter.aarch64-darwin
           df -h
   build-linux:
     name: Build packages on Linux
