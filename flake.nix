@@ -127,9 +127,9 @@
           config.allowUnfree = true;
           overlays = [ (import rust-overlay) ];
         };
+        overlayFile = if pkgs.stdenv.isLinux then ./overlay/d-linux.nix else ./overlay/d-darwin.nix;
         overlays = pkgs.lib.attrsets.mergeAttrsList (
-          map (overlay: overlay pkgs pkgs)
-            (import ./overlay/d-linux.nix { inherit pkgs inputs; }).nixpkgs.overlays
+          map (overlay: overlay pkgs pkgs) (import overlayFile { inherit pkgs inputs; }).nixpkgs.overlays
         );
       in
       with pkgs;
