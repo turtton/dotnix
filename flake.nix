@@ -193,6 +193,8 @@
           packages = [
             nvfetcher
             home-manager
+            pinact
+            zizmor
             (writeScriptBin "switch-home" ''
               home-manager switch --flake ".#$@" --show-trace
             '')
