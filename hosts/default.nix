@@ -65,6 +65,7 @@ let
         ++ [
           ./../overlay/d-linux.nix
           ./../module
+          sharedOptions
         ]
         ++ (lib.optionals (users != [ ]) [
           inputs.home-manager.nixosModules.home-manager
@@ -77,6 +78,7 @@ let
               sharedModules = homeModules ++ [
                 inputs.claude-code-overlay.homeManagerModules.default
                 ./../module
+                sharedOptions
               ];
               extraSpecialArgs = {
                 inherit

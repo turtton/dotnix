@@ -37,7 +37,7 @@ in
         virtualisation.podman.extraPackages = [
           pkgs.podman-compose
         ];
-        users.users = lib.mergeAttrs (map (name: { "$name".extraGroups = [ "kvm" ]; }) usernames);
+        users = lib.mergeAttrsList (map (name: { users."${name}".extraGroups = [ "kvm" ]; }) usernames);
       }
   );
 }
