@@ -278,6 +278,7 @@ in
           enable = true;
           server = true;
         };
+        packs.winapps.enable = true;
       };
     };
     bridgetop = createSystem {

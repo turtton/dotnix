@@ -99,6 +99,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.quickshell.follows = "quickshell"; # Use same quickshell version
     };
+    winapps = {
+      url = "github:winapps-org/winapps";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "utils";
+      };
+    };
   };
   outputs =
     inputs@{
