@@ -32,12 +32,12 @@ in
           optionals hostPlatform.isLinux [
             inputs.winapps.packages."${system}".winapps
             inputs.winapps.packages."${system}".winapps-launcher
+            podman-compose
           ];
         virtualisation.podman.enable = true;
         virtualisation.podman.extraPackages = [
           pkgs.podman-compose
         ];
-        users = lib.mergeAttrsList (map (name: { users."${name}".extraGroups = [ "kvm" ]; }) usernames);
       }
   );
 }
