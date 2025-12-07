@@ -281,6 +281,7 @@ in
           server = true;
         };
         packs.winapps.enable = true;
+        packs.vial.enable = true;
       };
     };
     bridgetop = createSystem {
@@ -328,6 +329,7 @@ in
       ];
       sharedOptions = {
         packs.remote-desktop.enable = true;
+        packs.vial.enable = true;
       };
     };
     virtbox = createSystem {
