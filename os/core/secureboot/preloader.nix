@@ -34,17 +34,13 @@ in
     extraFiles = {
       "EFI/systemd/PreLoader.efi" = "${preLoader}/share/${preLoader.pname}.efi";
       "EFI/systemd/HashTool.efi" = "${hashTool}/share/${hashTool.pname}.efi";
+      # loader.efi is a copy of systemd-bootx64.efi for PreLoader
+      "EFI/systemd/loader.efi" = "${pkgs.systemd}/lib/systemd/boot/efi/systemd-bootx64.efi";
       # Fallback settings
       "EFI/BOOT/HashTool.efi" = "${hashTool}/share/${hashTool.pname}.efi";
       "EFI/BOOT/BOOTx64.EFI" = "${preLoader}/share/${preLoader.pname}.efi";
+      "EFI/BOOT/loader.efi" = "${pkgs.systemd}/lib/systemd/boot/efi/systemd-bootx64.efi";
     };
-    extraInstallCommands = ''
-      # I dont know why, but this shell cannnot use cp command.
-      ${pkgs.uutils-coreutils-noprefix}/bin/cp /boot/EFI/systemd/systemd-bootx64.efi /boot/EFI/systemd/loader.efi
-      # Fallback settings
-      ${pkgs.uutils-coreutils-noprefix}/bin/cp /boot/EFI/systemd/systemd-bootx64.efi /boot/EFI/BOOT/loader.efi
-      # ${pkgs.uutils-coreutils-noprefix}/bin/cp ${preLoader}/share/${preLoader.pname}.efi /boot/EFI/BOOT/BOOTX64.EFI
-    '';
   };
   system.activationScripts = {
     bootentry.text = ''
