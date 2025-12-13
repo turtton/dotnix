@@ -42,6 +42,14 @@ My dotfiles for NixOS
 
 1. Reboot
 
+# NixOS Modules
+
+This repository provides reusable NixOS modules. See [nixosModules/README.md](./nixosModules/README.md) for details.
+
+Available modules:
+
+- `preloader-signed` - UEFI Secure Boot with PreLoader
+
 # References
 
 > My environement log(JP):\

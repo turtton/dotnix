@@ -10,7 +10,7 @@
   imports = [
     ./hardware-configuration.nix
     ./../../os/core/shared
-    (import ./../../os/core/secureboot/preloader.nix "nvme0n1" "1")
+    ./../../nixosModules/preloader-signed.nix
     ./../../os/core/shell.nix
     ./../../os/wm/hyprland.nix
     ./../../os/desktop/shared
@@ -27,7 +27,14 @@
 
   boot = {
     loader = {
-      systemd-boot.enable = true;
+      systemd-boot = {
+        enable = true;
+        preloader-signed = {
+          enable = true;
+          efiSystemDrive = "nvme0n1";
+          efiPartId = "1";
+        };
+      };
       efi.canTouchEfiVariables = true;
     };
     kernelPackages = pkgs.linuxKernel.packages.linux_xanmod;

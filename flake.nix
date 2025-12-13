@@ -124,6 +124,9 @@
       nixosConfigurations = (import ./hosts inputs).nixos;
       homeConfigurations = (import ./hosts inputs).home-manager;
       darwinConfigurations = (import ./hosts inputs).darwin;
+      nixosModules = {
+        preloader-signed = import ./nixosModules/preloader-signed.nix;
+      };
     }
     // flake-utils.lib.eachDefaultSystem (
       system:
@@ -164,37 +167,43 @@
           rustowl = rustowl.packages.${system}.default;
           claude-code = overlays.claude-code;
         }
-        // lib.optionalAttrs stdenv.hostPlatform.isLinux {
-          beutl = overlays.beutl;
-          jetbrains-dolphin-qt5 = overlays.jetbrains-dolphin-qt5;
-          jetbrains-dolphin-qt6 = overlays.jetbrains-dolphin-qt6;
-          jetbrains-nautilus = overlays.jetbrains-nautilus;
-          noto-fonts-cjk-sans = overlays.noto-fonts-cjk-sans;
-          noto-fonts-cjk-serif = overlays.noto-fonts-cjk-serif;
-          noto-fonts = overlays.noto-fonts;
-          wallpaper-springcity = overlays.wallpaper-springcity;
-          hyprland = hyprland.packages.${system}.default;
-          hyprpolkitagent = hyprpolkitagent.packages.${system}.default;
-          zen-browser = inputs.zen-browser.packages.${system}.default;
-          isaacsim-webrtc-streaming-client = overlays.isaacsim-webrtc-streaming-client;
-          claude-desktop = overlays.claude-desktop;
-          dolphin = overlays.kdePackages.dolphin;
-          # wifiman-desktop = overlays.wifiman-desktop;
-          # pake-cli = overlays.pake-cli;
-          # fastmail = overlays.fastmail;
-          # Force Wayland IME system
-          vivaldi = overlays.vivaldi;
-          chromium = overlays.chromium;
-          spotify = overlays.spotify;
-          obsidian = overlays.obsidian;
-          discord = overlays.discord;
-          discord-ptb = overlays.discord-ptb;
-          slack = overlays.slack;
-          teams-for-linux = overlays.teams-for-linux;
-          vscode = overlays.vscode;
-          zoom-us = overlays.zoom-us;
-          noctalia-shell = noctalia.packages.${system}.default;
-        };
+        // lib.optionalAttrs stdenv.hostPlatform.isLinux (
+          let
+            preloader-signed = import ./packages/preloader-signed.nix { inherit pkgs; };
+          in
+          {
+            inherit (preloader-signed) preLoader hashTool;
+            beutl = overlays.beutl;
+            jetbrains-dolphin-qt5 = overlays.jetbrains-dolphin-qt5;
+            jetbrains-dolphin-qt6 = overlays.jetbrains-dolphin-qt6;
+            jetbrains-nautilus = overlays.jetbrains-nautilus;
+            noto-fonts-cjk-sans = overlays.noto-fonts-cjk-sans;
+            noto-fonts-cjk-serif = overlays.noto-fonts-cjk-serif;
+            noto-fonts = overlays.noto-fonts;
+            wallpaper-springcity = overlays.wallpaper-springcity;
+            hyprland = hyprland.packages.${system}.default;
+            hyprpolkitagent = hyprpolkitagent.packages.${system}.default;
+            zen-browser = inputs.zen-browser.packages.${system}.default;
+            isaacsim-webrtc-streaming-client = overlays.isaacsim-webrtc-streaming-client;
+            claude-desktop = overlays.claude-desktop;
+            dolphin = overlays.kdePackages.dolphin;
+            # wifiman-desktop = overlays.wifiman-desktop;
+            # pake-cli = overlays.pake-cli;
+            # fastmail = overlays.fastmail;
+            # Force Wayland IME system
+            vivaldi = overlays.vivaldi;
+            chromium = overlays.chromium;
+            spotify = overlays.spotify;
+            obsidian = overlays.obsidian;
+            discord = overlays.discord;
+            discord-ptb = overlays.discord-ptb;
+            slack = overlays.slack;
+            teams-for-linux = overlays.teams-for-linux;
+            vscode = overlays.vscode;
+            zoom-us = overlays.zoom-us;
+            noctalia-shell = noctalia.packages.${system}.default;
+          }
+        );
         devShells.default = mkShell {
           packages = [
             nvfetcher
