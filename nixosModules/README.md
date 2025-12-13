@@ -9,22 +9,6 @@ A module that integrates PreLoader and HashTool for UEFI Secure Boot with system
 ### Usage
 
 ```nix
-# Add to imports
-imports = [
-  ./path/to/nixosModules/preloader-signed.nix
-];
-
-# Configuration
-boot.loader.systemd-boot.preloader-signed = {
-  enable = true;
-  efiSystemDrive = "nvme0n1";  # EFI system drive
-  efiPartId = "1";              # EFI partition ID
-};
-```
-
-### Using from external flake
-
-```nix
 {
   inputs.dotnix.url = "github:turtton/dotnix";
 
