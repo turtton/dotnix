@@ -41,26 +41,23 @@
           ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
             saoudrizwan.claude-dev
           ]
+          ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
+            rooveterinaryinc.roo-cline
+          ]
         )
-        ++ (
-          with pkgs;
-          [
-            vscode-marketplace.re7rix2."50-shades-of-purple"
-            vscode-marketplace.atommaterial.a-file-icon-vscode
-            vscode-marketplace.me-dutour-mathieu.vscode-github-actions
-            vscode-marketplace."42crunch".vscode-openapi
-            vscode-marketplace.typespec.typespec-vscode
-            vscode-marketplace.njpwerner.autodocstring
-            vscode-marketplace.matt-meyers.vscode-dbml
-            vscode-marketplace.bocovo.dbml-erd-visualizer
-            vscode-marketplace.ardenivanov.svelte-intellisense
-            vscode-marketplace.fivethree.vscode-svelte-snippets
-            vscode-marketplace.aidan-gibson.river
-          ]
-          ++ lib.optionals stdenv.isLinux [
-            vscode-marketplace.rooveterinaryinc.roo-cline
-          ]
-        );
+        ++ (with pkgs; [
+          vscode-marketplace.re7rix2."50-shades-of-purple"
+          vscode-marketplace.atommaterial.a-file-icon-vscode
+          vscode-marketplace.me-dutour-mathieu.vscode-github-actions
+          vscode-marketplace."42crunch".vscode-openapi
+          vscode-marketplace.typespec.typespec-vscode
+          vscode-marketplace.njpwerner.autodocstring
+          vscode-marketplace.matt-meyers.vscode-dbml
+          vscode-marketplace.bocovo.dbml-erd-visualizer
+          vscode-marketplace.ardenivanov.svelte-intellisense
+          vscode-marketplace.fivethree.vscode-svelte-snippets
+          vscode-marketplace.aidan-gibson.river
+        ]);
       userSettings = {
         "workbench.productIconTheme" = "a-file-icon-vscode-product-icon-theme";
         "workbench.colorTheme" = "50 Shades of Purple";
