@@ -4,12 +4,11 @@ My dotfiles for NixOS
 
 # [Hyprland](./home-manager/wm/hyprland/)
 
-![](./docs/hypr-waybar.png)
+![](./docs/hypr-noctalia.png)
 
-- Bar: [waybar](https://github.com/Alexays/Waybar)
+- Launcher/Bar/LockScreen: [noctalia-shell](https://github.com/noctalia-dev/noctalia-shell)
 - Editor: [Neovim](https://github.com/turtton/myvim.nix)
 - Terminal: [Alacritty](https://alacritty.org)
-- LockScreen: [HyprLock](https://github.com/hyprwm/hyprlock/)
 - ScreenShot: [Grimblast+swappy](https://github.com/turtton/dotnix/blob/8186fca772bfa4d22db9263a04c08541cfbeafa9/home-manager/wm/hyprland/key-bindings.nix#L102-L106)
 
 > Article(JP): https://zenn.dev/watagame/articles/hyprland-nix
