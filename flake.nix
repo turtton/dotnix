@@ -210,14 +210,15 @@
             home-manager
             pinact
             zizmor
+            nh
             (writeScriptBin "switch-home" ''
-              home-manager switch --flake ".#$@" --show-trace
+              nh home switch . -C"$@"
             '')
             (writeScriptBin "switch-nixos" ''
-              ulimit -n 4096 && sudo nixos-rebuild switch --flake ".#$@" --show-trace
+              ulimit -n 4096 && nh os switch . -H "$@"
             '')
             (writeScriptBin "switch-darwin" ''
-              nix run nix-darwin -- switch --flake ".#$@" --show-trace
+              nh darwin switch . -H "$@"
             '')
             (writeScriptBin "gen-template" ''
               nix run github:nix-community/nixos-generators -- -f proxmox-lxc --flake ".#$@" --show-trace
