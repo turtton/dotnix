@@ -83,6 +83,7 @@
           "git diff"
           "git show"
         ];
+        "claudeCode.preferredLocation" = "panel";
       }
       // pkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
         "cline.chromeExecutablePath" = pkgs.lib.makeBinPath [ pkgs.chromium ] + "/" + pkgs.chromium.pname;
