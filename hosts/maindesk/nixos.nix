@@ -13,7 +13,8 @@
     ./../../nixosModules/preloader-signed.nix
     ./../../os/core/amdgpu.nix
     ./../../os/core/shell.nix
-    ./../../os/wm/hyprland.nix
+    # Niri is configured via module/niri with packs.niri.enable
+    # ./../../os/wm/hyprland.nix
     ./../../os/desktop/shared
     ./../../os/desktop/1password.nix
     ./../../os/desktop/flatpak.nix
