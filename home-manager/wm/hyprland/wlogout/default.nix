@@ -48,7 +48,7 @@
       }
       {
         label = "lock";
-        action = "hyprlock";
+        action = "noctalia-shell ipc call lockScreen lock";
         text = "Lock";
         keybind = "l";
       }

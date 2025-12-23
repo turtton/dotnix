@@ -240,7 +240,7 @@ in
       homes = [
         rec {
           username = "turtton";
-          confPath = ./maindesk/home-manager-hypr.nix;
+          confPath = ./maindesk/home-manager-niri.nix;
           osUserConfig =
             { pkgs, ... }:
             {
@@ -257,12 +257,12 @@ in
                 enable = true;
                 settings = {
                   initial_session = {
-                    command = "Hyprland";
+                    command = "niri-session";
                     user = username;
                   };
                   default_session = {
                     command = ''
-                      ${pkgs.tuigreet}/bin/tuigreet --time --cmd start-hyprland
+                      ${pkgs.tuigreet}/bin/tuigreet --time --cmd niri-session
                     '';
                     user = username;
                   };
@@ -275,6 +275,7 @@ in
         inputs.plasma-manager.homeManagerModules.plasma-manager
       ];
       sharedOptions = {
+        packs.niri.enable = true;
         packs.android.enable = true;
         packs.remote-desktop = {
           enable = true;
@@ -293,7 +294,7 @@ in
       homes = [
         rec {
           username = "bbridge";
-          confPath = ./bridgetop/home-manager-hypr.nix;
+          confPath = ./bridgetop/home-manager-niri.nix;
           osUserConfig =
             { pkgs, ... }:
             {
@@ -310,12 +311,12 @@ in
                 enable = true;
                 settings = {
                   initial_session = {
-                    command = "Hyprland";
+                    command = "niri-session";
                     user = username;
                   };
                   default_session = {
                     command = ''
-                      ${pkgs.tuigreet}/bin/tuigreet --time --cmd start-hyprland
+                      ${pkgs.tuigreet}/bin/tuigreet --time --cmd niri-session
                     '';
                     user = username;
                   };
@@ -328,6 +329,7 @@ in
         inputs.plasma-manager.homeManagerModules.plasma-manager
       ];
       sharedOptions = {
+        packs.niri.enable = true;
         packs.remote-desktop.enable = true;
         packs.vial.enable = true;
       };
