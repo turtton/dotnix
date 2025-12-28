@@ -125,6 +125,7 @@
       claude-desktop,
       rustowl,
       noctalia,
+      niri-flake,
       ...
     }:
     {
@@ -209,6 +210,7 @@
             vscode = overlays.vscode;
             zoom-us = overlays.zoom-us;
             noctalia-shell = noctalia.packages.${system}.default;
+            xwayland-satellite = niri-flake.packages.${system}.xwayland-satellite-unstable;
           }
         );
         devShells.default = mkShell {

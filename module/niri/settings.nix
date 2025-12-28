@@ -2,6 +2,8 @@
   lib,
   pkgs,
   config,
+  inputs,
+  system,
   ...
 }:
 let
@@ -10,6 +12,11 @@ in
 {
   config = lib.mkIf cfg.enable {
     programs.niri.settings = {
+      xwayland-satellite = {
+        enable = true;
+        path = lib.getExe inputs.niri-flake.packages."${system}".xwayland-satellite-unstable;
+      };
+
       environment = {
         XMODIFIERS = "@im=fcitx";
         QT_QPA_PLATFORM = "wayland";
