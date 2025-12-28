@@ -62,6 +62,7 @@ in
             gcolor3
             hyprpicker
             google-cursor
+            xdg-desktop-portal-gnome
           ];
 
         xdg.userDirs.createDirectories = true;

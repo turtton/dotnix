@@ -92,6 +92,9 @@ in
       "Mod+Tab".action.focus-monitor-next = { };
       "Mod+Shift+Tab".action.move-column-to-monitor-next = { };
 
+      #Overview
+      "Alt+Tab".action.toggle-overview = { };
+
       # Screenshots
       "Print".action.screenshot-screen = { };
       "Mod+Print".action.screenshot-window = { };
