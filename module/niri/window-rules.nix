@@ -36,7 +36,16 @@ in
     programs.niri.settings.window-rules = [
       # Default rules
       {
-        geometry-corner-radius = 20;
+        geometry-corner-radius =
+          let
+            radius = 20.0;
+          in
+          {
+            top-left = radius;
+            top-right = radius;
+            bottom-left = radius;
+            bottom-right = radius;
+          };
         clip-to-geometry = true;
         opacity = 0.93;
       }
