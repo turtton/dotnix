@@ -24,7 +24,7 @@
       setupCompleted = true;
       bar = {
         density = "compact";
-        position = "top";
+        position = "left";
         showCapsule = false;
         floating = true;
         marginVertical = 0.20;
