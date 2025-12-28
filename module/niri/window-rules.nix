@@ -18,6 +18,7 @@ let
     "krita"
     "factorio"
     "code"
+    "org.remmina.Remmina"
     ".*\\.exe"
   ];
 
@@ -62,15 +63,15 @@ in
         open-floating = true;
       }
 
-      # Remmina connected windows
+      # Remmina main window (connection list) - keep transparent
       {
         matches = [
           {
             app-id = "org.remmina.Remmina";
-            title = "^(?!Remmina$).*";
+            title = "Remmina Remote Desktop Client";
           }
         ];
-        opacity = 1.0;
+        opacity = 0.8;
       }
     ]
     ++ opaqueRules;
