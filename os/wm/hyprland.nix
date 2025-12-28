@@ -2,7 +2,6 @@
 {
   imports = [
     inputs.hyprland.nixosModules.default
-    inputs.noctalia.nixosModules.default
   ];
   programs.hyprland = {
     enable = true;

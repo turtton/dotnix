@@ -13,21 +13,27 @@
     ./../../home-manager/gui/dev
     ./../../home-manager/gui/term/alacritty.nix
     ./../../home-manager/gui/filemanager/dolphin
-    # Note: module/niri handles the WM config via packs.niri.enable
   ];
 
   programs.niri.settings = {
     outputs = {
       "eDP-1" = {
-        mode = { width = 2240; height = 1400; refresh = 60.0; };
-        position = { x = 0; y = 0; };
+        mode = {
+          width = 2240;
+          height = 1400;
+          refresh = 60.0;
+        };
+        position = {
+          x = 0;
+          y = 0;
+        };
         scale = 1.25;
       };
     };
     input.mouse.accel-speed = lib.mkForce 0.05;
     spawn-at-startup = lib.mkAfter [
-      { command = ["bitwarden"]; }
-      { command = ["keybase-gui"]; }
+      { command = [ "bitwarden" ]; }
+      { command = [ "keybase-gui" ]; }
     ];
   };
 

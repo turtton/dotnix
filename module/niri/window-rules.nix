@@ -1,5 +1,7 @@
-{ ... }:
+{ lib, config, ... }:
 let
+  cfg = config.packs.niri;
+
   opaqueApps = [
     "discord"
     "vesktop"
@@ -29,46 +31,48 @@ let
   opaqueRules = map mkOpaqueRule opaqueApps;
 in
 {
-  programs.niri.settings.window-rules = [
-    # Default opacity for all windows
-    {
-      opacity = 0.8;
-    }
+  config = lib.mkIf cfg.enable {
+    programs.niri.settings.window-rules = [
+      # Default opacity for all windows
+      {
+        opacity = 0.8;
+      }
 
-    # Picture-in-picture windows
-    {
-      matches = [
-        { title = "^Picture in picture.*$"; }
-      ];
-      opacity = 1.0;
-    }
+      # Picture-in-picture windows
+      {
+        matches = [
+          { title = "^Picture in picture.*$"; }
+        ];
+        opacity = 1.0;
+      }
 
-    # QEMU windows
-    {
-      matches = [
-        { title = "^.* on QEMU/KVM$"; }
-      ];
-      opacity = 1.0;
-    }
+      # QEMU windows
+      {
+        matches = [
+          { title = "^.* on QEMU/KVM$"; }
+        ];
+        opacity = 1.0;
+      }
 
-    # KDE Connect daemon
-    {
-      matches = [
-        { app-id = "^org\\.kde\\.kdeconnect\\.daemon.*$"; }
-      ];
-      open-floating = true;
-    }
+      # KDE Connect daemon
+      {
+        matches = [
+          { app-id = "^org\\.kde\\.kdeconnect\\.daemon.*$"; }
+        ];
+        open-floating = true;
+      }
 
-    # Remmina connected windows
-    {
-      matches = [
-        {
-          app-id = "org.remmina.Remmina";
-          title = "^(?!Remmina$).*";
-        }
-      ];
-      opacity = 1.0;
-    }
-  ]
-  ++ opaqueRules;
+      # Remmina connected windows
+      {
+        matches = [
+          {
+            app-id = "org.remmina.Remmina";
+            title = "^(?!Remmina$).*";
+          }
+        ];
+        opacity = 1.0;
+      }
+    ]
+    ++ opaqueRules;
+  };
 }

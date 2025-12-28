@@ -12,7 +12,6 @@
     ./../../os/core/shared
     ./../../nixosModules/preloader-signed.nix
     ./../../os/core/shell.nix
-    ./../../os/wm/hyprland.nix
     ./../../os/desktop/shared
     ./../../os/desktop/1password.nix
     ./../../os/desktop/flatpak.nix
