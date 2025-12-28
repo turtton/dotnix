@@ -7,11 +7,11 @@ let
   ];
   applyPlugins = ide: with pkgs; (jetbrains.plugins.addPlugins ide plugins);
   ides = with pkgs.jetbrains; [
-    idea-ultimate
+    idea
     webstorm
     rust-rover
     datagrip
-    pycharm-professional
+    pycharm
     clion
     rider
   ];

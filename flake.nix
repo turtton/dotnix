@@ -82,7 +82,6 @@
       url = "github:ryoppippi/claude-code-overlay";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "utils";
       };
     };
     rustowl = {
@@ -92,14 +91,9 @@
         rust-overlay.follows = "rust-overlay";
       };
     };
-    quickshell = {
-      url = "github:outfoxxed/quickshell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.quickshell.follows = "quickshell"; # Use same quickshell version
     };
     winapps = {
       url = "github:winapps-org/winapps";
