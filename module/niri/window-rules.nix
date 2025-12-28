@@ -34,8 +34,10 @@ in
 {
   config = lib.mkIf cfg.enable {
     programs.niri.settings.window-rules = [
-      # Default opacity for all windows
+      # Default rules
       {
+        geometry-corner-radius = 20;
+        clip-to-geometry = true;
         opacity = 0.93;
       }
 
