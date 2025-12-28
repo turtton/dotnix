@@ -14,7 +14,6 @@
 
     # ./eww
     ./qt
-    ./wlogout
     # ./dunst.nix
     ./gtk.nix
     ./key-bindings.nix
