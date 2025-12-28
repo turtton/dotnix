@@ -55,7 +55,7 @@ in
             wl-clipboard
             cliphist
             polkit
-            kdePackages.plasma-polkit-agent
+            kdePackages.polkit-kde-agent-1
             libsecret
             networkmanagerapplet
             btop
