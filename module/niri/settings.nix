@@ -56,6 +56,8 @@ in
 
       prefer-no-csd = true;
 
+      screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
+
       # TODO: Add animations after confirming correct niri-flake format
 
       spawn-at-startup = [
@@ -89,6 +91,9 @@ in
         }
         { command = [ "${pkgs.gitify}/bin/gitify" ]; }
         { command = [ "noctalia-shell" ]; }
+        {
+          command = [ "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1" ];
+        }
       ];
     };
   };

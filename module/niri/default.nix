@@ -55,7 +55,7 @@ in
             wl-clipboard
             cliphist
             polkit
-            inputs.hyprpolkitagent.packages.${system}.hyprpolkitagent
+            kdePackages.plasma-polkit-agent
             libsecret
             networkmanagerapplet
             btop
@@ -71,9 +71,6 @@ in
       }
     else
       {
-        # NixOS-level settings for Niri
-        # Note: programs.niri is configured via home-manager with homeModules.niri
-
         security.pam.services =
           let
             enableKeyrings = {

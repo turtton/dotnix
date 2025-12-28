@@ -71,27 +71,19 @@ in
       "Mod+Shift+9".action.move-column-to-workspace = 9;
 
       # Workspace navigation (Mod + Ctrl + H/L)
-      "Mod+Ctrl+h".action.focus-workspace-down = { };
-      "Mod+Ctrl+l".action.focus-workspace-up = { };
-      "Mod+Ctrl+Left".action.focus-workspace-down = { };
-      "Mod+Ctrl+Right".action.focus-workspace-up = { };
+      "Mod+Ctrl+j".action.focus-workspace-down = { };
+      "Mod+Ctrl+k".action.focus-workspace-up = { };
+      "Mod+Ctrl+Down".action.focus-workspace-down = { };
+      "Mod+Ctrl+Up".action.focus-workspace-up = { };
 
       # Monitor management
       "Mod+Tab".action.focus-monitor-next = { };
       "Mod+Shift+Tab".action.move-column-to-monitor-next = { };
 
       # Screenshots
-      "Print".action.spawn = [
-        "sh"
-        "-c"
-        "${grim}/bin/grim - | ${swappy}/bin/swappy -f - -o /tmp/screenshot.png && ${zenity}/bin/zenity --question --text='Save?' && cp /tmp/screenshot.png $HOME/Pictures/$(date +%Y-%m-%dT%H:%M:%S).png"
-      ];
+      "Print".action.screenshot-screen = { };
       "Mod+Print".action.screenshot-window = { };
-      "Mod+Shift+s".action.spawn = [
-        "sh"
-        "-c"
-        "${grim}/bin/grim -g \"$(${slurp}/bin/slurp)\" - | ${swappy}/bin/swappy -f - -o /tmp/screenshot.png && ${zenity}/bin/zenity --question --text='Save?' && cp /tmp/screenshot.png $HOME/Pictures/$(date +%Y-%m-%dT%H:%M:%S).png"
-      ];
+      "Mod+Shift+s".action.screenshot = { };
 
       # Media control
       "XF86AudioPlay".action.spawn = [
