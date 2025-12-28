@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 {
   imports = [ ./starship.nix ];
+  home.shell.enableZshIntegration = true;
   programs.zsh = {
     enable = true;
     dotDir = "${config.xdg.configHome}/zsh";
