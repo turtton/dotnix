@@ -2,7 +2,7 @@
   imports = [
     ./nvim
     ./alternative.nix
-    ./direenv.nix
+    ./direnv.nix
     ./gpg.nix
     ./mise.nix
     ./util.nix

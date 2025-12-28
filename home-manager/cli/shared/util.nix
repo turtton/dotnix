@@ -17,4 +17,9 @@
     fastfetch
     gnuplot_qt # graphing ulitity
   ];
+
+  programs.zellij = {
+    enable = true;
+    theme = "catppuccin-mocha";
+  };
 }
