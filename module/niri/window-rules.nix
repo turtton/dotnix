@@ -36,7 +36,7 @@ in
     programs.niri.settings.window-rules = [
       # Default opacity for all windows
       {
-        opacity = 0.8;
+        opacity = 0.93;
       }
 
       # Picture-in-picture windows

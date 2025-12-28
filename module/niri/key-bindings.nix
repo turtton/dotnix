@@ -14,7 +14,8 @@ in
       "Mod+Return".action.spawn = [ "alacritty" ];
       "Mod+Shift+Q".action.close-window = { };
       "Mod+F".action.fullscreen-window = { };
-      "Mod+Shift+F".action.set-window-height = "-10%";
+      "Mod+Ctrl+F".action.set-column-width = "100%";
+      "Mod+Shift+F".action.toggle-window-floating = { };
       "Mod+Shift+E".action.spawn = [ "wlogout" ];
 
       # Noctalia bindings are in module/niri/noctalia.nix
@@ -44,6 +45,12 @@ in
       "Mod+k".action.move-window-up = { };
       "Mod+l".action.move-column-right = { };
 
+      # Window resizing
+      "Mod+Shift+Left".action.set-window-width = "+10%";
+      "Mod+Shift+Right".action.set-window-width = "-10%";
+      "Mod+Shift+h".action.set-window-width = "-10%";
+      "Mod+Shift+l".action.set-window-width = "+10%";
+
       # Column management
       "Mod+BracketLeft".action.consume-window-into-column = { };
       "Mod+BracketRight".action.expel-window-from-column = { };
@@ -69,6 +76,11 @@ in
       "Mod+Shift+7".action.move-column-to-workspace = 7;
       "Mod+Shift+8".action.move-column-to-workspace = 8;
       "Mod+Shift+9".action.move-column-to-workspace = 9;
+
+      "Mod+Shift+Down".action.move-column-to-workspace-down = { };
+      "Mod+Shift+Up".action.move-column-to-workspace-up = { };
+      "Mod+Shift+j".action.move-column-to-workspace-down = { };
+      "Mod+Shift+k".action.move-column-to-workspace-up = { };
 
       # Workspace navigation (Mod + Ctrl + H/L)
       "Mod+Ctrl+j".action.focus-workspace-down = { };
@@ -130,6 +142,8 @@ in
       # Mouse workspace navigation
       "Mod+WheelScrollDown".action.focus-workspace-down = { };
       "Mod+WheelScrollUp".action.focus-workspace-up = { };
+      "Mod+Shift+WheelScrollUp".action.focus-column-left = { };
+      "Mod+Shift+WheelScrollDown".action.focus-column-right = { };
 
       # Color picker
       "Mod+Shift+c".action.spawn = [

@@ -18,6 +18,8 @@ in
         QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
         NIXOS_OZONE_WL = "1";
         GIO_MODULE_DIR = "${pkgs.glib-networking}/lib/gio/modules/";
+        XCURSOR_THEME = "GoogleDot-Black";
+        XCURSOR_SIZE = "24";
       };
 
       input = {

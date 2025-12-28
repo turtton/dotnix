@@ -61,6 +61,7 @@ in
             btop
             gcolor3
             hyprpicker
+            google-cursor
           ];
 
         xdg.userDirs.createDirectories = true;
@@ -91,7 +92,10 @@ in
         xdg.portal = {
           enable = true;
           extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
+          config.common.default = "*";
         };
+
+        programs.dconf.enable = true;
 
         environment.sessionVariables.NIXOS_OZONE_WL = "1";
       }
