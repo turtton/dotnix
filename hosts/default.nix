@@ -276,6 +276,7 @@ in
       ];
       sharedOptions = {
         packs.niri.enable = true;
+        packs.bemoji.enable = true;
         packs.android.enable = true;
         packs.remote-desktop = {
           enable = true;
@@ -330,6 +331,7 @@ in
       ];
       sharedOptions = {
         packs.niri.enable = true;
+        packs.bemoji.enable = true;
         packs.remote-desktop.enable = true;
         packs.vial.enable = true;
       };
@@ -373,6 +375,9 @@ in
         #   };
         # }
       ];
+      sharedOptions = {
+        packs.bemoji.enable = true;
+      };
     };
     atticserver = createSystem {
       system = "x86_64-linux";
