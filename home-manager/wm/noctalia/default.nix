@@ -26,7 +26,7 @@
         density = "compact";
         position = "left";
         showCapsule = false;
-        floating = true;
+        floating = false;
         marginVertical = 0.20;
         widgets = {
           left = [
@@ -61,8 +61,14 @@
             }
             {
               id = "SystemMonitor";
+              compactMode = false;
               showCpuTemp = true;
               showDiskUsage = true;
+              showCpuUsage = true;
+              showGpuUsage = true;
+              showMemoryUsage = true;
+              showMemoryAsPercent = false;
+              showNetworkStats = false;
             }
             {
               alwaysShowPercentage = false;
