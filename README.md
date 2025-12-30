@@ -2,6 +2,19 @@
 
 My dotfiles for NixOS
 
+# [Niri](./module/niri/)
+
+![](./docs/niri-noctalia.png)
+
+- Launcher/Bar/LockScreen: [noctalia-shell](https://github.com/noctalia-dev/noctalia-shell)
+- Editor: [Neovim](https://github.com/turtton/myvim.nix)
+- Terminal: [Alacritty](https://alacritty.org)
+
+<details>
+<summary>
+Hyprland (outdated)
+</summary>
+
 # [Hyprland](./home-manager/wm/hyprland/)
 
 ![](./docs/hypr-noctalia.png)
@@ -12,6 +25,8 @@ My dotfiles for NixOS
 - ScreenShot: [Grimblast+swappy](https://github.com/turtton/dotnix/blob/8186fca772bfa4d22db9263a04c08541cfbeafa9/home-manager/wm/hyprland/key-bindings.nix#L102-L106)
 
 > Article(JP): https://zenn.dev/watagame/articles/hyprland-nix
+
+</details>
 
 # Setup
 
