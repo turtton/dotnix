@@ -22,6 +22,12 @@ let
         cp $src ${name}.efi
         install -D -m0644 -t $out/share/ ${name}.efi
       '';
+      meta = with pkgs.lib; {
+        description = "UEFI ${name} binary for Secure Boot";
+        homepage = "https://blog.hansenpartnership.com/linux-foundation-secure-boot-system-released/";
+        license = licenses.gpl2;
+        platforms = platforms.linux;
+      };
     };
 in
 {
