@@ -1,11 +1,11 @@
 * {
     bg-col:  #1e1e2e;
     bg-col-light: #1e1e2e;
-    border-col: #1e1e2e;
-    selected-col: #1e1e2e;
-    randomcolor: #eba0ac;
+    border-col: #6c7086;
+    selected-col: #94e2d5;
+    accent: #cba6f7;
     fg-col: #cdd6f4;
-    fg-col2: #a6e3a1;
+    fg-col-dark: #1e1e2e;
     subtext: #6c7086;
     width: 900;
 }
@@ -37,66 +37,78 @@ configuration{
 button {
     background-color: @bg-col-light;
     horizontal-align: 0.5;
-    padding: 10px;
+    padding: 8px 12px;
     text-color: @subtext;
     vertical-align: 0.5;
+    border-radius: 8px;
+    margin: 0px 5px;
 }
 
 button selected {
-    background-color: @bg-col;
-    text-color: @randomcolor;
+    background-color: @accent;
+    text-color: @fg-col-dark;
 }
 
 element {
     background-color: @bg-col;
-    padding: 5px;
+    padding: 10px 15px;
     text-color: @fg-col;
+    border-radius: 8px;
 }
 
 element-icon {
-    size: 20px;
+    size: 36px;
+    margin: 0px 12px 0px 0px;
 }
 
 element selected {
     background-color: @selected-col;
-    text-color: @fg-col2;
+    text-color: @fg-col-dark;
 }
 
 entry {
-    background-color: @bg-col;
-    margin: 20px 0px 0px 10px;
-    padding: 6px;
+    background-color: transparent;
+    margin: 0px;
+    padding: 10px;
     text-color: @fg-col;
+    placeholder: "Search entries...";
+    placeholder-color: @subtext;
 }
 
 inputbar {
     background-color: @bg-col;
-    border-radius: 5px;
-    children: [prompt, entry];
-    padding: 2px;
+    border: 2px;
+    border-color: @accent;
+    border-radius: 20px;
+    children: [entry];
+    margin: 20px 20px 10px 20px;
+    padding: 2px 10px;
 }
 
 listview {
     background-color: @bg-col;
     border: 0px 0px 0px;
-    columns: 2;
-    margin: 10px 0px 0px 20px;
+    columns: 1;
+    margin: 10px 20px 0px 20px;
     padding: 6px 0px 0px;
+    spacing: 5px;
 }
 
 mainbox {
     background-color: @bg-col;
+    children: [inputbar, mode-switcher, listview];
 }
 
 mode-switcher {
-    spacing: 0;
+    spacing: 5px;
+    margin: 5px 20px 10px 20px;
 }
 
 prompt {
-    background-color: @randomcolor;
-    border-radius: 3px;
-    margin: 20px 0px 0px 20px;
-    padding: 6px;
+    background-color: @accent;
+    border-radius: 15px;
+    margin: 0px 5px 0px 0px;
+    padding: 8px 12px;
     text-color: @bg-col;
 }
 
@@ -107,8 +119,9 @@ textbox-prompt-colon {
 
 window {
     background-color: @bg-col;
-    border: 8px;
+    border: 2px;
     border-color: @border-col;
+    border-radius: 12px;
     height: 500px;
 }
 
