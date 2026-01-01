@@ -93,12 +93,15 @@ in
         xdg.portal = {
           enable = true;
           extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
-          config.common.default = "*";
+          configPackages = [ inputs.niri-flake.packages.${system}.niri-stable ];
         };
 
         programs.dconf.enable = true;
 
-        environment.sessionVariables.NIXOS_OZONE_WL = "1";
+        environment.sessionVariables = {
+          NIXOS_OZONE_WL = "1";
+          XDG_CURRENT_DESKTOP = "niri";
+        };
       }
   );
 }
