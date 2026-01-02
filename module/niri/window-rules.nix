@@ -84,6 +84,21 @@ in
         ];
         opacity = 0.8;
       }
+      # Fix staem friend game play notification window
+      {
+        matches = [
+          {
+            app-id = "steam";
+            title = "^notificationtoasts_\d+_desktop$";
+          }
+        ];
+        open-floating = true;
+        default-floating-position = {
+          x = 20;
+          y = 20;
+          relative-to = "bottom-right";
+        };
+      }
     ]
     ++ opaqueRules;
   };
