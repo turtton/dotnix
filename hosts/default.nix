@@ -1,11 +1,16 @@
 inputs:
 let
   remoteNixpkgsPatches = [
-    # {
-    #   meta.description = "Fix pygls (for ms-python)";
-    #   url = "https://github.com/NixOS/nixpkgs/pull/437306.patch";
-    #   hash = "sha256-TNK3d+ecq74H+59byEJNTw/jpMVZa/m7Hz/9ldJD8wY=";
-    # }
+    {
+      meta.description = "Fix xl2tpd build error";
+      url = "https://github.com/NixOS/nixpkgs/pull/476161.patch";
+      hash = "sha256-4sINwU0hKLrLQpgBF/fWLjSUi/rFCm/t7qrp1ib7Zf4=";
+    }
+    {
+      meta.description = "Fix bs-manager build";
+      url = "https://github.com/NixOS/nixpkgs/pull/476063.patch";
+      hash = "sha256-wrkCKT2v+KHSMXvtGcec6hwrXe5idxlipyceDyrPXeY=";
+    }
   ];
   stateVersion = "23.11";
   createSystem =
