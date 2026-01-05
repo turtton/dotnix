@@ -89,7 +89,7 @@ in
         matches = [
           {
             app-id = "steam";
-            title = "^notificationtoasts_\d+_desktop$";
+            title = "^notificationtoasts_\\d+_desktop$";
           }
         ];
         open-floating = true;
