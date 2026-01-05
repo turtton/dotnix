@@ -29,6 +29,22 @@
         };
         scale = 1.25;
       };
+      # Iiyama PL2792H (上側)
+      "Iiyama North America PL2792H 1224333611565" = {
+        position = {
+          x = 0;
+          y = -1080;
+        };
+        scale = 1.0;
+      };
+      # RTK CX156A (左側)
+      "Invalid Vendor Codename - RTK CX156A 0x00000001" = {
+        position = {
+          x = -1920;
+          y = 0;
+        };
+        scale = 1.0;
+      };
     };
     input.mouse.accel-speed = lib.mkForce 0.05;
     spawn-at-startup = lib.mkAfter [
