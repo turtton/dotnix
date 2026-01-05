@@ -15,6 +15,7 @@
             ms-vscode-remote.remote-containers
             marp-team.marp-vscode
             ms-kubernetes-tools.vscode-kubernetes-tools
+            github.vscode-github-actions
             # AI
             github.copilot-chat
             github.copilot
