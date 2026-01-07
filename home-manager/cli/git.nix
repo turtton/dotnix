@@ -92,6 +92,64 @@
           showIcons = true;
           nerdFontsVersion = "3";
         };
+        customCommands = [
+          # localBranches: 選択したローカルブランチを指定ディレクトリに worktree 追加
+          {
+            key = "w";
+            command = "git worktree add ../{{.Form.Path}} {{.SelectedLocalBranch.Name}}";
+            description = "Add worktree for selected branch";
+            context = "localBranches";
+            prompts = [
+              {
+                type = "input";
+                title = "New worktree path (directory name)";
+                key = "Path";
+                suggestion = ''{{.SelectedLocalBranch.Name | replace "/" "-"}}'';
+              }
+            ];
+          }
+          # remoteBranches: 選択したリモートブランチをローカル化してから worktree 追加
+          {
+            key = "w";
+            command = "bash -lc 'set -e; BR={{.SelectedRemoteBranch.Name}}; DIR=../{{.Form.Path}}; if git show-ref --verify --quiet refs/heads/$BR; then git worktree add \"$DIR\" \"$BR\"; else git fetch --prune; git worktree add -b \"$BR\" \"$DIR\" origin/$BR; fi; git -C \"$DIR\" branch --set-upstream-to=origin/$BR \"$BR\" || true'";
+            description = "Add worktree for selected remote branch (auto create/use local and set upstream)";
+            context = "remoteBranches";
+            prompts = [
+              {
+                type = "input";
+                title = "New worktree path (directory name)";
+                key = "Path";
+                suggestion = ''{{.SelectedRemoteBranch.Name | replace "/" "-"}}'';
+              }
+            ];
+          }
+          # worktrees: BaseBranch から NewBranch を作成し、指定ディレクトリに worktree 追加
+          {
+            key = "W";
+            command = "git worktree add -b {{.Form.NewBranch}} ../{{.Form.Path}} {{.Form.BaseBranch}}";
+            description = "Create new branch as worktree";
+            context = "worktrees";
+            prompts = [
+              {
+                type = "input";
+                title = "New worktree path (directory name)";
+                key = "Path";
+                suggestion = "{{.Form.NewBranch}}";
+              }
+              {
+                type = "input";
+                title = "New branch name";
+                key = "NewBranch";
+              }
+              {
+                type = "input";
+                title = "Base branch to create from (e.g., main or master)";
+                key = "BaseBranch";
+                initialValue = "main";
+              }
+            ];
+          }
+        ];
       };
     };
   };
