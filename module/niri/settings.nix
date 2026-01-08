@@ -18,11 +18,19 @@ in
       };
 
       environment = {
+        # IME settings
         XMODIFIERS = "@im=fcitx";
+        GTK_IM_MODULE = "fcitx";
+        QT_IM_MODULE = "wayland;fcitx";
+        QT_IM_MODULES = "wayland;fcitx"; # Qt6
+
+        # Qt settings
         QT_QPA_PLATFORM = "wayland";
         QT_QPA_PLATFORMTHEME = "gtk3";
         QT_STYLE_OVERRIDE = "kvantum";
         QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+
+        # Other
         NIXOS_OZONE_WL = "1";
         GIO_MODULE_DIR = "${pkgs.glib-networking}/lib/gio/modules/";
       };
