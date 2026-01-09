@@ -28,4 +28,7 @@
     };
     kernelPackages = pkgs.linuxKernel.packages.linux_xanmod;
   };
+
+  # Disable kernel debug mount for container environment
+  systemd.suppressedSystemUnits = [ "sys-kernel-debug.mount" ];
 }

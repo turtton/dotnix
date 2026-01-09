@@ -398,7 +398,6 @@ in
                 group = "users";
                 extraGroups = [
                   "wheel"
-                  "networkmanager"
                 ];
                 openssh.authorizedKeys.keys = [
                   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA/8nfHCulkm71YTzMXgrvTF+G9RQ9LUvy6pKat/FXot"
