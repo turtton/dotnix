@@ -1,16 +1,11 @@
 inputs:
 let
   remoteNixpkgsPatches = [
-    {
-      meta.description = "Fix xl2tpd build error";
-      url = "https://github.com/NixOS/nixpkgs/pull/476161.patch";
-      hash = "sha256-4sINwU0hKLrLQpgBF/fWLjSUi/rFCm/t7qrp1ib7Zf4=";
-    }
-    {
-      meta.description = "Fix bs-manager build";
-      url = "https://github.com/NixOS/nixpkgs/pull/476063.patch";
-      hash = "sha256-wrkCKT2v+KHSMXvtGcec6hwrXe5idxlipyceDyrPXeY=";
-    }
+    # {
+    #   meta.description = "Fix bs-manager build";
+    #   url = "https://github.com/NixOS/nixpkgs/pull/476063.patch";
+    #   hash = "sha256-wrkCKT2v+KHSMXvtGcec6hwrXe5idxlipyceDyrPXeY=";
+    # }
   ];
   stateVersion = "23.11";
   createSystem =
