@@ -36,7 +36,11 @@ This is a Nix/NixOS configuration repository that manages system configurations 
   - `gui/` - GUI applications
   - `wm/` - Window manager configs (Hyprland, XMonad, Aerospace)
 - **`os/`** - System-level NixOS modules:
-  - `core/` - Essential services (network, SSH, locale)
+  - `core/` - Essential services:
+    - `common/` - Shared settings for all environments (locale, nix, ssh, gpg, tailscale)
+    - `desktop/` - Desktop-specific settings (NetworkManager, libvirtd, nix-ld)
+    - `server/` - Server/LXC minimal configuration
+    - `shared/` - Backward compatibility layer (imports desktop)
   - `desktop/` - Desktop services (fonts, sound, 1Password)
   - `wm/` - Window manager system services
 - **`overlay/`** - Custom package definitions and modifications
