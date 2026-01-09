@@ -34,12 +34,18 @@ jobs:
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           persist-credentials: false
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@53acf823325fe9ca47f4cdaa951f90b4b0de5bb9 # v4.1.1
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:nix
       - uses: cachix/install-nix-action@4e002c8ec80594ecd40e759629461e26c8abed15 # v31.9.0
-      - name: Install nix
+      - name: Setup attic client
         uses: icewind1991/attic-action@5b92b73fc87088f54ee787189f87f57418af3f09 # v1.2.1
         with:
           name: home
-          instance: https://attic.taile2777.ts.net
+          instance: http://attic.taile2777.ts.net:8080
           authToken: ${{ secrets.ATTIC_TOKEN }}
       - name: GC
         run: |
@@ -60,13 +66,19 @@ jobs:
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           persist-credentials: false
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@53acf823325fe9ca47f4cdaa951f90b4b0de5bb9 # v4.1.1
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:nix
       - name: Install nix
         uses: cachix/install-nix-action@4e002c8ec80594ecd40e759629461e26c8abed15 # v31.9.0
       - name: Setup attic client
         uses: icewind1991/attic-action@5b92b73fc87088f54ee787189f87f57418af3f09 # v1.2.1
         with:
           name: home
-          instance: https://attic.taile2777.ts.net
+          instance: http://attic.taile2777.ts.net:8080
           authToken: ${{ secrets.ATTIC_TOKEN }}
       - name: GC
         run: |
@@ -122,17 +134,23 @@ jobs:
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           persist-credentials: false
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@53acf823325fe9ca47f4cdaa951f90b4b0de5bb9 # v4.1.1
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:nix
       - uses: cachix/install-nix-action@4e002c8ec80594ecd40e759629461e26c8abed15 # v31.9.0
       #- uses: cachix/cachix-action@v14
       #  with:
       #    name: turtton
       #    authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       # Original: https://github.com/natsukium/dotfiles/blob/main/.github/workflows/test.yml
-      - name: Install nix
+      - name: Setup attic client
         uses: icewind1991/attic-action@5b92b73fc87088f54ee787189f87f57418af3f09 # v1.2.1
         with:
           name: home
-          instance: https://attic.taile2777.ts.net
+          instance: http://attic.taile2777.ts.net:8080
           authToken: ${{ secrets.ATTIC_TOKEN }}
       - name: GC
         run: |
@@ -161,13 +179,19 @@ jobs:
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           persist-credentials: false
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@53acf823325fe9ca47f4cdaa951f90b4b0de5bb9 # v4.1.1
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:nix
       - name: Install nix
         uses: cachix/install-nix-action@4e002c8ec80594ecd40e759629461e26c8abed15 # v31.9.0
       - name: Setup attic client
         uses: icewind1991/attic-action@5b92b73fc87088f54ee787189f87f57418af3f09 # v1.2.1
         with:
           name: home
-          instance: https://attic.taile2777.ts.net
+          instance: http://attic.taile2777.ts.net:8080
           authToken: ${{ secrets.ATTIC_TOKEN }}
       - name: GC
         run: |
