@@ -10,7 +10,7 @@
   imports = [
     ./atticd.nix
     # ./cloudflared.nix
-    ./../../os/core/shared
+    ./../../os/core/server
     ./../../os/core/shell.nix
   ];
   # ++ (with inputs.nixos-hardware.nixosModules; [

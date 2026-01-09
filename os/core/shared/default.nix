@@ -1,29 +1,9 @@
-{ pkgs, ... }:
+{ ... }:
 {
+  # Backward compatibility layer:
+  # Existing desktop hosts reference this path.
+  # New hosts should use os/core/desktop or os/core/server directly.
   imports = [
-    ./gpg.nix
-    ./ld.nix
-    ./locale.nix
-    ./network.nix
-    ./nix.nix
-    ./ssh.nix
-    ./virtualisation.nix
+    ../desktop
   ];
-  # Fix timelag for windows
-  time.hardwareClockInLocalTime = true;
-
-  services.journald.extraConfig = ''
-    SystemMaxFileSize=300M
-  '';
-
-  # Enable usb access
-  services.gvfs.enable = true;
-  services.udisks2.enable = true;
-
-  # Limit the number of boot loader configurations
-  boot.loader = {
-    systemd-boot.configurationLimit = 5;
-    grub.configurationLimit = 5;
-    generic-extlinux-compatible.configurationLimit = 5;
-  };
 }
