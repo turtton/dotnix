@@ -220,6 +220,7 @@
             pinact
             zizmor
             nh
+            gh
             (writeScriptBin "switch-home" ''
               nh home switch . -C"$@"
             '')
@@ -231,6 +232,9 @@
             '')
             (writeScriptBin "gen-template" ''
               nix run github:nix-community/nixos-generators -- -f proxmox-lxc --flake ".#$@" --show-trace
+            '')
+            (writeScriptBin "update-flake" ''
+              NIX_CONFIG="access-tokens = github.com=$(gh auth token)" nix flake update "$@"
             '')
 
             # For xmonad
