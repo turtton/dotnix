@@ -7,7 +7,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./../../os/core/shared
+    ./../../os/core/desktop
     ./../../os/core/shell.nix
     # ./../../os/wm/plasma5.nix
     ./../../os/wm/hyprland.nix

@@ -9,7 +9,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./../../os/core/shared
+    ./../../os/core/desktop
     ./../../nixosModules/preloader-signed.nix
     ./../../os/core/amdgpu.nix
     ./../../os/core/shell.nix
