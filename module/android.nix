@@ -25,8 +25,11 @@ in
       }
     else
       {
-        # Enable android rule
-        programs.adb.enable = true;
+        environment.systemPackages =
+          with pkgs;
+          optionals hostPlatform.isLinux [
+            android-tools
+          ];
       }
   );
 }
