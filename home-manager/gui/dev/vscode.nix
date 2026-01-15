@@ -16,6 +16,7 @@
             marp-team.marp-vscode
             ms-kubernetes-tools.vscode-kubernetes-tools
             github.vscode-github-actions
+            antfu.slidev
             # AI
             github.copilot-chat
             github.copilot
@@ -85,6 +86,7 @@
           "git show"
         ];
         "claudeCode.preferredLocation" = "panel";
+        "claudeCode.useTerminal" = true;
       }
       // pkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
         "cline.chromeExecutablePath" = pkgs.lib.makeBinPath [ pkgs.chromium ] + "/" + pkgs.chromium.pname;
