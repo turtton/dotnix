@@ -16,10 +16,5 @@
     ];
   programs.claude-code = {
     enable = true;
-    package = pkgs.claude-code.override {
-      additionalPaths = [
-        "${config.home.homeDirectory}/.local/bin"
-      ];
-    };
   };
 }
