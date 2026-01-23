@@ -63,6 +63,8 @@ in
             hyprpicker
             google-cursor
             xdg-desktop-portal-gnome
+            # Required by xdg-desktop-portal-gnome for FileChooser (e.g., Chromium's "Save as PDF")
+            nautilus
           ];
 
         xdg.userDirs.createDirectories = true;
