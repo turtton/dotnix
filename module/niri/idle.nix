@@ -1,13 +1,17 @@
 {
   config,
   lib,
+  inputs,
+  system,
   ...
 }:
 let
   cfg = config.packs.niri;
-  lock-cmd = "noctalia-shell ipc call lockScreen lock";
-  monitor-on = "niri msg action power-on-monitors";
-  monitor-off = "niri msg action power-off-monitors";
+  niri = lib.getExe inputs.niri-flake.packages.${system}.niri-stable;
+  noctalia-shell = lib.getExe inputs.noctalia.packages.${system}.default;
+  lock-cmd = "${noctalia-shell} ipc call lockScreen lock";
+  monitor-on = "${niri} msg action power-on-monitors";
+  monitor-off = "${niri} msg action power-off-monitors";
 in
 {
   config = lib.mkIf cfg.enable {
