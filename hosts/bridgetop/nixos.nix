@@ -48,7 +48,13 @@
 
   services = {
     # Enable CUPS to print documents.
-    printing.enable = true;
+    printing = {
+      enable = true;
+      drivers = with pkgs; [
+        gutenprint
+        foomatic-db-ppds
+      ];
+    };
     udev.extraRules = ''
       SUBSYSTEM=="usb", ATTR{idVendor}=="16f4", ATTR{idProduct}=="4001",RUN+="/bin/sh -c 'modprobe -q ftdi-sio'",RUN+="/bin/sh -c 'echo 16f4 4001 >/sys/bus/usb-serial/drivers/ftdi_sio/new_id'"
     '';
