@@ -41,6 +41,9 @@ in
 
       # Git Repository Management
       siketyan-ghr
+
+      # nix run wrapper using ,(comma)
+      comma
     ]
     ++ pkgs.lib.optionals hostPlatform.isLinux [
       stack-wrapped
