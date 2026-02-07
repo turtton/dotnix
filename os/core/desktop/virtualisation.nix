@@ -19,5 +19,6 @@
   };
   environment.systemPackages = with pkgs; [
     virt-manager
+    winboat
   ];
 }

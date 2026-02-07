@@ -281,7 +281,7 @@ in
           enable = true;
           server = true;
         };
-        packs.winapps.enable = true;
+        packs.winapps.enable = false;
         packs.vial.enable = true;
       };
     };
