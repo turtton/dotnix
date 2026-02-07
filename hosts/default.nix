@@ -112,6 +112,7 @@ let
                       "dialout"
                       "adbusers"
                       "kvm"
+                      "docker"
                     ];
                   };
                 })
