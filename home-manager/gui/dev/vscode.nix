@@ -17,6 +17,7 @@
             ms-kubernetes-tools.vscode-kubernetes-tools
             github.vscode-github-actions
             antfu.slidev
+            ms-vscode-remote.remote-ssh
             # AI
             github.copilot-chat
             github.copilot
