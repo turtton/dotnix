@@ -1519,6 +1519,7 @@
         "plasma-manager": "plasma-manager",
         "rust-overlay": "rust-overlay_2",
         "rustowl": "rustowl",
+        "siketyan-ghr": "siketyan-ghr",
         "split-monitor-workspaces": "split-monitor-workspaces",
         "treefmt-nix": "treefmt-nix",
         "turtton-neovim": "turtton-neovim",
@@ -1612,6 +1613,35 @@
       "original": {
         "owner": "cordx56",
         "repo": "rustowl",
+        "type": "github"
+      }
+    },
+    "siketyan-ghr": {
+      "inputs": {
+        "flake-utils": [
+          "utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": [
+          "rust-overlay"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1770084294,
+        "narHash": "sha256-i13J7ssCXD1KMNyaFqoKHsmLaJSfr1iB0alMvvXjR5k=",
+        "owner": "siketyan",
+        "repo": "ghr",
+        "rev": "bb7ae12edfb18f65baef156ca03395ade8ff73fc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "siketyan",
+        "repo": "ghr",
         "type": "github"
       }
     },

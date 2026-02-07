@@ -4,11 +4,13 @@
       "https://hyprland.cachix.org"
       "https://ags.cachix.org"
       "https://niri.cachix.org"
+      "https://siketyan.cachix.org"
     ];
     extra-trusted-public-keys = [
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       "ags.cachix.org-1:naAvMrz0CuYqeyGNyLgE010iUiuf/qx6kYrUv3NwAJ8="
       "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
+      "siketyan.cachix.org-1:WNNtRH3yo7wUpQ0aURUTCq2BpF97m4UsP0h1nKe6pAA="
     ];
   };
   inputs = {
@@ -111,6 +113,15 @@
       inputs = {
         nixpkgs.follows = "nixpkgs";
         treefmt-nix.follows = "treefmt-nix";
+      };
+    };
+    siketyan-ghr = {
+      url = "github:siketyan/ghr";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        treefmt-nix.follows = "treefmt-nix";
+        rust-overlay.follows = "rust-overlay";
+        flake-utils.follows = "utils";
       };
     };
   };
