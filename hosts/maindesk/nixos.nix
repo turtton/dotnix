@@ -38,7 +38,7 @@
       };
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = pkgs.linuxKernel.packages.linux_xanmod;
+    kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
     kernelModules = [
       "pci_stub"
       "vfio"

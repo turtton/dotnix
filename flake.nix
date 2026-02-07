@@ -5,12 +5,15 @@
       "https://ags.cachix.org"
       "https://niri.cachix.org"
       "https://siketyan.cachix.org"
+      # Cachy OS kernel
+      "https://attic.xuyh0120.win/lantian"
     ];
     extra-trusted-public-keys = [
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       "ags.cachix.org-1:naAvMrz0CuYqeyGNyLgE010iUiuf/qx6kYrUv3NwAJ8="
       "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
       "siketyan.cachix.org-1:WNNtRH3yo7wUpQ0aURUTCq2BpF97m4UsP0h1nKe6pAA="
+      "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
     ];
   };
   inputs = {
@@ -124,6 +127,7 @@
         flake-utils.follows = "utils";
       };
     };
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
   };
   outputs =
     inputs@{
@@ -220,6 +224,7 @@
             teams-for-linux = overlays.teams-for-linux;
             vscode = overlays.vscode;
             zoom-us = overlays.zoom-us;
+            cachyos-kernel-latest = overlays.cachyosKernels.linuxPackages-cachyos-latest.kernel;
             noctalia-shell = noctalia.packages.${system}.default;
             xwayland-satellite = niri-flake.packages.${system}.xwayland-satellite-unstable;
           }
