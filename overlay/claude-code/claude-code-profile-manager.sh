@@ -1,97 +1,105 @@
 #!/usr/bin/env bash
 
-# Get config directory
+# claude-profile: Subcommand-based CLI for managing Claude Code profiles
+
 CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
 PROFILE_DIR="$CONFIG_DIR/profile-claude-code"
 PROFILES_FILE="$PROFILE_DIR/profiles.conf"
+CURRENT_FILE="$PROFILE_DIR/current"
 
-# Create profile directory if it doesn't exist
+# Ensure profile directory and config exist
 mkdir -p "$PROFILE_DIR"
+[ -f "$PROFILES_FILE" ] || touch "$PROFILES_FILE"
 
-# Initialize profiles file if it doesn't exist
-if [ ! -f "$PROFILES_FILE" ]; then
-  touch "$PROFILES_FILE"
-fi
-
-# Function to list all profiles
-list_profiles() {
-  echo "=== Claude Code Profiles ==="
-  echo "0) Default (no CLAUDE_CONFIG_DIR)"
-  if [ -s "$PROFILES_FILE" ]; then
-    local i=1
-    while IFS='|' read -r name path; do
-      echo "$i) $name"
-      ((i++))
-    done <"$PROFILES_FILE"
-  else
-    echo "(No custom profiles found)"
-  fi
-  echo
-}
-
-# Function to create a new profile
-create_profile() {
-  echo -n "Enter profile name: "
-  read -r profile_name
-
-  # Validate profile name
-  if [ -z "$profile_name" ]; then
-    echo "Error: Profile name cannot be empty"
+# Validate profile name: only alphanumeric, underscore, hyphen
+validate_name() {
+  local name="$1"
+  if [ -z "$name" ]; then
+    echo "Error: Profile name cannot be empty" >&2
     return 1
   fi
+  if ! [[ $name =~ ^[a-zA-Z0-9_-]+$ ]]; then
+    echo "Error: Profile name must match [a-zA-Z0-9_-]+" >&2
+    return 1
+  fi
+  if [ "$name" = "default" ]; then
+    echo "Error: 'default' is a reserved name" >&2
+    return 1
+  fi
+  return 0
+}
+
+# Get current active profile name (empty string means default)
+get_current() {
+  if [ -f "$CURRENT_FILE" ]; then
+    cat "$CURRENT_FILE"
+  fi
+}
+
+cmd_list() {
+  local current
+  current=$(get_current)
+
+  echo "Profiles:"
+  if [ -z "$current" ]; then
+    echo "  * default"
+  else
+    echo "    default"
+  fi
+
+  if [ -s "$PROFILES_FILE" ]; then
+    while IFS='|' read -r name path; do
+      if [ "$name" = "$current" ]; then
+        echo "  * $name ($path)"
+      else
+        echo "    $name ($path)"
+      fi
+    done <"$PROFILES_FILE"
+  fi
+}
+
+cmd_show() {
+  local current
+  current=$(get_current)
+  if [ -z "$current" ]; then
+    echo "default"
+  else
+    echo "$current"
+  fi
+}
+
+cmd_create() {
+  local name="$1"
+  validate_name "$name" || return 1
 
   # Check if profile already exists
-  if grep -q "^$profile_name|" "$PROFILES_FILE"; then
-    echo "Error: Profile '$profile_name' already exists"
+  if grep -q "^${name}|" "$PROFILES_FILE" 2>/dev/null; then
+    echo "Error: Profile '$name' already exists" >&2
     return 1
   fi
 
-  # Create profile directory
-  profile_path="$CONFIG_DIR/claude-code-$profile_name"
+  local profile_path="$CONFIG_DIR/claude-code-$name"
   mkdir -p "$profile_path"
 
-  # Save profile to config
-  echo "$profile_name|$profile_path" >>"$PROFILES_FILE"
-
-  echo "Profile '$profile_name' created successfully at $profile_path"
+  echo "$name|$profile_path" >>"$PROFILES_FILE"
+  echo "Created profile '$name' at $profile_path"
 }
 
-# Function to delete a profile
-delete_profile() {
-  if [ ! -s "$PROFILES_FILE" ]; then
-    echo "No profiles to delete"
+cmd_delete() {
+  local name="$1"
+  validate_name "$name" || return 1
+
+  # Check if profile exists
+  if ! grep -q "^${name}|" "$PROFILES_FILE" 2>/dev/null; then
+    echo "Error: Profile '$name' not found" >&2
     return 1
   fi
 
-  echo "Select profile to delete:"
-  list_profiles
-  echo -n "Enter profile number to delete: "
-  read -r profile_num
-
-  # Validate input
-  if ! [[ $profile_num =~ ^[0-9]+$ ]]; then
-    echo "Error: Invalid selection"
-    return 1
-  fi
-
-  # Check if trying to delete default profile
-  if [ "$profile_num" = "0" ]; then
-    echo "Error: Cannot delete default profile"
-    return 1
-  fi
-
-  # Get profile info
-  local profile_info=$(sed -n "${profile_num}p" "$PROFILES_FILE")
-  if [ -z "$profile_info" ]; then
-    echo "Error: Invalid profile number"
-    return 1
-  fi
-
-  local profile_name=$(echo "$profile_info" | cut -d'|' -f1)
-  local profile_path=$(echo "$profile_info" | cut -d'|' -f2)
+  local profile_path
+  profile_path=$(grep "^${name}|" "$PROFILES_FILE" | head -n1 | cut -d'|' -f2)
 
   # Confirm deletion
-  echo -n "Delete profile '$profile_name' and its data? [y/N]: "
+  echo -n "Delete profile '$name' and its data at $profile_path? [y/N]: "
   read -r confirm
   if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then
     echo "Deletion cancelled"
@@ -103,137 +111,97 @@ delete_profile() {
     rm -rf "$profile_path"
   fi
 
-  # Remove from profiles file
+  # Remove from profiles.conf using pattern match
   if [[ $OSTYPE == "darwin"* ]]; then
-    sed -i '' "${profile_num}d" "$PROFILES_FILE"
+    sed -i '' "/^${name}|/d" "$PROFILES_FILE"
   else
-    sed -i "${profile_num}d" "$PROFILES_FILE"
+    sed -i "/^${name}|/d" "$PROFILES_FILE"
   fi
 
-  echo "Profile '$profile_name' deleted successfully"
+  # If this was the active profile, reset to default
+  local current
+  current=$(get_current)
+  if [ "$current" = "$name" ]; then
+    rm -f "$CURRENT_FILE"
+    echo "Active profile reset to default"
+  fi
+
+  echo "Deleted profile '$name'"
 }
 
-# Function to select and launch profile
-launch_profile() {
-  echo "Select profile to launch:"
-  list_profiles
-  echo -n "Enter profile number: "
-  read -r profile_num
+cmd_switch() {
+  local name="$1"
 
-  # Validate input
-  if ! [[ $profile_num =~ ^[0-9]+$ ]]; then
-    echo "Error: Invalid selection"
-    return 1
-  fi
-
-  # Handle default profile
-  if [ "$profile_num" = "0" ]; then
-    echo "Launching Claude Code with default profile..."
-    @claude-code@
+  # "default" resets to default profile
+  if [ "$name" = "default" ]; then
+    rm -f "$CURRENT_FILE"
+    echo "Switched to default profile"
     return 0
   fi
 
-  # Get profile info
-  local profile_info=$(sed -n "${profile_num}p" "$PROFILES_FILE")
-  if [ -z "$profile_info" ]; then
-    echo "Error: Invalid profile number"
+  validate_name "$name" || return 1
+
+  # Check if profile exists
+  if ! grep -q "^${name}|" "$PROFILES_FILE" 2>/dev/null; then
+    echo "Error: Profile '$name' not found" >&2
     return 1
   fi
 
-  local profile_name=$(echo "$profile_info" | cut -d'|' -f1)
-  local profile_path=$(echo "$profile_info" | cut -d'|' -f2)
-
-  echo "Launching Claude Code with profile '$profile_name'..."
-
-  # Launch Claude Code with the profile's config directory
-  CLAUDE_CONFIG_DIR="$profile_path" @claude-code@
+  echo "$name" >"$CURRENT_FILE"
+  echo "Switched to profile '$name'"
 }
 
-# Main menu
-main() {
-  while true; do
-    list_profiles
-    echo "Actions:"
-    echo "  [number] - Select and launch profile"
-    echo "  a - Create new profile"
-    echo "  d - Delete profile"
-    echo "  q - Quit"
-    echo
-    echo -n "Choose action: "
-    read -r action
-
-    case "$action" in
-    a | A)
-      create_profile
-      ;;
-    d | D)
-      delete_profile
-      ;;
-    q | Q)
-      echo "Goodbye!"
-      exit 0
-      ;;
-    [0-9]*)
-      # User entered a number, try to launch that profile
-      if [ "$action" = "0" ]; then
-        echo "Launching Claude Code with default profile..."
-        @claude-code@
-        exit 0
-      else
-        profile_info=$(sed -n "${action}p" "$PROFILES_FILE")
-        if [ -n "$profile_info" ]; then
-          profile_name=$(echo "$profile_info" | cut -d'|' -f1)
-          profile_path=$(echo "$profile_info" | cut -d'|' -f2)
-          echo "Launching Claude Code with profile '$profile_name'..."
-          CLAUDE_CONFIG_DIR="$profile_path" @claude-code@
-          exit 0
-        else
-          echo "Error: Invalid profile number"
-        fi
-      fi
-      ;;
-    *)
-      echo "Invalid action"
-      ;;
-    esac
-
-    echo
-    echo "Press Enter to continue..."
-    read -r
-    clear
-  done
+cmd_help() {
+  echo "Usage: claude-profile <command> [args]"
+  echo ""
+  echo "Commands:"
+  echo "  list              List all profiles (* = active)"
+  echo "  show              Print the active profile name"
+  echo "  create <name>     Create a new profile"
+  echo "  delete <name>     Delete a profile (with confirmation)"
+  echo "  switch <name>     Switch the active profile (use 'default' to reset)"
+  echo "  help              Show this help message"
 }
 
-# Check if profile number was provided as first argument
-if [ -n "$1" ]; then
-  if [[ $1 =~ ^[0-9]+$ ]]; then
-    # Handle default profile
-    if [ "$1" = "0" ]; then
-      echo "Launching Claude Code with default profile..."
-      @claude-code@
-      exit 0
-    fi
-
-    # Get profile info
-    profile_info=$(sed -n "${1}p" "$PROFILES_FILE")
-    if [ -n "$profile_info" ]; then
-      profile_name=$(echo "$profile_info" | cut -d'|' -f1)
-      profile_path=$(echo "$profile_info" | cut -d'|' -f2)
-      echo "Launching Claude Code with profile '$profile_name'..."
-      CLAUDE_CONFIG_DIR="$profile_path" @claude-code@
-      exit 0
-    else
-      echo "Error: Invalid profile number '$1'"
-      echo "Available profiles:"
-      list_profiles
-      exit 1
-    fi
-  else
-    echo "Error: Profile number must be a valid number"
-    echo "Usage: $0 [profile_number]"
+# Main dispatch
+case "${1:-}" in
+list)
+  cmd_list
+  ;;
+show)
+  cmd_show
+  ;;
+create)
+  if [ -z "${2:-}" ]; then
+    echo "Usage: claude-profile create <name>" >&2
     exit 1
   fi
-fi
-
-# Run main function if no arguments provided
-main
+  cmd_create "$2"
+  ;;
+delete)
+  if [ -z "${2:-}" ]; then
+    echo "Usage: claude-profile delete <name>" >&2
+    exit 1
+  fi
+  cmd_delete "$2"
+  ;;
+switch)
+  if [ -z "${2:-}" ]; then
+    echo "Usage: claude-profile switch <name>" >&2
+    exit 1
+  fi
+  cmd_switch "$2"
+  ;;
+help | --help | -h)
+  cmd_help
+  ;;
+"")
+  cmd_help
+  exit 1
+  ;;
+*)
+  echo "Unknown command: $1" >&2
+  echo "Run 'claude-profile help' for usage" >&2
+  exit 1
+  ;;
+esac
