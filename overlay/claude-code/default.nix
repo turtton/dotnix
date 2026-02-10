@@ -1,18 +1,21 @@
 inputs: self: prev: {
-  claude-code = self.callPackage (
-    {
-      additionalPaths ? [ ],
-    }:
+  claude-code =
     let
-      original = inputs.claude-code-overlay.packages.${prev.stdenv.hostPlatform.system}.default.override {
-        inherit additionalPaths;
-      };
+      claude-code = inputs.claude-code-overlay.packages.${prev.stdenv.hostPlatform.system}.default;
+      original =
+        inputs.claudebox.packages.${prev.stdenv.hostPlatform.system}.default.overrideAttrs
+          (old: {
+            inherit claude-code;
+          });
       claude-wrapper-script = self.substitute {
         src = ./claude-wrapper.sh;
         substitutions = [
           "--subst-var-by"
-          "claude-code"
-          "${original}/bin/claude"
+          "claudebox"
+          "${original}/bin/claudebox"
+          "--subst-var-by"
+          "claude-code-dir"
+          "${claude-code}/bin"
         ];
       };
       claude-wrapper = self.writeShellScriptBin "claude-wrapper" (
@@ -23,7 +26,7 @@ inputs: self: prev: {
       );
     in
     self.symlinkJoin {
-      inherit (original) pname version;
+      inherit (claude-code) pname version;
       name = "${original.name}-wrapped";
       paths = [
         original
@@ -31,10 +34,10 @@ inputs: self: prev: {
         claude-profile
       ];
       postBuild = ''
-        rm "$out/bin/claude"
         mv "$out/bin/claude-wrapper" "$out/bin/claude"
       '';
-      meta = original.meta;
-    }
-  ) { };
+      meta = original.meta // {
+        mainProgram = "claude";
+      };
+    };
 }

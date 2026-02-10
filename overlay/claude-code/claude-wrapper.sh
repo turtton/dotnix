@@ -1,11 +1,21 @@
 #!/usr/bin/env bash
 
-# Thin wrapper that sets CLAUDE_CONFIG_DIR based on active profile
-# and passes all arguments through to the real claude binary.
+# Thin wrapper that sets CLAUDE_CONFIG_DIR based on active profile.
+# Routes to claudebox (sandboxed) when no args, or to real claude when args are given.
+
+# Ensure the real claude binary is in PATH for claudebox to find
+export PATH="@claude-code-dir@${PATH:+:$PATH}"
+
+# Determine target: no args → claudebox (sandboxed), with args → real claude
+if [ $# -eq 0 ]; then
+  target="@claudebox@"
+else
+  target="@claude-code-dir@/claude"
+fi
 
 # Respect existing CLAUDE_CONFIG_DIR if set
 if [ -n "$CLAUDE_CONFIG_DIR" ]; then
-  exec @claude-code@ "$@"
+  exec "$target" "$@"
 fi
 
 CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
@@ -20,7 +30,7 @@ fi
 
 # If no current profile or it's empty, use default (no CLAUDE_CONFIG_DIR)
 if [ -z "$current_profile" ]; then
-  exec @claude-code@ "$@"
+  exec "$target" "$@"
 fi
 
 # Look up profile path from profiles.conf
@@ -30,13 +40,13 @@ fi
 
 # If profile not found in conf, fall back to default
 if [ -z "$profile_path" ]; then
-  exec @claude-code@ "$@"
+  exec "$target" "$@"
 fi
 
 # If profile directory doesn't exist, fall back to default
 if [ ! -d "$profile_path" ]; then
-  exec @claude-code@ "$@"
+  exec "$target" "$@"
 fi
 
 export CLAUDE_CONFIG_DIR="$profile_path"
-exec @claude-code@ "$@"
+exec "$target" "$@"
