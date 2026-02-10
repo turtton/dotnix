@@ -9,6 +9,7 @@ in
     inputs.rust-overlay.overlays.default
     inputs.rustowl.overlays.default
     inputs.nix-cachyos-kernel.overlays.pinned
+    inputs.llm-agents.overlays.default
     (import ./claude-code inputs)
     (import ./fix-dolphin-mime.nix)
     (import ./fix-ime.nix)

@@ -8,8 +8,8 @@
   home.packages =
     with pkgs;
     [
-      gemini-cli
-      codex
+      llm-agents.codex
+      llm-agents.opencode
     ]
     ++ lib.optionals hostPlatform.isLinux [
       claude-desktop
