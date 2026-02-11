@@ -94,7 +94,8 @@
       };
     };
     claudebox = {
-      url = "github:numtide/claudebox";
+      # url = "github:numtide/claudebox";
+      url = "github:turtton/claudebox";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         treefmt-nix.follows = "treefmt-nix";

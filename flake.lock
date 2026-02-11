@@ -203,15 +203,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1769290057,
-        "narHash": "sha256-4C+e9K0Mq+OfBIH9u/EdzrtXLXVqWBfndAC2BHU+JhE=",
-        "owner": "numtide",
+        "lastModified": 1770814998,
+        "narHash": "sha256-xyQWguMl28a6BaEZAxsnOTStPAkHLqFU9qOcCvyY5p8=",
+        "owner": "turtton",
         "repo": "claudebox",
-        "rev": "33a7705a6232acfe77397e20c8710456221277a1",
+        "rev": "8865c441f2f661d235009cc4c1205c73b953506f",
         "type": "github"
       },
       "original": {
-        "owner": "numtide",
+        "owner": "turtton",
         "repo": "claudebox",
         "type": "github"
       }
