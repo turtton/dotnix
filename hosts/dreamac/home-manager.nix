@@ -13,4 +13,5 @@
     ./../../home-manager/gui/term/alacritty.nix
     ./../../home-manager/wm/aerospace
   ];
+  packs.bitwarden.enable = true;
 }

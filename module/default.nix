@@ -1,5 +1,6 @@
 {
   imports = [
+    ./bitwarden
     ./niri
     ./winapps
     ./wlogout

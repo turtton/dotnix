@@ -3,6 +3,7 @@
   lib,
   config,
   isHomeManager,
+  hostPlatform,
   ...
 }:
 let
@@ -15,25 +16,32 @@ in
 
   config = lib.mkIf cfg.enable (
     if isHomeManager then
-      {
-        packs.rofi.enable = true;
+      lib.mkMerge (
+        [
+          {
+            packs.rofi.enable = true;
 
-        home.packages = [ pkgs.bemoji ];
+            home.packages = [ pkgs.bemoji ];
 
-        home.sessionVariables.BEMOJI_PICKER_CMD = "rofi -dmenu -i -p emoji";
+            home.sessionVariables.BEMOJI_PICKER_CMD = "rofi -dmenu -i -p emoji";
 
-        xdg.dataFile."bemoji/shortcodes.txt".source = ./bemoji.txt;
+            xdg.dataFile."bemoji/shortcodes.txt".source = ./bemoji.txt;
+          }
+        ]
+        ++ lib.optionals hostPlatform.isLinux [
+          {
+            # Hyprland keybinding
+            wayland.windowManager.hyprland.settings = lib.mkIf hyprlandEnabled {
+              bind = [ "$mainMod, period, exec, bemoji" ];
+            };
 
-        # Hyprland keybinding
-        wayland.windowManager.hyprland.settings = lib.mkIf hyprlandEnabled {
-          bind = [ "$mainMod, period, exec, bemoji" ];
-        };
-
-        # Niri keybinding
-        programs.niri.settings.binds = lib.mkIf niriEnabled {
-          "Mod+Period".action.spawn = [ "bemoji" ];
-        };
-      }
+            # Niri keybinding
+            programs.niri.settings.binds = lib.mkIf niriEnabled {
+              "Mod+Period".action.spawn = [ "bemoji" ];
+            };
+          }
+        ]
+      )
     else
       { }
   );

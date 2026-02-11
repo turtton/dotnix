@@ -18,7 +18,6 @@
     ++ [
       ./browser.nix
       ./media.nix
-      ./bitwarden.nix
     ];
 
   home.packages =
