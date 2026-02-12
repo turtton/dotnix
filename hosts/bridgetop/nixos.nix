@@ -36,7 +36,7 @@
       };
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = pkgs.linuxKernel.packages.linux_xanmod;
+    kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
   };
 
   swapDevices = [
