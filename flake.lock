@@ -203,11 +203,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770814998,
-        "narHash": "sha256-xyQWguMl28a6BaEZAxsnOTStPAkHLqFU9qOcCvyY5p8=",
+        "lastModified": 1770908304,
+        "narHash": "sha256-c9R9ooviMd2P9TRgwg9FNkKnxAN3K/1QGcO72zaC72k=",
         "owner": "turtton",
         "repo": "claudebox",
-        "rev": "8865c441f2f661d235009cc4c1205c73b953506f",
+        "rev": "f8fb5ef726d5f78e828ed202fa1a9d18b1c9b768",
         "type": "github"
       },
       "original": {
