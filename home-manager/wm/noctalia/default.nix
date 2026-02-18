@@ -64,6 +64,7 @@
               compactMode = false;
               showCpuTemp = true;
               showDiskUsage = true;
+              showDiskAsPercent = true;
               showCpuUsage = true;
               showGpuUsage = true;
               showMemoryUsage = true;
