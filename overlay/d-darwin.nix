@@ -10,5 +10,6 @@ in
     inputs.rustowl.overlays.default
     inputs.llm-agents.overlays.default
     (import ./claude-code inputs)
+    (import ./codex)
   ];
 }

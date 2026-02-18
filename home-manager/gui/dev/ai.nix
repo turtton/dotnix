@@ -8,6 +8,7 @@
   home.packages =
     with pkgs;
     [
+      codex-latest
       llm-agents.codex
       llm-agents.opencode
     ]

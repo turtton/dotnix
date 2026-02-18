@@ -200,6 +200,7 @@
         packages = {
           rustowl = rustowl.packages.${system}.default;
           claude-code = overlays.claude-code;
+          codex-latest = overlays.codex-latest;
         }
         // lib.optionalAttrs stdenv.hostPlatform.isLinux (
           let

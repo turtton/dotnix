@@ -11,6 +11,7 @@ in
     inputs.nix-cachyos-kernel.overlays.pinned
     inputs.llm-agents.overlays.default
     (import ./claude-code inputs)
+    (import ./codex)
     (import ./fix-dolphin-mime.nix)
     (import ./fix-ime.nix)
     (import ./force-wayland.nix inputs)
