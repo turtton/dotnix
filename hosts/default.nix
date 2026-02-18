@@ -113,6 +113,8 @@ let
                       "adbusers"
                       "kvm"
                       "docker"
+                      "render"
+                      "video"
                     ];
                   };
                 })

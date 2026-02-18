@@ -13,6 +13,10 @@
     };
   };
   services.lact.enable = true;
+  services.ollama = {
+    enable = true;
+    rocmOverrideGfx = "11.0.0";
+  };
   systemd.tmpfiles.rules =
     let
       rocmEnv = pkgs.symlinkJoin {
@@ -30,5 +34,5 @@
   environment.systemPackages = with pkgs; [
     clinfo
   ];
-
+  nixpkgs.config.rocmSupport = true;
 }
