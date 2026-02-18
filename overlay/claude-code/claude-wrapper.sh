@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
 # Thin wrapper that sets CLAUDE_CONFIG_DIR based on active profile.
-# Routes to claudebox (sandboxed) when no args, or to real claude when args are given.
+# Routes to sandbox (sandboxed) when no args, or to real claude when args are given.
 
-# Ensure the real claude binary is in PATH for claudebox to find
+# Ensure the real claude binary is in PATH
 export PATH="@claude-code-dir@${PATH:+:$PATH}"
 
-# Determine target: no args → claudebox (sandboxed), with args → real claude
+# Determine target: no args → sandbox (sandboxed), with args → real claude
 if [ $# -eq 0 ]; then
-  target="@claudebox@"
+  target="@sandbox@"
 else
   target="@claude-code-dir@/claude"
 fi

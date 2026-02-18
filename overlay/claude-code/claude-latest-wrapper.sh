@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Wrapper that fetches the latest claude-code from github:ryoppippi/claude-code-overlay
-# at runtime and routes it through claudebox (sandboxed) or directly.
+# at runtime and routes it through sandbox (sandboxed) or directly.
 
 set -euo pipefail
 
@@ -14,12 +14,13 @@ if [ -z "$claude_code_store" ] || [ ! -d "$claude_code_store/bin" ]; then
   exit 1
 fi
 
-# Ensure the real claude binary is in PATH for claudebox to find
+# Ensure the real claude binary is in PATH
 export PATH="${claude_code_store}/bin${PATH:+:$PATH}"
 
-# Determine target: no args → claudebox (sandboxed), with args → real claude
+# Determine target: no args → sandbox (sandboxed), with args → real claude
 if [ $# -eq 0 ]; then
-  target="@claudebox@"
+  export CLAUDE_CODE_BIN="${claude_code_store}/bin/claude"
+  target="@sandbox@"
 else
   target="${claude_code_store}/bin/claude"
 fi

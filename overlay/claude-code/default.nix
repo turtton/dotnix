@@ -2,17 +2,26 @@ inputs: self: prev: {
   claude-code =
     let
       claude-code = inputs.claude-code-overlay.packages.${prev.stdenv.hostPlatform.system}.default;
-      original =
-        inputs.claudebox.packages.${prev.stdenv.hostPlatform.system}.default.overrideAttrs
-          (old: {
-            inherit claude-code;
-          });
+      sandbox = self.writeShellApplication {
+        name = "claude-sandbox";
+        runtimeInputs = with self; [
+          bubblewrap
+          jq
+          git
+          gnupg
+          coreutils
+        ];
+        checkPhase = "";
+        text = builtins.replaceStrings [ "@claude-code-dir@" ] [ "${claude-code}/bin" ] (
+          builtins.readFile ./sandbox.sh
+        );
+      };
       claude-wrapper-script = self.substitute {
         src = ./claude-wrapper.sh;
         substitutions = [
           "--subst-var-by"
-          "claudebox"
-          "${original}/bin/claudebox"
+          "sandbox"
+          "${sandbox}/bin/claude-sandbox"
           "--subst-var-by"
           "claude-code-dir"
           "${claude-code}/bin"
@@ -25,8 +34,8 @@ inputs: self: prev: {
         src = ./claude-latest-wrapper.sh;
         substitutions = [
           "--subst-var-by"
-          "claudebox"
-          "${original}/bin/claudebox"
+          "sandbox"
+          "${sandbox}/bin/claude-sandbox"
         ];
       };
       claude-latest-wrapper = self.writeShellScriptBin "claude-latest-wrapper" (
@@ -38,9 +47,8 @@ inputs: self: prev: {
     in
     self.symlinkJoin {
       inherit (claude-code) pname version;
-      name = "${original.name}-wrapped";
+      name = "${claude-code.name}-wrapped";
       paths = [
-        original
         claude-wrapper
         claude-latest-wrapper
         claude-profile
@@ -49,7 +57,7 @@ inputs: self: prev: {
         mv "$out/bin/claude-wrapper" "$out/bin/claude"
         mv "$out/bin/claude-latest-wrapper" "$out/bin/claude-latest"
       '';
-      meta = original.meta // {
+      meta = claude-code.meta // {
         mainProgram = "claude";
       };
     };

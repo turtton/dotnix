@@ -93,14 +93,6 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
-    claudebox = {
-      # url = "github:numtide/claudebox";
-      url = "github:turtton/claudebox";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        treefmt-nix.follows = "treefmt-nix";
-      };
-    };
     rustowl = {
       url = "github:nix-community/rustowl-flake";
       inputs = {
