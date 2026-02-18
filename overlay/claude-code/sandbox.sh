@@ -106,6 +106,14 @@ git_config() {
   fi
 }
 
+# GitHub CLI: ~/.config/gh/ を読み取り専用で公開
+gh_cli() {
+  if [[ -d "${HOME}/.config/gh" ]]; then
+    mkdir -p "${CLAUDE_HOME}/.config"
+    BWRAP_ARGS+=(--ro-bind "${HOME}/.config/gh" "${HOME}/.config/gh")
+  fi
+}
+
 # SSH エージェント: SSH_AUTH_SOCK を読み取り専用で公開
 ssh_agent() {
   if [[ -n ${SSH_AUTH_SOCK:-} && -e $SSH_AUTH_SOCK ]]; then
@@ -202,6 +210,7 @@ isolated_home
 namespace_and_env
 project_mount
 git_config
+gh_cli
 ssh_agent
 gpg_agent
 ide_integration
