@@ -241,6 +241,7 @@
             teams-for-linux = overlays.teams-for-linux;
             vscode = overlays.vscode;
             zoom-us = overlays.zoom-us;
+            opencode = overlays.opencode;
             cachyos-kernel-latest = overlays.cachyosKernels.linuxPackages-cachyos-latest.kernel;
             noctalia-shell = noctalia.packages.${system}.default;
             xwayland-satellite = niri-flake.packages.${system}.xwayland-satellite-unstable;
