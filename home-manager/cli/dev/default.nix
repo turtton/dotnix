@@ -46,11 +46,9 @@ in
     ++ pkgs.lib.optionals hostPlatform.isLinux [
       stack-wrapped
     ];
-  programs.nix-index-database = {
-    enable = true;
-    # nix run wrapper using ,(comma)
-    comma.enable = true;
-  };
+  # nix run wrapper using ,(comma)
+  programs.nix-index-database.comma.enable = true;
+  programs.nix-index.enable = true;
 
   programs.zsh.initContent = ''
     source <(ghr shell)
