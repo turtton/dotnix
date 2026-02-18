@@ -139,6 +139,10 @@
         treefmt-nix.follows = "treefmt-nix";
       };
     };
+    opencode = {
+      url = "github:anomalyco/opencode";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     inputs@{
@@ -201,6 +205,7 @@
           rustowl = rustowl.packages.${system}.default;
           claude-code = overlays.claude-code;
           codex-latest = overlays.codex-latest;
+          opencode-latest = overlays.opencode-latest;
         }
         // lib.optionalAttrs stdenv.hostPlatform.isLinux (
           let

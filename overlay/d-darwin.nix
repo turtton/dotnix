@@ -11,5 +11,6 @@ in
     inputs.llm-agents.overlays.default
     (import ./claude-code inputs)
     (import ./codex)
+    (import ./opencode inputs)
   ];
 }

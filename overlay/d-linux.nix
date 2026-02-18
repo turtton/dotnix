@@ -12,6 +12,7 @@ in
     inputs.llm-agents.overlays.default
     (import ./claude-code inputs)
     (import ./codex)
+    (import ./opencode inputs)
     (import ./fix-dolphin-mime.nix)
     (import ./fix-ime.nix)
     (import ./force-wayland.nix inputs)

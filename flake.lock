@@ -1584,6 +1584,26 @@
         "type": "github"
       }
     },
+    "opencode": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1771403068,
+        "narHash": "sha256-jdRV+Qd0jPAU2clTjGEUnGpGk1dFXpUTFh0xKcli/BM=",
+        "owner": "anomalyco",
+        "repo": "opencode",
+        "rev": "6cd3a5902260764899a566b33d7f76123b9c9800",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anomalyco",
+        "repo": "opencode",
+        "type": "github"
+      }
+    },
     "plasma-manager": {
       "inputs": {
         "home-manager": [
@@ -1684,6 +1704,7 @@
         "nixpkgs-staging-next": "nixpkgs-staging-next",
         "noctalia": "noctalia",
         "nvfetcher": "nvfetcher",
+        "opencode": "opencode",
         "plasma-manager": "plasma-manager",
         "rust-overlay": "rust-overlay_2",
         "rustowl": "rustowl",

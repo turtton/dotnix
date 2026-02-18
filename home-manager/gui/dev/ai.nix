@@ -9,8 +9,9 @@
     with pkgs;
     [
       codex-latest
+      opencode-latest
       llm-agents.codex
-      llm-agents.opencode
+      opencode
     ]
     ++ lib.optionals hostPlatform.isLinux [
       claude-desktop
