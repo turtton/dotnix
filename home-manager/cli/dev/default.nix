@@ -42,12 +42,16 @@ in
       # Git Repository Management
       siketyan-ghr
 
-      # nix run wrapper using ,(comma)
-      comma
     ]
     ++ pkgs.lib.optionals hostPlatform.isLinux [
       stack-wrapped
     ];
+  programs.nix-index-database = {
+    enable = true;
+    # nix run wrapper using ,(comma)
+    comma.enable = true;
+  };
+
   programs.zsh.initContent = ''
     source <(ghr shell)
     source <(ghr shell --completion bash)

@@ -78,6 +78,7 @@ let
               sharedModules = homeModules ++ [
                 ./../module
                 sharedOptions
+                inputs.nix-index-database.homeModules.default
               ];
               extraSpecialArgs = {
                 inherit
