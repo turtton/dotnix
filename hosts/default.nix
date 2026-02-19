@@ -177,6 +177,7 @@ let
             useUserPackages = true;
             sharedModules = [
               ./../module
+              inputs.nix-index-database.homeModules.default
             ];
             users."${username}" = homeModule // {
               home = {
