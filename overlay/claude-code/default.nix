@@ -2,18 +2,21 @@ inputs: self: prev: {
   claude-code =
     let
       claude-code = inputs.claude-code-overlay.packages.${prev.stdenv.hostPlatform.system}.default;
+      isDarwin = prev.stdenv.isDarwin;
       sandbox = self.writeShellApplication {
         name = "claude-sandbox";
-        runtimeInputs = with self; [
-          bubblewrap
-          jq
-          git
-          gnupg
-          coreutils
-        ];
+        runtimeInputs =
+          with self;
+          [
+            jq
+            git
+            gnupg
+            coreutils
+          ]
+          ++ self.lib.optionals (!isDarwin) [ self.bubblewrap ];
         checkPhase = "";
         text = builtins.replaceStrings [ "@claude-code-dir@" ] [ "${claude-code}/bin" ] (
-          builtins.readFile ./sandbox.sh
+          builtins.readFile (if isDarwin then ./sandbox-darwin.sh else ./sandbox.sh)
         );
       };
       claude-wrapper-script = self.substitute {
