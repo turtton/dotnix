@@ -239,6 +239,13 @@ gpg_agent
 ide_integration
 chrome_integration
 
+# プロジェクト固有のサンドボックス拡張: .claude/sandbox-extra.sh があれば読み込む
+SANDBOX_EXTRA="${REPO_ROOT}/.claude/sandbox-extra.sh"
+if [[ -f $SANDBOX_EXTRA ]]; then
+  # shellcheck source=/dev/null
+  source "$SANDBOX_EXTRA"
+fi
+
 # サンドボックス内で実行するスクリプトの組み立て
 if [[ -n ${IDE_AUTH_TOKEN:-} ]]; then
   INNER_SCRIPT="$(
