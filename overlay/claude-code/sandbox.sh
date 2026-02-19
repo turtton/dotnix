@@ -193,6 +193,27 @@ ide_integration() {
   fi
 }
 
+# Docker ソケット: Docker CLI からデーモンに接続可能にする
+docker_socket() {
+  # 標準の Docker ソケット
+  local docker_sock="/var/run/docker.sock"
+  if [[ -S $docker_sock ]]; then
+    BWRAP_ARGS+=(--bind "$docker_sock" "$docker_sock")
+  fi
+
+  # Rootless Docker (XDG_RUNTIME_DIR/docker.sock)
+  local rootless_sock="${XDG_RUNTIME}/docker.sock"
+  if [[ -S $rootless_sock ]]; then
+    BWRAP_ARGS+=(--bind "$rootless_sock" "$rootless_sock")
+  fi
+
+  # Docker 設定 (~/.docker) を読み取り専用で公開
+  if [[ -d "${HOME}/.docker" ]]; then
+    mkdir -p "${CLAUDE_HOME}/.docker"
+    BWRAP_ARGS+=(--ro-bind "${HOME}/.docker" "${HOME}/.docker")
+  fi
+}
+
 # Chrome 拡張連携: ブラウザブリッジソケットと NativeMessagingHosts を公開
 chrome_integration() {
   # ブリッジ用 Unix ソケットディレクトリ
@@ -237,6 +258,7 @@ dbus_session
 ssh_agent
 gpg_agent
 ide_integration
+docker_socket
 chrome_integration
 
 # プロジェクト固有のサンドボックス拡張: .claude/sandbox-extra.sh があれば読み込む
