@@ -228,7 +228,7 @@
             isaacsim-webrtc-streaming-client = overlays.isaacsim-webrtc-streaming-client;
             claude-desktop = overlays.claude-desktop;
             dolphin = overlays.kdePackages.dolphin;
-            # wifiman-desktop = overlays.wifiman-desktop;
+            wifiman-desktop = overlays.wifiman-desktop;
             # pake-cli = overlays.pake-cli;
             # fastmail = overlays.fastmail;
             # Force Wayland IME system
