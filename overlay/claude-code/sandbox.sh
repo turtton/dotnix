@@ -114,6 +114,28 @@ gh_cli() {
   fi
 }
 
+# D-Bus セッションバス: キーリングアクセス等に必要
+dbus_session() {
+  local socket_path=""
+
+  # DBUS_SESSION_BUS_ADDRESS から Unix ソケットパスを抽出
+  if [[ -n ${DBUS_SESSION_BUS_ADDRESS:-} ]]; then
+    socket_path="$(echo "$DBUS_SESSION_BUS_ADDRESS" | sed -n 's/^unix:path=\([^,]*\).*/\1/p')"
+  fi
+
+  # フォールバック: XDG_RUNTIME_DIR/bus
+  if [[ -z $socket_path ]]; then
+    socket_path="${XDG_RUNTIME}/bus"
+  fi
+
+  if [[ -S $socket_path ]]; then
+    BWRAP_ARGS+=(
+      --ro-bind "$socket_path" "$socket_path"
+      --setenv DBUS_SESSION_BUS_ADDRESS "unix:path=${socket_path}"
+    )
+  fi
+}
+
 # SSH エージェント: SSH_AUTH_SOCK を読み取り専用で公開
 ssh_agent() {
   if [[ -n ${SSH_AUTH_SOCK:-} && -e $SSH_AUTH_SOCK ]]; then
@@ -211,6 +233,7 @@ namespace_and_env
 project_mount
 git_config
 gh_cli
+dbus_session
 ssh_agent
 gpg_agent
 ide_integration
