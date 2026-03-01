@@ -1,7 +1,13 @@
 inputs: self: prev: {
   opencode =
     let
-      opencode = inputs.opencode.packages.${prev.stdenv.hostPlatform.system}.default;
+      opencode =
+        (inputs.opencode.packages.${prev.stdenv.hostPlatform.system}.default).overrideAttrs
+          (old: {
+            nativeBuildInputs = map (dep: if (dep.pname or "") == "bun" then self.bun else dep) (
+              old.nativeBuildInputs or [ ]
+            );
+          });
       isDarwin = prev.stdenv.isDarwin;
 
       # Sandbox script (Linux only)

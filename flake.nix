@@ -142,8 +142,7 @@
     opencode = {
       # Use PR #15401 commit until merged: fix .github/TEAM_MEMBERS not included
       url = "github:anomalyco/opencode/8353e6cb056aff380ae9312caab8354ebef6a08b";
-      # Use nixpkgs with bun 1.3.10+ (commit 3f0336406035444b4a24b942788334af5f906259)
-      inputs.nixpkgs.url = "github:NixOS/nixpkgs/3f0336406035444b4a24b942788334af5f906259";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
   outputs =
@@ -171,7 +170,20 @@
     // flake-utils.lib.eachDefaultSystem (
       system:
       let
-        pkgs = import nixpkgs {
+        remoteNixpkgsPatches = import ./nixpkgs-patches.nix;
+        nixpkgsSrc =
+          if remoteNixpkgsPatches == [ ] then
+            nixpkgs
+          else
+            let
+              originPkgs = nixpkgs.legacyPackages.${system};
+            in
+            originPkgs.applyPatches {
+              name = "nixpkgs-patched";
+              src = nixpkgs;
+              patches = map originPkgs.fetchpatch remoteNixpkgsPatches;
+            };
+        pkgs = import nixpkgsSrc {
           inherit system;
           config.allowUnfree = true;
           overlays = [ (import rust-overlay) ];

@@ -1,12 +1,6 @@
 inputs:
 let
-  remoteNixpkgsPatches = [
-    # {
-    #   meta.description = "Fix argocd offlineCache hash";
-    #   url = "https://github.com/NixOS/nixpkgs/pull/490808.patch";
-    #   hash = "sha256-OLxvGWxxnmbY3403MEQxFgiodNY8S7R4hyVr3nClXgg=";
-    # }
-  ];
+  remoteNixpkgsPatches = import ../nixpkgs-patches.nix;
   stateVersion = "23.11";
   createSystem =
     {
