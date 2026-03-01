@@ -185,10 +185,10 @@ docker_socket() {
     BWRAP_ARGS+=(--bind "$rootless_sock" "$rootless_sock")
   fi
 
-  # Docker 設定 (~/.docker) を読み取り専用で公開
+  # Docker 設定 (~/.docker) を公開
   if [[ -d "${HOME}/.docker" ]]; then
     mkdir -p "${OPENCODE_HOME}/.docker"
-    BWRAP_ARGS+=(--ro-bind "${HOME}/.docker" "${HOME}/.docker")
+    BWRAP_ARGS+=(--bind "${HOME}/.docker" "${HOME}/.docker")
   fi
 }
 
