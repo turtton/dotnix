@@ -68,7 +68,7 @@ isolated_home() {
     --tmpfs /tmp
     --bind "$OPENCODE_HOME" "$HOME"
   )
-  
+
   # OpenCode 設定ファイルが存在する場合のみマウント
   if [[ -f $OPENCODE_JSON ]]; then
     mkdir -p "${OPENCODE_HOME}/.config/opencode"
