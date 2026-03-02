@@ -73,22 +73,6 @@ isolated_home() {
   if [[ -d $OPENCODE_CONFIG ]]; then
     mkdir -p "${OPENCODE_HOME}/.config/opencode"
     BWRAP_ARGS+=(--bind "$OPENCODE_CONFIG" "${HOME}/.config/opencode")
-
-    # AGENTS.md のシンボリックリンクをたどってマウント
-    local agents_md="${OPENCODE_CONFIG}/AGENTS.md"
-    if [[ -L $agents_md ]]; then
-      local target_file
-      target_file="$(readlink -f "$agents_md")"
-      if [[ -f $target_file ]]; then
-        local target_dir
-        target_dir="$(dirname "$target_file")"
-        # リンク先のディレクトリが $HOME 配下にある場合のみマウント
-        if [[ $target_file == "$HOME/"* ]]; then
-          mkdir -p "${OPENCODE_HOME}/${target_dir#"$HOME/"}"
-          BWRAP_ARGS+=(--ro-bind "$target_file" "${target_file}")
-        fi
-      fi
-    fi
   fi
 
   # OpenCode データディレクトリ (auth.json等を含む) をマウント
