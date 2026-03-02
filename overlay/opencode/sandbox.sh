@@ -69,10 +69,33 @@ isolated_home() {
     --bind "$OPENCODE_HOME" "$HOME"
   )
 
-  # OpenCode 設定ファイルが存在する場合のみマウント
-  if [[ -f $OPENCODE_JSON ]]; then
+  # OpenCode 設定ディレクトリ全体をマウント (opencode.json, AGENTS.md等)
+  if [[ -d $OPENCODE_CONFIG ]]; then
     mkdir -p "${OPENCODE_HOME}/.config/opencode"
-    BWRAP_ARGS+=(--bind "$OPENCODE_JSON" "${HOME}/.config/opencode/opencode.json")
+    BWRAP_ARGS+=(--bind "$OPENCODE_CONFIG" "${HOME}/.config/opencode")
+
+    # AGENTS.md のシンボリックリンクをたどってマウント
+    local agents_md="${OPENCODE_CONFIG}/AGENTS.md"
+    if [[ -L $agents_md ]]; then
+      local target_file
+      target_file="$(readlink -f "$agents_md")"
+      if [[ -f $target_file ]]; then
+        local target_dir
+        target_dir="$(dirname "$target_file")"
+        # リンク先のディレクトリが $HOME 配下にある場合のみマウント
+        if [[ $target_file == "$HOME/"* ]]; then
+          mkdir -p "${OPENCODE_HOME}/${target_dir#"$HOME/"}"
+          BWRAP_ARGS+=(--ro-bind "$target_file" "${target_file}")
+        fi
+      fi
+    fi
+  fi
+
+  # OpenCode データディレクトリ (auth.json等を含む) をマウント
+  local opencode_data="${HOME}/.local/share/opencode"
+  if [[ -d $opencode_data ]]; then
+    mkdir -p "${OPENCODE_HOME}/.local/share/opencode"
+    BWRAP_ARGS+=(--bind "$opencode_data" "${HOME}/.local/share/opencode")
   fi
 }
 
@@ -226,8 +249,8 @@ fi
 # サンドボックス内で実行するスクリプトの組み立て
 INNER_SCRIPT="$(
   cat <<-SCRIPT
-	cd '${PROJECT_DIR}'
-	exec '${OPENCODE_BIN}' "$@"
+		cd '${PROJECT_DIR}'
+		exec '${OPENCODE_BIN}' "$@"
 	SCRIPT
 )"
 
