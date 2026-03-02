@@ -13,6 +13,7 @@ in
     (import ./claude-code inputs)
     (import ./codex)
     (import ./opencode inputs)
+    (import ./fix-android-studio-launcher.nix)
     (import ./fix-dolphin-mime.nix)
     (import ./fix-ime.nix)
     (import ./force-wayland.nix inputs)
