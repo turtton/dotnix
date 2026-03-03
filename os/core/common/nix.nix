@@ -20,7 +20,6 @@
         # "https://turtton.cachix.org"
         "https://hyprland.cachix.org"
         "https://ags.cachix.org"
-        "https://attic.turtton.net/home"
         "https://attic.taile2777.ts.net/home"
       ];
       trusted-public-keys = [
