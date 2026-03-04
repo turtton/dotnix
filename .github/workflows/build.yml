@@ -45,7 +45,7 @@ jobs:
         uses: icewind1991/attic-action@5b92b73fc87088f54ee787189f87f57418af3f09 # v1.2.1
         with:
           name: home
-          instance: https://attic-ci.taile2777.ts.net
+          instance: http://attic-ci.taile2777.ts.net:8080
           authToken: ${{ secrets.ATTIC_TOKEN }}
       - name: GC
         run: |
@@ -78,7 +78,7 @@ jobs:
         uses: icewind1991/attic-action@5b92b73fc87088f54ee787189f87f57418af3f09 # v1.2.1
         with:
           name: home
-          instance: https://attic-ci.taile2777.ts.net
+          instance: http://attic-ci.taile2777.ts.net:8080
           authToken: ${{ secrets.ATTIC_TOKEN }}
       - name: GC
         run: |
@@ -152,7 +152,7 @@ jobs:
         uses: icewind1991/attic-action@5b92b73fc87088f54ee787189f87f57418af3f09 # v1.2.1
         with:
           name: home
-          instance: https://attic-ci.taile2777.ts.net
+          instance: http://attic-ci.taile2777.ts.net:8080
           authToken: ${{ secrets.ATTIC_TOKEN }}
       - name: GC
         run: |
@@ -194,7 +194,7 @@ jobs:
         uses: icewind1991/attic-action@5b92b73fc87088f54ee787189f87f57418af3f09 # v1.2.1
         with:
           name: home
-          instance: https://attic-ci.taile2777.ts.net
+          instance: http://attic-ci.taile2777.ts.net:8080
           authToken: ${{ secrets.ATTIC_TOKEN }}
       - name: GC
         run: |
