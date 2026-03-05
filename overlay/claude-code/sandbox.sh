@@ -65,7 +65,7 @@ nix_store() {
 # 隔離ホームディレクトリ: 一時ホームに Claude 設定をマウント
 isolated_home() {
   BWRAP_ARGS+=(
-    --tmpfs /tmp
+    --perms 1777 --tmpfs /tmp
     --bind "$CLAUDE_HOME" "$HOME"
     --bind "$CLAUDE_CONFIG" "${HOME}/.claude"
     --bind "$CLAUDE_JSON" "${HOME}/.claude.json"
@@ -228,6 +228,11 @@ tmux_support() {
   if [[ -n ${TERMINFO_DIRS:-} ]]; then
     BWRAP_ARGS+=(--setenv TERMINFO_DIRS "$TERMINFO_DIRS")
   fi
+
+  # tmux ソケットディレクトリの事前作成フラグ
+  # bwrap の PID namespace 内では tmux サーバーの fork+daemonize 中に
+  # mkdir が完了する前にプロセスが終了するため、INNER_SCRIPT で事前に作成する
+  TMUX_ENABLED=1
 }
 
 # Chrome 拡張連携: ブラウザブリッジソケットと NativeMessagingHosts を公開
@@ -286,10 +291,17 @@ if [[ -f $SANDBOX_EXTRA ]]; then
 fi
 
 # サンドボックス内で実行するスクリプトの組み立て
+INNER_PREAMBLE=""
+
+# tmux ソケットディレクトリの事前作成 (PID namespace 内で tmux が mkdir できないため)
+if [[ -n ${TMUX_ENABLED:-} ]]; then
+  INNER_PREAMBLE+='mkdir -p -m 0700 /tmp/tmux-$(id -u)'$'\n'
+fi
+
 if [[ -n ${IDE_AUTH_TOKEN:-} ]]; then
   INNER_SCRIPT="$(
     cat <<-SCRIPT
-		exec 3< '${HOME}/.ide-auth-token'
+		${INNER_PREAMBLE}exec 3< '${HOME}/.ide-auth-token'
 		rm -f '${HOME}/.ide-auth-token'
 		export CLAUDE_CODE_WEBSOCKET_AUTH_FILE_DESCRIPTOR=3
 		cd '${PROJECT_DIR}'
@@ -299,7 +311,7 @@ if [[ -n ${IDE_AUTH_TOKEN:-} ]]; then
 else
   INNER_SCRIPT="$(
     cat <<-SCRIPT
-		cd '${PROJECT_DIR}'
+		${INNER_PREAMBLE}cd '${PROJECT_DIR}'
 		exec '${CLAUDE_CODE_BIN}' --dangerously-skip-permissions
 		SCRIPT
   )"
