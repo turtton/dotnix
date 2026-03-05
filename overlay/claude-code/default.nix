@@ -13,7 +13,10 @@ inputs: self: prev: {
             gnupg
             coreutils
           ]
-          ++ self.lib.optionals (!isDarwin) [ self.bubblewrap ];
+          ++ self.lib.optionals (!isDarwin) [
+            self.bubblewrap
+            self.tmux
+          ];
         checkPhase = "";
         text = builtins.replaceStrings [ "@claude-code-dir@" ] [ "${claude-code}/bin" ] (
           builtins.readFile (if isDarwin then ./sandbox-darwin.sh else ./sandbox.sh)

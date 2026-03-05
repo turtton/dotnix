@@ -214,6 +214,22 @@ docker_socket() {
   fi
 }
 
+# tmux サポート: Agent Teams のスプリットペインモードに必要
+tmux_support() {
+  # TERM を転送 (tmux のターミナル検出に必要)
+  if [[ -n ${TERM:-} ]]; then
+    BWRAP_ARGS+=(--setenv TERM "$TERM")
+  fi
+
+  # TERMINFO / TERMINFO_DIRS を転送 (NixOS のterminfo検索に必要)
+  if [[ -n ${TERMINFO:-} ]]; then
+    BWRAP_ARGS+=(--setenv TERMINFO "$TERMINFO")
+  fi
+  if [[ -n ${TERMINFO_DIRS:-} ]]; then
+    BWRAP_ARGS+=(--setenv TERMINFO_DIRS "$TERMINFO_DIRS")
+  fi
+}
+
 # Chrome 拡張連携: ブラウザブリッジソケットと NativeMessagingHosts を公開
 chrome_integration() {
   # ブリッジ用 Unix ソケットディレクトリ
@@ -259,6 +275,7 @@ ssh_agent
 gpg_agent
 ide_integration
 docker_socket
+tmux_support
 chrome_integration
 
 # プロジェクト固有のサンドボックス拡張: .claude/sandbox-extra.sh があれば読み込む
