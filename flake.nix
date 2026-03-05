@@ -141,7 +141,7 @@
     };
     opencode = {
       # Use PR #15401 commit until merged: fix .github/TEAM_MEMBERS not included
-      url = "github:anomalyco/opencode/8353e6cb056aff380ae9312caab8354ebef6a08b";
+      url = "github:anomalyco/opencode";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
