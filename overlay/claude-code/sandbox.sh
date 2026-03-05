@@ -305,14 +305,14 @@ if [[ -n ${IDE_AUTH_TOKEN:-} ]]; then
 		rm -f '${HOME}/.ide-auth-token'
 		export CLAUDE_CODE_WEBSOCKET_AUTH_FILE_DESCRIPTOR=3
 		cd '${PROJECT_DIR}'
-		exec '${CLAUDE_CODE_BIN}' --dangerously-skip-permissions
+		exec tmux new-session -- '${CLAUDE_CODE_BIN}' --dangerously-skip-permissions
 		SCRIPT
   )"
 else
   INNER_SCRIPT="$(
     cat <<-SCRIPT
 		${INNER_PREAMBLE}cd '${PROJECT_DIR}'
-		exec '${CLAUDE_CODE_BIN}' --dangerously-skip-permissions
+		exec tmux new-session -- '${CLAUDE_CODE_BIN}' --dangerously-skip-permissions
 		SCRIPT
   )"
 fi
