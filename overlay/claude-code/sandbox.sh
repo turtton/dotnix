@@ -214,9 +214,9 @@ docker_socket() {
   fi
 }
 
-# tmux サポート: Agent Teams のスプリットペインモードに必要
-tmux_support() {
-  # TERM を転送 (tmux のターミナル検出に必要)
+# ターミナル環境の転送
+terminal_env() {
+  # TERM を転送
   if [[ -n ${TERM:-} ]]; then
     BWRAP_ARGS+=(--setenv TERM "$TERM")
   fi
@@ -228,11 +228,6 @@ tmux_support() {
   if [[ -n ${TERMINFO_DIRS:-} ]]; then
     BWRAP_ARGS+=(--setenv TERMINFO_DIRS "$TERMINFO_DIRS")
   fi
-
-  # tmux ソケットディレクトリの事前作成フラグ
-  # bwrap の PID namespace 内では tmux サーバーの fork+daemonize 中に
-  # mkdir が完了する前にプロセスが終了するため、INNER_SCRIPT で事前に作成する
-  TMUX_ENABLED=1
 }
 
 # Chrome 拡張連携: ブラウザブリッジソケットと NativeMessagingHosts を公開
@@ -280,7 +275,7 @@ ssh_agent
 gpg_agent
 ide_integration
 docker_socket
-tmux_support
+terminal_env
 chrome_integration
 
 # プロジェクト固有のサンドボックス拡張: .claude/sandbox-extra.sh があれば読み込む
@@ -291,28 +286,21 @@ if [[ -f $SANDBOX_EXTRA ]]; then
 fi
 
 # サンドボックス内で実行するスクリプトの組み立て
-INNER_PREAMBLE=""
-
-# tmux ソケットディレクトリの事前作成 (PID namespace 内で tmux が mkdir できないため)
-if [[ -n ${TMUX_ENABLED:-} ]]; then
-  INNER_PREAMBLE+='mkdir -p -m 0700 /tmp/tmux-$(id -u)'$'\n'
-fi
-
 if [[ -n ${IDE_AUTH_TOKEN:-} ]]; then
   INNER_SCRIPT="$(
     cat <<-SCRIPT
-		${INNER_PREAMBLE}exec 3< '${HOME}/.ide-auth-token'
+		exec 3< '${HOME}/.ide-auth-token'
 		rm -f '${HOME}/.ide-auth-token'
 		export CLAUDE_CODE_WEBSOCKET_AUTH_FILE_DESCRIPTOR=3
 		cd '${PROJECT_DIR}'
-		exec tmux new-session -- '${CLAUDE_CODE_BIN}' --dangerously-skip-permissions
+		exec '${CLAUDE_CODE_BIN}' --dangerously-skip-permissions
 		SCRIPT
   )"
 else
   INNER_SCRIPT="$(
     cat <<-SCRIPT
-		${INNER_PREAMBLE}cd '${PROJECT_DIR}'
-		exec tmux new-session -- '${CLAUDE_CODE_BIN}' --dangerously-skip-permissions
+		cd '${PROJECT_DIR}'
+		exec '${CLAUDE_CODE_BIN}' --dangerously-skip-permissions
 		SCRIPT
   )"
 fi

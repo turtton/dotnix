@@ -15,7 +15,6 @@ inputs: self: prev: {
           ]
           ++ self.lib.optionals (!isDarwin) [
             self.bubblewrap
-            self.tmux
           ];
         checkPhase = "";
         text = builtins.replaceStrings [ "@claude-code-dir@" ] [ "${claude-code}/bin" ] (
