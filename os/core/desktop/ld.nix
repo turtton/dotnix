@@ -117,6 +117,10 @@
       # used by hyprpanel
       libgtop
 
+      # used by Android emulator
+      libpng
+      libxkbfile
+
       # libraries not on the upstream include list, but nevertheless expected
       # by at least one appimage
       libtool.lib # for Synfigstudio
