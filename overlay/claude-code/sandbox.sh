@@ -136,16 +136,6 @@ dbus_session() {
   fi
 }
 
-# SSH エージェント: SSH_AUTH_SOCK を読み取り専用で公開
-ssh_agent() {
-  if [[ -n ${SSH_AUTH_SOCK:-} && -e $SSH_AUTH_SOCK ]]; then
-    BWRAP_ARGS+=(
-      --ro-bind "$SSH_AUTH_SOCK" "$SSH_AUTH_SOCK"
-      --setenv SSH_AUTH_SOCK "$SSH_AUTH_SOCK"
-    )
-  fi
-}
-
 # GPG エージェント: ソケットディレクトリ + ~/.gnupg を公開
 # 事前にデーモンを起動しておく (PID namespace 内では自動起動不可のため)
 gpg_agent() {
@@ -271,7 +261,6 @@ project_mount
 git_config
 gh_cli
 dbus_session
-ssh_agent
 gpg_agent
 ide_integration
 docker_socket
