@@ -50,8 +50,15 @@ in
   programs.nix-index-database.comma.enable = true;
   programs.nix-index.enable = true;
 
+  programs.fzf.enable = true;
+
   programs.zsh.initContent = ''
     source <(ghr shell)
     source <(ghr shell --completion bash)
+
+    function gcd() {
+      local repo=$(ghr list | fzf --query="$*" --select-1 --exit-0)
+      [ -n "$repo" ] && ghr cd "$repo"
+    }
   '';
 }
