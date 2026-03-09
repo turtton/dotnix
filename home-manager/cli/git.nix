@@ -64,9 +64,9 @@
         alias = {
           log-graph = "log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)<%an>%Creset' --abbrev-commit --date=format-local:'%Y/%m/%d %H:%M:%S'";
         };
-        url = {
-          "git@github.com:".insteadOf = "https://github.com/";
-        };
+        # url = {
+        #   "git@github.com:".insteadOf = "https://github.com/";
+        # };
       };
       ignores = [
         ".idea"
