@@ -102,6 +102,7 @@ let
                     description = lib.mkDefault "${h.username}";
                     isNormalUser = lib.mkDefault true;
                     extraGroups = lib.mkDefault [
+                      "input"
                       "networkmanager"
                       "wheel"
                       "dialout"
