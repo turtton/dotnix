@@ -101,7 +101,7 @@ let
                   users.users."${h.username}" = {
                     description = lib.mkDefault "${h.username}";
                     isNormalUser = lib.mkDefault true;
-                    extraGroups = lib.mkDefault [
+                    extraGroups = [
                       "input"
                       "networkmanager"
                       "wheel"
