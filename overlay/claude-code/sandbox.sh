@@ -183,24 +183,48 @@ ide_integration() {
   fi
 }
 
-# Docker ソケット: Docker CLI からデーモンに接続可能にする
-docker_socket() {
-  # 標準の Docker ソケット
+# コンテナソケット: Docker/Podman CLI からデーモンに接続可能にする
+container_socket() {
+  # Docker: 標準ソケット
   local docker_sock="/var/run/docker.sock"
   if [[ -S $docker_sock ]]; then
     BWRAP_ARGS+=(--bind "$docker_sock" "$docker_sock")
   fi
 
-  # Rootless Docker (XDG_RUNTIME_DIR/docker.sock)
-  local rootless_sock="${XDG_RUNTIME}/docker.sock"
-  if [[ -S $rootless_sock ]]; then
-    BWRAP_ARGS+=(--bind "$rootless_sock" "$rootless_sock")
+  # Docker: Rootless (XDG_RUNTIME_DIR/docker.sock)
+  local rootless_docker="${XDG_RUNTIME}/docker.sock"
+  if [[ -S $rootless_docker ]]; then
+    BWRAP_ARGS+=(--bind "$rootless_docker" "$rootless_docker")
   fi
 
   # Docker 設定 (~/.docker) を公開
   if [[ -d "${HOME}/.docker" ]]; then
     mkdir -p "${CLAUDE_HOME}/.docker"
     BWRAP_ARGS+=(--bind "${HOME}/.docker" "${HOME}/.docker")
+  fi
+
+  # Podman: Rootful ソケット
+  local podman_sock="/run/podman/podman.sock"
+  if [[ -S $podman_sock ]]; then
+    BWRAP_ARGS+=(--bind "$podman_sock" "$podman_sock")
+  fi
+
+  # Podman: Rootless ソケット (XDG_RUNTIME_DIR/podman/podman.sock)
+  local rootless_podman="${XDG_RUNTIME}/podman/podman.sock"
+  if [[ -S $rootless_podman ]]; then
+    BWRAP_ARGS+=(--bind "$(dirname "$rootless_podman")" "$(dirname "$rootless_podman")")
+  fi
+
+  # Podman/Buildah 設定 (~/.config/containers/) を公開
+  if [[ -d "${HOME}/.config/containers" ]]; then
+    mkdir -p "${CLAUDE_HOME}/.config/containers"
+    BWRAP_ARGS+=(--ro-bind "${HOME}/.config/containers" "${HOME}/.config/containers")
+  fi
+
+  # Podman データ (~/.local/share/containers/) を公開
+  if [[ -d "${HOME}/.local/share/containers" ]]; then
+    mkdir -p "${CLAUDE_HOME}/.local/share/containers"
+    BWRAP_ARGS+=(--bind "${HOME}/.local/share/containers" "${HOME}/.local/share/containers")
   fi
 }
 
@@ -263,7 +287,7 @@ gh_cli
 dbus_session
 gpg_agent
 ide_integration
-docker_socket
+container_socket
 terminal_env
 chrome_integration
 
