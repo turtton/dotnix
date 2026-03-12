@@ -65,7 +65,7 @@ nix_store() {
 # 隔離ホームディレクトリ: 一時ホームに OpenCode 設定をマウント
 isolated_home() {
   BWRAP_ARGS+=(
-    --tmpfs /tmp
+    --perms 1777 --tmpfs /tmp
     --bind "$OPENCODE_HOME" "$HOME"
   )
 
@@ -80,6 +80,20 @@ isolated_home() {
   if [[ -d $opencode_data ]]; then
     mkdir -p "${OPENCODE_HOME}/.local/share/opencode"
     BWRAP_ARGS+=(--bind "$opencode_data" "${HOME}/.local/share/opencode")
+  fi
+
+  # OpenCode キャッシュディレクトリ (プラグインの node_modules, models.json等)
+  local opencode_cache="${HOME}/.cache/opencode"
+  if [[ -d $opencode_cache ]]; then
+    mkdir -p "${OPENCODE_HOME}/.cache/opencode"
+    BWRAP_ARGS+=(--bind "$opencode_cache" "${HOME}/.cache/opencode")
+  fi
+
+  # OpenCode 状態ディレクトリ (frecency, model選択, プロンプト履歴)
+  local opencode_state="${HOME}/.local/state/opencode"
+  if [[ -d $opencode_state ]]; then
+    mkdir -p "${OPENCODE_HOME}/.local/state/opencode"
+    BWRAP_ARGS+=(--bind "$opencode_state" "${HOME}/.local/state/opencode")
   fi
 }
 
@@ -96,6 +110,14 @@ namespace_and_env() {
     --setenv TEMP /tmp
     --setenv TMP /tmp
   )
+
+  # XDG Base Directory 変数の転送 (opencode は XDG 準拠)
+  local xdg_vars=(XDG_CONFIG_HOME XDG_DATA_HOME XDG_CACHE_HOME XDG_STATE_HOME)
+  for var in "${xdg_vars[@]}"; do
+    if [[ -n ${!var:-} ]]; then
+      BWRAP_ARGS+=(--setenv "$var" "${!var}")
+    fi
+  done
 }
 
 # プロジェクトマウント: 親ツリーは ro、リポジトリルートは rw
@@ -147,16 +169,6 @@ dbus_session() {
   fi
 }
 
-# SSH エージェント: SSH_AUTH_SOCK を読み取り専用で公開
-ssh_agent() {
-  if [[ -n ${SSH_AUTH_SOCK:-} && -e $SSH_AUTH_SOCK ]]; then
-    BWRAP_ARGS+=(
-      --ro-bind "$SSH_AUTH_SOCK" "$SSH_AUTH_SOCK"
-      --setenv SSH_AUTH_SOCK "$SSH_AUTH_SOCK"
-    )
-  fi
-}
-
 # GPG エージェント: ソケットディレクトリ + ~/.gnupg を公開
 # 事前にデーモンを起動しておく (PID namespace 内では自動起動不可のため)
 gpg_agent() {
@@ -199,6 +211,22 @@ docker_socket() {
   fi
 }
 
+# ターミナル環境の転送
+terminal_env() {
+  # TERM を転送
+  if [[ -n ${TERM:-} ]]; then
+    BWRAP_ARGS+=(--setenv TERM "$TERM")
+  fi
+
+  # TERMINFO / TERMINFO_DIRS を転送 (NixOS のterminfo検索に必要)
+  if [[ -n ${TERMINFO:-} ]]; then
+    BWRAP_ARGS+=(--setenv TERMINFO "$TERMINFO")
+  fi
+  if [[ -n ${TERMINFO_DIRS:-} ]]; then
+    BWRAP_ARGS+=(--setenv TERMINFO_DIRS "$TERMINFO_DIRS")
+  fi
+}
+
 # =============================================================================
 # セットアップ & 起動
 # =============================================================================
@@ -219,9 +247,9 @@ project_mount
 git_config
 gh_cli
 dbus_session
-ssh_agent
 gpg_agent
 docker_socket
+terminal_env
 
 # プロジェクト固有のサンドボックス拡張: .opencode/sandbox-extra.sh があれば読み込む
 SANDBOX_EXTRA="${REPO_ROOT}/.opencode/sandbox-extra.sh"
