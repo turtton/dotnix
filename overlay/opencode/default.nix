@@ -26,19 +26,17 @@ inputs: self: prev: {
       opencode-wrapper-script = self.writeText "opencode-wrapper.sh" ''
         #!/usr/bin/env bash
 
-        # Thin wrapper that routes to sandbox when no args, or to real opencode when args are given.
+        # Sandbox-first wrapper: all invocations run inside bubblewrap sandbox by default.
+        # Set OPENCODE_NO_SANDBOX=1 to bypass the sandbox when needed.
 
         # Ensure the real opencode binary is in PATH
         export PATH="${opencode}/bin''${PATH:+:$PATH}"
 
-        # Determine target: no args → sandbox, with args → real opencode
-        if [ $# -eq 0 ]; then
-          target="${sandbox}/bin/opencode-sandbox"
-        else
-          target="${opencode}/bin/opencode"
+        if [ -n "''${OPENCODE_NO_SANDBOX:-}" ]; then
+          exec "${opencode}/bin/opencode" "$@"
         fi
 
-        exec "$target" "$@"
+        exec "${sandbox}/bin/opencode-sandbox" "$@"
       '';
 
       opencode-wrapper = self.writeShellScriptBin "opencode-wrapper" (
