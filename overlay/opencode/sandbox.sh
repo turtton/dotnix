@@ -109,6 +109,10 @@ namespace_and_env() {
     --setenv TEMPDIR /tmp
     --setenv TEMP /tmp
     --setenv TMP /tmp
+    # tmux: ホスト側の TMUX 変数を消す (ネスト検出を防ぎ、サンドボックス内で独立した tmux サーバーを起動)
+    --unsetenv TMUX
+    --unsetenv TMUX_PANE
+    --unsetenv TMUX_TMPDIR
   )
 
   # XDG Base Directory 変数の転送 (opencode は XDG 準拠)
@@ -283,11 +287,15 @@ if [[ -f $SANDBOX_EXTRA ]]; then
 fi
 
 # サンドボックス内で実行するスクリプトの組み立て
-INNER_SCRIPT="$(
-  cat <<-SCRIPT
-		cd '${PROJECT_DIR}'
-		exec '${OPENCODE_BIN}' "$@"
-	SCRIPT
-)"
+# TTY がある場合は tmux セッション内で起動 (OMO の tmux ペイン分割を有効化)
+# 非対話環境 (パイプ等) では直接実行
+INNER_SCRIPT='
+cd "$1"; shift
+if [ -t 0 ] && [ -t 1 ] && [ -t 2 ]; then
+  tmux new-session -s opencode -- "$@" && exit $?
+fi
+exec "$@"
+'
 
-exec bwrap "${BWRAP_ARGS[@]}" bash -c "$INNER_SCRIPT"
+exec bwrap "${BWRAP_ARGS[@]}" \
+  bash -c "$INNER_SCRIPT" bash "$PROJECT_DIR" "$OPENCODE_BIN" "$@"

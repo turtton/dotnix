@@ -15,7 +15,11 @@ inputs: self: prev: {
             gnupg
             coreutils
           ]
-          ++ self.lib.optionals (!isDarwin) [ self.bubblewrap ];
+          ++ self.lib.optionals (!isDarwin) [
+            self.bubblewrap
+            self.tmux
+          ];
+
         checkPhase = "";
         text = builtins.replaceStrings [ "@opencode-dir@" ] [ "${opencode}/bin" ] (
           builtins.readFile ./sandbox.sh
