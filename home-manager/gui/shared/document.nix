@@ -4,5 +4,6 @@
     obsidian
     typora
     evince
+    libreoffice
   ];
 }
