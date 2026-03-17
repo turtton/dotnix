@@ -75,6 +75,8 @@
         "*.local.json"
         ".gemini"
         ".claude"
+        ".opencode"
+        ".sisyphus"
       ];
     };
     gh = {
