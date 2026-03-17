@@ -113,6 +113,8 @@ namespace_and_env() {
     --unsetenv TMUX
     --unsetenv TMUX_PANE
     --unsetenv TMUX_TMPDIR
+    # opencode: サンドボックスのネストを防ぐ (OMO の subagent 起動時に再度サンドボックスが起動しないように)
+    --setenv OPENCODE_NO_SANDBOX 1
   )
 
   # XDG Base Directory 変数の転送 (opencode は XDG 準拠)
