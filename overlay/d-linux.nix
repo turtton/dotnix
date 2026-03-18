@@ -17,6 +17,10 @@ in
     (import ./fix-dolphin-mime.nix)
     (import ./fix-ime.nix)
     (import ./force-wayland.nix inputs)
+    # ORDERING: fix-libreoffice-fonts.nix MUST come before noto-fonts-* overlays.
+    # Moving it after any of them breaks the font-pinning logic and causes
+    # LibreOffice to rebuild locally instead of being fetched from cache.nixos.org.
+    (import ./fix-libreoffice-fonts.nix)
     (import ./noto-fonts-cjk-serif.nix)
     (import ./noto-fonts-cjk-sans.nix)
     (import ./noto-fonts.nix)
