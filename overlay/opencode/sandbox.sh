@@ -270,7 +270,9 @@ terminal_env() {
     BWRAP_ARGS+=(--setenv TERM "$TERM")
   fi
 
-  if [[ -n ${TERMINFO:-} ]]; then
+  # TERMINFO: sandbox内で見えないパスを指す場合は転送しない
+  # (TERMINFO_DIRS より優先されるため、誤ったパスだとterminfoが見つからなくなる)
+  if [[ -n ${TERMINFO:-} ]] && [[ -d $TERMINFO ]]; then
     BWRAP_ARGS+=(--setenv TERMINFO "$TERMINFO")
   fi
 

@@ -20,6 +20,7 @@ inputs: self: prev: {
             self.tmux
             self.iproute2
             self.gnugrep
+            self.gnused
           ];
 
         checkPhase = "";
