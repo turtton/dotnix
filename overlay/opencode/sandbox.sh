@@ -241,6 +241,29 @@ container_socket() {
   fi
 }
 
+# Waylandクリップボード: コンポジターソケットをバインドして wl-copy/wl-paste をホスト側に届ける
+# X11 は入力注入等のリスクがあるため公開しない
+display_clipboard() {
+  if [[ -n ${WAYLAND_DISPLAY:-} ]]; then
+    # WAYLAND_DISPLAY が絶対パスの場合はそのまま、相対名なら XDG_RUNTIME_DIR 配下に解決
+    local wayland_socket
+    if [[ ${WAYLAND_DISPLAY} == /* ]]; then
+      wayland_socket="${WAYLAND_DISPLAY}"
+    else
+      wayland_socket="${XDG_RUNTIME}/${WAYLAND_DISPLAY}"
+    fi
+    if [[ -S $wayland_socket ]]; then
+      BWRAP_ARGS+=(
+        --ro-bind "$wayland_socket" "$wayland_socket"
+        --setenv WAYLAND_DISPLAY "$WAYLAND_DISPLAY"
+        --setenv XDG_RUNTIME_DIR "$XDG_RUNTIME"
+        # WAYLAND_SOCKET (FD番号) が漏れ込んで別ソケットを参照するのを防ぐ
+        --unsetenv WAYLAND_SOCKET
+      )
+    fi
+  fi
+}
+
 # ターミナル環境の転送
 terminal_env() {
   # TERM を転送
@@ -280,6 +303,7 @@ dbus_session
 gpg_agent
 container_socket
 terminal_env
+display_clipboard
 
 # プロジェクト固有のサンドボックス拡張: .opencode/sandbox-extra.sh があれば読み込む
 SANDBOX_EXTRA="${REPO_ROOT}/.opencode/sandbox-extra.sh"
