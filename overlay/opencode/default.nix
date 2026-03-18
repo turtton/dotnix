@@ -18,6 +18,8 @@ inputs: self: prev: {
           ++ self.lib.optionals (!isDarwin) [
             self.bubblewrap
             self.tmux
+            self.iproute2
+            self.gnugrep
           ];
 
         checkPhase = "";

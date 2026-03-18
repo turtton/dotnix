@@ -278,11 +278,20 @@ terminal_env() {
   # sandbox内からアクセス可能なシステムterminfoを先頭に挿入する
   # (opencode attach が tmux-256color 等を描画するために必要)
   local system_terminfo="/run/current-system/sw/share/terminfo"
-  local effective_dirs="${system_terminfo}"
-  if [[ -n ${TERMINFO_DIRS:-} ]]; then
-    effective_dirs="${effective_dirs}:${TERMINFO_DIRS}"
+  local effective_dirs=""
+  if [[ -d $system_terminfo ]]; then
+    effective_dirs="${system_terminfo}"
   fi
-  BWRAP_ARGS+=(--setenv TERMINFO_DIRS "$effective_dirs")
+  if [[ -n ${TERMINFO_DIRS:-} ]]; then
+    if [[ -n $effective_dirs ]]; then
+      effective_dirs="${effective_dirs}:${TERMINFO_DIRS}"
+    else
+      effective_dirs="${TERMINFO_DIRS}"
+    fi
+  fi
+  if [[ -n $effective_dirs ]]; then
+    BWRAP_ARGS+=(--setenv TERMINFO_DIRS "$effective_dirs")
+  fi
 }
 
 # OMO用ポート検出: sandbox内opencodeが使う空きポートを検出し OPENCODE_PORT に設定する
@@ -290,6 +299,11 @@ terminal_env() {
 opencode_port() {
   if [[ -n ${OPENCODE_PORT:-} ]]; then
     BWRAP_ARGS+=(--setenv OPENCODE_PORT "$OPENCODE_PORT")
+    return
+  fi
+
+  if ! command -v ss &>/dev/null || ! command -v grep &>/dev/null; then
+    echo "opencode-sandbox: WARNING: ss or grep not found, skipping port detection" >&2
     return
   fi
 
@@ -303,6 +317,8 @@ opencode_port() {
 
   if [[ -n $free_port ]]; then
     BWRAP_ARGS+=(--setenv OPENCODE_PORT "$free_port")
+  else
+    echo "opencode-sandbox: WARNING: no free port found in range 4097-4200; OMO may connect to wrong server" >&2
   fi
 }
 
