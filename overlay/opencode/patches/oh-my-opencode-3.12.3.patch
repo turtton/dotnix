@@ -1,22 +1,53 @@
 diff --git a/dist/index.js b/dist/index.js
-index b26359bbb96d9ad476d499bf32c39b77a7b5312f..3928079a522da074771cd86c7537acfe0e095edb 100644
+index b26359bbb96d9ad476d499bf32c39b77a7b5312f..fe31119bc5a69f342543893749b8f56386d16521 100644
 --- a/dist/index.js
 +++ b/dist/index.js
-@@ -79954,7 +79954,7 @@ Use \`background_output(task_id="${task.id}")\` to retrieve this result when rea
-         await this.client.session.promptAsync({
-           path: { id: task.parentSessionID },
-           body: {
--            noReply: !allComplete,
-+            noReply: true,
-             ...agent !== undefined ? { agent } : {},
-             ...model !== undefined ? { model } : {},
-             ...resolvedTools ? { tools: resolvedTools } : {},
-@@ -79964,7 +79964,7 @@ Use \`background_output(task_id="${task.id}")\` to retrieve this result when rea
-         log("[background-agent] Sent notification to parent session:", {
-           taskId: task.id,
-           allComplete,
--          noReply: !allComplete
-+          noReply: true
-         });
-       } catch (error92) {
-         if (isAbortedSessionError(error92)) {
+@@ -71947,7 +71947,7 @@
+   });
+ }
+ // src/tools/background-task/constants.ts
+-var BACKGROUND_OUTPUT_DESCRIPTION = `Get output from background task. Use full_session=true to fetch session messages with filters. System notifies on completion, so block=true rarely needed. - Timeout values are in milliseconds (ms), NOT seconds.`;
++var BACKGROUND_OUTPUT_DESCRIPTION = `Get output from background task. Use full_session=true to fetch session messages with filters. When waiting for agent results, use block=true to actively wait rather than relying on system notifications. - Timeout values are in milliseconds (ms), NOT seconds.`;
+ var BACKGROUND_CANCEL_DESCRIPTION = `Cancel running background task(s). Use all=true to cancel ALL before final answer.`;
+ 
+ // src/features/tool-metadata-store/store.ts
+@@ -72666,7 +72666,7 @@
+ The system will notify you when the task completes.
+ Use \`background_output\` tool with task_id="${task.id}" to check progress:
+ - block=false (default): Check status immediately - returns full status info
+-- block=true: Wait for completion (rarely needed since system notifies)`;
++- block=true: Wait for completion (recommended when waiting for agent results)`;
+   } catch (error92) {
+     const message = error92 instanceof Error ? error92.message : String(error92);
+     return `Failed to launch background agent task: ${message}`;
+@@ -86976,8 +86976,8 @@
+ 
+ **Collect Oracle results before your final answer. No exceptions.**
+ 
+-- Oracle takes minutes. When done with your own work: **end your response** \u2014 wait for the \`<system-reminder>\`.
+-- Do NOT poll \`background_output\` on a running Oracle. The notification will come.
++- Oracle takes minutes. Use \`background_output(task_id="...", block=true)\` to wait for results.
++
+ - Never cancel Oracle.
+ </Oracle_Usage>`;
+ }
+@@ -87002,7 +87002,7 @@
+     '- **Testing**: Deleting failing tests to "pass"',
+     "- **Search**: Firing agents for single-line typos or obvious syntax errors",
+     "- **Debugging**: Shotgun debugging, random changes",
+-    "- **Background Tasks**: Polling `background_output` on running tasks \u2014 end response and wait for notification",
++    "- **Background Tasks**: Not using \`background_output(block=true)\` when waiting for task results \u2014 always block-wait, do not rely on system notifications",
+     "- **Delegation Duplication**: Delegating exploration to explore/librarian and then manually doing the same search yourself",
+     "- **Oracle**: Delivering answer without collecting Oracle results"
+   ];
+@@ -87773,8 +87773,8 @@
+ 2. Continue only with non-overlapping work
+    - If you have DIFFERENT independent work \u2192 do it now
+    - Otherwise \u2192 **END YOUR RESPONSE.**
+-3. System sends \`<system-reminder>\` on each task completion \u2014 then call \`background_output(task_id="...")\`
+-4. Need results not yet ready? **End your response.** The notification will trigger your next turn.
++3. When waiting for results: call \`background_output(task_id="...", block=true)\` to actively wait until completion.
++4. Do NOT rely on system notifications to resume \u2014 use block=true to stay in the same turn.
+ 5. Cleanup: Cancel disposable tasks individually via \`background_cancel(taskId="...")\`
+ 
+ ${buildAntiDuplicationSection()}
