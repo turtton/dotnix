@@ -266,17 +266,43 @@ display_clipboard() {
 
 # ターミナル環境の転送
 terminal_env() {
-  # TERM を転送
   if [[ -n ${TERM:-} ]]; then
     BWRAP_ARGS+=(--setenv TERM "$TERM")
   fi
 
-  # TERMINFO / TERMINFO_DIRS を転送 (NixOS のterminfo検索に必要)
   if [[ -n ${TERMINFO:-} ]]; then
     BWRAP_ARGS+=(--setenv TERMINFO "$TERMINFO")
   fi
+
+  # TERMINFO_DIRS: ホスト側パス (~/.nix-profile等) はsandbox内で無効なため、
+  # sandbox内からアクセス可能なシステムterminfoを先頭に挿入する
+  # (opencode attach が tmux-256color 等を描画するために必要)
+  local system_terminfo="/run/current-system/sw/share/terminfo"
+  local effective_dirs="${system_terminfo}"
   if [[ -n ${TERMINFO_DIRS:-} ]]; then
-    BWRAP_ARGS+=(--setenv TERMINFO_DIRS "$TERMINFO_DIRS")
+    effective_dirs="${effective_dirs}:${TERMINFO_DIRS}"
+  fi
+  BWRAP_ARGS+=(--setenv TERMINFO_DIRS "$effective_dirs")
+}
+
+# OMO用ポート検出: sandbox内opencodeが使う空きポートを検出し OPENCODE_PORT に設定する
+# ホスト側で別のopencodeが4096を使っていても競合せず、OMOも正しいサーバーに接続できる
+opencode_port() {
+  if [[ -n ${OPENCODE_PORT:-} ]]; then
+    BWRAP_ARGS+=(--setenv OPENCODE_PORT "$OPENCODE_PORT")
+    return
+  fi
+
+  local free_port
+  for port in $(seq 4097 4200); do
+    if ! ss -tlnH "sport = :${port}" 2>/dev/null | grep -q .; then
+      free_port=$port
+      break
+    fi
+  done
+
+  if [[ -n $free_port ]]; then
+    BWRAP_ARGS+=(--setenv OPENCODE_PORT "$free_port")
   fi
 }
 
@@ -304,6 +330,7 @@ gpg_agent
 container_socket
 terminal_env
 display_clipboard
+opencode_port
 
 # プロジェクト固有のサンドボックス拡張: .opencode/sandbox-extra.sh があれば読み込む
 SANDBOX_EXTRA="${REPO_ROOT}/.opencode/sandbox-extra.sh"
