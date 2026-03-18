@@ -1,7 +1,16 @@
 inputs: self: prev: {
   opencode =
     let
-      opencode = inputs.opencode.packages.${prev.stdenv.hostPlatform.system}.default;
+      opencode =
+        (inputs.opencode.packages.${prev.stdenv.hostPlatform.system}.default).overrideAttrs
+          (old: {
+            # Force channel to "latest" so opencode uses opencode.db instead of opencode-local.db.
+            # Without this, Nix-built opencode defaults to channel="local" because OPENCODE_CHANNEL
+            # is set to "local" in the upstream flake derivation.
+            env = (old.env or { }) // {
+              OPENCODE_CHANNEL = "latest";
+            };
+          });
       isDarwin = prev.stdenv.isDarwin;
 
       # Sandbox script (Linux only)
