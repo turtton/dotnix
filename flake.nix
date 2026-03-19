@@ -275,7 +275,7 @@
             (writeScriptBin "switch-nixos" ''
               ulimit -n 4096 && nh os switch . -H "$@"
             '')
-            (writeScriptBin "switch-nixos-remote" ''
+            (writeScriptBin "remote-switch-nixos" ''
               switch-nixos "$1" --target-host "''${2:-$1}"
             '')
             (writeScriptBin "switch-darwin" ''
