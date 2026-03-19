@@ -359,11 +359,14 @@ fi
 
 # サンドボックス内で実行するスクリプトの組み立て
 # TTY がある場合は tmux セッション内で起動 (OMO の tmux ペイン分割を有効化)
+# --port: OMO がサブエージェントペインで `opencode attach` するために HTTP API の TCP リスナーが必要
+#         デフォルト --port 0 ではリスナーが起動せず、OMO の isServerRunning() ヘルスチェックが失敗する
 # 非対話環境 (パイプ等) では直接実行
 INNER_SCRIPT='
 cd "$1"; shift
 if [ -t 0 ] && [ -t 1 ] && [ -t 2 ]; then
-  tmux new-session -s opencode -- "$@" && exit $?
+  port="${OPENCODE_PORT:-4096}"
+  tmux new-session -s opencode -- "$@" --port "$port" && exit $?
 fi
 exec "$@"
 '
