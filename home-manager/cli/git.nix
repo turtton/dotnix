@@ -6,6 +6,7 @@
 { pkgs, ... }:
 {
   programs = {
+    radicle.enable = true;
     delta = {
       enable = true;
       enableGitIntegration = true;
