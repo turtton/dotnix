@@ -13,10 +13,27 @@
     inputs.noctalia.packages.${system}.default
     wl-clipboard # clipboard manager
     cliphist # clipboard history
+    kdePackages.qttools # for KdeConnect plugin
   ];
   # configure options
   programs.noctalia-shell = {
     enable = true;
+    plugins = {
+      sources = [
+        {
+          enabled = true;
+          name = "Official Noctalia Plugins";
+          url = "https://github.com/noctalia-dev/noctalia-plugins";
+        }
+      ];
+      states = {
+        kde-connect = {
+          enabled = true;
+          sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+        };
+      };
+      version = 2;
+    };
     settings = {
       # configure noctalia here; defaults will
       # be deep merged with these attributes.
@@ -41,11 +58,14 @@
               id = "Bluetooth";
             }
             {
-              id = "ActiveWindow";
-              showIcon = true;
+              id = "KdeConnect";
             }
             {
               id = "MediaMini";
+            }
+            {
+              id = "ActiveWindow";
+              showIcon = true;
             }
           ];
           center = [
