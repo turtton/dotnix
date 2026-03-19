@@ -357,6 +357,17 @@ if [[ -f $SANDBOX_EXTRA ]]; then
   source "$SANDBOX_EXTRA"
 fi
 
+TMUX_CONF_PATH="${OPENCODE_HOME}/.tmux.conf"
+QUOTA_OUTPUT_PATH="${OPENCODE_HOME}/.copilot-quota"
+QUOTA_SCRIPT_PATH="${OPENCODE_HOME}/.copilot-quota-poll.sh"
+
+echo "N/A" >"$QUOTA_OUTPUT_PATH"
+cp "@quota-script@" "$QUOTA_SCRIPT_PATH"
+sed -i "s|__OUTPUT_PATH__|${HOME}/.copilot-quota|g" "$QUOTA_SCRIPT_PATH"
+chmod +x "$QUOTA_SCRIPT_PATH"
+cp "@tmux-conf@" "$TMUX_CONF_PATH"
+sed -i "s|__QUOTA_FILE__|${HOME}/.copilot-quota|g" "$TMUX_CONF_PATH"
+
 # サンドボックス内で実行するスクリプトの組み立て
 # TTY がある場合は tmux セッション内で起動 (OMO の tmux ペイン分割を有効化)
 # --port: OMO がサブエージェントペインで `opencode attach` するために HTTP API の TCP リスナーが必要
@@ -366,7 +377,16 @@ INNER_SCRIPT='
 cd "$1"; shift
 if [ -t 0 ] && [ -t 1 ] && [ -t 2 ]; then
   port="${OPENCODE_PORT:-4096}"
-  tmux new-session -s opencode -- "$@" --port "$port" && exit $?
+  if gh auth status >/dev/null 2>&1; then
+    "$HOME/.copilot-quota-poll.sh" &
+    quota_pid=$!
+  fi
+  tmux -f "$HOME/.tmux.conf" new-session -s opencode -- "$@" --port "$port"
+  exit_code=$?
+  if [ -n "${quota_pid:-}" ]; then
+    kill "$quota_pid" 2>/dev/null; wait "$quota_pid" 2>/dev/null
+  fi
+  exit $exit_code
 fi
 exec "$@"
 '

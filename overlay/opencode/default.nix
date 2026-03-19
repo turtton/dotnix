@@ -21,6 +21,7 @@ inputs: self: prev: {
           [
             jq
             git
+            gh
             gnupg
             coreutils
           ]
@@ -33,9 +34,19 @@ inputs: self: prev: {
           ];
 
         checkPhase = "";
-        text = builtins.replaceStrings [ "@opencode-dir@" ] [ "${opencode}/bin" ] (
-          builtins.readFile ./sandbox.sh
-        );
+        text =
+          builtins.replaceStrings
+            [
+              "@opencode-dir@"
+              "@tmux-conf@"
+              "@quota-script@"
+            ]
+            [
+              "${opencode}/bin"
+              "${./tmux.conf}"
+              "${./copilot-quota-poll.sh}"
+            ]
+            (builtins.readFile ./sandbox.sh);
       };
 
       # Wrapper script that uses sandbox by default
