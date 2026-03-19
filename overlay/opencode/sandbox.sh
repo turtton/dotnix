@@ -127,10 +127,28 @@ namespace_and_env() {
 }
 
 # プロジェクトマウント: 親ツリーは ro、リポジトリルートは rw
+# worktree サポート: git-common-dir が git-dir と異なる場合 (linked worktree)、
+# メインリポジトリを先に ro マウントし、REPO_ROOT の rw バインドで上書きする
 project_mount() {
   if [[ $SHARE_TREE != "$REPO_ROOT" ]]; then
     BWRAP_ARGS+=(--ro-bind "$SHARE_TREE" "$SHARE_TREE")
   fi
+
+  # --path-format=absolute: サブディレクトリ実行時の相対パス返却を回避
+  local git_dir git_common_dir main_repo_root
+  git_dir="$(git -C "$PROJECT_DIR" rev-parse --path-format=absolute --git-dir 2>/dev/null)"
+  git_common_dir="$(git -C "$PROJECT_DIR" rev-parse --path-format=absolute --git-common-dir 2>/dev/null)"
+  if [[ -n $git_dir && -n $git_common_dir && $git_common_dir != "$git_dir" ]]; then
+    main_repo_root="$(realpath "${git_common_dir}/.." 2>/dev/null)"
+    # 失敗時・SHARE_TREE 配下なら既存マウントで到達可能なため追加不要
+    if [[ -n $main_repo_root && -d $main_repo_root ]] &&
+      [[ $main_repo_root != "$SHARE_TREE" && $main_repo_root != "$REPO_ROOT" ]] &&
+      [[ $main_repo_root != "$SHARE_TREE/"* ]]; then
+      BWRAP_ARGS+=(--ro-bind "$main_repo_root" "$main_repo_root")
+    fi
+  fi
+
+  # REPO_ROOT は最後にマウントして rw 権限を確保
   BWRAP_ARGS+=(--bind "$REPO_ROOT" "$REPO_ROOT")
 }
 
