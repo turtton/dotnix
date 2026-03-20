@@ -40,9 +40,9 @@ in
             ];
         }
         (mkIf (cfg.ssh-agent && hostPlatform.isLinux) {
-          home.sessionVariables = {
-            SSH_AUTH_SOCK = "${config.home.homeDirectory}/.bitwarden-ssh-agent.sock";
-          };
+          # home.sessionVariables = {
+          #   SSH_AUTH_SOCK = "${config.home.homeDirectory}/.bitwarden-ssh-agent.sock";
+          # };
           services.gnome-keyring.components = [
             "secrets"
             "pkcs11"
