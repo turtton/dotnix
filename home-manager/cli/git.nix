@@ -5,6 +5,14 @@
 }:
 { pkgs, ... }:
 {
+  systemd.user.services.ssh-agent-radicle = {
+    Unit.Description = "SSH agent for Radicle";
+    Install.WantedBy = [ "default.target" ];
+    Service = {
+      Type = "simple";
+      ExecStart = "${pkgs.openssh}/bin/ssh-agent -D -a %t/radicle-ssh-agent.sock";
+    };
+  };
   programs = {
     radicle.enable = true;
     delta = {
