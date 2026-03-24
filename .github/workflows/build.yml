@@ -163,7 +163,7 @@ jobs:
         run: |
           #nix build --impure --no-link --show-trace --system x86_64-linux \
           #  .#nixosConfigurations.maindesk.config.system.build.toplevel
-          nix build ".#$PACKAGE"
+          nix build --fallback ".#$PACKAGE"
           df -h
         env:
           PACKAGE: ${{ matrix.packages }}
@@ -205,7 +205,7 @@ jobs:
         run: |
           #nix build --impure --no-link --show-trace --system x86_64-linux \
           #  .#nixosConfigurations.maindesk.config.system.build.toplevel
-          nix build ".#${PACKAGE}"
+          nix build --fallback ".#${PACKAGE}"
           df -h
         env:
           PACKAGE: ${{ matrix.packages }}
