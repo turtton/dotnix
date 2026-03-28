@@ -21,18 +21,54 @@ render_quota() {
 
   local used=$((entitlement - remaining))
   if [[ $used -lt 0 ]]; then used=0; fi
-  if [[ $used -gt $entitlement ]]; then used=$entitlement; fi
-  local pct=$((used * 100 / entitlement))
 
-  local filled=$((pct / 10))
-  if [[ $filled -gt 10 ]]; then filled=10; fi
-  if [[ $filled -lt 0 ]]; then filled=0; fi
-  local empty=$((10 - filled))
-  local bar=""
-  for ((i = 0; i < filled; i++)); do bar+="█"; done
-  for ((i = 0; i < empty; i++)); do bar+="░"; done
+  local bar="" suffix=""
 
-  echo "${bar} ${used}/${entitlement}" >"$OUTPUT_FILE"
+  if [[ $used -le $entitlement ]]; then
+    local pct=$((used * 100 / entitlement))
+    local filled=$((pct / 10))
+    [[ $filled -gt 10 ]] && filled=10
+    [[ $filled -lt 0 ]] && filled=0
+    local empty=$((10 - filled))
+    for ((i = 0; i < filled; i++)); do bar+="█"; done
+    for ((i = 0; i < empty; i++)); do bar+="░"; done
+  else
+    local overage=$((used - entitlement))
+    local overage_pct=$((overage * 100 / entitlement))
+    local overage_lap=$((overage_pct / 100))
+    local in_lap=$((overage_pct % 100))
+
+    local lap_colors=("#f38ba8" "#f9e2af" "#cba6f7" "#a6e3a1")
+    local num_colors=${#lap_colors[@]}
+    local current_idx=$((overage_lap % num_colors))
+    local prev_color="#cdd6f4"
+    if [[ $overage_lap -gt 0 ]]; then
+      prev_color="${lap_colors[$(((overage_lap - 1) % num_colors))]}"
+    fi
+
+    local overlay_filled=$((in_lap / 10))
+    [[ $overlay_filled -lt 1 && $in_lap -gt 0 ]] && overlay_filled=1
+    [[ $in_lap -eq 0 ]] && overlay_filled=0
+    [[ $overlay_filled -gt 10 ]] && overlay_filled=10
+    local prev_remaining=$((10 - overlay_filled))
+
+    if [[ $overlay_filled -gt 0 ]]; then
+      bar+="#[fg=${lap_colors[$current_idx]}]"
+      for ((i = 0; i < overlay_filled; i++)); do bar+="█"; done
+    fi
+    if [[ $prev_remaining -gt 0 ]]; then
+      bar+="#[fg=${prev_color}]"
+      for ((i = 0; i < prev_remaining; i++)); do bar+="█"; done
+    fi
+    bar+="#[fg=#cdd6f4]"
+
+    local cost_cents=$((overage * 4))
+    local cost_dollars=$((cost_cents / 100))
+    local cost_frac=$((cost_cents % 100))
+    suffix=$(printf ' +$%d.%02d' "$cost_dollars" "$cost_frac")
+  fi
+
+  echo "${bar} ${used}/${entitlement}${suffix}" >"$OUTPUT_FILE"
 }
 
 render_quota
