@@ -36,11 +36,11 @@ in
 
     system.activationScripts.bootentry.text = ''
       # Resolve disk and partition number from ESP UUID, resilient to NVMe enumeration changes
-      ESP_DEV=$(readlink -f /dev/disk/by-uuid/${cfg.efiPartUuid})
+      ESP_DEV=$(${pkgs.coreutils}/bin/readlink -f /dev/disk/by-uuid/${cfg.efiPartUuid})
       # Extract partition number (e.g. /dev/nvme1n1p1 -> 1)
-      PART_NUM=$(echo "$ESP_DEV" | grep -oP '\d+$')
+      PART_NUM=$(echo "$ESP_DEV" | ${pkgs.gnugrep}/bin/grep -oP '\d+$')
       # Strip partition suffix to get disk (e.g. /dev/nvme1n1p1 -> /dev/nvme1n1)
-      DISK_DEV=$(echo "$ESP_DEV" | sed 's/p[0-9]*$//')
+      DISK_DEV=$(echo "$ESP_DEV" | ${pkgs.gnused}/bin/sed 's/p[0-9]*$//')
       ${pkgs.efibootmgr}/bin/efibootmgr --unicode --disk "$DISK_DEV" --part "$PART_NUM" --create --label "PreLoader" --loader /boot/EFI/systemd/PreLoader.efi
     '';
   };
