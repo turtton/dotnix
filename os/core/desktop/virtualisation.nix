@@ -8,7 +8,12 @@
         setSocketVariable = true;
       };
     };
-    podman.enable = true;
+    podman = {
+      enable = true;
+      extraPackages = with pkgs; [
+        podman-compose
+      ];
+    };
     libvirtd = {
       enable = true;
       qemu = {
