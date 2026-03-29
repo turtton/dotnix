@@ -33,8 +33,7 @@
         enable = true;
         preloader-signed = {
           enable = true;
-          efiSystemDrive = "nvme0n1";
-          efiPartId = "1";
+          efiPartUuid = "EB99-92A5";
         };
       };
       efi.canTouchEfiVariables = true;

@@ -13,16 +13,10 @@ in
   options.boot.loader.systemd-boot.preloader-signed = {
     enable = lib.mkEnableOption "PreLoader for UEFI Secure Boot";
 
-    efiSystemDrive = lib.mkOption {
+    efiPartUuid = lib.mkOption {
       type = lib.types.str;
-      example = "nvme0n1";
-      description = "EFI system drive device name (without /dev/ prefix)";
-    };
-
-    efiPartId = lib.mkOption {
-      type = lib.types.str;
-      example = "1";
-      description = "EFI partition ID number";
+      example = "EB99-92A5";
+      description = "UUID of the EFI system partition (FAT32). Used to dynamically resolve the disk device, making the config resilient to NVMe enumeration order changes across reboots.";
     };
   };
 
@@ -41,7 +35,13 @@ in
     };
 
     system.activationScripts.bootentry.text = ''
-      ${pkgs.efibootmgr}/bin/efibootmgr --unicode --disk /dev/${cfg.efiSystemDrive} --part ${cfg.efiPartId} --create --label "PreLoader" --loader /boot/EFI/systemd/PreLoader.efi
+      # Resolve disk and partition number from ESP UUID, resilient to NVMe enumeration changes
+      ESP_DEV=$(readlink -f /dev/disk/by-uuid/${cfg.efiPartUuid})
+      # Extract partition number (e.g. /dev/nvme1n1p1 -> 1)
+      PART_NUM=$(echo "$ESP_DEV" | grep -oP '\d+$')
+      # Strip partition suffix to get disk (e.g. /dev/nvme1n1p1 -> /dev/nvme1n1)
+      DISK_DEV=$(echo "$ESP_DEV" | sed 's/p[0-9]*$//')
+      ${pkgs.efibootmgr}/bin/efibootmgr --unicode --disk "$DISK_DEV" --part "$PART_NUM" --create --label "PreLoader" --loader /boot/EFI/systemd/PreLoader.efi
     '';
   };
 }

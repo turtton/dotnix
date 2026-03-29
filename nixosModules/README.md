@@ -19,8 +19,7 @@ A module that integrates PreLoader and HashTool for UEFI Secure Boot with system
         {
           boot.loader.systemd-boot.preloader-signed = {
             enable = true;
-            efiSystemDrive = "nvme0n1";
-            efiPartId = "1";
+            efiPartUuid = "EB99-92A5";  # UUID of your ESP partition
           };
         }
       ];
@@ -29,13 +28,29 @@ A module that integrates PreLoader and HashTool for UEFI Secure Boot with system
 }
 ```
 
+### How to find your ESP UUID
+
+`hardware-configuration.nix` の `fileSystems."/boot".device` を確認してください：
+
+```nix
+fileSystems."/boot" = {
+  device = "/dev/disk/by-uuid/EB99-92A5";  # <- この値を使う
+  fsType = "vfat";
+};
+```
+
+または実行中のシステムで確認する場合：
+
+```bash
+blkid $(findmnt -n -o SOURCE /boot) -s UUID -o value
+```
+
 ### Options
 
 | Option | Type | Description |
 |--------|------|-------------|
 | `enable` | bool | Enable the module |
-| `efiSystemDrive` | string | EFI system drive name (e.g., `nvme0n1`) |
-| `efiPartId` | string | EFI partition number (e.g., `1`) |
+| `efiPartUuid` | string | UUID of the EFI system partition (e.g., `EB99-92A5`). Dynamically resolves the disk device, resilient to NVMe enumeration order changes. |
 
 ### References
 
