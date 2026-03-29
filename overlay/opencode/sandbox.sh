@@ -381,7 +381,7 @@ QUOTA_SCRIPT_PATH="${OPENCODE_HOME}/.copilot-quota-poll.sh"
 PORT_OUTPUT_PATH="${OPENCODE_HOME}/.opencode-port"
 
 printf '%s\n' "N/A" >"$QUOTA_OUTPUT_PATH"
-printf '%s\n' "N/A" >"$PORT_OUTPUT_PATH"
+printf '%s' "N/A" >"$PORT_OUTPUT_PATH"
 cp "@quota-script@" "$QUOTA_SCRIPT_PATH"
 sed -i "s|__OUTPUT_PATH__|${HOME}/.copilot-quota|g" "$QUOTA_SCRIPT_PATH"
 chmod +x "$QUOTA_SCRIPT_PATH"
@@ -430,11 +430,11 @@ set -- "$bin" "$@"
 
 # port 0 = listener 無効、has_port かつ値が取れなかった場合も N/A
 if ! $port_valid && $has_port; then
-  printf '%s\n' "N/A" > "$HOME/.opencode-port"
+  printf '%s' "N/A" > "$HOME/.opencode-port"
 elif [ "$actual_port" = "0" ]; then
-  printf '%s\n' "N/A" > "$HOME/.opencode-port"
+  printf '%s' "N/A" > "$HOME/.opencode-port"
 else
-  printf '%s\n' "$actual_port" > "$HOME/.opencode-port"
+  printf '%s' "$actual_port" > "$HOME/.opencode-port"
 fi
 
 if [ -t 0 ] && [ -t 1 ] && [ -t 2 ]; then
