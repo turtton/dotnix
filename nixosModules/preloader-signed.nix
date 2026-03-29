@@ -41,7 +41,11 @@ in
       PART_NUM=$(echo "$ESP_DEV" | ${pkgs.gnugrep}/bin/grep -oP '\d+$')
       # Strip partition suffix to get disk (e.g. /dev/nvme1n1p1 -> /dev/nvme1n1)
       DISK_DEV=$(echo "$ESP_DEV" | ${pkgs.gnused}/bin/sed 's/p[0-9]*$//')
-      ${pkgs.efibootmgr}/bin/efibootmgr --unicode --disk "$DISK_DEV" --part "$PART_NUM" --create --label "PreLoader" --loader /boot/EFI/systemd/PreLoader.efi
+      # Remove existing PreLoader entries to keep boot list clean (idempotent)
+      for BOOTNUM in $(${pkgs.efibootmgr}/bin/efibootmgr | ${pkgs.gnugrep}/bin/grep -oP 'Boot\K[0-9A-F]+(?=\* PreLoader)'); do
+        ${pkgs.efibootmgr}/bin/efibootmgr --delete-bootnum --bootnum "$BOOTNUM" > /dev/null
+      done
+      ${pkgs.efibootmgr}/bin/efibootmgr --unicode --disk "$DISK_DEV" --part "$PART_NUM" --create --label "PreLoader" --loader /boot/EFI/systemd/PreLoader.efi > /dev/null
     '';
   };
 }
