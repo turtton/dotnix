@@ -30,6 +30,7 @@
       signing = {
         key = signingKey;
         signByDefault = true;
+        format = "openpgp";
       };
       # Some ocnfigurations reffered from https://blog.gitbutler.com/how-git-core-devs-configure-git/
       settings = {
