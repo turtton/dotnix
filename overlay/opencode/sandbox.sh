@@ -378,13 +378,16 @@ fi
 TMUX_CONF_PATH="${OPENCODE_HOME}/.tmux.conf"
 QUOTA_OUTPUT_PATH="${OPENCODE_HOME}/.copilot-quota"
 QUOTA_SCRIPT_PATH="${OPENCODE_HOME}/.copilot-quota-poll.sh"
+PORT_OUTPUT_PATH="${OPENCODE_HOME}/.opencode-port"
 
-echo "N/A" >"$QUOTA_OUTPUT_PATH"
+printf '%s\n' "N/A" >"$QUOTA_OUTPUT_PATH"
+printf '%s\n' "N/A" >"$PORT_OUTPUT_PATH"
 cp "@quota-script@" "$QUOTA_SCRIPT_PATH"
 sed -i "s|__OUTPUT_PATH__|${HOME}/.copilot-quota|g" "$QUOTA_SCRIPT_PATH"
 chmod +x "$QUOTA_SCRIPT_PATH"
 cp "@tmux-conf@" "$TMUX_CONF_PATH"
 sed -i "s|__QUOTA_FILE__|${HOME}/.copilot-quota|g" "$TMUX_CONF_PATH"
+sed -i "s|__PORT_FILE__|${HOME}/.opencode-port|g" "$TMUX_CONF_PATH"
 
 # サンドボックス内で実行するスクリプトの組み立て
 # TTY がある場合は tmux セッション内で起動 (OMO の tmux ペイン分割を有効化)
@@ -397,20 +400,42 @@ cd "$1"; shift
 port="${OPENCODE_PORT:-4096}"
 bin=$1; shift
 
-# ユーザー引数に --port が含まれているか走査 (-- 以降は位置引数なので打ち切る)
+# ユーザー引数から --port 値を抽出 (-- 以降は位置引数なので打ち切る)
+# 複数指定時は最後の有効な値を採用する (opencode CLI と同じ挙動)
+actual_port="$port"
 has_port=false
+port_valid=false
+grab_next=false
 for arg in "$@"; do
+  if $grab_next; then
+    case "$arg" in
+      -*) grab_next=false ;;
+      "") grab_next=false ;;
+      *)  actual_port="$arg"; port_valid=true; grab_next=false ;;
+    esac
+    continue
+  fi
   case "$arg" in
     --) break ;;
-    --port|--port=*) has_port=true; break ;;
+    --port=?*) has_port=true; port_valid=true; actual_port="${arg#--port=}" ;;
+    --port=)   has_port=true ;;
+    --port)    has_port=true; grab_next=true ;;
   esac
 done
 
-# --port がなければスクリプト管理のポートを追加 (対話/非対話共通で argv を組み立て)
 if ! $has_port; then
   set -- "$@" --port "$port"
 fi
 set -- "$bin" "$@"
+
+# port 0 = listener 無効、has_port かつ値が取れなかった場合も N/A
+if ! $port_valid && $has_port; then
+  printf '%s\n' "N/A" > "$HOME/.opencode-port"
+elif [ "$actual_port" = "0" ]; then
+  printf '%s\n' "N/A" > "$HOME/.opencode-port"
+else
+  printf '%s\n' "$actual_port" > "$HOME/.opencode-port"
+fi
 
 if [ -t 0 ] && [ -t 1 ] && [ -t 2 ]; then
   if gh auth status >/dev/null 2>&1; then
