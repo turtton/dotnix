@@ -118,7 +118,8 @@ namespace_and_env() {
   )
 
   # XDG Base Directory 変数の転送 (opencode は XDG 準拠)
-  local xdg_vars=(XDG_CONFIG_HOME XDG_DATA_HOME XDG_CACHE_HOME XDG_STATE_HOME)
+  # XDG_RUNTIME_DIR: Wayland, podman rootless ソケット等が依存
+  local xdg_vars=(XDG_CONFIG_HOME XDG_DATA_HOME XDG_CACHE_HOME XDG_STATE_HOME XDG_RUNTIME_DIR)
   for var in "${xdg_vars[@]}"; do
     if [[ -n ${!var:-} ]]; then
       BWRAP_ARGS+=(--setenv "$var" "${!var}")
@@ -215,7 +216,11 @@ gpg_agent() {
 }
 
 # コンテナソケット: Docker/Podman CLI からデーモンに接続可能にする
+# サンドボックス内では --unshare-all によりコンテナランタイムの直接実行は不可能なため、
+# CONTAINER_HOST を設定してホスト側デーモンへのリモート接続を有効化する
 container_socket() {
+  local container_host=""
+
   # Docker: 標準ソケット
   local docker_sock="/var/run/docker.sock"
   if [[ -S $docker_sock ]]; then
@@ -244,6 +249,7 @@ container_socket() {
   local rootless_podman="${XDG_RUNTIME}/podman/podman.sock"
   if [[ -S $rootless_podman ]]; then
     BWRAP_ARGS+=(--bind "$(dirname "$rootless_podman")" "$(dirname "$rootless_podman")")
+    container_host="unix://${rootless_podman}"
   fi
 
   # Podman/Buildah 設定 (~/.config/containers/) を公開
@@ -256,6 +262,10 @@ container_socket() {
   if [[ -d "${HOME}/.local/share/containers" ]]; then
     mkdir -p "${OPENCODE_HOME}/.local/share/containers"
     BWRAP_ARGS+=(--bind "${HOME}/.local/share/containers" "${HOME}/.local/share/containers")
+  fi
+
+  if [[ -n $container_host ]]; then
+    BWRAP_ARGS+=(--setenv CONTAINER_HOST "$container_host")
   fi
 }
 
@@ -274,7 +284,6 @@ display_clipboard() {
       BWRAP_ARGS+=(
         --ro-bind "$wayland_socket" "$wayland_socket"
         --setenv WAYLAND_DISPLAY "$WAYLAND_DISPLAY"
-        --setenv XDG_RUNTIME_DIR "$XDG_RUNTIME"
         # WAYLAND_SOCKET (FD番号) が漏れ込んで別ソケットを参照するのを防ぐ
         --unsetenv WAYLAND_SOCKET
       )
