@@ -30,8 +30,7 @@
         enable = true;
         preloader-signed = {
           enable = true;
-          efiSystemDrive = "nvme0n1";
-          efiPartId = "1";
+          efiPartUuid = "30AA-1931";
         };
       };
       efi.canTouchEfiVariables = true;
