@@ -279,6 +279,7 @@ in
       ];
       sharedOptions = {
         packs.niri.enable = true;
+        packs.noctalia.enable = true;
         packs.bemoji.enable = true;
         packs.android.enable = true;
         packs.remote-desktop = {
@@ -338,6 +339,7 @@ in
       ];
       sharedOptions = {
         packs.niri.enable = true;
+        packs.noctalia.enable = true;
         packs.bemoji.enable = true;
         packs.remote-desktop.enable = true;
         packs.vial.enable = true;

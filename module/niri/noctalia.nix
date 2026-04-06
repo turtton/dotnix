@@ -1,9 +1,10 @@
 { lib, config, ... }:
 let
-  cfg = config.packs.niri;
+  niriCfg = config.packs.niri;
+  noctaliaCfg = config.packs.noctalia;
 in
 {
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf (niriCfg.enable && noctaliaCfg.enable) {
     programs.niri.settings = {
       # Allows notification actions and window activation from Noctalia.
       debug.honor-xdg-activation-with-invalid-serial = { };

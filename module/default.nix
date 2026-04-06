@@ -2,6 +2,7 @@
   imports = [
     ./bitwarden
     ./niri
+    ./noctalia
     ./winapps
     ./wlogout
     ./rofi

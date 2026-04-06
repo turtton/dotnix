@@ -21,10 +21,8 @@
       login = enableKeyrings;
       hyprlock = enableKeyrings;
     };
-  # Used by hyprpanel
   services = {
     upower.enable = true;
     power-profiles-daemon.enable = true;
-    noctalia-shell.enable = true;
   };
 }

@@ -6,8 +6,6 @@
 }:
 {
   imports = [
-    ../noctalia
-    # replaced by noctalia
     #./rofi
     #./waybar
     #./hyprlock.nix

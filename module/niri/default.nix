@@ -14,24 +14,17 @@ let
   cfg = config.packs.niri;
 in
 {
-  imports =
-    optionals (isHomeManager && hostPlatform.isLinux) [
-      inputs.niri-flake.homeModules.niri
-      ../../home-manager/wm/noctalia
-      ./settings.nix
-      ./key-bindings.nix
-      ./window-rules.nix
-      ./idle.nix
-      ./noctalia.nix
-      ./gtk.nix
-      ./qt
-      ./utilapp.nix
-    ]
-    ++ optionals (!isHomeManager) [
-      # Don't use nixosModules.niri as it conflicts with homeModules when
-      # using home-manager as NixOS module. Configure NixOS settings directly.
-      inputs.noctalia.nixosModules.default
-    ];
+  imports = optionals (isHomeManager && hostPlatform.isLinux) [
+    inputs.niri-flake.homeModules.niri
+    ./settings.nix
+    ./key-bindings.nix
+    ./window-rules.nix
+    ./idle.nix
+    ./noctalia.nix
+    ./gtk.nix
+    ./qt
+    ./utilapp.nix
+  ];
 
   options.packs.niri = {
     enable = mkEnableOption "Enable Niri compositor";
@@ -91,7 +84,6 @@ in
             services = {
               upower.enable = true;
               power-profiles-daemon.enable = true;
-              noctalia-shell.enable = true;
             };
 
             xdg.portal = {
