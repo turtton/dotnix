@@ -2,6 +2,7 @@
   userName,
   userEmail,
   signingKey ? "",
+  signingType ? "openpgp",
 }:
 { pkgs, ... }:
 {
@@ -30,7 +31,7 @@
       signing = {
         key = signingKey;
         signByDefault = true;
-        format = "openpgp";
+        format = signingType;
       };
       # Some ocnfigurations reffered from https://blog.gitbutler.com/how-git-core-devs-configure-git/
       settings = {

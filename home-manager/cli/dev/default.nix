@@ -16,6 +16,7 @@ let
 in
 {
   imports = [
+    ./ai.nix
     ./cargo.nix
     ./container.nix
   ];
