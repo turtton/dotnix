@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
+    ./containerized.nix
     ./gpg.nix
     ./locale.nix
     ./network.nix
