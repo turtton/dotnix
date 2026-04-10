@@ -424,6 +424,26 @@ in
         }
       ];
     };
+    wslac = createSystem {
+      system = "x86_64-linux";
+      hostname = "nixos";
+      modules = [
+        ./wslac/nixos.nix
+      ];
+      homes = [
+        rec {
+          username = "nixos";
+          confPath = ./wslac/home-manager.nix;
+          osUserConfig =
+            { pkgs, ... }:
+            {
+              users.users."${username}" = {
+                shell = pkgs.zsh;
+              };
+            };
+        }
+      ];
+    };
   };
   darwin = {
     "dreamac" = createDarwinConfig {

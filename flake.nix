@@ -149,6 +149,10 @@
       url = "git+https://iris.radicle.xyz/zSj69SY75yV9h6LxyiQ3cxDTDSEV.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     inputs@{
