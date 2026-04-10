@@ -16,7 +16,7 @@
     ./gtk.nix
     ./key-bindings.nix
     ./settings.nix
-    ./swww.nix
+    ./awww.nix
     ./hypridle.nix
     #./hyprpanel.nix
     ./utilapp.nix
