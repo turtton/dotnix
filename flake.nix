@@ -82,9 +82,7 @@
     };
     claude-desktop = {
       # url = "github:k3d3/claude-desktop-linux-flake";
-      # Temporary: use PR #89 fork to fix nodePackages.asar removal from nixpkgs
-      # https://github.com/k3d3/claude-desktop-linux-flake/pull/89
-      url = "github:naotoo1/claude-desktop-linux-flake/fix/remove-nodepackages-asar";
+      url = "github:heytcass/claude-desktop-linux-flake";
       #url = "github:turtton/claude-desktop-linux-flake/turtton";
       inputs = {
         nixpkgs.follows = "nixpkgs";

@@ -194,16 +194,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1775121851,
-        "narHash": "sha256-EEEi/Z3v1YUDgj/zlF3Ajrux2lblxHDduWwsW5JgOXQ=",
-        "owner": "naotoo1",
+        "lastModified": 1775762128,
+        "narHash": "sha256-JwK7kCZ7ZOmbKB5hjfhxifVzw8ub2Smk631/0yMq2mY=",
+        "owner": "heytcass",
         "repo": "claude-desktop-linux-flake",
-        "rev": "829f157fd908541cd7ef5f1469635f84ea3713a8",
+        "rev": "2ba40bb45a6a7a42043cb1dd66449fda9b685322",
         "type": "github"
       },
       "original": {
-        "owner": "naotoo1",
-        "ref": "fix/remove-nodepackages-asar",
+        "owner": "heytcass",
         "repo": "claude-desktop-linux-flake",
         "type": "github"
       }
