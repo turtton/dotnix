@@ -14,6 +14,10 @@ in
       rm $out/bin/blockbench
       makeWrapper ${original}/bin/blockbench $out/bin/blockbench_4
 
+      # Remove shared data dir to avoid conflicts with blockbench v5
+      # (the original binary resolves its resources from its own store path)
+      rm -rf $out/share/blockbench
+
       # Replace desktop entry with renamed exec, name, and icon
       rm -rf $out/share/applications
       mkdir -p $out/share/applications
