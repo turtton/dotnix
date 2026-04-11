@@ -80,7 +80,13 @@ in
   teams-for-linux = forceWaylandIme { name = "teams-for-linux"; };
   claude-desktop =
     let
-      claude-desktop = inputs.claude-desktop.packages.${stdenv.system}.claude-desktop;
+      claude-desktop = (inputs.claude-desktop.packages.${stdenv.system}.claude-desktop).override {
+        # nodePackages was removed from nixpkgs (2026-03-03).
+        # Upstream still references nodePackages.asar; shim it to the top-level asar package.
+        nodePackages = {
+          asar = prev.asar;
+        };
+      };
       claude-desktop-wayland = forceWaylandIme {
         name = claude-desktop.pname;
         package = claude-desktop;
