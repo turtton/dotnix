@@ -95,6 +95,16 @@ isolated_home() {
     mkdir -p "${OPENCODE_HOME}/.local/state/opencode"
     BWRAP_ARGS+=(--bind "$opencode_state" "${HOME}/.local/state/opencode")
   fi
+
+  # Rust ツールチェーン: rustup + cargo を読み書きで公開
+  if [[ -d "${HOME}/.rustup" ]]; then
+    mkdir -p "${OPENCODE_HOME}/.rustup"
+    BWRAP_ARGS+=(--bind "${HOME}/.rustup" "${HOME}/.rustup")
+  fi
+  if [[ -d "${HOME}/.cargo" ]]; then
+    mkdir -p "${OPENCODE_HOME}/.cargo"
+    BWRAP_ARGS+=(--bind "${HOME}/.cargo" "${HOME}/.cargo")
+  fi
 }
 
 # 名前空間の隔離とネットワーク共有 + 環境変数の設定
