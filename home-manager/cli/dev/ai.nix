@@ -5,6 +5,9 @@
   ...
 }:
 {
+  imports = [
+    ./opencode
+  ];
   home.packages = with pkgs; [
     codex-latest
     opencode-latest

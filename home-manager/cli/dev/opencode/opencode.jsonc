@@ -1,0 +1,94 @@
+{
+	"$schema": "https://opencode.ai/config.json",
+	"plugin": [
+		"@tarquinen/opencode-dcp@latest",
+		"@turtton/oh-my-openagent@latest",
+		"opencode-comments-plugin",
+		"@simonwjackson/opencode-direnv",
+		"opencode-wakatime"
+	],
+	"provider": {},
+	"agent": {
+		"compaction": {
+			"model": "opencode/minimax-m2.5-free"
+		},
+		"title": {
+			"model": "opencode/minimax-m2.5-free"
+		},
+		"summary": {
+			"model": "opencode/minimax-m2.5-free"
+		}
+	},
+	"provider": {
+		"github-copilot": {
+			"models": {
+				"claude-haiku-4.5": {
+					"limit": { "context": 160000, "output": 32000 }
+				},
+				"claude-opus-4.5": {
+					"limit": { "context": 160000, "output": 32000 }
+				},
+				"claude-opus-4.6": {
+					"limit": { "context": 200000, "output": 64000 }
+				},
+				"claude-sonnet-4": {
+					"limit": { "context": 144000, "output": 16000 }
+				},
+				"claude-sonnet-4.5": {
+					"limit": { "context": 160000, "output": 32000 }
+				},
+				"claude-sonnet-4.6": {
+					"limit": { "context": 200000, "output": 32000 }
+				},
+				"gemini-2.5-pro": {
+					"limit": { "context": 173000, "output": 64000 }
+				},
+				"gemini-3-flash-preview": {
+					"limit": { "context": 173000, "output": 64000 }
+				},
+				"gemini-3-pro-preview": {
+					"limit": { "context": 173000, "output": 64000 }
+				},
+				"gemini-3.1-pro-preview": {
+					"limit": { "context": 173000, "output": 64000 }
+				},
+				"gpt-4.1": {
+					"limit": { "context": 128000, "output": 16384 }
+				},
+				"gpt-4o": {
+					"limit": { "context": 68000, "output": 16384 }
+				},
+				"gpt-5-mini": {
+					"limit": { "context": 192000, "output": 64000 }
+				},
+				"gpt-5.1": {
+					"limit": { "context": 192000, "output": 64000 }
+				},
+				"gpt-5.1-codex": {
+					"limit": { "context": 256000, "output": 128000 }
+				},
+				"gpt-5.1-codex-max": {
+					"limit": { "context": 256000, "output": 128000 }
+				},
+				"gpt-5.1-codex-mini": {
+					"limit": { "context": 256000, "output": 128000 }
+				},
+				"gpt-5.2": {
+					"limit": { "context": 192000, "output": 64000 }
+				},
+				"gpt-5.2-codex": {
+					"limit": { "context": 400000, "output": 128000 }
+				},
+				"grok-code-fast-1": {
+					"limit": { "context": 173000, "output": 64000 }
+				},
+				"gpt-5.3-codex": {
+					"limit": { "context": 400000, "output": 128000 }
+				},
+				"gpt-5.4": {
+					"limit": { "context": 400000, "output": 128000 }
+				}
+			}
+		}
+	}
+}

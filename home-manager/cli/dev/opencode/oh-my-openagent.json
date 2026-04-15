@@ -1,0 +1,83 @@
+{
+	"$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/dev/assets/oh-my-opencode.schema.json",
+	"tmux": {
+		"enabled": true
+	},
+	"agents": {
+		"sisyphus": {
+			"model": "github-copilot/claude-opus-4.6",
+			"variant": "max"
+		},
+		"oracle": {
+			"model": "github-copilot/gpt-5.4",
+			"variant": "high"
+		},
+		"librarian": {
+			"model": "github-copilot/gemini-3-flash-preview"
+		},
+		"explore": {
+			"model": "github-copilot/grok-code-fast-1"
+		},
+		"multimodal-looker": {
+			"model": "github-copilot/gemini-3-flash-preview"
+		},
+		"prometheus": {
+			"model": "github-copilot/claude-opus-4.6",
+			"variant": "max"
+		},
+		"metis": {
+			"model": "github-copilot/claude-opus-4.6",
+			"variant": "max"
+		},
+		"momus": {
+			"model": "github-copilot/gpt-5.4",
+			"variant": "xhigh"
+		},
+		"atlas": {
+			"model": "github-copilot/claude-sonnet-4.6"
+		},
+		"hephaestus": {
+			"model": "github-copilot/gpt-5.3-codex"
+		}
+	},
+	"categories": {
+		"visual-engineering": {
+			"model": "github-copilot/gemini-3.1-pro-preview",
+			"variant": "high"
+		},
+		"ultrabrain": {
+			"model": "github-copilot/gemini-3.1-pro-preview",
+			"variant": "high"
+		},
+		"artistry": {
+			"model": "github-copilot/gemini-3.1-pro-preview",
+			"variant": "high"
+		},
+		"quick": {
+			"model": "github-copilot/claude-haiku-4.5"
+		},
+		"unspecified-low": {
+			"model": "github-copilot/claude-sonnet-4.5"
+		},
+		"unspecified-high": {
+			"model": "github-copilot/claude-opus-4.6",
+			"variant": "max"
+		},
+		"writing": {
+			"model": "github-copilot/gemini-3-flash-preview"
+		}
+	},
+	"background_task": {
+		"circuitBreaker": {
+			"windowSize": 100,
+			"repetitionThresholdPercent": 90,
+			"maxToolCalls": 400
+		}
+	},
+	"skills": {
+		"sources": [
+			"@OPENCODE_CONFIG_DIR@/skill/final-review",
+			"@OPENCODE_CONFIG_DIR@/skill/git-commit"
+		]
+	}
+}
