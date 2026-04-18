@@ -6,7 +6,7 @@
 	"agents": {
 		"sisyphus": {
 			"model": "github-copilot/claude-opus-4.6",
-			"variant": "max"
+			"variant": "high"
 		},
 		"oracle": {
 			"model": "github-copilot/gpt-5.4",
@@ -23,11 +23,11 @@
 		},
 		"prometheus": {
 			"model": "github-copilot/claude-opus-4.6",
-			"variant": "max"
+			"variant": "high"
 		},
 		"metis": {
 			"model": "github-copilot/claude-opus-4.6",
-			"variant": "max"
+			"variant": "high"
 		},
 		"momus": {
 			"model": "github-copilot/gpt-5.4",
@@ -61,7 +61,7 @@
 		},
 		"unspecified-high": {
 			"model": "github-copilot/claude-opus-4.6",
-			"variant": "max"
+			"variant": "high"
 		},
 		"writing": {
 			"model": "github-copilot/gemini-3-flash-preview"
@@ -76,8 +76,8 @@
 	},
 	"skills": {
 		"sources": [
-			"@OPENCODE_CONFIG_DIR@/skill/final-review",
-			"@OPENCODE_CONFIG_DIR@/skill/git-commit"
+			"/home/turtton/.config/opencode/skill/final-review",
+			"/home/turtton/.config/opencode/skill/git-commit"
 		]
 	}
 }
