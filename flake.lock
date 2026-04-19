@@ -1746,11 +1746,11 @@
         "opencode": "opencode_2"
       },
       "locked": {
-        "lastModified": 1776484879,
-        "narHash": "sha256-sUjz4n0iQA+JBr2gMeh3MBjhMaG8WL3nvpCnJ6OYWvE=",
+        "lastModified": 1776573375,
+        "narHash": "sha256-rw0SDNS4u/DdN6UcXBuWa9g9Z/dgIsEcFudmDoqFikE=",
         "ref": "refs/heads/dev",
-        "rev": "079008fcd1c1d08f05eed60236ec4164e173b89b",
-        "revCount": 29,
+        "rev": "bbd691d7ac6fb26726468b8b2d06078fac037d7f",
+        "revCount": 43,
         "type": "git",
         "url": "https://iris.radicle.xyz/zSj69SY75yV9h6LxyiQ3cxDTDSEV.git"
       },
@@ -1767,16 +1767,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1776237983,
-        "narHash": "sha256-rVbWlVY4ujNVaE1o3SJmD0NrfWDtAfH+8MhOzmGgnhM=",
+        "lastModified": 1776472156,
+        "narHash": "sha256-jlxR2BODV8wk0sP4Kkyza7Zr5I+Q003gldCfp2eYOt8=",
         "owner": "anomalyco",
         "repo": "opencode",
-        "rev": "765932199021cf1dd7a813e37da744f391752bd1",
+        "rev": "a35b8a95c27d28e979a3826e1289d7ee87f40251",
         "type": "github"
       },
       "original": {
         "owner": "anomalyco",
-        "ref": "v1.4.6",
+        "ref": "v1.4.11",
         "repo": "opencode",
         "type": "github"
       }
