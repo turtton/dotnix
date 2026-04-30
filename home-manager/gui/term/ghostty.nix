@@ -6,6 +6,9 @@
       theme = "Catppuccin Mocha";
       font-family = "Hack Nerd Font";
       font-size = 10;
+      backgrond-opacity = 0.7;
+      background-blur = "macos-glass-clear";
+      macos-titlebar-style = "transparent";
     };
   };
 }

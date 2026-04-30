@@ -11,7 +11,7 @@ in
   config = lib.mkIf cfg.enable {
     programs.niri.settings.binds = with pkgs; {
       # Basic window management
-      "Mod+Return".action.spawn = [ "alacritty" ];
+      "Mod+Return".action.spawn = [ "ghostty" ];
       "Mod+Shift+Q".action.close-window = { };
       "Mod+F".action.fullscreen-window = { };
       "Mod+Alt+F".action.set-column-width = "100%";
