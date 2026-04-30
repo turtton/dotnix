@@ -42,9 +42,10 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # nixpkgs.config.permittedInsecurePackages = [
-  #   "libxml2-2.13.8"
-  # ];
+  nixpkgs.config.permittedInsecurePackages = [
+    # Allow discord dependency
+    "openssl-1.1.1w"
+  ];
 
   environment.systemPackages = with pkgs; [
     cachix
