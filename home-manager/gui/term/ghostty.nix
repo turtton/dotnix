@@ -1,4 +1,8 @@
+{ pkgs, ... }:
 {
+  home.packages = [
+    pkgs.ghostty.terminfo
+  ];
   programs.ghostty = {
     enable = true;
     installVimSyntax = true;
