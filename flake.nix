@@ -193,6 +193,10 @@
         pkgs = import nixpkgsSrc {
           inherit system;
           config.allowUnfree = true;
+          config.permittedInsecurePackages = [
+            # Allow discord dependency
+            "openssl-1.1.1w"
+          ];
           overlays = [ (import rust-overlay) ];
         };
         overlayFile = if pkgs.stdenv.isLinux then ./overlay/d-linux.nix else ./overlay/d-darwin.nix;

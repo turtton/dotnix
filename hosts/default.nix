@@ -85,6 +85,11 @@ let
               };
               backupFileExtension = "backup";
             };
+            nixpkgs.config.permittedInsecurePackages = [
+              # Allow discord dependency
+              "openssl-1.1.1w"
+            ];
+
           }
           {
             system.stateVersion = stateVersion;
