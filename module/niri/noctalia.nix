@@ -16,6 +16,8 @@ in
         }
       ];
 
+      spawn-at-startup = [ { command = [ "noctalia-shell" ]; } ];
+
       binds = {
         "Mod+V".action.spawn = [
           "noctalia-shell"

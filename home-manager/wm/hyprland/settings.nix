@@ -1,4 +1,12 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
+let
+  noctaliaCfg = config.packs.noctalia;
+in
 {
   wayland.windowManager.hyprland.settings = {
     "plugin:split-monitor-workspaces:count" = 8;
@@ -21,6 +29,9 @@
       "wl-paste --watch cliphist store"
       "${pkgs.cliphist}/bin/cliphist wipe"
       "${pkgs.gitify}/bin/gitify"
+    ]
+    ++ lib.optionals noctaliaCfg.enable [
+      "noctalia-shell"
     ];
     windowrule =
       let
