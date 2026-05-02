@@ -3,6 +3,7 @@
   inputs,
   pkgs,
   hostPlatform,
+  config,
   ...
 }:
 let
@@ -13,6 +14,7 @@ in
     firefox = {
       enable = isLinux;
       package = if isLinux then pkgs.firefox else pkgs.firefox-unwrapped;
+      configPath = "${config.xdg.configHome}/mozilla/firefox";
     };
     chromium.enable = isLinux;
     vivaldi.enable = isLinux;
