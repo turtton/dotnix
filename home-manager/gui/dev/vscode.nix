@@ -45,7 +45,6 @@
             saoudrizwan.claude-dev
           ]
           ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
-            rooveterinaryinc.roo-cline
           ]
         )
         ++ (with pkgs; [
@@ -79,13 +78,6 @@
           };
         };
         "svelte.enable-ts-plugin" = true;
-        "roo-cline.allowedCommands" = [
-          "cargo clippy"
-          "tsc"
-          "git log"
-          "git diff"
-          "git show"
-        ];
         "claudeCode.preferredLocation" = "panel";
         "claudeCode.useTerminal" = true;
       }
