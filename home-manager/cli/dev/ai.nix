@@ -13,8 +13,12 @@
     opencode-latest
     llm-agents.codex
     opencode
+    rtk
   ];
   programs.claude-code = {
     enable = true;
   };
+  home.activation.rtk = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    ${lib.getExe pkgs.rtk} install -g --opencode
+  '';
 }
