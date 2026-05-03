@@ -33,5 +33,11 @@ in
     (import ./wifiman-desktop.nix)
     (import ./siketyan-ghr.nix inputs)
     #    (import ./webapp.nix)
+    # Fix ldap test error(nixpkgs#513245)
+    (final: prev: {
+      openldap = prev.openldap.overrideAttrs (_: {
+        doCheck = !prev.stdenv.hostPlatform.isi686;
+      });
+    })
   ];
 }
