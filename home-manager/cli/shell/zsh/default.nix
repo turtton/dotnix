@@ -10,13 +10,6 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
-    shellAliases = {
-      npm = "corepack npm";
-      npx = "corepack npx";
-      pnpm = "corepack pnpm";
-      pnpx = "corepack pnpx";
-    };
-
     plugins = [
       {
         name = "zsh-nix-shell";
