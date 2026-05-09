@@ -13,7 +13,13 @@
 		},
 		"hephaestus": {
 			"model": "github-copilot/gpt-5.4",
-			"variant": "medium"
+			"variant": "medium",
+			"fallback_models": [
+				{
+					"model": "github-copilot/gpt-5.5",
+					"variant": "medium"
+				}
+			]
 		},
 		"oracle": {
 			"model": "github-copilot/gpt-5.4",
