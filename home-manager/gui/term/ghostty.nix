@@ -13,6 +13,7 @@
       background-opacity = 0.7;
       background-blur = "macos-glass-clear";
       macos-titlebar-style = "transparent";
+      window-save-state = "never";
     };
   };
 }
