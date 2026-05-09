@@ -23,9 +23,9 @@
 			"models": {
 				"claude-haiku-4.5": {
 					"limit": {
-						"context": 160000,
-						"input": 144000,
-						"output": 32000
+						"context": 200000,
+						"input": 136000,
+						"output": 64000
 					}
 				},
 				"claude-opus-4.5": {
@@ -176,6 +176,20 @@
 					}
 				},
 				"gpt-5.4": {
+					"limit": {
+						"context": 400000,
+						"input": 360000,
+						"output": 128000
+					}
+				},
+				"gpt-5.4-mini": {
+					"limit": {
+						"context": 400000,
+						"input": 360000,
+						"output": 128000
+					}
+				},
+				"gpt-5.5": {
 					"limit": {
 						"context": 400000,
 						"input": 360000,
