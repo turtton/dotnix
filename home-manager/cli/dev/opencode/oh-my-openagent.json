@@ -189,6 +189,9 @@
 	"tmux": {
 		"enabled": true
 	},
+	"team_mode": {
+		"enabled": true
+	},
 	"background_task": {
 		"circuitBreaker": {
 			"windowSize": 100,
