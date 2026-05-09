@@ -1213,6 +1213,29 @@
         "type": "github"
       }
     },
+    "mixxx": {
+      "inputs": {
+        "flake-utils": [
+          "utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1778244474,
+        "narHash": "sha256-a1tw1A9B300FbD7CoijpDOnRcKLqvOp9m0N0QvvZsUU=",
+        "owner": "turtton",
+        "repo": "mixxx",
+        "rev": "e2220fc6cb0ce5cccaf1b70645afe8b0b04f9bcd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "turtton",
+        "repo": "mixxx",
+        "type": "github"
+      }
+    },
     "niri-flake": {
       "inputs": {
         "niri-stable": "niri-stable",
@@ -1855,6 +1878,7 @@
         "hyprpolkitagent": "hyprpolkitagent",
         "lanzaboote": "lanzaboote",
         "llm-agents": "llm-agents",
+        "mixxx": "mixxx",
         "niri-flake": "niri-flake",
         "nix-cachyos-kernel": "nix-cachyos-kernel",
         "nix-darwin": "nix-darwin",

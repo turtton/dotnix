@@ -31,7 +31,7 @@ in
     (import ./wallpaper-springcity.nix generated.wallpaper-springcity)
     (import ./blockbench_4.nix inputs)
     (import ./wifiman-desktop.nix)
-    (import ./siketyan-ghr.nix inputs)
+    (import ./app-replacements.nix inputs)
     #    (import ./webapp.nix)
     # Fix ldap test error(nixpkgs#513245)
     (final: prev: {

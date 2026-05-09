@@ -153,6 +153,13 @@
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    mixxx = {
+      url = "github:turtton/mixxx";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "utils";
+      };
+    };
   };
   outputs =
     inputs@{
@@ -273,6 +280,7 @@
             cachyos-kernel-latest = overlays.cachyosKernels.linuxPackages-cachyos-latest.kernel;
             noctalia-shell = noctalia.packages.${system}.default;
             xwayland-satellite = niri-flake.packages.${system}.xwayland-satellite-unstable;
+            mixxx = overlays.mixxx;
           }
         );
         devShells.default = mkShell {

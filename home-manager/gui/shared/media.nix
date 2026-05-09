@@ -11,6 +11,7 @@
       tauon
       vlc
       kdePackages.kdenlive
+      mixxx
     ];
   programs.obs-studio.enable = hostPlatform.isLinux;
 }
