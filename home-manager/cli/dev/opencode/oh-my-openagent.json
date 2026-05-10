@@ -190,7 +190,9 @@
 		"enabled": true
 	},
 	"team_mode": {
-		"enabled": true
+		"enabled": true,
+		"max_parallel_members": 4,
+		"tmux_visualization": true
 	},
 	"background_task": {
 		"circuitBreaker": {
