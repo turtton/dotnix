@@ -19,6 +19,6 @@
     enable = true;
   };
   home.activation.rtk = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    ${lib.getExe pkgs.rtk} install -g --opencode
+    ${lib.getExe pkgs.rtk} init -g --opencode
   '';
 }
