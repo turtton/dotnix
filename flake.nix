@@ -83,13 +83,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     claude-desktop = {
-      # url = "github:k3d3/claude-desktop-linux-flake";
-      url = "github:heytcass/claude-desktop-linux-flake";
-      #url = "github:turtton/claude-desktop-linux-flake/turtton";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "utils";
-      };
+      url = "github:aaddrick/claude-desktop-debian";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     claude-code-overlay = {
       url = "github:ryoppippi/claude-code-overlay";
