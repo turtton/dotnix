@@ -11,6 +11,7 @@
       hoppscotch # WebAPI dev	tool
       gitify
       drawio
+      lens
     ]
     ++ lib.optionals hostPlatform.isLinux [
       isaacsim-webrtc-streaming-client
