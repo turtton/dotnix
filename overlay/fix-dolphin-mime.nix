@@ -23,8 +23,8 @@ in
       postBuild = ''
         rm $out/bin/dolphin
         makeWrapper ${dolphin-orig}/bin/dolphin $out/bin/dolphin \
-            --prefix XDG_CONFIG_DIRS : "${prev.libsForQt5.kservice}/etc/xdg" \
-            --run "${prev.kdePackages.kservice}/bin/kbuildsycoca6 --noincremental ${prev.libsForQt5.kservice}/etc/xdg/menus/applications.menu"
+            --prefix XDG_CONFIG_DIRS : "${prev.plasma5Packages.kservice}/etc/xdg" \
+            --run "${prev.kdePackages.kservice}/bin/kbuildsycoca6 --noincremental ${prev.plasma5Packages.kservice}/etc/xdg/menus/applications.menu"
       '';
     };
   };
