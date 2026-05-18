@@ -36,7 +36,6 @@ in
             with pkgs;
             optionals hostPlatform.isLinux [
               bitwarden-cli
-              bitwarden-desktop
             ];
         }
         (mkIf (cfg.ssh-agent && hostPlatform.isLinux) {
@@ -50,6 +49,10 @@ in
         })
       ]
     else
-      { }
+      {
+        environment.systemPackages = [
+          pkgs.bitwarden-desktop
+        ];
+      }
   );
 }
