@@ -14,7 +14,7 @@ in
     (import ./codex)
     (import ./opencode inputs)
     (import ./fix-fhs-launcher.nix)
-    (import ./fix-dolphin-mime.nix)
+    (import ./fix-dolphin-mime.nix inputs)
     (import ./fix-ime.nix)
     (import ./force-wayland.nix inputs)
     # ORDERING: fix-libreoffice-fonts.nix MUST come before noto-fonts-* overlays.

@@ -25,6 +25,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-staging-next.url = "github:NixOS/nixpkgs/staging-next";
+    nixpkgs-25.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgs-blockbench4.url = "github:NixOS/nixpkgs/1c3b10e04b7ff1948b5a3eda3d33547506fb8fee";
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
