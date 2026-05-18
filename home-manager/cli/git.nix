@@ -14,6 +14,9 @@
       ExecStart = "${pkgs.openssh}/bin/ssh-agent -D -a %t/radicle-ssh-agent.sock";
     };
   };
+  home.sessionVariables = {
+    SSH_AUTH_SOCK = "/run/user/1000/radicle-ssh-agent.sock";
+  };
   programs = {
     radicle.enable = true;
     delta = {
