@@ -14,6 +14,7 @@ let
       homes,
       homeModules ? [ ], # [path]
       sharedOptions ? { }, # Additional options to be passed to home-manager and nixos
+      isWsl ? false,
     }:
     let
       originPkgs = inputs.nixpkgs.legacyPackages.${system};
@@ -61,6 +62,9 @@ let
           ./../module
           sharedOptions
         ]
+        ++ (lib.optionals isWsl) [
+          inputs.nixos-wsl.nixosModules.wsl
+        ]
         ++ (lib.optionals (users != [ ]) [
           inputs.home-manager.nixosModules.home-manager
           ### home-manager configurations ####
@@ -80,6 +84,7 @@ let
                   system
                   hostPlatform
                   pkgs-staging-next
+                  isWsl
                   ;
                 isHomeManager = true;
               };
@@ -131,6 +136,7 @@ let
           system
           pkgs-staging-next
           hostPlatform
+          isWsl
           ;
         isHomeManager = false;
       };
@@ -448,6 +454,7 @@ in
             };
         }
       ];
+      isWsl = true;
     };
   };
   darwin = {
