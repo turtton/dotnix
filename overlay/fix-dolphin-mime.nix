@@ -10,8 +10,10 @@
 #
 # The modified package retains its original GPL license.
 
-final: prev:
+inputs: final: prev:
 let
+  system = final.stdenv.hostPlatform.system;
+  pkgs-25 = import inputs.nixpkgs-25 { inherit system; };
   dolphin-orig = prev.kdePackages.dolphin;
 in
 {
@@ -23,8 +25,8 @@ in
       postBuild = ''
         rm $out/bin/dolphin
         makeWrapper ${dolphin-orig}/bin/dolphin $out/bin/dolphin \
-            --prefix XDG_CONFIG_DIRS : "${prev.libsForQt5.kservice}/etc/xdg" \
-            --run "${prev.kdePackages.kservice}/bin/kbuildsycoca6 --noincremental ${prev.libsForQt5.kservice}/etc/xdg/menus/applications.menu"
+            --prefix XDG_CONFIG_DIRS : "${pkgs-25.libsForQt5.kservice}/etc/xdg" \
+            --run "${prev.kdePackages.kservice}/bin/kbuildsycoca6 --noincremental ${pkgs-25.libsForQt5.kservice}/etc/xdg/menus/applications.menu"
       '';
     };
   };

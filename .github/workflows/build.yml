@@ -101,8 +101,7 @@ jobs:
       fail-fast: false
       matrix:
         packages:
-          - jetbrains-dolphin-qt5
-          - jetbrains-dolphin-qt6
+          - jetbrains-dolphin
           - jetbrains-nautilus
           - wallpaper-springcity
           - hyprland
