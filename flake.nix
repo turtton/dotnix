@@ -246,8 +246,7 @@
           {
             inherit (preloader-signed) preLoader hashTool;
             beutl = overlays.beutl;
-            jetbrains-dolphin-qt5 = overlays.jetbrains-dolphin-qt5;
-            jetbrains-dolphin-qt6 = overlays.jetbrains-dolphin-qt6;
+            jetbrains-dolphin = overlays.jetbrains-dolphin;
             jetbrains-nautilus = overlays.jetbrains-nautilus;
             noto-fonts-cjk-sans = overlays.noto-fonts-cjk-sans;
             noto-fonts-cjk-serif = overlays.noto-fonts-cjk-serif;

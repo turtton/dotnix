@@ -4,7 +4,7 @@
     kdePackages.dolphin
     kdePackages.dolphin-plugins
     kdePackages.kio-extras
-    jetbrains-dolphin-qt6
+    jetbrains-dolphin
     kdePackages.ark
   ];
   xdg.dataFile = {
