@@ -17,6 +17,7 @@
       llm-agents.codex
       rtk
       senpi
+      cursor-cli
     ]
     ++ pkgs.lib.optionals (!isWsl) [
       opencode
