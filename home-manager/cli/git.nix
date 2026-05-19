@@ -91,6 +91,8 @@
         ".claude"
         ".opencode"
         ".sisyphus"
+        ".pi"
+        ".senpi"
       ];
     };
     gh = {
