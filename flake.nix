@@ -156,6 +156,10 @@
         flake-utils.follows = "utils";
       };
     };
+    senpi = {
+      url = "github:turtton/senpi-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     inputs@{
@@ -238,6 +242,7 @@
           opencode-latest = overlays.opencode-latest;
           opencode = overlays.opencode;
           blockbench_4 = overlays.blockbench_4;
+          senpi = overlays.senpi;
         }
         // lib.optionalAttrs stdenv.hostPlatform.isLinux (
           let

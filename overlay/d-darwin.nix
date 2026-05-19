@@ -2,9 +2,11 @@
 { pkgs, inputs, ... }:
 let
   generated = pkgs.callPackage ../_sources/generated.nix { };
+  senpi = inputs.senpi.packages.${pkgs.stdenv.hostPlatform.system}.senpi;
 in
 {
   nixpkgs.overlays = [
+    (final: prev: { inherit senpi; })
     inputs.nix-vscode-extensions.overlays.default
     inputs.rust-overlay.overlays.default
     inputs.rustowl.overlays.default

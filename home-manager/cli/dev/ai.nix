@@ -16,6 +16,7 @@
       opencode-latest
       llm-agents.codex
       rtk
+      senpi
     ]
     ++ pkgs.lib.optionals (!isWsl) [
       opencode

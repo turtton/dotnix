@@ -1943,6 +1943,7 @@
         "plasma-manager": "plasma-manager",
         "rust-overlay": "rust-overlay_2",
         "rustowl": "rustowl",
+        "senpi": "senpi",
         "siketyan-ghr": "siketyan-ghr",
         "split-monitor-workspaces": "split-monitor-workspaces",
         "treefmt-nix": "treefmt-nix_2",
@@ -2037,6 +2038,26 @@
       "original": {
         "owner": "cordx56",
         "repo": "rustowl",
+        "type": "github"
+      }
+    },
+    "senpi": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1779157890,
+        "narHash": "sha256-+tS4JXK2ZEF+d5e8Ij5H5BZirKEgFtpc58YAjQYaLnY=",
+        "owner": "turtton",
+        "repo": "senpi-flake",
+        "rev": "6bbbf31050362b0219e29ebe902efafcef8aaa1b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "turtton",
+        "repo": "senpi-flake",
         "type": "github"
       }
     },

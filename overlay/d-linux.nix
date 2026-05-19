@@ -2,6 +2,7 @@
 { pkgs, inputs, ... }:
 let
   generated = pkgs.callPackage ../_sources/generated.nix { };
+  senpi = inputs.senpi.packages.${pkgs.stdenv.hostPlatform.system}.senpi;
 in
 {
   nixpkgs.overlays = [
@@ -33,8 +34,9 @@ in
     (import ./wifiman-desktop.nix)
     (import ./app-replacements.nix inputs)
     #    (import ./webapp.nix)
-    # Fix ldap test error(nixpkgs#513245)
     (final: prev: {
+      inherit senpi;
+      # Fix ldap test error(nixpkgs#513245)
       openldap = prev.openldap.overrideAttrs (_: {
         doCheck = !prev.stdenv.hostPlatform.isi686;
       });
