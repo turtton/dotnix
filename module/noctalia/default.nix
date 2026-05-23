@@ -143,7 +143,7 @@ in
                 colorizeIcons = false;
               };
               wallpaper = {
-                directory = "${pkgs.wallpaper-springcity}";
+                directory = "${pkgs.wallpaper-outerspace}";
               };
               colorSchemes.predefinedScheme = "Catppuccin";
               appLauncher = {
