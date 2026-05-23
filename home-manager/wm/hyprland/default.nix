@@ -25,6 +25,7 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
+    configType = "lua";
     xwayland.enable = true;
     plugins = [
       inputs.split-monitor-workspaces.packages.${system}.split-monitor-workspaces
