@@ -42,11 +42,12 @@ jobs:
           tags: tag:nix
       - uses: cachix/install-nix-action@8aa03977d8d733052d78f4e008a241fd1dbf36b3 # v31.10.6
       - name: Setup attic client
-        uses: icewind1991/attic-action@5b92b73fc87088f54ee787189f87f57418af3f09 # v1.2.1
-        with:
-          name: home
-          instance: https://attic.taile2777.ts.net
-          authToken: ${{ secrets.ATTIC_TOKEN }}
+        run: |
+          nix profile install nixpkgs#attic-client
+          attic login --set-default home https://attic.taile2777.ts.net "$ATTIC_TOKEN"
+          attic use home
+        env:
+          ATTIC_TOKEN: ${{ secrets.ATTIC_TOKEN }}
       - name: GC
         run: |
           df -h
@@ -75,11 +76,12 @@ jobs:
       - name: Install nix
         uses: cachix/install-nix-action@8aa03977d8d733052d78f4e008a241fd1dbf36b3 # v31.10.6
       - name: Setup attic client
-        uses: icewind1991/attic-action@5b92b73fc87088f54ee787189f87f57418af3f09 # v1.2.1
-        with:
-          name: home
-          instance: https://attic.taile2777.ts.net
-          authToken: ${{ secrets.ATTIC_TOKEN }}
+        run: |
+          nix profile install nixpkgs#attic-client
+          attic login --set-default home https://attic.taile2777.ts.net "$ATTIC_TOKEN"
+          attic use home
+        env:
+          ATTIC_TOKEN: ${{ secrets.ATTIC_TOKEN }}
       - name: GC
         run: |
           df -h
@@ -151,11 +153,12 @@ jobs:
       #    authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       # Original: https://github.com/natsukium/dotfiles/blob/main/.github/workflows/test.yml
       - name: Setup attic client
-        uses: icewind1991/attic-action@5b92b73fc87088f54ee787189f87f57418af3f09 # v1.2.1
-        with:
-          name: home
-          instance: https://attic.taile2777.ts.net
-          authToken: ${{ secrets.ATTIC_TOKEN }}
+        run: |
+          nix profile install nixpkgs#attic-client
+          attic login --set-default home https://attic.taile2777.ts.net "$ATTIC_TOKEN"
+          attic use home
+        env:
+          ATTIC_TOKEN: ${{ secrets.ATTIC_TOKEN }}
       - name: GC
         run: |
           df -h
@@ -169,6 +172,9 @@ jobs:
           df -h
         env:
           PACKAGE: ${{ matrix.packages }}
+      - name: Push to attic
+        if: success()
+        run: attic push home ./result
   build-darwin:
     name: Build packages on Mac
     runs-on: macos-latest
@@ -195,11 +201,12 @@ jobs:
       - name: Install nix
         uses: cachix/install-nix-action@8aa03977d8d733052d78f4e008a241fd1dbf36b3 # v31.10.6
       - name: Setup attic client
-        uses: icewind1991/attic-action@5b92b73fc87088f54ee787189f87f57418af3f09 # v1.2.1
-        with:
-          name: home
-          instance: https://attic.taile2777.ts.net
-          authToken: ${{ secrets.ATTIC_TOKEN }}
+        run: |
+          nix profile install nixpkgs#attic-client
+          attic login --set-default home https://attic.taile2777.ts.net "$ATTIC_TOKEN"
+          attic use home
+        env:
+          ATTIC_TOKEN: ${{ secrets.ATTIC_TOKEN }}
       - name: GC
         run: |
           df -h
@@ -213,6 +220,9 @@ jobs:
           df -h
         env:
           PACKAGE: ${{ matrix.packages }}
+      - name: Push to attic
+        if: success()
+        run: attic push home ./result
   all-workflows-passed:
     name: Checks all workflows passed
     if: always()
