@@ -243,6 +243,7 @@
           opencode = overlays.opencode;
           blockbench_4 = overlays.blockbench_4;
           senpi = overlays.senpi;
+          ghr = overlays.siketyan-ghr;
         }
         // lib.optionalAttrs stdenv.hostPlatform.isLinux (
           let
