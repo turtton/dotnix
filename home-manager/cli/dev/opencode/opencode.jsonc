@@ -1,21 +1,21 @@
 {
 	"$schema": "https://opencode.ai/config.json",
 	"plugin": [
-		"@tarquinen/opencode-dcp@latest",
-		"oh-my-openagent@latest",
+		"@tarquinen/opencode-dcp",
+		"oh-my-openagent",
 		"opencode-comments-plugin",
 		"@simonwjackson/opencode-direnv",
 		"opencode-wakatime"
 	],
 	"agent": {
 		"compaction": {
-			"model": "opencode/minimax-m2.5-free"
+			"model": "opencode/deepseek-v4-flash-free"
 		},
 		"title": {
-			"model": "opencode/minimax-m2.5-free"
+			"model": "opencode/deepseek-v4-flash-free"
 		},
 		"summary": {
-			"model": "opencode/minimax-m2.5-free"
+			"model": "opencode/deepseek-v4-flash-free"
 		}
 	},
 	"provider": {
