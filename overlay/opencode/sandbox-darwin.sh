@@ -64,6 +64,11 @@ isolated_home() {
   if [[ -d "${REAL_HOME}/.cargo" ]]; then
     ln -sfn "${REAL_HOME}/.cargo" "${OPENCODE_HOME}/.cargo"
   fi
+
+  # Cursor Agent: ~/.cursor (cli-config.json, セッション情報等)
+  if [[ -d "${REAL_HOME}/.cursor" ]]; then
+    ln -sfn "${REAL_HOME}/.cursor" "${OPENCODE_HOME}/.cursor"
+  fi
 }
 
 # Git 設定: ~/.gitconfig と ~/.config/git/ を読み取り専用で公開
@@ -160,6 +165,7 @@ build_sandbox_profile() {
     "${REAL_HOME}/.cargo"
     "${REAL_HOME}/.rustup"
     "${REAL_HOME}/.docker"
+    "${REAL_HOME}/.cursor"
   )
   for dir in "${rw_dirs[@]}"; do
     [[ -d $dir ]] && allow_writes+=("$dir")
@@ -210,6 +216,17 @@ if [[ -z ${GH_TOKEN:-} ]]; then
     export GH_TOKEN="$_gh_token"
   fi
   unset _gh_token
+fi
+
+# Cursor Agent: macOS Keychain からトークンを事前取得して環境変数に注入する
+# sandbox-exec 内では securityd への Mach IPC がブロックされるため Keychain が参照できない。
+# CURSOR_API_KEY を設定しておくと cursor-agent は Keychain を経由せず直接トークンを使用する。
+if [[ -z ${CURSOR_API_KEY:-} ]]; then
+  _cursor_token="$(perl -e 'alarm 3; exec @ARGV' security find-generic-password -s "cursor-access-token" -a "cursor-user" -w 2>/dev/null || true)"
+  if [[ -n $_cursor_token ]]; then
+    export CURSOR_API_KEY="$_cursor_token"
+  fi
+  unset _cursor_token
 fi
 
 # プロジェクト固有のサンドボックス拡張: .opencode/sandbox-extra.sh があれば読み込む
