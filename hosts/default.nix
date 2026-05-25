@@ -171,6 +171,7 @@ let
       };
       modules = modules ++ [
         ./../overlay/d-darwin.nix
+        inputs.mac-app-util.darwinModules.default
         inputs.home-manager.darwinModules.home-manager
         {
           networking.hostName = hostname;
@@ -184,6 +185,7 @@ let
             sharedModules = [
               ./../module
               inputs.nix-index-database.homeModules.default
+              inputs.mac-app-util.homeManagerModules.default
             ];
             users."${username}" = homeModule // {
               home = {
@@ -191,6 +193,7 @@ let
                 enableNixpkgsReleaseCheck = true;
               };
             };
+            backupFileExtension = "backup";
             extraSpecialArgs = {
               inherit
                 inputs
@@ -199,6 +202,7 @@ let
                 hostPlatform
                 ;
               isHomeManager = true;
+              isWsl = false;
             };
           };
         }

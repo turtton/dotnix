@@ -1,10 +1,18 @@
 { pkgs, hostPlatform, ... }:
 {
-  imports = [
-    ./idea
-    ./ai.nix
-    ./vscode.nix
-  ];
+  imports =
+    (
+      if hostPlatform.isLinux then
+        [
+          ./vscode.nix
+        ]
+      else
+        [ ]
+    )
+    ++ [
+      ./idea
+      ./ai.nix
+    ];
   home.packages =
     with pkgs;
     [

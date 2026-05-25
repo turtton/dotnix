@@ -1,6 +1,7 @@
 {
   nixConfig = {
     extra-substituters = [
+      "https://attic.taile2777.ts.net/home"
       "https://hyprland.cachix.org"
       "https://ags.cachix.org"
       "https://noctalia.cachix.org"
@@ -13,6 +14,7 @@
       "https://cache.numtide.com"
     ];
     extra-trusted-public-keys = [
+      "home:7Fjx4vYDLZAOseF/QaouAVdlCBiPpIMKj0BPjgieBAE="
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       "ags.cachix.org-1:naAvMrz0CuYqeyGNyLgE010iUiuf/qx6kYrUv3NwAJ8="
       "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
@@ -160,6 +162,7 @@
       url = "github:turtton/senpi-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    mac-app-util.url = "github:hraban/mac-app-util";
   };
   outputs =
     inputs@{
@@ -286,6 +289,7 @@
         );
         devShells.default = mkShell {
           packages = [
+            git
             nvfetcher
             home-manager
             pinact

@@ -13,15 +13,17 @@
     packages =
       with pkgs;
       [
-        codex-latest
         opencode-latest
-        llm-agents.codex
         rtk
         senpi
         cursor-cli
       ]
       ++ pkgs.lib.optionals (!isWsl) [
         opencode
+      ]
+      ++ pkgs.lib.optionals hostPlatform.isLinux [
+        llm-agents.codex
+        codex-latest
       ];
     activation.rtk = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       ${lib.getExe pkgs.rtk} init -g --opencode

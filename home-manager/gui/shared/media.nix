@@ -3,10 +3,10 @@
   home.packages =
     with pkgs;
     [
-      spotify
       yt-dlp
     ]
     ++ lib.optionals hostPlatform.isLinux [
+      spotify # spotify works in darwin but not for me
       mpv
       tauon
       vlc

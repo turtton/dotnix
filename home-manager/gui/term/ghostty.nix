@@ -1,10 +1,14 @@
-{ pkgs, ... }:
+{ pkgs, hostPlatform, ... }:
+let
+  ghostty = if hostPlatform.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
+in
 {
   home.packages = [
-    pkgs.ghostty.terminfo
+    ghostty.terminfo
   ];
   programs.ghostty = {
     enable = true;
+    package = ghostty;
     installVimSyntax = true;
     settings = {
       theme = "Catppuccin Mocha";

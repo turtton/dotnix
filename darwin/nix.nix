@@ -21,6 +21,7 @@
       trusted-users = [
         "root"
         "@admin"
+        "@staff"
       ];
       substituters = [
         "https://aseipp-nix-cache.freetls.fastly.net"
