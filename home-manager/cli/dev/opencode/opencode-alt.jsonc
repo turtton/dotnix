@@ -1,0 +1,16 @@
+{
+	"$schema": "https://opencode.ai/config.json",
+	"plugin": [
+		"cursor-acp",
+		"@tarquinen/opencode-dcp",
+		"oh-my-openagent@4.3.1",
+		"opencode-comments-plugin",
+		"@simonwjackson/opencode-direnv",
+		"opencode-wakatime"
+	],
+	"agent": {
+		"title": {
+			"model": "opencode-go/minimax-m2.7"
+		}
+	}
+}
