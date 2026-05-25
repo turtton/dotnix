@@ -7,9 +7,11 @@
     };
     taps = [
       "mtgto/macskk"
+      "BarutSRB/tap"
     ];
     casks = [
       "macskk"
+      "omniwm"
     ];
   };
 }
