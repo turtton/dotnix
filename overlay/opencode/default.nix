@@ -13,7 +13,6 @@ inputs: self: prev: {
           });
       isDarwin = prev.stdenv.isDarwin;
 
-      # Sandbox script (Linux only)
       sandbox = self.writeShellApplication {
         name = "opencode-sandbox";
         runtimeInputs =
@@ -24,10 +23,10 @@ inputs: self: prev: {
             gh
             gnupg
             coreutils
+            tmux
           ]
           ++ self.lib.optionals (!isDarwin) [
             self.bubblewrap
-            self.tmux
             self.iproute2
             self.gnugrep
             self.gnused
@@ -46,14 +45,14 @@ inputs: self: prev: {
               "${./tmux.conf}"
               "${./copilot-quota-poll.sh}"
             ]
-            (builtins.readFile ./sandbox.sh);
+            (builtins.readFile (if isDarwin then ./sandbox-darwin.sh else ./sandbox.sh));
       };
 
       # Wrapper script that uses sandbox by default
       opencode-wrapper-script = self.writeText "opencode-wrapper.sh" ''
         #!/usr/bin/env bash
 
-        # Sandbox-first wrapper: all invocations run inside bubblewrap sandbox by default.
+        # Sandbox-first wrapper: all invocations run inside sandbox by default.
         # Set OPENCODE_NO_SANDBOX=1 to bypass the sandbox when needed.
 
         # Ensure the real opencode binary is in PATH
@@ -70,20 +69,17 @@ inputs: self: prev: {
         builtins.readFile opencode-wrapper-script
       );
     in
-    if isDarwin then
-      opencode # Darwin doesn't support bubblewrap, use original binary
-    else
-      self.symlinkJoin {
-        inherit (opencode) pname version;
-        name = "${opencode.name}-wrapped";
-        paths = [ opencode-wrapper ];
-        postBuild = ''
-          mv "$out/bin/opencode-wrapper" "$out/bin/opencode"
-        '';
-        meta = opencode.meta // {
-          mainProgram = "opencode";
-        };
+    self.symlinkJoin {
+      inherit (opencode) pname version;
+      name = "${opencode.name}-wrapped";
+      paths = [ opencode-wrapper ];
+      postBuild = ''
+        mv "$out/bin/opencode-wrapper" "$out/bin/opencode"
+      '';
+      meta = opencode.meta // {
+        mainProgram = "opencode";
       };
+    };
 
   opencode-latest =
     let
