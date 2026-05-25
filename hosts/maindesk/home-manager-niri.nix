@@ -25,7 +25,7 @@
         mode = {
           width = 3840;
           height = 2160;
-          refresh = 159.975;
+          refresh = 120.0;
         };
         position = {
           x = 0;
@@ -37,7 +37,7 @@
         mode = {
           width = 1920;
           height = 1080;
-          refresh = 144.001;
+          refresh = 60.0;
         };
         position = {
           x = 0;
