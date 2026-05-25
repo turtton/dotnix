@@ -75,6 +75,10 @@ git_config() {
     mkdir -p "${OPENCODE_HOME}/.config"
     ln -sfn "${REAL_HOME}/.config/git" "${OPENCODE_HOME}/.config/git"
   fi
+  # SSH 署名鍵: user.signingkey = ~/.ssh/id_ed25519.pub が sandbox HOME を参照するため
+  if [[ -d "${REAL_HOME}/.ssh" ]]; then
+    ln -sfn "${REAL_HOME}/.ssh" "${OPENCODE_HOME}/.ssh"
+  fi
 }
 
 # GitHub CLI: ~/.config/gh/ を公開
