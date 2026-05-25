@@ -7,7 +7,6 @@
           ./fcitx
           ./libskk
           ./chat.nix
-          ./document.nix
           ./image.nix
           ./kdeconnect.nix
           ./keybase.nix
@@ -17,6 +16,7 @@
         [ ]
     )
     ++ [
+      ./document.nix
       ./media.nix
     ];
 
