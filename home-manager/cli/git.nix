@@ -4,9 +4,14 @@
   signingKey ? "",
   signingType ? "openpgp",
 }:
-{ pkgs, ... }:
 {
-  systemd.user.services.ssh-agent-radicle = {
+  pkgs,
+  hostPlatform,
+  lib,
+  ...
+}:
+{
+  systemd.user.services.ssh-agent-radicle = lib.mkIf hostPlatform.isLinux {
     Unit.Description = "SSH agent for Radicle";
     Install.WantedBy = [ "default.target" ];
     Service = {
@@ -14,7 +19,7 @@
       ExecStart = "${pkgs.openssh}/bin/ssh-agent -D -a %t/radicle-ssh-agent.sock";
     };
   };
-  home.sessionVariables = {
+  home.sessionVariables = lib.mkIf hostPlatform.isLinux {
     SSH_AUTH_SOCK = "/run/user/1000/radicle-ssh-agent.sock";
   };
   programs = {
