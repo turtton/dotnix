@@ -83,6 +83,7 @@
         # };
       };
       ignores = [
+        ".DS_Store"
         ".idea"
         ".vscode"
         "*.local.md"
@@ -90,6 +91,7 @@
         ".gemini"
         ".claude"
         ".opencode"
+        ".omo"
         ".sisyphus"
         ".pi"
         ".senpi"
