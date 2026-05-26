@@ -10,12 +10,12 @@
           ./image.nix
           ./kdeconnect.nix
           ./keybase.nix
-          ./browser.nix
         ]
       else
         [ ]
     )
     ++ [
+      ./browser.nix
       ./document.nix
       ./media.nix
     ];

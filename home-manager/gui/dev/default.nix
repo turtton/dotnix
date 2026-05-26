@@ -24,4 +24,5 @@
     ++ lib.optionals hostPlatform.isLinux [
       isaacsim-webrtc-streaming-client
     ];
+  programs.zed-editor.enable = true;
 }

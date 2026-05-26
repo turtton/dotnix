@@ -1,6 +1,4 @@
 {
-  system,
-  inputs,
   pkgs,
   hostPlatform,
   config,
@@ -18,9 +16,9 @@ in
     };
     chromium.enable = isLinux;
     vivaldi.enable = isLinux;
+    zen-browser.enable = true;
   };
   home.packages = pkgs.lib.optionals isLinux [
-    inputs.zen-browser.packages."${system}".default
     pkgs.google-chrome
   ];
   xdg.mimeApps.defaultApplications =
