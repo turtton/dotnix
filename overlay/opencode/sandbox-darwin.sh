@@ -212,17 +212,6 @@ if [[ -z ${GH_TOKEN:-} ]]; then
   unset _gh_token
 fi
 
-# Cursor Agent: macOS Keychain からトークンを事前取得して環境変数に注入する
-# sandbox-exec 内では securityd への Mach IPC がブロックされるため Keychain が参照できない。
-# CURSOR_API_KEY を設定しておくと cursor-agent は Keychain を経由せず直接トークンを使用する。
-if [[ -z ${CURSOR_API_KEY:-} ]]; then
-  _cursor_token="$(perl -e 'alarm 3; exec @ARGV' security find-generic-password -s "cursor-access-token" -a "cursor-user" -w 2>/dev/null || true)"
-  if [[ -n $_cursor_token ]]; then
-    export CURSOR_API_KEY="$_cursor_token"
-  fi
-  unset _cursor_token
-fi
-
 # プロジェクト固有のサンドボックス拡張: .opencode/sandbox-extra.sh があれば読み込む
 SANDBOX_EXTRA="${REPO_ROOT}/.opencode/sandbox-extra.sh"
 if [[ -f $SANDBOX_EXTRA ]]; then
