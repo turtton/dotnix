@@ -14,7 +14,6 @@
       with pkgs;
       [
         opencode-latest
-        rtk
         senpi
         cursor-cli
       ]
@@ -25,9 +24,6 @@
         llm-agents.codex
         codex-latest
       ];
-    activation.rtk = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      ${lib.getExe pkgs.rtk} init -g --opencode
-    '';
     sessionVariables = {
       CURSOR_AGENT_PATH = "${lib.getExe pkgs.cursor-cli}";
     };
