@@ -64,11 +64,6 @@ isolated_home() {
   if [[ -d "${REAL_HOME}/.cargo" ]]; then
     ln -sfn "${REAL_HOME}/.cargo" "${OPENCODE_HOME}/.cargo"
   fi
-
-  # Cursor Agent: ~/.cursor (cli-config.json, セッション情報等)
-  if [[ -d "${REAL_HOME}/.cursor" ]]; then
-    ln -sfn "${REAL_HOME}/.cursor" "${OPENCODE_HOME}/.cursor"
-  fi
 }
 
 # Git 設定: ~/.gitconfig と ~/.config/git/ を読み取り専用で公開
@@ -165,7 +160,6 @@ build_sandbox_profile() {
     "${REAL_HOME}/.cargo"
     "${REAL_HOME}/.rustup"
     "${REAL_HOME}/.docker"
-    "${REAL_HOME}/.cursor"
   )
   for dir in "${rw_dirs[@]}"; do
     [[ -d $dir ]] && allow_writes+=("$dir")
