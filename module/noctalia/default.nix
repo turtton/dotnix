@@ -52,6 +52,10 @@ in
                   enabled = true;
                   sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
                 };
+                privacy-indicator = {
+                  enabled = true;
+                  sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+                };
               };
               version = 2;
             };
@@ -77,7 +81,7 @@ in
                       id = "Bluetooth";
                     }
                     {
-                      id = "KdeConnect";
+                      id = "plugin:kde-connect";
                     }
                     {
                       id = "MediaMini";
@@ -99,11 +103,14 @@ in
                       id = "Tray";
                     }
                     {
+                      id = "plugin:privacy-indicator";
+                    }
+                    {
                       id = "SystemMonitor";
                       compactMode = false;
                       showCpuTemp = true;
                       showDiskUsage = true;
-                      showDiskAsPercent = true;
+                      showDiskUsageAsPercent = true;
                       showCpuUsage = true;
                       showGpuUsage = true;
                       showMemoryUsage = true;
