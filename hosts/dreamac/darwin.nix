@@ -5,6 +5,7 @@
     ./../../darwin/fonts.nix
     ./../../darwin/homebrew.nix
     ./../../darwin/nix.nix
+    ./../../darwin/skhd.nix
     ./../../darwin/system.nix
   ];
   ids.uids.nixbld = 401;
