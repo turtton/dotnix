@@ -1,7 +1,6 @@
 {
 	"$schema": "https://opencode.ai/config.json",
 	"plugin": [
-		"cursor-acp",
 		"@tarquinen/opencode-dcp",
 		"oh-my-openagent@4.3.1",
 		"opencode-comments-plugin",
@@ -11,6 +10,1100 @@
 	"agent": {
 		"title": {
 			"model": "opencode-go/minimax-m2.7"
+		}
+	},
+	"provider": {
+		"cursor-api": {
+			"name": "Cursor",
+			"npm": "@ai-sdk/openai-compatible",
+			"options": {
+				"baseURL": "http://127.0.0.1:8787/opencodev2/v1"
+			},
+			"models": {
+				"auto": {
+					"name": "Auto",
+					"cost": {
+						"input": 1.25,
+						"output": 6,
+						"cache_read": 0.25,
+						"cache_write": 1.25
+					}
+				},
+				"composer-2-fast": {
+					"name": "Composer 2 Fast",
+					"cost": {
+						"input": 1.5,
+						"output": 7.5,
+						"cache_read": 0.35,
+						"cache_write": 1.5
+					}
+				},
+				"composer-2": {
+					"name": "Composer 2",
+					"cost": {
+						"input": 0.5,
+						"output": 2.5,
+						"cache_read": 0.2,
+						"cache_write": 0.5
+					}
+				},
+				"gpt-5.3-codex-low": {
+					"name": "Codex 5.3 Low",
+					"cost": {
+						"input": 1.75,
+						"output": 14,
+						"cache_read": 0.175,
+						"cache_write": 1.75
+					}
+				},
+				"gpt-5.3-codex-low-fast": {
+					"name": "Codex 5.3 Low Fast",
+					"cost": {
+						"input": 1.75,
+						"output": 14,
+						"cache_read": 0.175,
+						"cache_write": 1.75
+					}
+				},
+				"gpt-5.3-codex": {
+					"name": "Codex 5.3",
+					"cost": {
+						"input": 1.75,
+						"output": 14,
+						"cache_read": 0.175,
+						"cache_write": 1.75
+					}
+				},
+				"gpt-5.3-codex-fast": {
+					"name": "Codex 5.3 Fast",
+					"cost": {
+						"input": 1.75,
+						"output": 14,
+						"cache_read": 0.175,
+						"cache_write": 1.75
+					}
+				},
+				"gpt-5.3-codex-high": {
+					"name": "Codex 5.3 High",
+					"cost": {
+						"input": 1.75,
+						"output": 14,
+						"cache_read": 0.175,
+						"cache_write": 1.75
+					}
+				},
+				"gpt-5.3-codex-high-fast": {
+					"name": "Codex 5.3 High Fast",
+					"cost": {
+						"input": 1.75,
+						"output": 14,
+						"cache_read": 0.175,
+						"cache_write": 1.75
+					}
+				},
+				"gpt-5.3-codex-xhigh": {
+					"name": "Codex 5.3 Extra High",
+					"cost": {
+						"input": 1.75,
+						"output": 14,
+						"cache_read": 0.175,
+						"cache_write": 1.75
+					}
+				},
+				"gpt-5.3-codex-xhigh-fast": {
+					"name": "Codex 5.3 Extra High Fast",
+					"cost": {
+						"input": 1.75,
+						"output": 14,
+						"cache_read": 0.175,
+						"cache_write": 1.75
+					}
+				},
+				"gpt-5.2": {
+					"name": "GPT-5.2",
+					"cost": {
+						"input": 1.75,
+						"output": 14,
+						"cache_read": 0.175,
+						"cache_write": 1.75
+					}
+				},
+				"gpt-5.2-codex-low": {
+					"name": "Codex 5.2 Low",
+					"cost": {
+						"input": 1.75,
+						"output": 14,
+						"cache_read": 0.175,
+						"cache_write": 1.75
+					}
+				},
+				"gpt-5.2-codex-low-fast": {
+					"name": "Codex 5.2 Low Fast",
+					"cost": {
+						"input": 1.75,
+						"output": 14,
+						"cache_read": 0.175,
+						"cache_write": 1.75
+					}
+				},
+				"gpt-5.2-codex": {
+					"name": "Codex 5.2",
+					"cost": {
+						"input": 1.75,
+						"output": 14,
+						"cache_read": 0.175,
+						"cache_write": 1.75
+					}
+				},
+				"gpt-5.2-codex-fast": {
+					"name": "Codex 5.2 Fast",
+					"cost": {
+						"input": 1.75,
+						"output": 14,
+						"cache_read": 0.175,
+						"cache_write": 1.75
+					}
+				},
+				"gpt-5.2-codex-high": {
+					"name": "Codex 5.2 High",
+					"cost": {
+						"input": 1.75,
+						"output": 14,
+						"cache_read": 0.175,
+						"cache_write": 1.75
+					}
+				},
+				"gpt-5.2-codex-high-fast": {
+					"name": "Codex 5.2 High Fast",
+					"cost": {
+						"input": 1.75,
+						"output": 14,
+						"cache_read": 0.175,
+						"cache_write": 1.75
+					}
+				},
+				"gpt-5.2-codex-xhigh": {
+					"name": "Codex 5.2 Extra High",
+					"cost": {
+						"input": 1.75,
+						"output": 14,
+						"cache_read": 0.175,
+						"cache_write": 1.75
+					}
+				},
+				"gpt-5.2-codex-xhigh-fast": {
+					"name": "Codex 5.2 Extra High Fast",
+					"cost": {
+						"input": 1.75,
+						"output": 14,
+						"cache_read": 0.175,
+						"cache_write": 1.75
+					}
+				},
+				"gpt-5.1-codex-max-low": {
+					"name": "Codex 5.1 Max Low",
+					"cost": {
+						"input": 1.25,
+						"output": 10,
+						"cache_read": 0.125,
+						"cache_write": 1.25
+					}
+				},
+				"gpt-5.1-codex-max-low-fast": {
+					"name": "Codex 5.1 Max Low Fast",
+					"cost": {
+						"input": 1.25,
+						"output": 10,
+						"cache_read": 0.125,
+						"cache_write": 1.25
+					}
+				},
+				"gpt-5.1-codex-max-medium": {
+					"name": "Codex 5.1 Max",
+					"cost": {
+						"input": 1.25,
+						"output": 10,
+						"cache_read": 0.125,
+						"cache_write": 1.25
+					}
+				},
+				"gpt-5.1-codex-max-medium-fast": {
+					"name": "Codex 5.1 Max Medium Fast",
+					"cost": {
+						"input": 1.25,
+						"output": 10,
+						"cache_read": 0.125,
+						"cache_write": 1.25
+					}
+				},
+				"gpt-5.1-codex-max-high": {
+					"name": "Codex 5.1 Max High",
+					"cost": {
+						"input": 1.25,
+						"output": 10,
+						"cache_read": 0.125,
+						"cache_write": 1.25
+					}
+				},
+				"gpt-5.1-codex-max-high-fast": {
+					"name": "Codex 5.1 Max High Fast",
+					"cost": {
+						"input": 1.25,
+						"output": 10,
+						"cache_read": 0.125,
+						"cache_write": 1.25
+					}
+				},
+				"gpt-5.1-codex-max-xhigh": {
+					"name": "Codex 5.1 Max Extra High",
+					"cost": {
+						"input": 1.25,
+						"output": 10,
+						"cache_read": 0.125,
+						"cache_write": 1.25
+					}
+				},
+				"gpt-5.1-codex-max-xhigh-fast": {
+					"name": "Codex 5.1 Max Extra High Fast",
+					"cost": {
+						"input": 1.25,
+						"output": 10,
+						"cache_read": 0.125,
+						"cache_write": 1.25
+					}
+				},
+				"composer-2.5": {
+					"name": "Composer 2.5"
+				},
+				"gpt-5.5-high": {
+					"name": "GPT-5.5 1M High",
+					"cost": {
+						"input": 5,
+						"output": 30,
+						"cache_read": 0.5,
+						"cache_write": 5,
+						"context_over_200k": {
+							"input": 10,
+							"output": 45,
+							"cache_read": 1,
+							"cache_write": 10
+						}
+					}
+				},
+				"gpt-5.5-high-fast": {
+					"name": "GPT-5.5 High Fast",
+					"cost": {
+						"input": 5,
+						"output": 30,
+						"cache_read": 0.5,
+						"cache_write": 5,
+						"context_over_200k": {
+							"input": 10,
+							"output": 45,
+							"cache_read": 1,
+							"cache_write": 10
+						}
+					}
+				},
+				"claude-opus-4-7-thinking-high": {
+					"name": "Opus 4.7 1M High Thinking",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"gpt-5.4-high": {
+					"name": "GPT-5.4 1M High",
+					"cost": {
+						"input": 2.5,
+						"output": 15,
+						"cache_read": 0.25,
+						"cache_write": 2.5,
+						"context_over_200k": {
+							"input": 5,
+							"output": 22.5,
+							"cache_read": 0.5,
+							"cache_write": 5
+						}
+					}
+				},
+				"gpt-5.4-high-fast": {
+					"name": "GPT-5.4 High Fast",
+					"cost": {
+						"input": 5,
+						"output": 30,
+						"cache_read": 0.5,
+						"cache_write": 5
+					}
+				},
+				"claude-4.6-opus-high-thinking": {
+					"name": "Opus 4.6 1M Thinking",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"claude-4.6-opus-high-thinking-fast": {
+					"name": "Opus 4.6 1M Thinking Fast",
+					"cost": {
+						"input": 30,
+						"output": 150,
+						"cache_read": 3,
+						"cache_write": 37.5
+					}
+				},
+				"composer-2.5-fast": {
+					"name": "Composer 2.5 Fast"
+				},
+				"gpt-5.5-none": {
+					"name": "GPT-5.5 1M None",
+					"cost": {
+						"input": 5,
+						"output": 30,
+						"cache_read": 0.5,
+						"cache_write": 5,
+						"context_over_200k": {
+							"input": 10,
+							"output": 45,
+							"cache_read": 1,
+							"cache_write": 10
+						}
+					}
+				},
+				"gpt-5.5-none-fast": {
+					"name": "GPT-5.5 None Fast",
+					"cost": {
+						"input": 5,
+						"output": 30,
+						"cache_read": 0.5,
+						"cache_write": 5,
+						"context_over_200k": {
+							"input": 10,
+							"output": 45,
+							"cache_read": 1,
+							"cache_write": 10
+						}
+					}
+				},
+				"gpt-5.5-low": {
+					"name": "GPT-5.5 1M Low",
+					"cost": {
+						"input": 5,
+						"output": 30,
+						"cache_read": 0.5,
+						"cache_write": 5,
+						"context_over_200k": {
+							"input": 10,
+							"output": 45,
+							"cache_read": 1,
+							"cache_write": 10
+						}
+					}
+				},
+				"gpt-5.5-low-fast": {
+					"name": "GPT-5.5 Low Fast",
+					"cost": {
+						"input": 5,
+						"output": 30,
+						"cache_read": 0.5,
+						"cache_write": 5,
+						"context_over_200k": {
+							"input": 10,
+							"output": 45,
+							"cache_read": 1,
+							"cache_write": 10
+						}
+					}
+				},
+				"gpt-5.5-medium": {
+					"name": "GPT-5.5 1M",
+					"cost": {
+						"input": 5,
+						"output": 30,
+						"cache_read": 0.5,
+						"cache_write": 5,
+						"context_over_200k": {
+							"input": 10,
+							"output": 45,
+							"cache_read": 1,
+							"cache_write": 10
+						}
+					}
+				},
+				"gpt-5.5-medium-fast": {
+					"name": "GPT-5.5 Fast",
+					"cost": {
+						"input": 5,
+						"output": 30,
+						"cache_read": 0.5,
+						"cache_write": 5,
+						"context_over_200k": {
+							"input": 10,
+							"output": 45,
+							"cache_read": 1,
+							"cache_write": 10
+						}
+					}
+				},
+				"gpt-5.5-extra-high": {
+					"name": "GPT-5.5 1M Extra High",
+					"cost": {
+						"input": 5,
+						"output": 30,
+						"cache_read": 0.5,
+						"cache_write": 5,
+						"context_over_200k": {
+							"input": 10,
+							"output": 45,
+							"cache_read": 1,
+							"cache_write": 10
+						}
+					}
+				},
+				"gpt-5.5-extra-high-fast": {
+					"name": "GPT-5.5 Extra High Fast",
+					"cost": {
+						"input": 5,
+						"output": 30,
+						"cache_read": 0.5,
+						"cache_write": 5,
+						"context_over_200k": {
+							"input": 10,
+							"output": 45,
+							"cache_read": 1,
+							"cache_write": 10
+						}
+					}
+				},
+				"claude-4.6-sonnet-medium": {
+					"name": "Sonnet 4.6 1M",
+					"cost": {
+						"input": 3,
+						"output": 15,
+						"cache_read": 0.3,
+						"cache_write": 3.75,
+						"context_over_200k": {
+							"input": 6,
+							"output": 22.5,
+							"cache_read": 0.6,
+							"cache_write": 7.5
+						}
+					}
+				},
+				"claude-4.6-sonnet-medium-thinking": {
+					"name": "Sonnet 4.6 1M Thinking",
+					"cost": {
+						"input": 3,
+						"output": 15,
+						"cache_read": 0.3,
+						"cache_write": 3.75,
+						"context_over_200k": {
+							"input": 6,
+							"output": 22.5,
+							"cache_read": 0.6,
+							"cache_write": 7.5
+						}
+					}
+				},
+				"claude-opus-4-7-low": {
+					"name": "Opus 4.7 1M Low",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"claude-opus-4-7-low-fast": {
+					"name": "Opus 4.7 1M Low Fast",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"claude-opus-4-7-medium": {
+					"name": "Opus 4.7 1M Medium",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"claude-opus-4-7-medium-fast": {
+					"name": "Opus 4.7 1M Medium Fast",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"claude-opus-4-7-high": {
+					"name": "Opus 4.7 1M High",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"claude-opus-4-7-high-fast": {
+					"name": "Opus 4.7 1M High Fast",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"claude-opus-4-7-xhigh": {
+					"name": "Opus 4.7 1M",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"claude-opus-4-7-xhigh-fast": {
+					"name": "Opus 4.7 1M Fast",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"claude-opus-4-7-max": {
+					"name": "Opus 4.7 1M Max",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"claude-opus-4-7-max-fast": {
+					"name": "Opus 4.7 1M Max Fast",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"claude-opus-4-7-thinking-low": {
+					"name": "Opus 4.7 1M Low Thinking",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"claude-opus-4-7-thinking-low-fast": {
+					"name": "Opus 4.7 1M Low Thinking Fast",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"claude-opus-4-7-thinking-medium": {
+					"name": "Opus 4.7 1M Medium Thinking",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"claude-opus-4-7-thinking-medium-fast": {
+					"name": "Opus 4.7 1M Medium Thinking Fast",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"claude-opus-4-7-thinking-high-fast": {
+					"name": "Opus 4.7 1M High Thinking Fast",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"claude-opus-4-7-thinking-xhigh": {
+					"name": "Opus 4.7 1M Thinking",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"claude-opus-4-7-thinking-xhigh-fast": {
+					"name": "Opus 4.7 1M Thinking Fast",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"claude-opus-4-7-thinking-max": {
+					"name": "Opus 4.7 1M Max Thinking",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"claude-opus-4-7-thinking-max-fast": {
+					"name": "Opus 4.7 1M Max Thinking Fast",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"grok-build-0.1": {
+					"name": "Grok Build 0.1 1M"
+				},
+				"gpt-5.4-low": {
+					"name": "GPT-5.4 1M Low",
+					"cost": {
+						"input": 2.5,
+						"output": 15,
+						"cache_read": 0.25,
+						"cache_write": 2.5,
+						"context_over_200k": {
+							"input": 5,
+							"output": 22.5,
+							"cache_read": 0.5,
+							"cache_write": 5
+						}
+					}
+				},
+				"gpt-5.4-medium": {
+					"name": "GPT-5.4 1M",
+					"cost": {
+						"input": 2.5,
+						"output": 15,
+						"cache_read": 0.25,
+						"cache_write": 2.5,
+						"context_over_200k": {
+							"input": 5,
+							"output": 22.5,
+							"cache_read": 0.5,
+							"cache_write": 5
+						}
+					}
+				},
+				"gpt-5.4-medium-fast": {
+					"name": "GPT-5.4 Fast",
+					"cost": {
+						"input": 5,
+						"output": 30,
+						"cache_read": 0.5,
+						"cache_write": 5
+					}
+				},
+				"gpt-5.4-xhigh": {
+					"name": "GPT-5.4 1M Extra High",
+					"cost": {
+						"input": 2.5,
+						"output": 15,
+						"cache_read": 0.25,
+						"cache_write": 2.5,
+						"context_over_200k": {
+							"input": 5,
+							"output": 22.5,
+							"cache_read": 0.5,
+							"cache_write": 5
+						}
+					}
+				},
+				"gpt-5.4-xhigh-fast": {
+					"name": "GPT-5.4 Extra High Fast",
+					"cost": {
+						"input": 5,
+						"output": 30,
+						"cache_read": 0.5,
+						"cache_write": 5
+					}
+				},
+				"claude-4.6-opus-high": {
+					"name": "Opus 4.6 1M",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"claude-4.6-opus-max": {
+					"name": "Opus 4.6 1M Max",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"claude-4.6-opus-max-thinking": {
+					"name": "Opus 4.6 1M Max Thinking",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"claude-4.6-opus-max-thinking-fast": {
+					"name": "Opus 4.6 1M Max Thinking Fast",
+					"cost": {
+						"input": 30,
+						"output": 150,
+						"cache_read": 3,
+						"cache_write": 37.5
+					}
+				},
+				"claude-4.5-opus-high": {
+					"name": "Opus 4.5",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"claude-4.5-opus-high-thinking": {
+					"name": "Opus 4.5 Thinking",
+					"cost": {
+						"input": 5,
+						"output": 25,
+						"cache_read": 0.5,
+						"cache_write": 6.25
+					}
+				},
+				"gpt-5.2-low": {
+					"name": "GPT-5.2 Low",
+					"cost": {
+						"input": 1.75,
+						"output": 14,
+						"cache_read": 0.175,
+						"cache_write": 1.75
+					}
+				},
+				"gpt-5.2-low-fast": {
+					"name": "GPT-5.2 Low Fast",
+					"cost": {
+						"input": 1.75,
+						"output": 14,
+						"cache_read": 0.175,
+						"cache_write": 1.75
+					}
+				},
+				"gpt-5.2-fast": {
+					"name": "GPT-5.2 Fast",
+					"cost": {
+						"input": 1.75,
+						"output": 14,
+						"cache_read": 0.175,
+						"cache_write": 1.75
+					}
+				},
+				"gpt-5.2-high": {
+					"name": "GPT-5.2 High",
+					"cost": {
+						"input": 1.75,
+						"output": 14,
+						"cache_read": 0.175,
+						"cache_write": 1.75
+					}
+				},
+				"gpt-5.2-high-fast": {
+					"name": "GPT-5.2 High Fast",
+					"cost": {
+						"input": 1.75,
+						"output": 14,
+						"cache_read": 0.175,
+						"cache_write": 1.75
+					}
+				},
+				"gpt-5.2-xhigh": {
+					"name": "GPT-5.2 Extra High",
+					"cost": {
+						"input": 1.75,
+						"output": 14,
+						"cache_read": 0.175,
+						"cache_write": 1.75
+					}
+				},
+				"gpt-5.2-xhigh-fast": {
+					"name": "GPT-5.2 Extra High Fast",
+					"cost": {
+						"input": 1.75,
+						"output": 14,
+						"cache_read": 0.175,
+						"cache_write": 1.75
+					}
+				},
+				"gemini-3.1-pro": {
+					"name": "Gemini 3.1 Pro",
+					"cost": {
+						"input": 2,
+						"output": 12,
+						"cache_read": 0.2,
+						"cache_write": 2,
+						"context_over_200k": {
+							"input": 4,
+							"output": 18,
+							"cache_read": 0.4,
+							"cache_write": 4
+						}
+					}
+				},
+				"gpt-5.4-mini-none": {
+					"name": "GPT-5.4 Mini None",
+					"cost": {
+						"input": 0.75,
+						"output": 4.5,
+						"cache_read": 0.075,
+						"cache_write": 0.75
+					}
+				},
+				"gpt-5.4-mini-low": {
+					"name": "GPT-5.4 Mini Low",
+					"cost": {
+						"input": 0.75,
+						"output": 4.5,
+						"cache_read": 0.075,
+						"cache_write": 0.75
+					}
+				},
+				"gpt-5.4-mini-medium": {
+					"name": "GPT-5.4 Mini",
+					"cost": {
+						"input": 0.75,
+						"output": 4.5,
+						"cache_read": 0.075,
+						"cache_write": 0.75
+					}
+				},
+				"gpt-5.4-mini-high": {
+					"name": "GPT-5.4 Mini High",
+					"cost": {
+						"input": 0.75,
+						"output": 4.5,
+						"cache_read": 0.075,
+						"cache_write": 0.75
+					}
+				},
+				"gpt-5.4-mini-xhigh": {
+					"name": "GPT-5.4 Mini Extra High",
+					"cost": {
+						"input": 0.75,
+						"output": 4.5,
+						"cache_read": 0.075,
+						"cache_write": 0.75
+					}
+				},
+				"gpt-5.4-nano-none": {
+					"name": "GPT-5.4 Nano None",
+					"cost": {
+						"input": 0.2,
+						"output": 1.25,
+						"cache_read": 0.02,
+						"cache_write": 0.2
+					}
+				},
+				"gpt-5.4-nano-low": {
+					"name": "GPT-5.4 Nano Low",
+					"cost": {
+						"input": 0.2,
+						"output": 1.25,
+						"cache_read": 0.02,
+						"cache_write": 0.2
+					}
+				},
+				"gpt-5.4-nano-medium": {
+					"name": "GPT-5.4 Nano",
+					"cost": {
+						"input": 0.2,
+						"output": 1.25,
+						"cache_read": 0.02,
+						"cache_write": 0.2
+					}
+				},
+				"gpt-5.4-nano-high": {
+					"name": "GPT-5.4 Nano High",
+					"cost": {
+						"input": 0.2,
+						"output": 1.25,
+						"cache_read": 0.02,
+						"cache_write": 0.2
+					}
+				},
+				"gpt-5.4-nano-xhigh": {
+					"name": "GPT-5.4 Nano Extra High",
+					"cost": {
+						"input": 0.2,
+						"output": 1.25,
+						"cache_read": 0.02,
+						"cache_write": 0.2
+					}
+				},
+				"grok-4.3": {
+					"name": "Grok 4.3 1M"
+				},
+				"claude-4.5-sonnet": {
+					"name": "Sonnet 4.5",
+					"cost": {
+						"input": 3,
+						"output": 15,
+						"cache_read": 0.3,
+						"cache_write": 3.75,
+						"context_over_200k": {
+							"input": 6,
+							"output": 22.5,
+							"cache_read": 0.6,
+							"cache_write": 7.5
+						}
+					}
+				},
+				"claude-4.5-sonnet-thinking": {
+					"name": "Sonnet 4.5 Thinking",
+					"cost": {
+						"input": 3,
+						"output": 15,
+						"cache_read": 0.3,
+						"cache_write": 3.75,
+						"context_over_200k": {
+							"input": 6,
+							"output": 22.5,
+							"cache_read": 0.6,
+							"cache_write": 7.5
+						}
+					}
+				},
+				"gpt-5.1-low": {
+					"name": "GPT-5.1 Low",
+					"cost": {
+						"input": 1.25,
+						"output": 10,
+						"cache_read": 0.125,
+						"cache_write": 1.25
+					}
+				},
+				"gpt-5.1": {
+					"name": "GPT-5.1",
+					"cost": {
+						"input": 1.25,
+						"output": 10,
+						"cache_read": 0.125,
+						"cache_write": 1.25
+					}
+				},
+				"gpt-5.1-high": {
+					"name": "GPT-5.1 High",
+					"cost": {
+						"input": 1.25,
+						"output": 10,
+						"cache_read": 0.125,
+						"cache_write": 1.25
+					}
+				},
+				"gemini-3-flash": {
+					"name": "Gemini 3 Flash",
+					"cost": {
+						"input": 0.5,
+						"output": 3,
+						"cache_read": 0.05,
+						"cache_write": 0.5
+					}
+				},
+				"gemini-3.5-flash": {
+					"name": "Gemini 3.5 Flash"
+				},
+				"gpt-5.1-codex-mini-low": {
+					"name": "Codex 5.1 Mini Low",
+					"cost": {
+						"input": 0.25,
+						"output": 2,
+						"cache_read": 0.025,
+						"cache_write": 0.25
+					}
+				},
+				"gpt-5.1-codex-mini": {
+					"name": "Codex 5.1 Mini",
+					"cost": {
+						"input": 0.25,
+						"output": 2,
+						"cache_read": 0.025,
+						"cache_write": 0.25
+					}
+				},
+				"gpt-5.1-codex-mini-high": {
+					"name": "Codex 5.1 Mini High",
+					"cost": {
+						"input": 0.25,
+						"output": 2,
+						"cache_read": 0.025,
+						"cache_write": 0.25
+					}
+				},
+				"claude-4-sonnet": {
+					"name": "Sonnet 4",
+					"cost": {
+						"input": 3,
+						"output": 15,
+						"cache_read": 0.3,
+						"cache_write": 3.75
+					}
+				},
+				"claude-4-sonnet-thinking": {
+					"name": "Sonnet 4 Thinking",
+					"cost": {
+						"input": 3,
+						"output": 15,
+						"cache_read": 0.3,
+						"cache_write": 3.75
+					}
+				},
+				"gpt-5-mini": {
+					"name": "GPT-5 Mini",
+					"cost": {
+						"input": 0.25,
+						"output": 2,
+						"cache_read": 0.025,
+						"cache_write": 0.25
+					}
+				},
+				"kimi-k2.5": {
+					"name": "Kimi K2.5",
+					"cost": {
+						"input": 0.6,
+						"output": 3,
+						"cache_read": 0.1,
+						"cache_write": 0.6
+					}
+				}
+			}
 		}
 	}
 }
