@@ -234,7 +234,10 @@ export USER="${USER:-$(id -un)}"
 # tmux: ホスト側の TMUX 変数を消す (ネスト検出を防ぎ、独立した tmux セッションを起動)
 unset TMUX
 unset TMUX_PANE
-unset TMUX_TMPDIR
+# tmux サーバーのソケットをインスタンス固有にし、sandbox profile の継承衝突を防ぐ
+# (共有 /tmp だと先行インスタンスのサーバーに接続し、その sandbox を継承してしまう)
+export TMUX_TMPDIR="${HOME}/.tmux"
+mkdir -p "$TMUX_TMPDIR"
 
 # tmux 設定・quota 関連ファイルのセットアップ
 # HOME がすでに OPENCODE_HOME に切り替わっているため、${HOME}/... = OPENCODE_HOME/...
