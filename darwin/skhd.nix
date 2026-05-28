@@ -3,7 +3,7 @@
     enable = true;
     skhdConfig = ''
       # Terminal
-      cmd + alt - return : open -an ghostty.app
+      cmd + alt - return : open -na Ghostty
     '';
   };
 }
