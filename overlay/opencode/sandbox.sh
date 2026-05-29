@@ -6,7 +6,10 @@ OPENCODE_BIN="${OPENCODE_BIN:-@opencode-dir@/opencode}"
 
 PROJECT_DIR="$(pwd)"
 REPO_ROOT="$(git -C "$PROJECT_DIR" rev-parse --show-toplevel 2>/dev/null || echo "$PROJECT_DIR")"
-OPENCODE_HOME="$(mktemp -d "${TMPDIR:-/tmp}/opencodebox-XXXXXXXX")"
+# メモリ節約: /var/tmp (ディスク) を優先し、失敗時のみ tmpfs にフォールバック
+if ! OPENCODE_HOME="$(mktemp -d /var/tmp/opencodebox-XXXXXXXX 2>/dev/null)"; then
+  OPENCODE_HOME="$(mktemp -d "${TMPDIR:-/tmp}/opencodebox-XXXXXXXX")"
+fi
 OPENCODE_CONFIG="${HOME}/.config/opencode"
 OPENCODE_JSON="${OPENCODE_CONFIG}/opencode.json"
 XDG_RUNTIME="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
