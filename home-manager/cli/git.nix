@@ -100,6 +100,7 @@
         ".sisyphus"
         ".pi"
         ".senpi"
+        ".cursor"
       ];
     };
     gh = {
