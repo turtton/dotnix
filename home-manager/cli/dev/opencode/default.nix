@@ -6,6 +6,13 @@ let
 in
 {
   home.activation.opencode = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    # Rotate previous configs to -old (keep one generation)
+    for f in opencode.jsonc oh-my-openagent.json dcp.jsonc AGENTS.md; do
+      [ -f "${configDir}/$f" ] && mv -f "${configDir}/$f" "${configDir}/$f.old"
+    done
+    rm -rf "${configDir}/skill-old"
+    [ -d "${configDir}/skill" ] && mv "${configDir}/skill" "${configDir}/skill-old"
+
     mkdir -p "${configDir}/skill/git-commit"
     mkdir -p "${configDir}/skill/final-review"
 
@@ -24,6 +31,12 @@ in
     chmod -R u+w "${configDir}/skill"
 
     # Alt profile (ChatGPT Team + Cursor + OpenCode Go)
+    for f in opencode.jsonc oh-my-openagent.json dcp.jsonc AGENTS.md; do
+      [ -f "${altConfigDir}/$f" ] && mv -f "${altConfigDir}/$f" "${altConfigDir}/$f.old"
+    done
+    rm -rf "${altConfigDir}/skill-old"
+    [ -d "${altConfigDir}/skill" ] && mv "${altConfigDir}/skill" "${altConfigDir}/skill-old"
+
     mkdir -p "${altConfigDir}/skill/git-commit"
     mkdir -p "${altConfigDir}/skill/final-review"
 
