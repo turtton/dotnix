@@ -102,7 +102,12 @@
 			]
 		},
 		"librarian": {
-			"model": "github-copilot/gemini-3-flash-preview"
+			"model": "github-copilot/gpt-5.4-mini",
+			"fallback_models": [
+				{
+					"model": "github-copilot/gemini-3-flash-preview"
+				}
+			]
 		}
 	},
 	"categories": {
