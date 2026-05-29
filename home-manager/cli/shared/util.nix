@@ -20,6 +20,11 @@
 
   programs.zellij = {
     enable = true;
-    settings.theme = "catppuccin-mocha";
+    exitShellOnExit = true;
+    enableZshIntegration = true;
+    settings = {
+      theme = "catppuccin-mocha";
+      show_startup_tips = false;
+    };
   };
 }
