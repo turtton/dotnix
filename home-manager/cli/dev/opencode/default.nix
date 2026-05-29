@@ -1,20 +1,26 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 let
   configDir = "${config.xdg.configHome}/opencode";
   altConfigDir = "${config.xdg.configHome}/opencode-alt";
-  skillSrc = ../../../../.agents/skills;
 in
 {
-  home.activation.opencode = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  imports = [
+    inputs.skills-catalog.homeManagerModules.default
+  ];
+
+  home.activation.opencode = lib.hm.dag.entryAfter [ "writeBoundary" "agent-skills" ] ''
     # Rotate previous configs to -old (keep one generation)
     for f in opencode.jsonc oh-my-openagent.json dcp.jsonc AGENTS.md; do
       [ -f "${configDir}/$f" ] && mv -f "${configDir}/$f" "${configDir}/$f.old"
     done
-    rm -rf "${configDir}/skill-old"
-    [ -d "${configDir}/skill" ] && mv "${configDir}/skill" "${configDir}/skill-old"
 
-    mkdir -p "${configDir}/skill/git-commit"
-    mkdir -p "${configDir}/skill/final-review"
+    mkdir -p "${configDir}"
 
     cp -f "${./opencode.jsonc}" "${configDir}/opencode.jsonc"
     cp -f "${./oh-my-openagent.json}" "${configDir}/oh-my-openagent.json"
@@ -22,23 +28,14 @@ in
     cp -f "${./dcp.jsonc}" "${configDir}/dcp.jsonc"
     cp -f "${./AGENTS.md}" "${configDir}/AGENTS.md"
 
-    cp -f "${skillSrc}/git-commit/SKILL.md" "${configDir}/skill/git-commit/SKILL.md"
-    cp -f "${skillSrc}/git-commit/GUIDE.md" "${configDir}/skill/git-commit/GUIDE.md"
-    cp -f "${skillSrc}/final-review/SKILL.md" "${configDir}/skill/final-review/SKILL.md"
-    cp -f "${skillSrc}/final-review/GUIDE.md" "${configDir}/skill/final-review/GUIDE.md"
-
     chmod u+w "${configDir}/opencode.jsonc" "${configDir}/oh-my-openagent.json" "${configDir}/dcp.jsonc" "${configDir}/AGENTS.md"
-    chmod -R u+w "${configDir}/skill"
 
     # Alt profile (ChatGPT Team + Cursor + OpenCode Go)
     for f in opencode.jsonc oh-my-openagent.json dcp.jsonc AGENTS.md; do
       [ -f "${altConfigDir}/$f" ] && mv -f "${altConfigDir}/$f" "${altConfigDir}/$f.old"
     done
-    rm -rf "${altConfigDir}/skill-old"
-    [ -d "${altConfigDir}/skill" ] && mv "${altConfigDir}/skill" "${altConfigDir}/skill-old"
 
-    mkdir -p "${altConfigDir}/skill/git-commit"
-    mkdir -p "${altConfigDir}/skill/final-review"
+    mkdir -p "${altConfigDir}"
 
     cp -f "${./opencode-alt.jsonc}" "${altConfigDir}/opencode.jsonc"
     cp -f "${./oh-my-openagent-alt.json}" "${altConfigDir}/oh-my-openagent.json"
@@ -57,13 +54,16 @@ in
       echo "Run 'opencode' (main profile) first to generate it via the cursor-acp plugin." >&2
     fi
 
-    cp -f "${skillSrc}/git-commit/SKILL.md" "${altConfigDir}/skill/git-commit/SKILL.md"
-    cp -f "${skillSrc}/git-commit/GUIDE.md" "${altConfigDir}/skill/git-commit/GUIDE.md"
-    cp -f "${skillSrc}/final-review/SKILL.md" "${altConfigDir}/skill/final-review/SKILL.md"
-    cp -f "${skillSrc}/final-review/GUIDE.md" "${altConfigDir}/skill/final-review/GUIDE.md"
+    # Mirror skills from main profile (deployed by agent-skills) to alt profile
+    if [ -d "${configDir}/skill" ]; then
+      mkdir -p "${altConfigDir}/skill"
+      ${pkgs.rsync}/bin/rsync -aL --delete "${configDir}/skill/" "${altConfigDir}/skill/"
+    else
+      rm -rf "${altConfigDir}/skill"
+    fi
 
     chmod u+w "${altConfigDir}/opencode.jsonc" "${altConfigDir}/oh-my-openagent.json" "${altConfigDir}/dcp.jsonc" "${altConfigDir}/AGENTS.md"
-    chmod -R u+w "${altConfigDir}/skill"
+    [ -d "${altConfigDir}/skill" ] && chmod -R u+w "${altConfigDir}/skill"
   '';
 
   home.shellAliases.oc-alt = "OPENCODE_CONFIG_DIR=${altConfigDir} CURSOR_API_KEY=\${$(rbw get cursor-api):-$CURSOR_API_KEY} opencode";

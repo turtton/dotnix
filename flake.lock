@@ -1,5 +1,27 @@
 {
   "nodes": {
+    "agent-skills-nix": {
+      "inputs": {
+        "home-manager": "home-manager_2",
+        "nixpkgs": [
+          "skills-catalog",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1779957311,
+        "narHash": "sha256-ay1wGiKQIGIcFpSxlutpoAlsPVerbVhDUXtmaDVLz+o=",
+        "owner": "Kyure-A",
+        "repo": "agent-skills-nix",
+        "rev": "df7a6e0fa87655cf28369781232d153c1c7b55ca",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Kyure-A",
+        "repo": "agent-skills-nix",
+        "type": "github"
+      }
+    },
     "ags": {
       "inputs": {
         "astal": "astal",
@@ -294,6 +316,22 @@
       "original": {
         "owner": "Mic92",
         "repo": "direnv-instant",
+        "type": "github"
+      }
+    },
+    "dotagents": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780054994,
+        "narHash": "sha256-JTbZqvKk4gfyPhUs2X9RBdgXD09lIKKjQH0fWfFrGSk=",
+        "owner": "turtton",
+        "repo": "dotagents",
+        "rev": "970a87d2a9dad6e6b0e5cb1bbfd2bb75def7a0b0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "turtton",
+        "repo": "dotagents",
         "type": "github"
       }
     },
@@ -778,6 +816,28 @@
       }
     },
     "home-manager_2": {
+      "inputs": {
+        "nixpkgs": [
+          "skills-catalog",
+          "agent-skills-nix",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1779678629,
+        "narHash": "sha256-gHcIFg0mm+KFsg7iZQt67kni3+qR5U3PhEC9P7vKlZ4=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "612bbe3b405ad5f71d7bf9edecc04b678a061652",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "home-manager_3": {
       "inputs": {
         "nixpkgs": [
           "zen-browser",
@@ -2123,6 +2183,7 @@
         "rustowl": "rustowl",
         "senpi": "senpi",
         "siketyan-ghr": "siketyan-ghr",
+        "skills-catalog": "skills-catalog",
         "split-monitor-workspaces": "split-monitor-workspaces",
         "treefmt-nix": "treefmt-nix_4",
         "turtton-neovim": "turtton-neovim",
@@ -2267,6 +2328,24 @@
         "repo": "ghr",
         "type": "github"
       }
+    },
+    "skills-catalog": {
+      "inputs": {
+        "agent-skills-nix": "agent-skills-nix",
+        "dotagents": "dotagents",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "path": "./skills",
+        "type": "path"
+      },
+      "original": {
+        "path": "./skills",
+        "type": "path"
+      },
+      "parent": []
     },
     "split-monitor-workspaces": {
       "inputs": {
@@ -2711,7 +2790,7 @@
     },
     "zen-browser": {
       "inputs": {
-        "home-manager": "home-manager_2",
+        "home-manager": "home-manager_3",
         "nixpkgs": "nixpkgs_12"
       },
       "locked": {
