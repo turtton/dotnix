@@ -17,11 +17,6 @@ Answer in 日本語
 
 - 長時間の作業でも中断・省略しないこと。つらくなったらagentに任せること
 
-# CLI
-
-- `python` → `uv` を使用すること
-- 未インストールのコマンド → nixパッケージがあれば `,` を活用すること（例: `, jq`）
-
 # GIT
 
 - GitHubリポジトリへの push / pull は ssh ではなく gh の auth token を活用して行うこと
