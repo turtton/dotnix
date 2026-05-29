@@ -29,249 +29,6 @@
 						"cache_write": 1.25
 					}
 				},
-				"composer-2-fast": {
-					"name": "Composer 2 Fast",
-					"cost": {
-						"input": 1.5,
-						"output": 7.5,
-						"cache_read": 0.35,
-						"cache_write": 1.5
-					}
-				},
-				"composer-2": {
-					"name": "Composer 2",
-					"cost": {
-						"input": 0.5,
-						"output": 2.5,
-						"cache_read": 0.2,
-						"cache_write": 0.5
-					}
-				},
-				"gpt-5.3-codex-low": {
-					"name": "Codex 5.3 Low",
-					"cost": {
-						"input": 1.75,
-						"output": 14,
-						"cache_read": 0.175,
-						"cache_write": 1.75
-					}
-				},
-				"gpt-5.3-codex-low-fast": {
-					"name": "Codex 5.3 Low Fast",
-					"cost": {
-						"input": 1.75,
-						"output": 14,
-						"cache_read": 0.175,
-						"cache_write": 1.75
-					}
-				},
-				"gpt-5.3-codex": {
-					"name": "Codex 5.3",
-					"cost": {
-						"input": 1.75,
-						"output": 14,
-						"cache_read": 0.175,
-						"cache_write": 1.75
-					}
-				},
-				"gpt-5.3-codex-fast": {
-					"name": "Codex 5.3 Fast",
-					"cost": {
-						"input": 1.75,
-						"output": 14,
-						"cache_read": 0.175,
-						"cache_write": 1.75
-					}
-				},
-				"gpt-5.3-codex-high": {
-					"name": "Codex 5.3 High",
-					"cost": {
-						"input": 1.75,
-						"output": 14,
-						"cache_read": 0.175,
-						"cache_write": 1.75
-					}
-				},
-				"gpt-5.3-codex-high-fast": {
-					"name": "Codex 5.3 High Fast",
-					"cost": {
-						"input": 1.75,
-						"output": 14,
-						"cache_read": 0.175,
-						"cache_write": 1.75
-					}
-				},
-				"gpt-5.3-codex-xhigh": {
-					"name": "Codex 5.3 Extra High",
-					"cost": {
-						"input": 1.75,
-						"output": 14,
-						"cache_read": 0.175,
-						"cache_write": 1.75
-					}
-				},
-				"gpt-5.3-codex-xhigh-fast": {
-					"name": "Codex 5.3 Extra High Fast",
-					"cost": {
-						"input": 1.75,
-						"output": 14,
-						"cache_read": 0.175,
-						"cache_write": 1.75
-					}
-				},
-				"gpt-5.2": {
-					"name": "GPT-5.2",
-					"cost": {
-						"input": 1.75,
-						"output": 14,
-						"cache_read": 0.175,
-						"cache_write": 1.75
-					}
-				},
-				"gpt-5.2-codex-low": {
-					"name": "Codex 5.2 Low",
-					"cost": {
-						"input": 1.75,
-						"output": 14,
-						"cache_read": 0.175,
-						"cache_write": 1.75
-					}
-				},
-				"gpt-5.2-codex-low-fast": {
-					"name": "Codex 5.2 Low Fast",
-					"cost": {
-						"input": 1.75,
-						"output": 14,
-						"cache_read": 0.175,
-						"cache_write": 1.75
-					}
-				},
-				"gpt-5.2-codex": {
-					"name": "Codex 5.2",
-					"cost": {
-						"input": 1.75,
-						"output": 14,
-						"cache_read": 0.175,
-						"cache_write": 1.75
-					}
-				},
-				"gpt-5.2-codex-fast": {
-					"name": "Codex 5.2 Fast",
-					"cost": {
-						"input": 1.75,
-						"output": 14,
-						"cache_read": 0.175,
-						"cache_write": 1.75
-					}
-				},
-				"gpt-5.2-codex-high": {
-					"name": "Codex 5.2 High",
-					"cost": {
-						"input": 1.75,
-						"output": 14,
-						"cache_read": 0.175,
-						"cache_write": 1.75
-					}
-				},
-				"gpt-5.2-codex-high-fast": {
-					"name": "Codex 5.2 High Fast",
-					"cost": {
-						"input": 1.75,
-						"output": 14,
-						"cache_read": 0.175,
-						"cache_write": 1.75
-					}
-				},
-				"gpt-5.2-codex-xhigh": {
-					"name": "Codex 5.2 Extra High",
-					"cost": {
-						"input": 1.75,
-						"output": 14,
-						"cache_read": 0.175,
-						"cache_write": 1.75
-					}
-				},
-				"gpt-5.2-codex-xhigh-fast": {
-					"name": "Codex 5.2 Extra High Fast",
-					"cost": {
-						"input": 1.75,
-						"output": 14,
-						"cache_read": 0.175,
-						"cache_write": 1.75
-					}
-				},
-				"gpt-5.1-codex-max-low": {
-					"name": "Codex 5.1 Max Low",
-					"cost": {
-						"input": 1.25,
-						"output": 10,
-						"cache_read": 0.125,
-						"cache_write": 1.25
-					}
-				},
-				"gpt-5.1-codex-max-low-fast": {
-					"name": "Codex 5.1 Max Low Fast",
-					"cost": {
-						"input": 1.25,
-						"output": 10,
-						"cache_read": 0.125,
-						"cache_write": 1.25
-					}
-				},
-				"gpt-5.1-codex-max-medium": {
-					"name": "Codex 5.1 Max",
-					"cost": {
-						"input": 1.25,
-						"output": 10,
-						"cache_read": 0.125,
-						"cache_write": 1.25
-					}
-				},
-				"gpt-5.1-codex-max-medium-fast": {
-					"name": "Codex 5.1 Max Medium Fast",
-					"cost": {
-						"input": 1.25,
-						"output": 10,
-						"cache_read": 0.125,
-						"cache_write": 1.25
-					}
-				},
-				"gpt-5.1-codex-max-high": {
-					"name": "Codex 5.1 Max High",
-					"cost": {
-						"input": 1.25,
-						"output": 10,
-						"cache_read": 0.125,
-						"cache_write": 1.25
-					}
-				},
-				"gpt-5.1-codex-max-high-fast": {
-					"name": "Codex 5.1 Max High Fast",
-					"cost": {
-						"input": 1.25,
-						"output": 10,
-						"cache_read": 0.125,
-						"cache_write": 1.25
-					}
-				},
-				"gpt-5.1-codex-max-xhigh": {
-					"name": "Codex 5.1 Max Extra High",
-					"cost": {
-						"input": 1.25,
-						"output": 10,
-						"cache_read": 0.125,
-						"cache_write": 1.25
-					}
-				},
-				"gpt-5.1-codex-max-xhigh-fast": {
-					"name": "Codex 5.1 Max Extra High Fast",
-					"cost": {
-						"input": 1.25,
-						"output": 10,
-						"cache_read": 0.125,
-						"cache_write": 1.25
-					}
-				},
 				"composer-2.5": {
 					"name": "Composer 2.5"
 				},
@@ -518,26 +275,8 @@
 						"cache_write": 6.25
 					}
 				},
-				"claude-opus-4-7-low-fast": {
-					"name": "Opus 4.7 1M Low Fast",
-					"cost": {
-						"input": 5,
-						"output": 25,
-						"cache_read": 0.5,
-						"cache_write": 6.25
-					}
-				},
 				"claude-opus-4-7-medium": {
 					"name": "Opus 4.7 1M Medium",
-					"cost": {
-						"input": 5,
-						"output": 25,
-						"cache_read": 0.5,
-						"cache_write": 6.25
-					}
-				},
-				"claude-opus-4-7-medium-fast": {
-					"name": "Opus 4.7 1M Medium Fast",
 					"cost": {
 						"input": 5,
 						"output": 25,
@@ -554,26 +293,8 @@
 						"cache_write": 6.25
 					}
 				},
-				"claude-opus-4-7-high-fast": {
-					"name": "Opus 4.7 1M High Fast",
-					"cost": {
-						"input": 5,
-						"output": 25,
-						"cache_read": 0.5,
-						"cache_write": 6.25
-					}
-				},
 				"claude-opus-4-7-xhigh": {
 					"name": "Opus 4.7 1M",
-					"cost": {
-						"input": 5,
-						"output": 25,
-						"cache_read": 0.5,
-						"cache_write": 6.25
-					}
-				},
-				"claude-opus-4-7-xhigh-fast": {
-					"name": "Opus 4.7 1M Fast",
 					"cost": {
 						"input": 5,
 						"output": 25,
@@ -590,26 +311,8 @@
 						"cache_write": 6.25
 					}
 				},
-				"claude-opus-4-7-max-fast": {
-					"name": "Opus 4.7 1M Max Fast",
-					"cost": {
-						"input": 5,
-						"output": 25,
-						"cache_read": 0.5,
-						"cache_write": 6.25
-					}
-				},
 				"claude-opus-4-7-thinking-low": {
 					"name": "Opus 4.7 1M Low Thinking",
-					"cost": {
-						"input": 5,
-						"output": 25,
-						"cache_read": 0.5,
-						"cache_write": 6.25
-					}
-				},
-				"claude-opus-4-7-thinking-low-fast": {
-					"name": "Opus 4.7 1M Low Thinking Fast",
 					"cost": {
 						"input": 5,
 						"output": 25,
@@ -626,24 +329,6 @@
 						"cache_write": 6.25
 					}
 				},
-				"claude-opus-4-7-thinking-medium-fast": {
-					"name": "Opus 4.7 1M Medium Thinking Fast",
-					"cost": {
-						"input": 5,
-						"output": 25,
-						"cache_read": 0.5,
-						"cache_write": 6.25
-					}
-				},
-				"claude-opus-4-7-thinking-high-fast": {
-					"name": "Opus 4.7 1M High Thinking Fast",
-					"cost": {
-						"input": 5,
-						"output": 25,
-						"cache_read": 0.5,
-						"cache_write": 6.25
-					}
-				},
 				"claude-opus-4-7-thinking-xhigh": {
 					"name": "Opus 4.7 1M Thinking",
 					"cost": {
@@ -653,26 +338,8 @@
 						"cache_write": 6.25
 					}
 				},
-				"claude-opus-4-7-thinking-xhigh-fast": {
-					"name": "Opus 4.7 1M Thinking Fast",
-					"cost": {
-						"input": 5,
-						"output": 25,
-						"cache_read": 0.5,
-						"cache_write": 6.25
-					}
-				},
 				"claude-opus-4-7-thinking-max": {
 					"name": "Opus 4.7 1M Max Thinking",
-					"cost": {
-						"input": 5,
-						"output": 25,
-						"cache_read": 0.5,
-						"cache_write": 6.25
-					}
-				},
-				"claude-opus-4-7-thinking-max-fast": {
-					"name": "Opus 4.7 1M Max Thinking Fast",
 					"cost": {
 						"input": 5,
 						"output": 25,
@@ -971,63 +638,6 @@
 				"grok-4.3": {
 					"name": "Grok 4.3 1M"
 				},
-				"claude-4.5-sonnet": {
-					"name": "Sonnet 4.5",
-					"cost": {
-						"input": 3,
-						"output": 15,
-						"cache_read": 0.3,
-						"cache_write": 3.75,
-						"context_over_200k": {
-							"input": 6,
-							"output": 22.5,
-							"cache_read": 0.6,
-							"cache_write": 7.5
-						}
-					}
-				},
-				"claude-4.5-sonnet-thinking": {
-					"name": "Sonnet 4.5 Thinking",
-					"cost": {
-						"input": 3,
-						"output": 15,
-						"cache_read": 0.3,
-						"cache_write": 3.75,
-						"context_over_200k": {
-							"input": 6,
-							"output": 22.5,
-							"cache_read": 0.6,
-							"cache_write": 7.5
-						}
-					}
-				},
-				"gpt-5.1-low": {
-					"name": "GPT-5.1 Low",
-					"cost": {
-						"input": 1.25,
-						"output": 10,
-						"cache_read": 0.125,
-						"cache_write": 1.25
-					}
-				},
-				"gpt-5.1": {
-					"name": "GPT-5.1",
-					"cost": {
-						"input": 1.25,
-						"output": 10,
-						"cache_read": 0.125,
-						"cache_write": 1.25
-					}
-				},
-				"gpt-5.1-high": {
-					"name": "GPT-5.1 High",
-					"cost": {
-						"input": 1.25,
-						"output": 10,
-						"cache_read": 0.125,
-						"cache_write": 1.25
-					}
-				},
 				"gemini-3-flash": {
 					"name": "Gemini 3 Flash",
 					"cost": {
@@ -1039,60 +649,6 @@
 				},
 				"gemini-3.5-flash": {
 					"name": "Gemini 3.5 Flash"
-				},
-				"gpt-5.1-codex-mini-low": {
-					"name": "Codex 5.1 Mini Low",
-					"cost": {
-						"input": 0.25,
-						"output": 2,
-						"cache_read": 0.025,
-						"cache_write": 0.25
-					}
-				},
-				"gpt-5.1-codex-mini": {
-					"name": "Codex 5.1 Mini",
-					"cost": {
-						"input": 0.25,
-						"output": 2,
-						"cache_read": 0.025,
-						"cache_write": 0.25
-					}
-				},
-				"gpt-5.1-codex-mini-high": {
-					"name": "Codex 5.1 Mini High",
-					"cost": {
-						"input": 0.25,
-						"output": 2,
-						"cache_read": 0.025,
-						"cache_write": 0.25
-					}
-				},
-				"claude-4-sonnet": {
-					"name": "Sonnet 4",
-					"cost": {
-						"input": 3,
-						"output": 15,
-						"cache_read": 0.3,
-						"cache_write": 3.75
-					}
-				},
-				"claude-4-sonnet-thinking": {
-					"name": "Sonnet 4 Thinking",
-					"cost": {
-						"input": 3,
-						"output": 15,
-						"cache_read": 0.3,
-						"cache_write": 3.75
-					}
-				},
-				"gpt-5-mini": {
-					"name": "GPT-5 Mini",
-					"cost": {
-						"input": 0.25,
-						"output": 2,
-						"cache_read": 0.025,
-						"cache_write": 0.25
-					}
 				},
 				"kimi-k2.5": {
 					"name": "Kimi K2.5",
