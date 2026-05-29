@@ -101,6 +101,7 @@
         ".pi"
         ".senpi"
         ".cursor"
+        ".agents"
       ];
     };
     gh = {

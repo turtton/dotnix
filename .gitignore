@@ -2,3 +2,10 @@
 /.direnv
 /result
 result*
+!.agents/
+.agents/*
+!.agents/skills/
+
+
+# APM dependencies
+apm_modules/

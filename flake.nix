@@ -296,6 +296,7 @@
             zizmor
             nh
             gh
+            inputs.llm-agents.packages.${system}.apm
             (writeScriptBin "switch-home" ''
               nh home switch . -C"$@"
             '')

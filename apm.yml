@@ -1,0 +1,12 @@
+name: dotnix
+version: 1.0.0
+description: APM project for dotnix
+author: turtton
+targets:
+  - agent-skills
+dependencies:
+  apm:
+    - turtton/dotagents
+  mcp: []
+includes: auto
+scripts: {}
