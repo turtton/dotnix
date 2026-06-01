@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, username, ... }:
 {
   nix = {
     enable = true;
@@ -20,8 +20,8 @@
       accept-flake-config = true;
       trusted-users = [
         "root"
+        username
         "@admin"
-        "@staff"
       ];
       substituters = [
         "https://aseipp-nix-cache.freetls.fastly.net"
