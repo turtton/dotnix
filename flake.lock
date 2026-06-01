@@ -2033,41 +2033,18 @@
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
-        ],
-        "opencode": "opencode_2"
-      },
-      "locked": {
-        "lastModified": 1778212083,
-        "narHash": "sha256-8i2Vh+BoCI26sflHVNkuJVPhH7jUinBvH0b/V532+VI=",
-        "ref": "refs/heads/dev",
-        "rev": "fabf952779e6a3a306bafab4ab7bc26bb5dc3424",
-        "revCount": 59,
-        "type": "git",
-        "url": "https://iris.radicle.xyz/zSj69SY75yV9h6LxyiQ3cxDTDSEV.git"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://iris.radicle.xyz/zSj69SY75yV9h6LxyiQ3cxDTDSEV.git"
-      }
-    },
-    "opencode_2": {
-      "inputs": {
-        "nixpkgs": [
-          "opencode",
-          "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1778165517,
-        "narHash": "sha256-F3085YQFlVB+xF8lzFcN4PgAbIqQeFzSUFjeV8U7py4=",
+        "lastModified": 1780255255,
+        "narHash": "sha256-Izj3bevcNwnVCF9X9BeRVbmAjqS+abzQMLO1UTOUni0=",
         "owner": "anomalyco",
         "repo": "opencode",
-        "rev": "8ba2a9171597262df9d19516c82a5e14f18f5c63",
+        "rev": "c57379833e3f25967c03653482fc3131b3068c04",
         "type": "github"
       },
       "original": {
         "owner": "anomalyco",
-        "ref": "v1.14.41",
         "repo": "opencode",
         "type": "github"
       }

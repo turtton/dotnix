@@ -1,42 +1,42 @@
 {
-	"$schema": "https://opencode.ai/config.json",
-	"plugin": [
-		"@tarquinen/opencode-dcp",
-		"oh-my-openagent@4.3.1",
-		"opencode-comments-plugin",
-		"@simonwjackson/opencode-direnv",
-		"opencode-wakatime"
-	],
-	"agent": {
-		"title": {
-			"model": "opencode-go/minimax-m2.7"
-		}
-	},
-	"provider": {
-		"cursor-api": {
-			"name": "Cursor",
-			"npm": "@ai-sdk/openai-compatible",
-			"options": {
-				"baseURL": "http://127.0.0.1:8787/opencodev2/v1"
-			},
-			"models": {
-				"composer-2.5": {
-					"name": "Composer 2.5",
-					"cost": {
-						"input": 0.5,
-						"output": 2.5,
-						"cache_read": 0.2
-					}
-				},
-				"composer-2.5-fast": {
-					"name": "Composer 2.5 Fast",
-					"cost": {
-						"input": 3,
-						"output": 15,
-						"cache_read": 0.5
-					}
-				}
-			}
-		}
-	}
+    "$schema": "https://opencode.ai/config.json",
+    "plugin": [
+        "@tarquinen/opencode-dcp",
+        "oh-my-openagent",
+        "opencode-comments-plugin",
+        "@simonwjackson/opencode-direnv",
+        "opencode-wakatime"
+    ],
+    "agent": {
+        "title": {
+            "model": "opencode-go/minimax-m2.7"
+        }
+    },
+    "provider": {
+        "cursor-api": {
+            "name": "Cursor",
+            "npm": "@ai-sdk/openai-compatible",
+            "options": {
+                "baseURL": "http://127.0.0.1:8787/opencodev2/v1"
+            },
+            "models": {
+                "composer-2.5": {
+                    "name": "Composer 2.5",
+                    "cost": {
+                        "input": 0.5,
+                        "output": 2.5,
+                        "cache_read": 0.2
+                    }
+                },
+                "composer-2.5-fast": {
+                    "name": "Composer 2.5 Fast",
+                    "cost": {
+                        "input": 3,
+                        "output": 15,
+                        "cache_read": 0.5
+                    }
+                }
+            }
+        }
+    }
 }

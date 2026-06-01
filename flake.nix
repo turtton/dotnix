@@ -142,9 +142,8 @@
       };
     };
     opencode = {
-      # Use PR #15401 commit until merged: fix .github/TEAM_MEMBERS not included
-      # url = "github:anomalyco/opencode";
-      url = "git+https://iris.radicle.xyz/zSj69SY75yV9h6LxyiQ3cxDTDSEV.git";
+      url = "github:anomalyco/opencode";
+      # url = "git+https://iris.radicle.xyz/zSj69SY75yV9h6LxyiQ3cxDTDSEV.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-wsl = {
