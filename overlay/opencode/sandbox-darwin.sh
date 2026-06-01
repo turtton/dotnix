@@ -7,7 +7,11 @@ OPENCODE_BIN="${OPENCODE_BIN:-@opencode-dir@/opencode}"
 PROJECT_DIR="$(pwd)"
 REPO_ROOT="$(git -C "$PROJECT_DIR" rev-parse --show-toplevel 2>/dev/null || echo "$PROJECT_DIR")"
 OPENCODE_HOME="$(mktemp -d "${TMPDIR:-/tmp}/opencodebox-XXXXXXXX")"
-OPENCODE_CONFIG="${HOME}/.config/opencode"
+OPENCODE_CONFIG="${OPENCODE_CONFIG_DIR:-${HOME}/.config/opencode}"
+if [[ -n ${OPENCODE_CONFIG_DIR:-} && ${OPENCODE_CONFIG_DIR:0:1} != "/" ]]; then
+  echo "opencode-sandbox: ERROR: OPENCODE_CONFIG_DIR must be an absolute path" >&2
+  exit 1
+fi
 
 # HOME 変更前に実パスを確定 (後で HOME を OPENCODE_HOME に切り替えるため)
 REAL_REPO="$(realpath "$REPO_ROOT")"
@@ -32,8 +36,9 @@ fi
 isolated_home() {
   # OpenCode 設定ディレクトリ全体をマウント (opencode.json, AGENTS.md 等)
   if [[ -d $OPENCODE_CONFIG ]]; then
-    mkdir -p "${OPENCODE_HOME}/.config"
-    ln -sfn "$OPENCODE_CONFIG" "${OPENCODE_HOME}/.config/opencode"
+    local target_dir="${OPENCODE_HOME}${OPENCODE_CONFIG#"$REAL_HOME"}"
+    mkdir -p "$(dirname "$target_dir")"
+    ln -sfn "$OPENCODE_CONFIG" "$target_dir"
   fi
 
   # OpenCode データディレクトリ (auth.json 等)
@@ -138,6 +143,14 @@ opencode_port() {
 # 注: Linux bwrap と異なり読み込みは制限しない (macOS ユーザー空間では実現困難)
 # sandbox-exec は proc ツリー全体に適用されるため、子プロセス (tmux, opencode) も保護対象
 build_sandbox_profile() {
+  # SBPL 文字列リテラル用に " と \ を escape
+  sbpl_escape() {
+    local s="$1"
+    s="${s//\\/\\\\}"
+    s="${s//\"/\\\"}"
+    printf '%s' "$s"
+  }
+
   local allow_writes=()
 
   # 常に許可: 隔離ホーム・プロジェクト・一時ディレクトリ
@@ -165,6 +178,13 @@ build_sandbox_profile() {
     [[ -d $dir ]] && allow_writes+=("$dir")
   done
 
+  # alt プロファイル対応: OPENCODE_CONFIG_DIR が異なるパスを指す場合も書き込み許可
+  local real_config_dir
+  if [[ -d $OPENCODE_CONFIG ]]; then
+    real_config_dir="$(realpath "$OPENCODE_CONFIG")"
+    [[ $real_config_dir != "$(realpath "${REAL_HOME}/.config/opencode")" ]] && allow_writes+=("$real_config_dir")
+  fi
+
   {
     echo "(version 1)"
     echo ""
@@ -172,12 +192,12 @@ build_sandbox_profile() {
     echo "(allow default)"
     echo ""
     echo "; ホームディレクトリへの書き込みを拒否"
-    printf '(deny file-write* (subpath "%s"))\n' "${REAL_HOME}"
+    printf '(deny file-write* (subpath "%s"))\n' "$(sbpl_escape "${REAL_HOME}")"
     echo ""
     echo "; opencode が必要とするパスへの書き込みを許可"
     echo "(allow file-write*"
     for path in "${allow_writes[@]}"; do
-      printf '  (subpath "%s")\n' "$path"
+      printf '  (subpath "%s")\n' "$(sbpl_escape "$path")"
     done
     echo ")"
   }
@@ -224,6 +244,11 @@ build_sandbox_profile >"${OPENCODE_HOME}/.sandbox.sb"
 
 # OMO 用ポート検出 (環境変数 OPENCODE_PORT に設定)
 opencode_port
+
+# OPENCODE_CONFIG_DIR を sandbox 側パスに書き換え (Linux 版と挙動を統一)
+if [[ -n ${OPENCODE_CONFIG_DIR:-} ]]; then
+  export OPENCODE_CONFIG_DIR="${OPENCODE_HOME}${OPENCODE_CONFIG#"$REAL_HOME"}"
+fi
 
 # HOME を隔離ホームに切り替え (以降の $HOME は OPENCODE_HOME を指す)
 export HOME="$OPENCODE_HOME"

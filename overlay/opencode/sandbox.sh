@@ -10,7 +10,11 @@ REPO_ROOT="$(git -C "$PROJECT_DIR" rev-parse --show-toplevel 2>/dev/null || echo
 if ! OPENCODE_HOME="$(mktemp -d /var/tmp/opencodebox-XXXXXXXX 2>/dev/null)"; then
   OPENCODE_HOME="$(mktemp -d "${TMPDIR:-/tmp}/opencodebox-XXXXXXXX")"
 fi
-OPENCODE_CONFIG="${HOME}/.config/opencode"
+OPENCODE_CONFIG="${OPENCODE_CONFIG_DIR:-${HOME}/.config/opencode}"
+if [[ -n ${OPENCODE_CONFIG_DIR:-} && ${OPENCODE_CONFIG_DIR:0:1} != "/" ]]; then
+  echo "opencode-sandbox: ERROR: OPENCODE_CONFIG_DIR must be an absolute path" >&2
+  exit 1
+fi
 OPENCODE_JSON="${OPENCODE_CONFIG}/opencode.json"
 XDG_RUNTIME="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
 
@@ -74,8 +78,9 @@ isolated_home() {
 
   # OpenCode 設定ディレクトリ全体をマウント (opencode.json, AGENTS.md等)
   if [[ -d $OPENCODE_CONFIG ]]; then
-    mkdir -p "${OPENCODE_HOME}/.config/opencode"
-    BWRAP_ARGS+=(--bind "$OPENCODE_CONFIG" "${HOME}/.config/opencode")
+    local target_dir="${OPENCODE_HOME}${OPENCODE_CONFIG#"$REAL_HOME"}"
+    mkdir -p "$(dirname "$target_dir")"
+    BWRAP_ARGS+=(--bind "$OPENCODE_CONFIG" "$target_dir")
   fi
 
   # OpenCode データディレクトリ (auth.json等を含む) をマウント
@@ -138,6 +143,12 @@ namespace_and_env() {
       BWRAP_ARGS+=(--setenv "$var" "${!var}")
     fi
   done
+
+  # OPENCODE_CONFIG_DIR の転送: alt プロファイル等のカスタム設定ディレクトリ指定用
+  if [[ -n ${OPENCODE_CONFIG_DIR:-} ]]; then
+    local target_dir="${OPENCODE_HOME}${OPENCODE_CONFIG#"$REAL_HOME"}"
+    BWRAP_ARGS+=(--setenv OPENCODE_CONFIG_DIR "$target_dir")
+  fi
 }
 
 # プロジェクトマウント: 親ツリーは ro、リポジトリルートは rw
