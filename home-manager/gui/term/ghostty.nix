@@ -18,6 +18,7 @@ in
       background-blur = "macos-glass-clear";
       macos-titlebar-style = "transparent";
       window-save-state = "never";
+      quit-after-last-window-closed = true;
     };
   };
 }
