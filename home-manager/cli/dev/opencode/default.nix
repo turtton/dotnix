@@ -3,6 +3,7 @@
   lib,
   pkgs,
   inputs,
+  isWsl,
   ...
 }:
 let
@@ -24,6 +25,16 @@ in
   imports = [
     inputs.skills-catalog.homeManagerModules.default
   ];
+
+  home.packages =
+    with pkgs;
+    [
+      opencode-latest
+    ]
+    ++ pkgs.lib.optionals (!isWsl) [
+      opencode
+    ];
+  home.shellAliases.oc-alt = "OPENCODE_CONFIG_DIR=${altConfigDir} opencode";
 
   home.activation.opencode = lib.hm.dag.entryAfter [ "writeBoundary" "agent-skills" ] ''
     # Rotate previous configs to -old (keep one generation)
@@ -74,6 +85,4 @@ in
     chmod u+w "${altConfigDir}/opencode.jsonc" "${altConfigDir}/oh-my-openagent.json" "${altConfigDir}/dcp.jsonc" "${altConfigDir}/AGENTS.md"
     [ -d "${altConfigDir}/skill" ] && chmod -R u+w "${altConfigDir}/skill"
   '';
-
-  home.shellAliases.oc-alt = "OPENCODE_CONFIG_DIR=${altConfigDir} opencode";
 }

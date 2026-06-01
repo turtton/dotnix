@@ -3,16 +3,14 @@ inputs: self: prev: {
     let
       # original = inputs.opencode.packages.${prev.stdenv.hostPlatform.system}.default;
       original = inputs.llm-agents.packages.${prev.stdenv.hostPlatform.system}.opencode;
-      opencode =
-        original.overrideAttrs
-          (old: {
-            # Force channel to "latest" so opencode uses opencode.db instead of opencode-local.db.
-            # Without this, Nix-built opencode defaults to channel="local" because OPENCODE_CHANNEL
-            # is set to "local" in the upstream flake derivation.
-            env = (old.env or { }) // {
-              OPENCODE_CHANNEL = "latest";
-            };
-          });
+      opencode = original.overrideAttrs (old: {
+        # Force channel to "latest" so opencode uses opencode.db instead of opencode-local.db.
+        # Without this, Nix-built opencode defaults to channel="local" because OPENCODE_CHANNEL
+        # is set to "local" in the upstream flake derivation.
+        env = (old.env or { }) // {
+          OPENCODE_CHANNEL = "latest";
+        };
+      });
       isDarwin = prev.stdenv.isDarwin;
 
       sandbox = self.writeShellApplication {

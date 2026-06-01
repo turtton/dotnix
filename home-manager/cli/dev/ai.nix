@@ -2,7 +2,6 @@
   pkgs,
   lib,
   hostPlatform,
-  isWsl,
   ...
 }:
 {
@@ -13,12 +12,8 @@
     packages =
       with pkgs;
       [
-        opencode-latest
         senpi
         cursor-cli
-      ]
-      ++ pkgs.lib.optionals (!isWsl) [
-        opencode
       ]
       ++ pkgs.lib.optionals hostPlatform.isLinux [
         llm-agents.codex
