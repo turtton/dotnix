@@ -75,5 +75,5 @@ in
     [ -d "${altConfigDir}/skill" ] && chmod -R u+w "${altConfigDir}/skill"
   '';
 
-  home.shellAliases.oc-alt = "OPENCODE_CONFIG_DIR=${altConfigDir} CURSOR_API_KEY=\${$(rbw get cursor-api):-$CURSOR_API_KEY} opencode";
+  home.shellAliases.oc-alt = "OPENCODE_CONFIG_DIR=${altConfigDir} opencode";
 }
