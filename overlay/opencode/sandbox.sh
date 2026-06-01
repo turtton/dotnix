@@ -78,8 +78,8 @@ isolated_home() {
 
   # OpenCode 設定ディレクトリ全体をマウント (opencode.json, AGENTS.md等)
   if [[ -d $OPENCODE_CONFIG ]]; then
-    local target_dir="${OPENCODE_HOME}${OPENCODE_CONFIG#"$REAL_HOME"}"
-    mkdir -p "$(dirname "$target_dir")"
+    local target_dir="${HOME}${OPENCODE_CONFIG#"$REAL_HOME"}"
+    mkdir -p "${OPENCODE_HOME}${OPENCODE_CONFIG#"$REAL_HOME"}"
     BWRAP_ARGS+=(--bind "$OPENCODE_CONFIG" "$target_dir")
   fi
 
@@ -146,7 +146,7 @@ namespace_and_env() {
 
   # OPENCODE_CONFIG_DIR の転送: alt プロファイル等のカスタム設定ディレクトリ指定用
   if [[ -n ${OPENCODE_CONFIG_DIR:-} ]]; then
-    local target_dir="${OPENCODE_HOME}${OPENCODE_CONFIG#"$REAL_HOME"}"
+    local target_dir="${HOME}${OPENCODE_CONFIG#"$REAL_HOME"}"
     BWRAP_ARGS+=(--setenv OPENCODE_CONFIG_DIR "$target_dir")
   fi
 }
