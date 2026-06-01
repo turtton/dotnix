@@ -8,6 +8,17 @@
 let
   configDir = "${config.xdg.configHome}/opencode";
   altConfigDir = "${config.xdg.configHome}/opencode-alt";
+
+  replaceConfigDir =
+    dir: content: builtins.replaceStrings [ "@OPENCODE_CONFIG_DIR@" ] [ dir ] content;
+
+  ohMyOpenagentMain = pkgs.writeText "oh-my-openagent.json" (
+    replaceConfigDir configDir (builtins.readFile ./oh-my-openagent.json)
+  );
+
+  ohMyOpenagentAlt = pkgs.writeText "oh-my-openagent-alt.json" (
+    replaceConfigDir altConfigDir (builtins.readFile ./oh-my-openagent-alt.json)
+  );
 in
 {
   imports = [
@@ -23,8 +34,7 @@ in
     mkdir -p "${configDir}"
 
     cp -f "${./opencode.jsonc}" "${configDir}/opencode.jsonc"
-    cp -f "${./oh-my-openagent.json}" "${configDir}/oh-my-openagent.json"
-    sed -i 's|@OPENCODE_CONFIG_DIR@|${configDir}|g' "${configDir}/oh-my-openagent.json"
+    cp -f ${ohMyOpenagentMain} "${configDir}/oh-my-openagent.json"
     cp -f "${./dcp.jsonc}" "${configDir}/dcp.jsonc"
     cp -f "${./AGENTS.md}" "${configDir}/AGENTS.md"
 
@@ -38,8 +48,7 @@ in
     mkdir -p "${altConfigDir}"
 
     cp -f "${./opencode-alt.jsonc}" "${altConfigDir}/opencode.jsonc"
-    cp -f "${./oh-my-openagent-alt.json}" "${altConfigDir}/oh-my-openagent.json"
-    sed -i 's|@OPENCODE_CONFIG_DIR@|${altConfigDir}|g' "${altConfigDir}/oh-my-openagent.json"
+    cp -f ${ohMyOpenagentAlt} "${altConfigDir}/oh-my-openagent.json"
     cp -f "${./dcp.jsonc}" "${altConfigDir}/dcp.jsonc"
     cp -f "${./AGENTS.md}" "${altConfigDir}/AGENTS.md"
 
