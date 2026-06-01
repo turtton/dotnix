@@ -1,15 +1,15 @@
 {
-    "$schema": "https://opencode.ai/config.json",
-    "plugin": [
-        "@tarquinen/opencode-dcp",
-        "oh-my-openagent",
-        "opencode-comments-plugin",
-        "@simonwjackson/opencode-direnv",
-        "opencode-wakatime"
-    ],
-    "agent": {
-        "title": {
-            "model": "github-copilot/gpt-5.4-mini"
-        }
-    }
+	"$schema": "https://opencode.ai/config.json",
+	"plugin": [
+		"@tarquinen/opencode-dcp",
+		"oh-my-openagent",
+		"opencode-comments-plugin",
+		"@simonwjackson/opencode-direnv",
+		"opencode-wakatime"
+	],
+	"agent": {
+		"title": {
+			"model": "github-copilot/gpt-5.4-mini"
+		}
+	}
 }
