@@ -8,7 +8,7 @@
 }:
 let
   configDir = "${config.xdg.configHome}/opencode";
-  altConfigDir = "${config.xdg.configHome}/opencode-alt";
+  goConfigDir = "${config.xdg.configHome}/opencode-go";
 
   replaceConfigDir =
     dir: content: builtins.replaceStrings [ "@OPENCODE_CONFIG_DIR@" ] [ dir ] content;
@@ -17,8 +17,8 @@ let
     replaceConfigDir configDir (builtins.readFile ./oh-my-openagent.json)
   );
 
-  ohMyOpenagentAlt = pkgs.writeText "oh-my-openagent-alt.json" (
-    replaceConfigDir altConfigDir (builtins.readFile ./oh-my-openagent-alt.json)
+  ohMyOpenagentGo = pkgs.writeText "oh-my-openagent-go.json" (
+    replaceConfigDir goConfigDir (builtins.readFile ./oh-my-openagent-go.json)
   );
 in
 {
@@ -34,7 +34,8 @@ in
     ++ pkgs.lib.optionals (!isWsl) [
       opencode
     ];
-  home.shellAliases.oc-alt = "OPENCODE_CONFIG_DIR=${altConfigDir} opencode";
+
+  home.shellAliases.oc-go = "OPENCODE_CONFIG_DIR=${goConfigDir} opencode";
 
   home.activation.opencode = lib.hm.dag.entryAfter [ "writeBoundary" "agent-skills" ] ''
     # Rotate previous configs to -old (keep one generation)
@@ -51,38 +52,38 @@ in
 
     chmod u+w "${configDir}/opencode.jsonc" "${configDir}/oh-my-openagent.json" "${configDir}/dcp.jsonc" "${configDir}/AGENTS.md"
 
-    # Alt profile (ChatGPT Team + Cursor + OpenCode Go)
+    # Go profile (ChatGPT Team + Cursor + OpenCode Go)
     for f in opencode.jsonc oh-my-openagent.json dcp.jsonc AGENTS.md; do
-      [ -f "${altConfigDir}/$f" ] && mv -f "${altConfigDir}/$f" "${altConfigDir}/$f.old"
+      [ -f "${goConfigDir}/$f" ] && mv -f "${goConfigDir}/$f" "${goConfigDir}/$f.old"
     done
 
-    mkdir -p "${altConfigDir}"
+    mkdir -p "${goConfigDir}"
 
-    cp -f "${./opencode-alt.jsonc}" "${altConfigDir}/opencode.jsonc"
-    cp -f ${ohMyOpenagentAlt} "${altConfigDir}/oh-my-openagent.json"
-    cp -f "${./dcp.jsonc}" "${altConfigDir}/dcp.jsonc"
-    cp -f "${./AGENTS.md}" "${altConfigDir}/AGENTS.md"
+    cp -f "${./opencode-go.jsonc}" "${goConfigDir}/opencode.jsonc"
+    cp -f ${ohMyOpenagentGo} "${goConfigDir}/oh-my-openagent.json"
+    cp -f "${./dcp.jsonc}" "${goConfigDir}/dcp.jsonc"
+    cp -f "${./AGENTS.md}" "${goConfigDir}/AGENTS.md"
 
     # Copy cursor-acp provider definition (opencode.json) from main profile
     if [ -f "${configDir}/opencode.json" ]; then
-      cp -f "${configDir}/opencode.json" "${altConfigDir}/opencode.json"
-      chmod u+w "${altConfigDir}/opencode.json"
+      cp -f "${configDir}/opencode.json" "${goConfigDir}/opencode.json"
+      chmod u+w "${goConfigDir}/opencode.json"
     else
       # Remove stale provider config and warn
-      rm -f "${altConfigDir}/opencode.json"
-      echo "WARNING: ${configDir}/opencode.json not found. cursor-acp provider unavailable in alt profile." >&2
+      rm -f "${goConfigDir}/opencode.json"
+      echo "WARNING: ${configDir}/opencode.json not found. cursor-acp provider unavailable in go profile." >&2
       echo "Run 'opencode' (main profile) first to generate it via the cursor-acp plugin." >&2
     fi
 
-    # Mirror skills from main profile (deployed by agent-skills) to alt profile
+    # Mirror skills from main profile (deployed by agent-skills) to go profile
     if [ -d "${configDir}/skill" ]; then
-      mkdir -p "${altConfigDir}/skill"
-      ${pkgs.rsync}/bin/rsync -aL --delete "${configDir}/skill/" "${altConfigDir}/skill/"
+      mkdir -p "${goConfigDir}/skill"
+      ${pkgs.rsync}/bin/rsync -aL --delete "${configDir}/skill/" "${goConfigDir}/skill/"
     else
-      rm -rf "${altConfigDir}/skill"
+      rm -rf "${goConfigDir}/skill"
     fi
 
-    chmod u+w "${altConfigDir}/opencode.jsonc" "${altConfigDir}/oh-my-openagent.json" "${altConfigDir}/dcp.jsonc" "${altConfigDir}/AGENTS.md"
-    [ -d "${altConfigDir}/skill" ] && chmod -R u+w "${altConfigDir}/skill"
+    chmod u+w "${goConfigDir}/opencode.jsonc" "${goConfigDir}/oh-my-openagent.json" "${goConfigDir}/dcp.jsonc" "${goConfigDir}/AGENTS.md"
+    [ -d "${goConfigDir}/skill" ] && chmod -R u+w "${goConfigDir}/skill"
   '';
 }
