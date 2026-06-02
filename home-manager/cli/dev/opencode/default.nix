@@ -9,6 +9,7 @@
 let
   configDir = "${config.xdg.configHome}/opencode";
   goConfigDir = "${config.xdg.configHome}/opencode-go";
+  cgConfigDir = "${config.xdg.configHome}/opencode-cg";
 
   replaceConfigDir =
     dir: content: builtins.replaceStrings [ "@OPENCODE_CONFIG_DIR@" ] [ dir ] content;
@@ -19,6 +20,10 @@ let
 
   ohMyOpenagentGo = pkgs.writeText "oh-my-openagent-go.json" (
     replaceConfigDir goConfigDir (builtins.readFile ./oh-my-openagent-go.json)
+  );
+
+  ohMyOpenagentCg = pkgs.writeText "oh-my-openagent-cg.json" (
+    replaceConfigDir cgConfigDir (builtins.readFile ./oh-my-openagent-cg.json)
   );
 in
 {
@@ -35,55 +40,58 @@ in
       opencode
     ];
 
-  home.shellAliases.oc-go = "OPENCODE_CONFIG_DIR=${goConfigDir} opencode";
+  home.shellAliases = {
+    oc-go = "OPENCODE_CONFIG_DIR=${goConfigDir} opencode";
+    oc-cg = "OPENCODE_CONFIG_DIR=${cgConfigDir} opencode";
+  };
 
   home.activation.opencode = lib.hm.dag.entryAfter [ "writeBoundary" "agent-skills" ] ''
-    # Rotate previous configs to -old (keep one generation)
-    for f in opencode.jsonc oh-my-openagent.json dcp.jsonc AGENTS.md; do
-      [ -f "${configDir}/$f" ] && mv -f "${configDir}/$f" "${configDir}/$f.old"
-    done
+    deploy_profile() {
+      local profile_dir="$1"
+      local config_jsonc="$2"
+      local openagent_json="$3"
+      local profile_name="$4"
 
-    mkdir -p "${configDir}"
+      for f in opencode.jsonc oh-my-openagent.json dcp.jsonc AGENTS.md; do
+        [ -f "$profile_dir/$f" ] && mv -f "$profile_dir/$f" "$profile_dir/$f.old"
+      done
 
-    cp -f "${./opencode.jsonc}" "${configDir}/opencode.jsonc"
-    cp -f ${ohMyOpenagentMain} "${configDir}/oh-my-openagent.json"
-    cp -f "${./dcp.jsonc}" "${configDir}/dcp.jsonc"
-    cp -f "${./AGENTS.md}" "${configDir}/AGENTS.md"
+      mkdir -p "$profile_dir"
 
-    chmod u+w "${configDir}/opencode.jsonc" "${configDir}/oh-my-openagent.json" "${configDir}/dcp.jsonc" "${configDir}/AGENTS.md"
+      cp -f "$config_jsonc" "$profile_dir/opencode.jsonc"
+      cp -f "$openagent_json" "$profile_dir/oh-my-openagent.json"
+      cp -f "${./dcp.jsonc}" "$profile_dir/dcp.jsonc"
+      cp -f "${./AGENTS.md}" "$profile_dir/AGENTS.md"
 
-    # Go profile (ChatGPT Team + Cursor + OpenCode Go)
-    for f in opencode.jsonc oh-my-openagent.json dcp.jsonc AGENTS.md; do
-      [ -f "${goConfigDir}/$f" ] && mv -f "${goConfigDir}/$f" "${goConfigDir}/$f.old"
-    done
+      chmod u+w "$profile_dir/opencode.jsonc" "$profile_dir/oh-my-openagent.json" "$profile_dir/dcp.jsonc" "$profile_dir/AGENTS.md"
 
-    mkdir -p "${goConfigDir}"
+      if [ "$profile_dir" != "${configDir}" ]; then
+        if [ "$profile_name" = "cg" ]; then
+          rm -f "$profile_dir/opencode.json"
+        elif [ -f "${configDir}/opencode.json" ]; then
+          # Copy generated provider definitions for profiles that keep external providers.
+          cp -f "${configDir}/opencode.json" "$profile_dir/opencode.json"
+          chmod u+w "$profile_dir/opencode.json"
+        else
+          rm -f "$profile_dir/opencode.json"
+          echo "WARNING: ${configDir}/opencode.json not found. cursor-acp provider unavailable in $profile_name profile." >&2
+          echo "Run 'opencode' (main profile) first to generate it via the cursor-acp plugin." >&2
+        fi
 
-    cp -f "${./opencode-go.jsonc}" "${goConfigDir}/opencode.jsonc"
-    cp -f ${ohMyOpenagentGo} "${goConfigDir}/oh-my-openagent.json"
-    cp -f "${./dcp.jsonc}" "${goConfigDir}/dcp.jsonc"
-    cp -f "${./AGENTS.md}" "${goConfigDir}/AGENTS.md"
+        # Mirror skills from main profile (deployed by agent-skills) to alternate profiles.
+        if [ -d "${configDir}/skill" ]; then
+          mkdir -p "$profile_dir/skill"
+          ${pkgs.rsync}/bin/rsync -aL --delete "${configDir}/skill/" "$profile_dir/skill/"
+        else
+          rm -rf "$profile_dir/skill"
+        fi
 
-    # Copy cursor-acp provider definition (opencode.json) from main profile
-    if [ -f "${configDir}/opencode.json" ]; then
-      cp -f "${configDir}/opencode.json" "${goConfigDir}/opencode.json"
-      chmod u+w "${goConfigDir}/opencode.json"
-    else
-      # Remove stale provider config and warn
-      rm -f "${goConfigDir}/opencode.json"
-      echo "WARNING: ${configDir}/opencode.json not found. cursor-acp provider unavailable in go profile." >&2
-      echo "Run 'opencode' (main profile) first to generate it via the cursor-acp plugin." >&2
-    fi
+        [ -d "$profile_dir/skill" ] && chmod -R u+w "$profile_dir/skill"
+      fi
+    }
 
-    # Mirror skills from main profile (deployed by agent-skills) to go profile
-    if [ -d "${configDir}/skill" ]; then
-      mkdir -p "${goConfigDir}/skill"
-      ${pkgs.rsync}/bin/rsync -aL --delete "${configDir}/skill/" "${goConfigDir}/skill/"
-    else
-      rm -rf "${goConfigDir}/skill"
-    fi
-
-    chmod u+w "${goConfigDir}/opencode.jsonc" "${goConfigDir}/oh-my-openagent.json" "${goConfigDir}/dcp.jsonc" "${goConfigDir}/AGENTS.md"
-    [ -d "${goConfigDir}/skill" ] && chmod -R u+w "${goConfigDir}/skill"
+    deploy_profile "${configDir}" "${./opencode.jsonc}" "${ohMyOpenagentMain}" "main"
+    deploy_profile "${goConfigDir}" "${./opencode-go.jsonc}" "${ohMyOpenagentGo}" "go"
+    deploy_profile "${cgConfigDir}" "${./opencode-cg.jsonc}" "${ohMyOpenagentCg}" "cg"
   '';
 }
