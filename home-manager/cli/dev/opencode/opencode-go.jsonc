@@ -17,25 +17,7 @@
 			"name": "Cursor",
 			"npm": "@ai-sdk/openai-compatible",
 			"options": {
-				"baseURL": "http://127.0.0.1:8787/opencodev2/v1"
-			},
-			"models": {
-				"composer-2.5": {
-					"name": "Composer 2.5",
-					"cost": {
-						"input": 0.5,
-						"output": 2.5,
-						"cache_read": 0.2
-					}
-				},
-				"composer-2.5-fast": {
-					"name": "Composer 2.5 Fast",
-					"cost": {
-						"input": 3,
-						"output": 15,
-						"cache_read": 0.5
-					}
-				}
+				"baseURL": "http://127.0.0.1:8787/v1"
 			}
 		},
 		"CrofAI": {
