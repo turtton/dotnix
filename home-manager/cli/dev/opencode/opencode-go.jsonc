@@ -42,19 +42,11 @@
 			"npm": "@ai-sdk/openai-compatible",
 			"name": "CrofAI",
 			"options": {
-				"baseURL": "https://crof.ai/v1",
-				"apiKey": "API_KEY_HERE"
+				"baseURL": "https://crof.ai/v1"
 			},
 			"models": {
 				"deepseek-v4-pro": {
 					"name": "CrofAI: deepseek-v3.2",
-					"limit": {
-						"context": 1000000,
-						"output": 131072
-					}
-				},
-				"deepseek-v4-pro-precision": {
-					"name": "CrofAI: deepseek-v4-pro (precision)",
 					"limit": {
 						"context": 1000000,
 						"output": 131072
@@ -81,20 +73,6 @@
 						"output": 262144
 					}
 				},
-				"kimi-k2.6-precision": {
-					"name": "CrofAI: kimi-k2.6 (precision)",
-					"limit": {
-						"context": 262144,
-						"output": 262144
-					}
-				},
-				"kimi-k2.5": {
-					"name": "CrofAI: kimi-k2.5",
-					"limit": {
-						"context": 262144,
-						"output": 262144
-					}
-				},
 				"kimi-k2.5-lightning": {
 					"name": "CrofAI: kimi-k2.5-lightning",
 					"limit": {
@@ -104,13 +82,6 @@
 				},
 				"glm-5.1": {
 					"name": "CrofAI: glm-5.1",
-					"limit": {
-						"context": 202752,
-						"output": 202752
-					}
-				},
-				"glm-5.1-precision": {
-					"name": "CrofAI: glm-5.1-precision",
 					"limit": {
 						"context": 202752,
 						"output": 202752
