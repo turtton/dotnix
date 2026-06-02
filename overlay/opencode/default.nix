@@ -1,8 +1,10 @@
 inputs: self: prev: {
   opencode =
     let
+      # original = inputs.opencode.packages.${prev.stdenv.hostPlatform.system}.default;
+      original = inputs.llm-agents.packages.${prev.stdenv.hostPlatform.system}.opencode;
       opencode =
-        (inputs.opencode.packages.${prev.stdenv.hostPlatform.system}.default).overrideAttrs
+        original.overrideAttrs
           (old: {
             # Force channel to "latest" so opencode uses opencode.db instead of opencode-local.db.
             # Without this, Nix-built opencode defaults to channel="local" because OPENCODE_CHANNEL
