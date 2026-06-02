@@ -104,11 +104,19 @@ gpg_agent() {
   fi
 }
 
-# コンテナ設定: Docker/OrbStack の設定ディレクトリを公開
-# ソケット自体 (/var/run/docker.sock) は $HOME 外にあるため sandbox-exec で自動許可
+# コンテナ設定: Docker/OrbStack の設定ディレクトリと Podman machine 接続を公開
 container_socket() {
   if [[ -d "${REAL_HOME}/.docker" ]]; then
     ln -sfn "${REAL_HOME}/.docker" "${OPENCODE_HOME}/.docker"
+  fi
+
+  if [[ -z ${CONTAINER_HOST:-} && -z ${DOCKER_HOST:-} ]] && command -v podman >/dev/null 2>&1; then
+    local podman_socket
+    podman_socket="$(HOME="$REAL_HOME" podman machine inspect --format '{{.ConnectionInfo.PodmanSocket.Path}}' 2>/dev/null || true)"
+    podman_socket="${podman_socket%%$'\n'*}"
+    if [[ -n $podman_socket && -S $podman_socket ]]; then
+      export CONTAINER_HOST="unix://${podman_socket}"
+    fi
   fi
 }
 
