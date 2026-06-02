@@ -18,10 +18,10 @@
     [
       hoppscotch # WebAPI dev	tool
       gitify
-      drawio
       lens
     ]
     ++ lib.optionals hostPlatform.isLinux [
+      drawio # also works darwin but I do not use it
       isaacsim-webrtc-streaming-client
     ];
   programs.zed-editor.enable = true;
