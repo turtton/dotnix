@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  hostPlatform,
+  ...
+}:
 {
   imports = [ ./starship.nix ];
   home.shell.enableZshIntegration = true;
@@ -41,5 +46,12 @@
       # Disabled by sharship
       # theme = "xiong-chiamiov-plus";
     };
+
+    # Set XDG_RUNTIME_DIR env var for some applicatins(e.g. nix-direnv)
+    initContent = pkgs.lib.optionalString hostPlatform.isDarwin ''
+      export XDG_RUNTIME_DIR="''${TMPDIR%/}/xdg-runtime-dir"
+      mkdir -p "$XDG_RUNTIME_DIR"
+      chmod 700 "$XDG_RUNTIME_DIR"
+    '';
   };
 }
