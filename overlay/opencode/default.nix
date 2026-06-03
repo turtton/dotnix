@@ -24,6 +24,7 @@ inputs: self: prev: {
             gnupg
             coreutils
             tmux
+            curl
           ]
           ++ self.lib.optionals (!isDarwin) [
             self.bubblewrap
@@ -39,11 +40,13 @@ inputs: self: prev: {
               "@opencode-dir@"
               "@tmux-conf@"
               "@quota-script@"
+              "@openai-quota-script@"
             ]
             [
               "${opencode}/bin"
               "${./tmux.conf}"
               "${./copilot-quota-poll.sh}"
+              "${./openai-quota-poll.sh}"
             ]
             (builtins.readFile (if isDarwin then ./sandbox-darwin.sh else ./sandbox.sh));
       };

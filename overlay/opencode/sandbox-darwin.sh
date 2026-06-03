@@ -275,15 +275,23 @@ mkdir -p "$TMUX_TMPDIR"
 # tmux 設定・quota 関連ファイルのセットアップ
 # HOME がすでに OPENCODE_HOME に切り替わっているため、${HOME}/... = OPENCODE_HOME/...
 printf '%s\n' "N/A" >"${HOME}/.copilot-quota"
+printf '%s' "" >"${HOME}/.openai-quota"
 printf '%s' "N/A" >"${HOME}/.opencode-port"
 cp "@quota-script@" "${HOME}/.copilot-quota-poll.sh"
 chmod u+w "${HOME}/.copilot-quota-poll.sh" # Nix store からのコピーは 0444 のため書き込み可能にする
 sed "s|__OUTPUT_PATH__|${HOME}/.copilot-quota|g" "${HOME}/.copilot-quota-poll.sh" >"${HOME}/.copilot-quota-poll.sh.tmp"
 mv -f "${HOME}/.copilot-quota-poll.sh.tmp" "${HOME}/.copilot-quota-poll.sh"
 chmod +x "${HOME}/.copilot-quota-poll.sh"
+cp "@openai-quota-script@" "${HOME}/.openai-quota-poll.sh"
+chmod u+w "${HOME}/.openai-quota-poll.sh"
+sed "s|__OUTPUT_PATH__|${HOME}/.openai-quota|g" "${HOME}/.openai-quota-poll.sh" >"${HOME}/.openai-quota-poll.sh.tmp"
+mv -f "${HOME}/.openai-quota-poll.sh.tmp" "${HOME}/.openai-quota-poll.sh"
+chmod +x "${HOME}/.openai-quota-poll.sh"
 cp "@tmux-conf@" "${HOME}/.tmux.conf"
 chmod u+w "${HOME}/.tmux.conf"
 sed "s|__QUOTA_FILE__|${HOME}/.copilot-quota|g" "${HOME}/.tmux.conf" >"${HOME}/.tmux.conf.tmp"
+mv -f "${HOME}/.tmux.conf.tmp" "${HOME}/.tmux.conf"
+sed "s|__OPENAI_QUOTA_FILE__|${HOME}/.openai-quota|g" "${HOME}/.tmux.conf" >"${HOME}/.tmux.conf.tmp"
 mv -f "${HOME}/.tmux.conf.tmp" "${HOME}/.tmux.conf"
 sed "s|__PORT_FILE__|${HOME}/.opencode-port|g" "${HOME}/.tmux.conf" >"${HOME}/.tmux.conf.tmp"
 mv -f "${HOME}/.tmux.conf.tmp" "${HOME}/.tmux.conf"
@@ -338,11 +346,16 @@ if [ -t 0 ] && [ -t 1 ] && [ -t 2 ]; then
     env GH_TOKEN="${GH_TOKEN:-}" "$HOME/.copilot-quota-poll.sh" &
     quota_pid=$!
   fi
+  "$HOME/.openai-quota-poll.sh" &
+  openai_quota_pid=$!
   _session_name="opencode-${BASHPID}"
   tmux -f "$HOME/.tmux.conf" new-session -s "$_session_name" -- "$@"
   exit_code=$?
   if [ -n "${quota_pid:-}" ]; then
     kill "$quota_pid" 2>/dev/null; wait "$quota_pid" 2>/dev/null
+  fi
+  if [ -n "${openai_quota_pid:-}" ]; then
+    kill "$openai_quota_pid" 2>/dev/null; wait "$openai_quota_pid" 2>/dev/null
   fi
   exit $exit_code
 fi
