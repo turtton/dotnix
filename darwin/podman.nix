@@ -17,9 +17,7 @@ in
     pkgs.podman-compose
   ];
   launchd.agents.podman-machine-start = {
-    enable = true;
-
-    config = {
+    serviceConfig = {
       Label = "local.podman-machine-start";
       ProgramArguments = [ "${podmanMachineStart}" ];
       RunAtLoad = true;
