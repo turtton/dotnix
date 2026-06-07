@@ -41,12 +41,14 @@ inputs: self: prev: {
               "@tmux-conf@"
               "@quota-script@"
               "@openai-quota-script@"
+              "@crof-quota-script@"
             ]
             [
               "${opencode}/bin"
               "${./tmux.conf}"
               "${./copilot-quota-poll.sh}"
               "${./openai-quota-poll.sh}"
+              "${./crof-quota-poll.sh}"
             ]
             (builtins.readFile (if isDarwin then ./sandbox-darwin.sh else ./sandbox.sh));
       };

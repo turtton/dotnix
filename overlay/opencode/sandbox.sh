@@ -413,10 +413,13 @@ QUOTA_OUTPUT_PATH="${OPENCODE_HOME}/.copilot-quota"
 QUOTA_SCRIPT_PATH="${OPENCODE_HOME}/.copilot-quota-poll.sh"
 OPENAI_QUOTA_OUTPUT_PATH="${OPENCODE_HOME}/.openai-quota"
 OPENAI_QUOTA_SCRIPT_PATH="${OPENCODE_HOME}/.openai-quota-poll.sh"
+CROF_QUOTA_OUTPUT_PATH="${OPENCODE_HOME}/.crof-quota"
+CROF_QUOTA_SCRIPT_PATH="${OPENCODE_HOME}/.crof-quota-poll.sh"
 PORT_OUTPUT_PATH="${OPENCODE_HOME}/.opencode-port"
 
 printf '%s\n' "N/A" >"$QUOTA_OUTPUT_PATH"
 printf '%s' "" >"$OPENAI_QUOTA_OUTPUT_PATH"
+printf '%s' "" >"$CROF_QUOTA_OUTPUT_PATH"
 printf '%s' "N/A" >"$PORT_OUTPUT_PATH"
 cp "@quota-script@" "$QUOTA_SCRIPT_PATH"
 sed -i "s|__OUTPUT_PATH__|${HOME}/.copilot-quota|g" "$QUOTA_SCRIPT_PATH"
@@ -424,9 +427,13 @@ chmod +x "$QUOTA_SCRIPT_PATH"
 cp "@openai-quota-script@" "$OPENAI_QUOTA_SCRIPT_PATH"
 sed -i "s|__OUTPUT_PATH__|${HOME}/.openai-quota|g" "$OPENAI_QUOTA_SCRIPT_PATH"
 chmod +x "$OPENAI_QUOTA_SCRIPT_PATH"
+cp "@crof-quota-script@" "$CROF_QUOTA_SCRIPT_PATH"
+sed -i "s|__OUTPUT_PATH__|${HOME}/.crof-quota|g" "$CROF_QUOTA_SCRIPT_PATH"
+chmod +x "$CROF_QUOTA_SCRIPT_PATH"
 cp "@tmux-conf@" "$TMUX_CONF_PATH"
 sed -i "s|__QUOTA_FILE__|${HOME}/.copilot-quota|g" "$TMUX_CONF_PATH"
 sed -i "s|__OPENAI_QUOTA_FILE__|${HOME}/.openai-quota|g" "$TMUX_CONF_PATH"
+sed -i "s|__CROF_QUOTA_FILE__|${HOME}/.crof-quota|g" "$TMUX_CONF_PATH"
 sed -i "s|__PORT_FILE__|${HOME}/.opencode-port|g" "$TMUX_CONF_PATH"
 
 # サンドボックス内で実行するスクリプトの組み立て
@@ -484,6 +491,8 @@ if [ -t 0 ] && [ -t 1 ] && [ -t 2 ]; then
   fi
   "$HOME/.openai-quota-poll.sh" &
   openai_quota_pid=$!
+  "$HOME/.crof-quota-poll.sh" &
+  crof_quota_pid=$!
   tmux -f "$HOME/.tmux.conf" new-session -s opencode -- "$@"
   exit_code=$?
   if [ -n "${quota_pid:-}" ]; then
@@ -491,6 +500,9 @@ if [ -t 0 ] && [ -t 1 ] && [ -t 2 ]; then
   fi
   if [ -n "${openai_quota_pid:-}" ]; then
     kill "$openai_quota_pid" 2>/dev/null; wait "$openai_quota_pid" 2>/dev/null
+  fi
+  if [ -n "${crof_quota_pid:-}" ]; then
+    kill "$crof_quota_pid" 2>/dev/null; wait "$crof_quota_pid" 2>/dev/null
   fi
   exit $exit_code
 fi
