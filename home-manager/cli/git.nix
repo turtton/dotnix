@@ -87,6 +87,12 @@
         #   "git@github.com:".insteadOf = "https://github.com/";
         # };
       };
+      includes = [
+        {
+          condition = "gitdir:~/work/";
+          path = "~/work/.gitconfig";
+        }
+      ];
       ignores = [
         ".DS_Store"
         ".idea"
