@@ -19,6 +19,7 @@
       hoppscotch # WebAPI dev	tool
       gitify
       lens
+      dbeaver-bin
     ]
     ++ lib.optionals hostPlatform.isLinux [
       drawio # also works darwin but I do not use it
