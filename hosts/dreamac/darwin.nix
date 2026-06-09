@@ -5,7 +5,7 @@
     ./../../darwin/fonts.nix
     ./../../darwin/homebrew.nix
     ./../../darwin/nix.nix
-    ./../../darwin/podman.nix
+    ./../../darwin/container.nix
     ./../../darwin/skhd.nix
     ./../../darwin/yabai
     ./../../darwin/system.nix
