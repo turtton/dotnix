@@ -33,7 +33,10 @@
 					"model": "github-copilot/claude-opus-4.6",
 					"variant": "high"
 				}
-			]
+			],
+			"tools": {
+				"skill": false
+			}
 		},
 		"explore": {
 			"model": "github-copilot/gpt-5.4-mini",

@@ -1,7 +1,6 @@
 {
 	"$schema": "https://opencode.ai/config.json",
 	"plugin": [
-		"@tarquinen/opencode-dcp",
 		"oh-my-openagent",
 		"opencode-comments-plugin",
 		"@simonwjackson/opencode-direnv",
