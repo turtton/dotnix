@@ -48,10 +48,13 @@
     };
 
     # Set XDG_RUNTIME_DIR env var for some applicatins(e.g. nix-direnv)
+    # language=zsh
     initContent = pkgs.lib.optionalString hostPlatform.isDarwin ''
-      export XDG_RUNTIME_DIR="''${TMPDIR%/}/xdg-runtime-dir"
-      mkdir -p "$XDG_RUNTIME_DIR"
-      chmod 700 "$XDG_RUNTIME_DIR"
+      if [[ -z "$XDG_RUNTIME_DIR" ]]; then
+        export XDG_RUNTIME_DIR="''${TMPDIR%/}/xdg-runtime-dir"
+        mkdir -p "$XDG_RUNTIME_DIR"
+        chmod 700 "$XDG_RUNTIME_DIR"
+      fi
     '';
   };
 }
