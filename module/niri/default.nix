@@ -70,6 +70,8 @@ in
           }
         else
           {
+            environment.systemPackages = [ inputs.niri-flake.packages.${system}.niri-stable ];
+
             security.pam.services =
               let
                 enableKeyrings = {
