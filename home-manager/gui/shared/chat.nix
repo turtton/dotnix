@@ -4,6 +4,7 @@
     discord
     discord-ptb
     vesktop
+    equibop
     slack
     zoom-us
     teams-for-linux
