@@ -43,6 +43,9 @@ in
       # Git Repository Management
       siketyan-ghr
 
+      # AWS Cli and plugins
+      awscli2
+      ssm-session-manager-plugin
     ]
     ++ pkgs.lib.optionals hostPlatform.isLinux [
       stack-wrapped
