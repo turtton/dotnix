@@ -52,7 +52,7 @@ in
       local openagent_json="$3"
       local profile_name="$4"
 
-      for f in opencode.jsonc oh-my-openagent.json dcp.jsonc AGENTS.md; do
+      for f in opencode.jsonc oh-my-openagent.json AGENTS.md; do
         [ -f "$profile_dir/$f" ] && mv -f "$profile_dir/$f" "$profile_dir/$f.old"
       done
 
@@ -60,10 +60,9 @@ in
 
       cp -f "$config_jsonc" "$profile_dir/opencode.jsonc"
       cp -f "$openagent_json" "$profile_dir/oh-my-openagent.json"
-      cp -f "${./dcp.jsonc}" "$profile_dir/dcp.jsonc"
       cp -f "${./AGENTS.md}" "$profile_dir/AGENTS.md"
 
-      chmod u+w "$profile_dir/opencode.jsonc" "$profile_dir/oh-my-openagent.json" "$profile_dir/dcp.jsonc" "$profile_dir/AGENTS.md"
+      chmod u+w "$profile_dir/opencode.jsonc" "$profile_dir/oh-my-openagent.json" "$profile_dir/AGENTS.md"
 
       if [ "$profile_dir" != "${configDir}" ]; then
         if [ "$profile_name" = "cg" ]; then
