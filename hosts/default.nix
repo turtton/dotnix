@@ -94,6 +94,8 @@ let
             nixpkgs.config.permittedInsecurePackages = [
               # Allow discord dependency
               "openssl-1.1.1w"
+              # bitwarden https://github.com/NixOS/nixpkgs/issues/526914
+              "electron-39.8.10"
             ];
 
           }
