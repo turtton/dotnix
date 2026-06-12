@@ -133,7 +133,6 @@ jobs:
           - cachyos-kernel-latest
           - opencode
           - mixxx
-          - senpi
           - ghr
     steps:
       - name: Checkout
@@ -185,7 +184,6 @@ jobs:
           - rustowl
           - claude-code
           - opencode
-          - senpi
           - ghr
     steps:
       - name: Checkout
