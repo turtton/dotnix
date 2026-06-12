@@ -1,9 +1,6 @@
 {
   inputs,
   pkgs,
-  hostname,
-  config,
-  pkgs-staging-next,
   ...
 }:
 {
@@ -44,6 +41,9 @@
       size = 16 * 1024;
     }
   ];
+
+  system.boot.loader.kernelFile = "bzImage";
+  hardware.deviceTree.enable = false;
 
   services = {
     # Enable CUPS to print documents.

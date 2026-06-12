@@ -50,6 +50,11 @@
     ];
   };
 
+  # cachyos kernel built by nixpkgs_7 lacks target/buildDTBs in passthru;
+  # set them explicitly since updated nixpkgs requires these from options.
+  system.boot.loader.kernelFile = "bzImage";
+  hardware.deviceTree.enable = false;
+
   hardware = {
     graphics = {
       enable = true;

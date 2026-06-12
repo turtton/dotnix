@@ -86,7 +86,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     claude-desktop = {
-      url = "github:aaddrick/claude-desktop-debian";
+      # https://github.com/aaddrick/claude-desktop-debian/issues/718
+      # url = "github:aaddrick/claude-desktop-debian";
+      url = "github:tedks/claude-desktop-debian";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     claude-code-overlay = {
@@ -103,7 +105,7 @@
       };
     };
     noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
+      url = "github:noctalia-dev/noctalia/legacy-v4";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     winapps = {
