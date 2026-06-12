@@ -20,7 +20,6 @@
             ms-vscode-remote.remote-ssh
             # AI
             github.copilot-chat
-            github.copilot
             # Languages
             ms-azuretools.vscode-docker
             redhat.vscode-yaml
@@ -30,11 +29,6 @@
             ms-python.python
             ms-python.vscode-pylance
             charliermarsh.ruff
-            ms-toolsai.jupyter
-            ms-toolsai.vscode-jupyter-slideshow
-            ms-toolsai.jupyter-keymap
-            ms-toolsai.jupyter-renderers
-            ms-toolsai.vscode-jupyter-cell-tags
             ### Javascript/TypeScript
             esbenp.prettier-vscode
             dbaeumer.vscode-eslint
