@@ -12,7 +12,6 @@
     packages =
       with pkgs;
       [
-        senpi
         cursor-cli
       ]
       ++ pkgs.lib.optionals hostPlatform.isLinux [
