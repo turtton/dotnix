@@ -283,9 +283,7 @@ in
                     user = username;
                   };
                   default_session = {
-                    command = ''
-                      ${pkgs.tuigreet}/bin/tuigreet --time --cmd niri-session
-                    '';
+                    command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd niri-session";
                     user = username;
                   };
                 };
@@ -343,9 +341,7 @@ in
                     user = username;
                   };
                   default_session = {
-                    command = ''
-                      ${pkgs.tuigreet}/bin/tuigreet --time --cmd niri-session
-                    '';
+                    command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd niri-session";
                     user = username;
                   };
                 };
@@ -390,9 +386,7 @@ in
                     user = username;
                   };
                   default_session = {
-                    command = ''
-                      ${pkgs.tuigreet}/bin/tuigreet --time --cmd start-hyprland
-                    '';
+                    command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd start-hyprland";
                     user = username;
                   };
                 };
