@@ -49,6 +49,11 @@
 					"limit": {
 						"context": 1000000,
 						"output": 131072
+					},
+					"cost": {
+						"input": 0.35,
+						"output": 0.8,
+						"cache_read": 0.003
 					}
 				},
 				"deepseek-v4-flash": {
@@ -56,6 +61,23 @@
 					"limit": {
 						"context": 1000000,
 						"output": 131072
+					},
+					"cost": {
+						"input": 0.12,
+						"output": 0.21,
+						"cache_read": 0.003
+					}
+				},
+				"kimi-k2.7-code": {
+					"name": "Kimi K2.7 Code",
+					"limit": {
+						"context": 262144,
+						"output": 262144
+					},
+					"cost": {
+						"input": 0.55,
+						"output": 2.25,
+						"cache_read": 0.05
 					}
 				},
 				"kimi-k2.6": {
@@ -70,6 +92,11 @@
 					"limit": {
 						"context": 202752,
 						"output": 202752
+					},
+					"cost": {
+						"input": 0.45,
+						"output": 2.15,
+						"cache_read": 0.08
 					}
 				},
 				"gemma-4-31b-it": {

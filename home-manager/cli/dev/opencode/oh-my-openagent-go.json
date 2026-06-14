@@ -2,10 +2,10 @@
 	"$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/dev/assets/oh-my-opencode.schema.json",
 	"agents": {
 		"sisyphus": {
-			"model": "opencode-go/kimi-k2.6",
+			"model": "CrofAI/kimi-k2.7-code",
 			"fallback_models": [
 				{
-					"model": "CrofAI/kimi-k2.6"
+					"model": "opencode-go/kimi-k2.7-code"
 				},
 				{
 					"model": "openai/gpt-5.5",
@@ -35,10 +35,10 @@
 					"variant": "high"
 				},
 				{
-					"model": "opencode-go/glm-5.1"
+					"model": "CrofAI/glm-5.1"
 				},
 				{
-					"model": "CrofAI/glm-5.1"
+					"model": "opencode-go/glm-5.1"
 				}
 			],
 			"tools": {
@@ -54,10 +54,10 @@
 					"variant": "high"
 				},
 				{
-					"model": "opencode-go/glm-5.1"
+					"model": "CrofAI/glm-5.1"
 				},
 				{
-					"model": "CrofAI/glm-5.1"
+					"model": "opencode-go/glm-5.1"
 				}
 			]
 		},
@@ -66,10 +66,10 @@
 			"variant": "high",
 			"fallback_models": [
 				{
-					"model": "opencode-go/glm-5.1"
+					"model": "CrofAI/glm-5.1"
 				},
 				{
-					"model": "CrofAI/glm-5.1"
+					"model": "opencode-go/glm-5.1"
 				}
 			]
 		},
@@ -78,26 +78,26 @@
 			"variant": "high",
 			"fallback_models": [
 				{
-					"model": "opencode-go/glm-5.1"
+					"model": "CrofAI/glm-5.1"
 				},
 				{
-					"model": "CrofAI/glm-5.1"
+					"model": "opencode-go/glm-5.1"
 				}
 			]
 		},
 		"atlas": {
-			"model": "opencode-go/kimi-k2.6",
+			"model": "CrofAI/kimi-k2.7-code",
 			"fallback_models": [
 				{
-					"model": "CrofAI/kimi-k2.6"
+					"model": "opencode-go/kimi-k2.7-code"
 				}
 			]
 		},
 		"sisyphus-junior": {
-			"model": "opencode-go/kimi-k2.6",
+			"model": "CrofAI/kimi-k2.7-code",
 			"fallback_models": [
 				{
-					"model": "CrofAI/kimi-k2.6"
+					"model": "opencode-go/kimi-k2.7-code"
 				}
 			]
 		},
@@ -140,20 +140,20 @@
 			"variant": "medium",
 			"fallback_models": [
 				{
-					"model": "opencode-go/kimi-k2.6"
+					"model": "CrofAI/kimi-k2.7-code"
 				},
 				{
-					"model": "CrofAI/kimi-k2.6"
+					"model": "opencode-go/kimi-k2.7-code"
 				}
 			]
 		}
 	},
 	"categories": {
 		"visual-engineering": {
-			"model": "opencode-go/glm-5.1",
+			"model": "CrofAI/glm-5.1",
 			"fallback_models": [
 				{
-					"model": "CrofAI/glm-5.1"
+					"model": "opencode-go/glm-5.1"
 				}
 			]
 		},
@@ -162,10 +162,10 @@
 			"variant": "xhigh",
 			"fallback_models": [
 				{
-					"model": "opencode-go/glm-5.1"
+					"model": "CrofAI/glm-5.1"
 				},
 				{
-					"model": "CrofAI/glm-5.1"
+					"model": "opencode-go/glm-5.1"
 				}
 			]
 		},
@@ -177,10 +177,10 @@
 					"model": "cursor-api/composer-2.5-fast"
 				},
 				{
-					"model": "opencode-go/glm-5.1"
+					"model": "CrofAI/glm-5.1"
 				},
 				{
-					"model": "CrofAI/glm-5.1"
+					"model": "opencode-go/glm-5.1"
 				}
 			]
 		},
@@ -196,10 +196,10 @@
 			"model": "openai/gpt-5.4-mini-fast",
 			"fallback_models": [
 				{
-					"model": "opencode-go/minimax-m3"
+					"model": "CrofAI/deepseek-v4-flash"
 				},
 				{
-					"model": "CrofAI/deepseek-v4-flash"
+					"model": "opencode-go/minimax-m3"
 				}
 			]
 		},
@@ -207,10 +207,10 @@
 			"model": "openai/gpt-5.3-codex",
 			"fallback_models": [
 				{
-					"model": "opencode-go/kimi-k2.6"
+					"model": "CrofAI/kimi-k2.7-code"
 				},
 				{
-					"model": "CrofAI/kimi-k2.6"
+					"model": "opencode-go/kimi-k2.7-code"
 				}
 			]
 		},
@@ -219,18 +219,18 @@
 			"variant": "high",
 			"fallback_models": [
 				{
-					"model": "opencode-go/kimi-k2.6"
+					"model": "CrofAI/kimi-k2.7-code"
 				},
 				{
-					"model": "CrofAI/kimi-k2.6"
+					"model": "opencode-go/kimi-k2.7-code"
 				}
 			]
 		},
 		"writing": {
-			"model": "opencode-go/kimi-k2.6",
+			"model": "CrofAI/kimi-k2.7-code",
 			"fallback_models": [
 				{
-					"model": "CrofAI/kimi-k2.6"
+					"model": "opencode-go/kimi-k2.7-code"
 				}
 			]
 		}
@@ -252,8 +252,8 @@
 	},
 	"skills": {
 		"sources": [
-			"@OPENCODE_CONFIG_DIR@/skill/final-review",
-			"@OPENCODE_CONFIG_DIR@/skill/git-commit"
+			"/home/turtton/.config/opencode-go/skill/final-review",
+			"/home/turtton/.config/opencode-go/skill/git-commit"
 		]
 	}
 }
