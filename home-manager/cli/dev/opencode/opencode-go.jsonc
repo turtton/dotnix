@@ -93,6 +93,11 @@
 						"context": 1000000,
 						"output": 131072
 					},
+					"variants": {
+						"max": {},
+						"high": {},
+						"medium": {}
+					},
 					"cost": {
 						"input": 0.5,
 						"output": 2.2,
