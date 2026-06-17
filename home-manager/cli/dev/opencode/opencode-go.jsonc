@@ -87,11 +87,23 @@
 						"output": 262144
 					}
 				},
+				"glm-5.2": {
+					"name": "GLM 5.2",
+					"limit": {
+						"context": 1000000,
+						"output": 131072
+					},
+					"cost": {
+						"input": 0.5,
+						"output": 2.2,
+						"cache_read": 0.08
+					}
+				},
 				"glm-5.1": {
 					"name": "GLM 5.1",
 					"limit": {
-						"context": 202752,
-						"output": 202752
+						"context": 1000000,
+						"output": 131072
 					},
 					"cost": {
 						"input": 0.45,
