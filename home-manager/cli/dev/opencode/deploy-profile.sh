@@ -19,6 +19,19 @@ OPENAGENT_SOURCE[main]="oh-my-openagent.json"
 OPENAGENT_SOURCE[go]="oh-my-openagent-go.json"
 OPENAGENT_SOURCE[cg]="oh-my-openagent-cg.json"
 
+# ---- Required commands ----
+for cmd in diff rsync sed; do
+  if ! command -v "$cmd" &>/dev/null; then
+    echo "ERROR: Required command '$cmd' not found in PATH." >&2
+    exit 1
+  fi
+done
+
+# ---- Helper: escape string for sed replacement (delimiter |) ----
+escape_sed_repl() {
+  printf '%s\n' "$1" | sed 's/[&\/\|]/\\&/g'
+}
+
 # ---- Functions ----
 
 usage() {
@@ -36,19 +49,20 @@ Profiles:
   cg     -> \${XDG_CONFIG_HOME:-\$HOME/.config}/opencode-cg
 
 Prerequisites:
-  - Run from home-manager/cli/dev/opencode/ in the dotnix repo.
-  - For non-main profiles, main profile must have been deployed at least once
+  - Run this script with bash from home-manager/cli/dev/opencode/.
+  - Requires: diff, rsync, sed (validated at startup).
+  - For non-main profiles, main profile should have been deployed at least once
     (opencode.json and skills are mirrored from main).
 EOF
 }
 
-# Show diff between a source file (after optional sed substitution) and target file.
-# Returns 0 if files are identical, 1 if different, 2 if target doesn't exist.
+# Print diff between a source file (after optional sed expression) and target file.
+# Returns 0 (identical), 1 (different), 2 (target missing).
 diff_with_target() {
-  local label="$1" # display label
+  local label="$1"
   local src_file="$2"
   local tgt_file="$3"
-  local sed_expr="${4:-}" # optional sed expression (e.g. "s|@X@|Y|g")
+  local sed_expr="${4:-}"
 
   local src_content
   if [[ -n $sed_expr ]]; then
@@ -75,52 +89,72 @@ diff_with_target() {
   fi
 }
 
-# Summarize opencode.json status for non-main profiles (dry-run).
-show_opencode_json_status() {
+# Check whether opencode.json in non-main profile would change.
+# Returns 0 (no change), 1 (would change).
+opencode_json_status() {
   local pd="$1" md="$2" pn="$3"
 
   if [[ $pn == "cg" ]]; then
     if [[ -f $pd/opencode.json ]]; then
-      echo "  [opencode.json] WILL BE REMOVED (cg profile does not need external providers)"
+      echo "  [opencode.json] WILL BE REMOVED (cg profile)"
+      return 1
     else
       echo "  [opencode.json] (already absent — no change)"
+      return 0
     fi
-  elif [[ -f $md/opencode.json ]]; then
-    if diff -q "$md/opencode.json" "$pd/opencode.json" &>/dev/null 2>/dev/null; then
-      echo "  [opencode.json] (identical to main — no change)"
-    elif [[ -f $pd/opencode.json ]]; then
-      echo "  [opencode.json] WILL BE UPDATED from main profile:"
-      diff -u "$pd/opencode.json" "$md/opencode.json" 2>/dev/null | sed 's/^/    /' || true
+  fi
+
+  if [[ -f $md/opencode.json ]]; then
+    if [[ -f $pd/opencode.json ]]; then
+      if diff -q "$md/opencode.json" "$pd/opencode.json" &>/dev/null; then
+        echo "  [opencode.json] (identical to main — no change)"
+        return 0
+      else
+        echo "  [opencode.json] WILL BE UPDATED from main profile:"
+        diff -u "$pd/opencode.json" "$md/opencode.json" 2>/dev/null | sed 's/^/    /' || true
+        return 1
+      fi
     else
       echo "  [opencode.json] WILL BE COPIED from main profile (new file)"
+      return 1
     fi
   else
-    echo "  [opencode.json] WARNING: main profile has no opencode.json — provider unavailable"
+    echo "  [opencode.json] WARNING: main profile has no opencode.json — will be skipped"
+    return 0
   fi
 }
 
-# Summarize skill directory changes (dry-run).
-show_skills_status() {
+# Check whether skill directory in non-main profile would change.
+# Returns 0 (no change), 1 (would change).
+skills_status() {
   local pd="$1" md="$2"
 
   if [[ -d $md/skill ]]; then
+    if [[ ! -d $pd/skill ]]; then
+      echo "  [skills] WILL BE SYNCED from main profile (new)"
+      return 1
+    fi
     local dry_run
-    dry_run=$(rsync -aLn --delete "$md/skill/" "$pd/skill/" 2>&1 || true)
+    dry_run=$(rsync -aLni --delete "$md/skill/" "$pd/skill/" 2>&1 || true)
     if [[ -z $dry_run ]]; then
       echo "  [skills] (already in sync — no change)"
+      return 0
     else
-      echo "  [skills] changes from main:"
+      echo "  [skills] WILL BE SYNCED from main profile:"
       echo "$dry_run" | head -20 | sed 's/^/    /'
       local count
       count=$(echo "$dry_run" | wc -l)
       if ((count > 20)); then
         echo "    ... and $((count - 20)) more"
       fi
+      return 1
     fi
   elif [[ -d $pd/skill ]]; then
     echo "  [skills] WILL BE REMOVED (no skills in main profile)"
+    return 1
   else
     echo "  [skills] (no skills in either profile — no change)"
+    return 0
   fi
 }
 
@@ -176,47 +210,57 @@ for f in "$config_source" "$openagent_source" "$agents_md"; do
     missing=true
   fi
 done
-"$missing" && exit 1
-
-if [[ $profile != "main" && ! -d $main_dir ]]; then
-  echo "WARNING: Main profile directory ($main_dir) does not exist." >&2
-  echo "Non-main profiles mirror opencode.json and skills from the main profile." >&2
-  echo "Run 'deploy-profile.sh main' or the Nix activation script first." >&2
-  echo "Continuing anyway (opencode.json and skills will be skipped)." >&2
+if [[ $missing == true ]]; then
+  exit 1
 fi
+
+# ---- Prerequisite check for non-main profiles ----
+main_missing=false
+if [[ $profile != "main" && ! -d $main_dir ]]; then
+  main_missing=true
+  echo "WARNING: Main profile directory ($main_dir) does not exist." >&2
+  echo "  Non-main profiles mirror opencode.json and skills from the main profile." >&2
+  echo "  Without it, extras will be skipped (existing files will NOT be deleted)." >&2
+fi
+
+# ---- Build sed expression for @OPENCODE_CONFIG_DIR@ ----
+repl_escaped=$(escape_sed_repl "$profile_dir")
+sed_expr="s|@OPENCODE_CONFIG_DIR@|${repl_escaped}|g"
 
 # ---- Dry-run: show diff summary ----
 if "$dry_run"; then
   echo "=== Dry run for profile '$profile' → $profile_dir ==="
   echo ""
 
-  mkdir -p "$profile_dir"
-
   has_changes=false
 
   diff_with_target "opencode.jsonc" "$config_source" "$profile_dir/opencode.jsonc" && rc=$? || rc=$?
-  case $rc in
-  1) has_changes=true ;;
-  2) has_changes=true ;;
-  esac
+  if [[ $rc -gt 2 ]]; then exit 1; fi
+  case $rc in 1 | 2) has_changes=true ;; esac
 
-  diff_with_target "oh-my-openagent.json" "$openagent_source" "$profile_dir/oh-my-openagent.json" "s|@OPENCODE_CONFIG_DIR@|${profile_dir}|g" && rc=$? || rc=$?
-  case $rc in
-  1) has_changes=true ;;
-  2) has_changes=true ;;
-  esac
+  diff_with_target "oh-my-openagent.json" "$openagent_source" "$profile_dir/oh-my-openagent.json" "$sed_expr" && rc=$? || rc=$?
+  if [[ $rc -gt 2 ]]; then exit 1; fi
+  case $rc in 1 | 2) has_changes=true ;; esac
 
   diff_with_target "AGENTS.md" "$agents_md" "$profile_dir/AGENTS.md" && rc=$? || rc=$?
-  case $rc in
-  1) has_changes=true ;;
-  2) has_changes=true ;;
-  esac
+  if [[ $rc -gt 2 ]]; then exit 1; fi
+  case $rc in 1 | 2) has_changes=true ;; esac
 
-  if [[ $profile != "main" ]]; then
+  if [[ $profile != "main" && ! $main_missing ]]; then
     echo ""
     echo "--- Non-main profile extras ---"
-    show_opencode_json_status "$profile_dir" "$main_dir" "$profile"
-    show_skills_status "$profile_dir" "$main_dir"
+    opencode_json_status "$profile_dir" "$main_dir" "$profile" && rc=$? || rc=$?
+    if [[ $rc -gt 1 ]]; then exit 1; fi
+    case $rc in 1) has_changes=true ;; esac
+
+    skills_status "$profile_dir" "$main_dir" && rc=$? || rc=$?
+    if [[ $rc -gt 1 ]]; then exit 1; fi
+    case $rc in 1) has_changes=true ;; esac
+  elif [[ $profile != "main" && $main_missing ]]; then
+    echo ""
+    echo "--- Non-main profile extras (SKIPPED — main profile missing) ---"
+    echo "  [opencode.json] (skipped)"
+    echo "  [skills] (skipped)"
   fi
 
   echo ""
@@ -228,25 +272,29 @@ if "$dry_run"; then
   exit 0
 fi
 
-# ---- Confirmation with diff preview ----
+# ---- Normal mode: show diff and confirm ----
 echo "=== Plan: deploy profile '$profile' → $profile_dir ==="
 echo ""
 
-mkdir -p "$profile_dir"
-
 diff_with_target "opencode.jsonc" "$config_source" "$profile_dir/opencode.jsonc" || true
-diff_with_target "oh-my-openagent.json" "$openagent_source" "$profile_dir/oh-my-openagent.json" "s|@OPENCODE_CONFIG_DIR@|${profile_dir}|g" || true
+diff_with_target "oh-my-openagent.json" "$openagent_source" "$profile_dir/oh-my-openagent.json" "$sed_expr" || true
 diff_with_target "AGENTS.md" "$agents_md" "$profile_dir/AGENTS.md" || true
 
-if [[ $profile != "main" ]]; then
+if [[ $profile != "main" && ! $main_missing ]]; then
   echo ""
   echo "--- Non-main profile extras ---"
-  show_opencode_json_status "$profile_dir" "$main_dir" "$profile"
-  show_skills_status "$profile_dir" "$main_dir"
+  opencode_json_status "$profile_dir" "$main_dir" "$profile" || true
+  skills_status "$profile_dir" "$main_dir" || true
+elif [[ $profile != "main" && $main_missing ]]; then
+  echo ""
+  echo "--- Non-main profile extras (SKIPPED — main profile missing) ---"
 fi
 
 echo ""
-read -r -p "Apply these changes? [y/N] " reply
+if ! read -r -p "Apply these changes? [y/N] " reply; then
+  echo "Cancelled."
+  exit 1
+fi
 case "$reply" in
 [yY] | [yY][eE][sS]) ;;
 *)
@@ -257,8 +305,10 @@ esac
 
 # ---- Apply ----
 
-# Backup existing files with timestamp
-backup_ts=$(date +%Y%m%d-%H%M%S)
+mkdir -p "$profile_dir"
+
+# Backup existing files with nanosecond-granularity timestamp
+backup_ts=$(date +%Y%m%d-%H%M%S)-$$
 for f in opencode.jsonc oh-my-openagent.json AGENTS.md; do
   if [[ -f $profile_dir/$f ]]; then
     cp -f "$profile_dir/$f" "$profile_dir/$f.${backup_ts}.bak"
@@ -272,7 +322,7 @@ chmod u+w "$profile_dir/opencode.jsonc"
 echo "  Deployed: opencode.jsonc"
 
 # Deploy oh-my-openagent.json with @OPENCODE_CONFIG_DIR@ substitution
-sed "s|@OPENCODE_CONFIG_DIR@|${profile_dir}|g" "$openagent_source" >"$profile_dir/oh-my-openagent.json"
+sed "$sed_expr" "$openagent_source" >"$profile_dir/oh-my-openagent.json"
 chmod u+w "$profile_dir/oh-my-openagent.json"
 echo "  Deployed: oh-my-openagent.json"
 
@@ -281,35 +331,49 @@ cp -f "$agents_md" "$profile_dir/AGENTS.md"
 chmod u+w "$profile_dir/AGENTS.md"
 echo "  Deployed: AGENTS.md"
 
-# Handle opencode.json for non-main profiles
-if [[ $profile_dir != "$main_dir" ]]; then
-  if [[ $profile == "cg" ]]; then
-    rm -f "$profile_dir/opencode.json"
-    echo "  Removed: opencode.json (cg profile)"
-  elif [[ -f $main_dir/opencode.json ]]; then
-    cp -f "$main_dir/opencode.json" "$profile_dir/opencode.json"
-    chmod u+w "$profile_dir/opencode.json"
-    echo "  Copied: opencode.json from main profile"
+# Handle extras for non-main profiles
+if [[ $profile != "main" ]]; then
+  if "$main_missing"; then
+    echo "  (Skipped opencode.json and skills — main profile missing)"
   else
-    rm -f "$profile_dir/opencode.json"
-    echo "  WARNING: ${main_dir}/opencode.json not found." >&2
-    echo "  cursor-acp provider unavailable in '$profile' profile." >&2
-  fi
+    # Guard: profile_dir is never empty or root
+    if [[ -z $profile_dir || $profile_dir == "/" ]]; then
+      echo "FATAL: profile_dir resolved to '$profile_dir' — refusing to operate." >&2
+      exit 1
+    fi
 
-  # Mirror skills from main profile (guard: profile_dir is never empty or root)
-  if [[ -z $profile_dir || $profile_dir == "/" ]]; then
-    echo "FATAL: profile_dir resolved to '$profile_dir' — refusing to operate." >&2
-    exit 1
-  fi
+    # Back up opencode.json before modifying
+    if [[ -f $profile_dir/opencode.json ]]; then
+      cp -f "$profile_dir/opencode.json" "$profile_dir/opencode.json.${backup_ts}.bak"
+      echo "  Backed up: opencode.json → opencode.json.${backup_ts}.bak"
+    fi
 
-  if [[ -d $main_dir/skill ]]; then
-    mkdir -p "$profile_dir/skill"
-    rsync -aL --delete "$main_dir/skill/" "$profile_dir/skill/"
-    chmod -R u+w "$profile_dir/skill"
-    echo "  Synced: skills from main profile"
-  elif [[ -d $profile_dir/skill ]]; then
-    rm -rf "$profile_dir/skill"
-    echo "  Removed: skill directory (no skills in main profile)"
+    if [[ $profile == "cg" ]]; then
+      rm -f "$profile_dir/opencode.json"
+      echo "  Removed: opencode.json (cg profile)"
+    elif [[ -f $main_dir/opencode.json ]]; then
+      cp -f "$main_dir/opencode.json" "$profile_dir/opencode.json"
+      chmod u+w "$profile_dir/opencode.json"
+      echo "  Copied: opencode.json from main profile"
+    else
+      echo "  Skipped: opencode.json (not found in main profile)" >&2
+    fi
+
+    # Back up skill directory before modifying
+    if [[ -d $profile_dir/skill ]]; then
+      cp -r "$profile_dir/skill" "$profile_dir/skill.${backup_ts}.bak"
+      echo "  Backed up: skill → skill.${backup_ts}.bak"
+    fi
+
+    if [[ -d $main_dir/skill ]]; then
+      mkdir -p "$profile_dir/skill"
+      rsync -aL --delete "$main_dir/skill/" "$profile_dir/skill/"
+      chmod -R u+w "$profile_dir/skill"
+      echo "  Synced: skills from main profile"
+    elif [[ -d $profile_dir/skill ]]; then
+      rm -rf "$profile_dir/skill"
+      echo "  Removed: skill directory (no skills in main profile)"
+    fi
   fi
 fi
 
