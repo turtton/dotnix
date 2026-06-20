@@ -54,6 +54,19 @@
     # Move window to monitor
     alt + shift - tab : yabai -m window --display next || yabai -m window --display first
 
+    # Window stack (alt + shift + ctrl + hjkl)
+    alt + shift + ctrl - h : yabai -m window --stack west
+    alt + shift + ctrl - j : yabai -m window --stack south
+    alt + shift + ctrl - k : yabai -m window --stack north
+    alt + shift + ctrl - l : yabai -m window --stack east
+
+    # Unstack window (extract from stack to tiling)
+    alt + shift + ctrl - 0 : yabai -m window --warp recent
+
+    # Cycle through stack with wraparound
+    alt - w : yabai -m window --focus stack.next || yabai -m window --focus stack.first
+    alt + shift - w : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
+
     # Balance tree
     alt + shift - 0 : yabai -m space --balance
 
