@@ -1755,22 +1755,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-blockbench4": {
-      "locked": {
-        "lastModified": 1754428926,
-        "narHash": "sha256-Nwp+Il5WOBn7RHXEGq94dGryS188P9eTPlsaQ0FhflA=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "1c3b10e04b7ff1948b5a3eda3d33547506fb8fee",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "1c3b10e04b7ff1948b5a3eda3d33547506fb8fee",
-        "type": "github"
-      }
-    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1777168982,
@@ -2271,7 +2255,6 @@
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_10",
         "nixpkgs-25": "nixpkgs-25",
-        "nixpkgs-blockbench4": "nixpkgs-blockbench4",
         "nixpkgs-staging-next": "nixpkgs-staging-next",
         "noctalia": "noctalia",
         "nvfetcher": "nvfetcher",

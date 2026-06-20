@@ -29,7 +29,6 @@ in
     (import ./jetbrains-dolphin.nix generated.jetbrains-dolphin)
     (import ./jetbrains-nautilus.nix generated.jetbrains-nautilus)
     (import ./wallpapers.nix generated.wallpaper-springcity)
-    (import ./blockbench_4.nix inputs)
     (import ./wifiman-desktop.nix)
     (import ./app-replacements.nix inputs)
     #    (import ./webapp.nix)
