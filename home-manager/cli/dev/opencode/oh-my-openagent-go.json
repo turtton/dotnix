@@ -11,7 +11,11 @@
 					"model": "openai/gpt-5.5",
 					"variant": "medium"
 				}
-			]
+			],
+			"prompt_append": "あなたはコードを直接編集できません。コード変更・検証実行・テスト実行・最終確認も含め、すべての実作業をサブエージェントに委譲してください。「trivialだから自分でやる」という判断はせず、常に委譲を第一選択とします。あなた自身が行うのは、サブエージェントへの指示、結果の読み取り、妥当性判断、追加指示の決定に限定します。",
+			"tools": {
+				"edit": false
+			}
 		},
 		"hephaestus": {
 			"model": "openai/gpt-5.5",
@@ -35,10 +39,12 @@
 					"variant": "high"
 				},
 				{
-					"model": "CrofAI/glm-5.1"
+					"model": "CrofAI/glm-5.2",
+					"variant": "max"
 				},
 				{
-					"model": "opencode-go/glm-5.1"
+					"model": "opencode-go/glm-5.2",
+					"variant": "max"
 				}
 			],
 			"tools": {
@@ -54,10 +60,12 @@
 					"variant": "high"
 				},
 				{
-					"model": "CrofAI/glm-5.1"
+					"model": "CrofAI/glm-5.2",
+					"variant": "max"
 				},
 				{
-					"model": "opencode-go/glm-5.1"
+					"model": "opencode-go/glm-5.2",
+					"variant": "max"
 				}
 			]
 		},
@@ -66,10 +74,12 @@
 			"variant": "high",
 			"fallback_models": [
 				{
-					"model": "CrofAI/glm-5.1"
+					"model": "CrofAI/glm-5.2",
+					"variant": "max"
 				},
 				{
-					"model": "opencode-go/glm-5.1"
+					"model": "opencode-go/glm-5.2",
+					"variant": "max"
 				}
 			]
 		},
@@ -78,10 +88,12 @@
 			"variant": "high",
 			"fallback_models": [
 				{
-					"model": "CrofAI/glm-5.1"
+					"model": "CrofAI/glm-5.2",
+					"variant": "max"
 				},
 				{
-					"model": "opencode-go/glm-5.1"
+					"model": "opencode-go/glm-5.2",
+					"variant": "max"
 				}
 			]
 		},
@@ -94,10 +106,12 @@
 			]
 		},
 		"sisyphus-junior": {
-			"model": "CrofAI/kimi-k2.7-code",
+			"model": "CrofAI/glm-5.2",
+			"variant": "max",
 			"fallback_models": [
 				{
-					"model": "opencode-go/kimi-k2.7-code"
+					"model": "opencode-go/glm-5.2",
+					"variant": "max"
 				}
 			]
 		},
@@ -136,11 +150,10 @@
 			]
 		},
 		"multimodal-looker": {
-			"model": "openai/gpt-5.5",
-			"variant": "medium",
+			"model": "CrofAI/kimi-k2.7-code",
 			"fallback_models": [
 				{
-					"model": "CrofAI/kimi-k2.7-code"
+					"model": "openai/gpt-5.5"
 				},
 				{
 					"model": "opencode-go/kimi-k2.7-code"
@@ -150,10 +163,15 @@
 	},
 	"categories": {
 		"visual-engineering": {
-			"model": "CrofAI/glm-5.1",
+			"model": "CrofAI/greg-2-super",
 			"fallback_models": [
 				{
-					"model": "opencode-go/glm-5.1"
+					"model": "CrofAI/glm-5.2",
+					"variant": "max"
+				},
+				{
+					"model": "opencode-go/glm-5.2",
+					"variant": "max"
 				}
 			]
 		},
@@ -162,25 +180,22 @@
 			"variant": "xhigh",
 			"fallback_models": [
 				{
-					"model": "CrofAI/glm-5.1"
+					"model": "CrofAI/glm-5.2",
+					"variant": "max"
 				},
 				{
-					"model": "opencode-go/glm-5.1"
+					"model": "opencode-go/glm-5.2",
+					"variant": "max"
 				}
 			]
 		},
 		"deep": {
-			"model": "openai/gpt-5.5",
-			"variant": "medium",
+			"model": "CrofAI/glm-5.2",
+			"variant": "max",
 			"fallback_models": [
 				{
-					"model": "cursor-api/composer-2.5-fast"
-				},
-				{
-					"model": "CrofAI/glm-5.1"
-				},
-				{
-					"model": "opencode-go/glm-5.1"
+					"model": "opencode-go/glm-5.2",
+					"variant": "max"
 				}
 			]
 		},
@@ -204,7 +219,7 @@
 			]
 		},
 		"unspecified-low": {
-			"model": "openai/gpt-5.3-codex",
+			"model": "CrofAI/glm-5.2",
 			"fallback_models": [
 				{
 					"model": "CrofAI/kimi-k2.7-code"
@@ -219,10 +234,12 @@
 			"variant": "high",
 			"fallback_models": [
 				{
-					"model": "CrofAI/kimi-k2.7-code"
+					"model": "CrofAI/glm-5.2",
+					"variant": "max"
 				},
 				{
-					"model": "opencode-go/kimi-k2.7-code"
+					"model": "opencode-go/glm-5.2",
+					"variant": "max"
 				}
 			]
 		},

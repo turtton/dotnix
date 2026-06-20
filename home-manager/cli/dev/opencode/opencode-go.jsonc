@@ -87,8 +87,20 @@
 						"output": 262144
 					}
 				},
+				"kimi-k2.5-lightning": {
+					"name": "Kimi K2.5 Lightning",
+					"limit": {
+						"context": 131072,
+						"output": 32768
+					},
+					"cost": {
+						"input": 1.0,
+						"output": 3.0,
+						"cache_read": 0.2
+					}
+				},
 				"glm-5.2": {
-					"name": "GLM 5.2",
+					"name": "GLM-5.2",
 					"limit": {
 						"context": 1000000,
 						"output": 131072
@@ -105,7 +117,7 @@
 					}
 				},
 				"glm-5.1": {
-					"name": "GLM 5.1",
+					"name": "GLM-5.1",
 					"limit": {
 						"context": 1000000,
 						"output": 131072
@@ -137,8 +149,8 @@
 						"output": 262144
 					}
 				},
-				"greg": {
-					"name": "Greg",
+				"greg-2-super": {
+					"name": "Greg2 Super",
 					"limit": {
 						"context": 229376,
 						"output": 229376
