@@ -32,7 +32,7 @@ render_quota() {
   local fmt_credits
   fmt_credits=$(printf '%.2f' "$credits" 2>/dev/null || echo "$credits")
 
-  echo "#[bg=#585b70,fg=#cdd6f4] │ #[bg=#181825,fg=#cdd6f4] 󰪑 ${fmt_credits} #[bg=#585b70,fg=#cdd6f4]" >"$OUTPUT_FILE"
+  echo "#[bg=#181825,fg=#cdd6f4] │ #[bg=#181825,fg=#4e56c8] n ${fmt_credits} #[bg=#181825,fg=#4e56c8]" >"$OUTPUT_FILE"
 }
 
 render_quota
