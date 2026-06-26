@@ -34,6 +34,15 @@
 						"output": 15,
 						"cache_read": 0.5
 					}
+				},
+				"gpt-5.5": {
+					"name": "GPT-5.5",
+					"reasoning": true,
+					"variants": {
+						"xhigh": {},
+						"high": {},
+						"medium": {}
+					}
 				}
 			}
 		},
