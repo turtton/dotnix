@@ -12,6 +12,8 @@
       "https://attic.xuyh0120.win/lantian"
       # llm-agents cache
       "https://cache.numtide.com"
+      # codex cache
+      "https://codex-cli.cachix.org"
     ];
     extra-trusted-public-keys = [
       "home:7Fjx4vYDLZAOseF/QaouAVdlCBiPpIMKj0BPjgieBAE="
@@ -22,6 +24,7 @@
       "siketyan.cachix.org-1:WNNtRH3yo7wUpQ0aURUTCq2BpF97m4UsP0h1nKe6pAA="
       "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
       "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+      "codex-cli.cachix.org-1:1Br3H1hHoRYG22n//cGKJOk3cQXgYobUel6O8DgSing="
     ];
   };
   inputs = {
@@ -145,6 +148,10 @@
     opencode = {
       url = "github:anomalyco/opencode";
       # url = "git+https://iris.radicle.xyz/zSj69SY75yV9h6LxyiQ3cxDTDSEV.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    codex-desktop-linux = {
+      url = "github:ilysenko/codex-desktop-linux";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-wsl = {

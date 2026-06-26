@@ -22,7 +22,15 @@
       CURSOR_AGENT_PATH = "${lib.getExe pkgs.cursor-cli}";
     };
   };
-  programs.claude-code = {
-    enable = true;
+  programs = {
+    claude-code = {
+      enable = true;
+    };
+    codexDesktopLinux = {
+      enable = hostPlatform.isLinux;
+      computerUseUi.enable = true;
+      remoteMobileControl.enable = true;
+      remoteControl.enable = true;
+    };
   };
 }

@@ -78,6 +78,7 @@ let
                 sharedOptions
                 inputs.nix-index-database.homeModules.default
                 inputs.zen-browser.homeModules.beta
+                inputs.codex-desktop-linux.homeManagerModules.default
               ];
               extraSpecialArgs = {
                 inherit
