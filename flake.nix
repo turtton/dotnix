@@ -179,10 +179,10 @@
       hyprpolkitagent,
       rust-overlay,
       treefmt-nix,
-      claude-desktop,
       rustowl,
       noctalia,
       niri-flake,
+      zen-browser,
       ...
     }:
     {
@@ -252,6 +252,7 @@
           opencode-latest = overlays.opencode-latest;
           opencode = overlays.opencode;
           ghr = overlays.siketyan-ghr;
+          zen-browser = zen-browser.packages.${system}.default;
         }
         // lib.optionalAttrs stdenv.hostPlatform.isLinux (
           let
