@@ -7,7 +7,7 @@ AUTH_FILE="${HOME}/.local/share/opencode/auth.json"
 
 render_quota() {
   local token=""
-  token=$(jq -r '(.crof.access // .CrofAI.access // empty)' "$AUTH_FILE" 2>/dev/null)
+  token=$(jq -r '(.crof.key // .CrofAI.key // empty)' "$AUTH_FILE" 2>/dev/null)
   if [[ -z $token ]]; then
     : >"$OUTPUT_FILE"
     return
