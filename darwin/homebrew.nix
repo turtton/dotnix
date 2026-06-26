@@ -15,6 +15,7 @@
       "omniwm"
       "codexbar"
       "background-music"
+      "scroll-reverser"
     ];
     # https://github.com/nix-darwin/nix-darwin/issues/1787
     onActivation.extraFlags = [
