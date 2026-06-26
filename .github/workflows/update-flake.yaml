@@ -23,6 +23,9 @@ jobs:
           nix_path: nixpkgs=channel:nixpkgs-unstable
       - name: Update nix flake
         run: nix flake --accept-flake-config update
+      - name: Update skills flake
+        working-directory: skills/
+        run: nix flake --accept-flake-config update
       - name: Make metadata
         id: meta
         run: |
@@ -38,3 +41,4 @@ jobs:
           branch: "update-nix-flake-at-${{ steps.meta.outputs.date }}"
           add-paths: |
             flake.lock
+            skills/flake.lock
