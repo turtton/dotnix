@@ -222,14 +222,113 @@ jobs:
       - name: Push to attic
         if: success()
         run: attic push home ./result
+  build-rocm-base:
+    name: Build ROCm base packages on Linux
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        packages:
+          - "nixosConfigurations.maindesk.pkgs.rocmPackages.clr"
+          - "nixosConfigurations.maindesk.pkgs.rocmPackages.rocblas"
+          - "nixosConfigurations.maindesk.pkgs.rocmPackages.hipblas"
+          - "nixosConfigurations.maindesk.pkgs.rocmPackages.miopen"
+          - "nixosConfigurations.maindesk.pkgs.rocmPackages.rocminfo"
+          - "nixosConfigurations.maindesk.pkgs.mesa^*"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@306e68a486fd2350f2bfc3b19fcd143891a4a2d8 # v4.1.2
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:nix
+      - uses: cachix/install-nix-action@8aa03977d8d733052d78f4e008a241fd1dbf36b3 # v31.10.6
+      #- uses: cachix/cachix-action@v14
+      #  with:
+      #    name: turtton
+      #    authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+      # Original: https://github.com/natsukium/dotfiles/blob/main/.github/workflows/test.yml
+      - name: Setup attic client
+        run: |
+          nix profile install nixpkgs#attic-client
+          attic login --set-default home https://attic.taile2777.ts.net "$ATTIC_TOKEN"
+          attic use home
+        env:
+          ATTIC_TOKEN: ${{ secrets.ATTIC_TOKEN }}
+      - name: GC
+        run: |
+          df -h
+          rm -rf "${AGENT_TOOLSDIRECTORY}"
+          df -h
+      - name: Build and push
+        run: |
+          paths_file="$(mktemp)"
+          nix build --fallback --no-link --print-out-paths ".#$PACKAGE" > "$paths_file"
+          mapfile -t paths < "$paths_file"
+          (( ${#paths[@]} > 0 ))
+          attic push home "${paths[@]}"
+        env:
+          PACKAGE: ${{ matrix.packages }}
+  build-downstream:
+    name: Build downstream packages on Linux
+    needs: [build-rocm-base]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        packages:
+          - "nixosConfigurations.maindesk.pkgs.firefox"
+          - "nixosConfigurations.maindesk.pkgs.ollama"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@306e68a486fd2350f2bfc3b19fcd143891a4a2d8 # v4.1.2
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:nix
+      - uses: cachix/install-nix-action@8aa03977d8d733052d78f4e008a241fd1dbf36b3 # v31.10.6
+      #- uses: cachix/cachix-action@v14
+      #  with:
+      #    name: turtton
+      #    authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+      # Original: https://github.com/natsukium/dotfiles/blob/main/.github/workflows/test.yml
+      - name: Setup attic client
+        run: |
+          nix profile install nixpkgs#attic-client
+          attic login --set-default home https://attic.taile2777.ts.net "$ATTIC_TOKEN"
+          attic use home
+        env:
+          ATTIC_TOKEN: ${{ secrets.ATTIC_TOKEN }}
+      - name: GC
+        run: |
+          df -h
+          rm -rf "${AGENT_TOOLSDIRECTORY}"
+          df -h
+      - name: Build and push
+        run: |
+          paths_file="$(mktemp)"
+          nix build --fallback --no-link --print-out-paths ".#$PACKAGE" > "$paths_file"
+          mapfile -t paths < "$paths_file"
+          (( ${#paths[@]} > 0 ))
+          attic push home "${paths[@]}"
+        env:
+          PACKAGE: ${{ matrix.packages }}
   all-workflows-passed:
     name: Checks all workflows passed
     if: always()
-    needs: ["check-linux", "check-darwin", "build-linux", "build-darwin"]
+    needs: ["check-linux", "check-darwin", "build-linux", "build-darwin", "build-rocm-base", "build-downstream"]
     runs-on: ubuntu-latest
     steps:
       - name: Check job status
-        if: ${{ needs.check-linux.result != 'success' || needs.check-darwin.result != 'success' || needs.build-linux.result != 'success' || needs.build-darwin.result != 'success' }}
+        if: ${{ needs.check-linux.result != 'success' || needs.check-darwin.result != 'success' || needs.build-linux.result != 'success' || needs.build-darwin.result != 'success' || needs.build-rocm-base.result != 'success' || needs.build-downstream.result != 'success' }}
         run: |
           echo "One or more jobs failed."
           exit 1
