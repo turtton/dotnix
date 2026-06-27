@@ -58,7 +58,7 @@
         scale = 1.0;
         transform.rotation = 270;
       };
-      "DP-3" = {
+      "Dell Inc. DELL E2210H J232R9A5091L" = {
         mode = {
           width = 1920;
           height = 1080;
@@ -66,7 +66,7 @@
         };
         position = {
           x = -1080 - 1920;
-          y = -100;
+          y = 600;
         };
         scale = 1.0;
       };
