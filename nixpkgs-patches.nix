@@ -1,7 +1,7 @@
 [
-  #{
-  #  meta.description = "python3Packages.psycopg: disable slow tests";
-  #  url = "https://github.com/NixOS/nixpkgs/pull/494547.patch";
-  #  hash = "sha256-8KmXEgHpqa3jgEbryTUYQHIW0+AyZJ7FhQW31no17KI=";
-  #}
+  {
+    meta.description = "Fix darwin compile error";
+    url = "https://github.com/NixOS/nixpkgs/pull/534965.patch";
+    hash = "sha256-wbWgJq43JiRV8ox21WMj7W+BF6DUPuUrcH0zgqwc2d8=";
+  }
 ]
