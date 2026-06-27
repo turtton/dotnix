@@ -17,7 +17,3 @@ Answer in 日本語
 # GIT
 
 - GitHubリポジトリへの push / pull は ssh ではなく gh の auth token を活用して行うこと
-
-# End of Work
-
-- 作業完了時は `skill(name="final-review")` を実行
