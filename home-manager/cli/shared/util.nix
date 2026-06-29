@@ -24,16 +24,19 @@
     settings = {
       theme = "catppuccin-mocha";
       show_startup_tips = false;
+      # ターミナルが強制クローズ（SIGHUP 等）されたとき、
+      # detach ではなく quit してサーバーを確実に終了させる
+      on_force_close = "quit";
     };
   };
 
   # ターミナルを閉じたときに孤立したzellijセッションが溜まらないよう、
-  # シェル終了時に対応セッションを自動削除する
+  # on_force_close = "quit" でSIGHUP時にサーバーごと終了させる。
+  # detach（Ctrl+P+D）した場合はサーバーが残るので別タブからreattach可能。
+  # このブロックは必ず zsh init の末尾に置くこと（exit するため後続 init が実行されない）。
   programs.zsh.initContent = lib.mkAfter ''
-    if [[ -z "$ZELLIJ" ]]; then
-      _zellij_session="zsh-$$"
-      trap 'zellij kill-session --yes "$_zellij_session" 2>/dev/null; unset _zellij_session' EXIT
-      zellij --session "$_zellij_session"
+    if [[ -o interactive && -t 0 && -t 1 && "$TERM" != "dumb" && -z "$ZELLIJ" ]]; then
+      ${lib.getExe pkgs.zellij}
       exit
     fi
   '';
