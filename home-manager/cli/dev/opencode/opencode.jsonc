@@ -5,5 +5,41 @@
 		"title": {
 			"model": "github-copilot/gpt-5.4-mini"
 		}
+	},
+	"permission": {
+		"*": "ask",
+		"grep:": "allow",
+		"glob": "allow",
+		"edit": "allow",
+		"lsp": "allow",
+		"skill": "allow",
+		"todowrite": "allow",
+		"question": "allow",
+		"read": {
+			"*": "allow",
+			"*.env": "deny",
+			"*.env.*": "deny",
+			"*.env.example": "allow"
+		},
+		"bash": {
+			"*": "ask",
+			"grep": "allow",
+			"rg": "allow",
+			"ls": "allow"
+		}
+	},
+	"experimental": {
+		"policies": [
+			{
+				"effect": "deny",
+				"action": "provider.use",
+				"resource": "*"
+			},
+			{
+				"effect": "allow",
+				"action": "provider.use",
+				"resource": "github-copilot"
+			}
+		]
 	}
 }
