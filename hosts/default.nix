@@ -156,11 +156,11 @@ let
     let
       originPkgs = inputs.nixpkgs.legacyPackages.${system};
       hostPlatform = originPkgs.stdenv.hostPlatform;
-      # nixpkgs = originPkgs.applyPatches {
-      #   name = "nixpkgs-patched";
-      #   src = inputs.nixpkgs;
-      #   patches = map originPkgs.fetchpatch remoteNixpkgsPatches;
-      # };
+      nixpkgs = originPkgs.applyPatches {
+        name = "nixpkgs-patched";
+        src = inputs.nixpkgs;
+        patches = map originPkgs.fetchpatch remoteNixpkgsPatches;
+      };
       homeDirectory = "/Users/${username}";
     in
     inputs.nix-darwin.lib.darwinSystem {
@@ -181,6 +181,7 @@ let
           networking.hostName = hostname;
           users.users."${username}".home = homeDirectory;
           nixpkgs.hostPlatform = system;
+          nixpkgs.source = nixpkgs;
           system.stateVersion = 5;
           system.primaryUser = username;
           home-manager = {
