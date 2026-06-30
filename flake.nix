@@ -166,6 +166,10 @@
       };
     };
     mac-app-util.url = "github:hraban/mac-app-util";
+    cnowledje = {
+      url = "github:turtton/cnowledje";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     skills-catalog = {
       url = "path:./skills";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -253,6 +257,7 @@
           opencode = overlays.opencode;
           ghr = overlays.siketyan-ghr;
           zen-browser = zen-browser.packages.${system}.default;
+          cnowledje = overlays.cnowledje;
         }
         // lib.optionalAttrs stdenv.hostPlatform.isLinux (
           let

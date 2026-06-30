@@ -13,5 +13,6 @@ in
     (import ./claude-code inputs)
     (import ./codex)
     (import ./opencode inputs)
+    (final: prev: { cnowledje = inputs.cnowledje.packages."${pkgs.system}".default; })
   ];
 }

@@ -46,6 +46,9 @@ in
       # AWS Cli and plugins
       awscli2
       ssm-session-manager-plugin
+
+      # Confluence CLI
+      cnowledje
     ]
     ++ pkgs.lib.optionals hostPlatform.isLinux [
       stack-wrapped

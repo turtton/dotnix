@@ -1,11 +1,17 @@
-{ dotagents }:
+{ dotagents, cnowledje }:
 { config, ... }:
 {
   programs.agent-skills = {
     enable = true;
-    sources.dotagents = {
-      path = dotagents;
-      subdir = "skills";
+    sources = {
+      dotagents = {
+        path = dotagents;
+        subdir = "skills";
+      };
+      cnowledje = {
+        path = cnowledje;
+        subdir = ".apm/skills";
+      };
     };
     skills.enableAll = true;
     targets.opencode = {
