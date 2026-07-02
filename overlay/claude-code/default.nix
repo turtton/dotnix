@@ -3,6 +3,8 @@ inputs: self: prev: {
     let
       claude-code = inputs.claude-code-overlay.packages.${prev.stdenv.hostPlatform.system}.default;
       isDarwin = prev.stdenv.isDarwin;
+      useWrapperSandbox = if isDarwin then "0" else "1";
+      sandboxTarget = if isDarwin then "${claude-code}/bin/claude" else "${sandbox}/bin/claude-sandbox";
       sandbox = self.writeShellApplication {
         name = "claude-sandbox";
         runtimeInputs =
@@ -26,10 +28,13 @@ inputs: self: prev: {
         substitutions = [
           "--subst-var-by"
           "sandbox"
-          "${sandbox}/bin/claude-sandbox"
+          sandboxTarget
           "--subst-var-by"
           "claude-code-dir"
           "${claude-code}/bin"
+          "--subst-var-by"
+          "use-sandbox"
+          useWrapperSandbox
         ];
       };
       claude-wrapper = self.writeShellScriptBin "claude-wrapper" (
@@ -40,7 +45,10 @@ inputs: self: prev: {
         substitutions = [
           "--subst-var-by"
           "sandbox"
-          "${sandbox}/bin/claude-sandbox"
+          sandboxTarget
+          "--subst-var-by"
+          "use-sandbox"
+          useWrapperSandbox
         ];
       };
       claude-latest-wrapper = self.writeShellScriptBin "claude-latest-wrapper" (
