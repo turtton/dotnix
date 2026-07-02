@@ -1,3 +1,27 @@
+{ pkgs, ... }:
+let
+  claudeManagedSettings = pkgs.writeText "claude-code-managed-settings.json" (
+    builtins.toJSON {
+      allowManagedPermissionRulesOnly = true;
+      sandbox = {
+        enabled = true;
+        failIfUnavailable = true;
+        autoAllowBashIfSandboxed = true;
+        allowUnsandboxedCommands = false;
+        excludedCommands = [ ];
+        network = {
+          allowUnixSockets = [ ];
+          allowAllUnixSockets = false;
+          allowLocalBinding = false;
+          allowedDomains = [ ];
+          httpProxyPort = null;
+          socksProxyPort = null;
+        };
+        enableWeakerNestedSandbox = false;
+      };
+    }
+  );
+in
 {
   system = {
     defaults = {
@@ -55,5 +79,9 @@
         ];
     };
   };
+  system.activationScripts.postActivation.text = ''
+    install -d -m 0755 "/Library/Application Support/ClaudeCode"
+    install -m 0644 "${claudeManagedSettings}" "/Library/Application Support/ClaudeCode/managed-settings.json"
+  '';
   security.pam.services.sudo_local.touchIdAuth = true;
 }
