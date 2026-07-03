@@ -57,7 +57,10 @@ in
   programs.nix-index-database.comma.enable = true;
   programs.nix-index.enable = true;
 
-  programs.fzf.enable = true;
+  programs.fzf = {
+    enable = true;
+    historyWidget.command = "";
+  };
 
   programs.zsh.initContent = ''
     source <(ghr shell)
