@@ -32,6 +32,10 @@ in
     (import ./wifiman-desktop.nix)
     (import ./app-replacements.nix inputs)
     #    (import ./webapp.nix)
-    (final: prev: { cnowledje = inputs.cnowledje.packages."${pkgs.system}".default; })
+    (final: prev: {
+      cnowledje = inputs.cnowledje.packages."${pkgs.system}".default;
+      # https://github.com/NixOS/nixpkgs/issues/536623
+      pnpm_10_29_2 = final.pnpm_10;
+    })
   ];
 }
