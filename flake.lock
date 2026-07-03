@@ -351,11 +351,11 @@
         "systems": "systems_2"
       },
       "locked": {
-        "lastModified": 1782803864,
-        "narHash": "sha256-ZBU9m3xyheLyEzcUMRaUQPWFDnJ7Wb2voRjxkp5dhv8=",
+        "lastModified": 1783075209,
+        "narHash": "sha256-cF/KI/DEO9ZNyjyciGS7we1XCWi/ACTiBYx/jfPsqiE=",
         "owner": "turtton",
         "repo": "cnowledje",
-        "rev": "0d69cc25270d0393e22b8c993f29628a94826ee9",
+        "rev": "49c6f4fad9faaaef8f3a25e4ea3b77d124f79bd2",
         "type": "github"
       },
       "original": {
