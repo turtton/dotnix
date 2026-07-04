@@ -55,6 +55,11 @@
 			"models": {
 				"deepseek-v4-pro": {
 					"name": "DeepSeek V4 Pro",
+					"variants": {
+						"max": {},
+						"high": {},
+						"medium": {}
+					},
 					"limit": {
 						"context": 1000000,
 						"output": 131072
@@ -67,6 +72,11 @@
 				},
 				"deepseek-v4-flash": {
 					"name": "DeepSeek V4 Flash",
+					"variants": {
+						"max": {},
+						"high": {},
+						"medium": {}
+					},
 					"limit": {
 						"context": 1000000,
 						"output": 131072
