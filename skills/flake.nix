@@ -11,10 +11,6 @@
       url = "github:turtton/dotagents";
       flake = false;
     };
-    cnowledje = {
-      url = "github:turtton/cnowledje";
-      flake = false;
-    };
   };
 
   outputs =
@@ -22,14 +18,13 @@
       self,
       agent-skills-nix,
       dotagents,
-      cnowledje,
       ...
     }:
     {
       homeManagerModules.default = {
         imports = [
           agent-skills-nix.homeManagerModules.default
-          (import ./home-manager.nix { inherit dotagents cnowledje; })
+          (import ./home-manager.nix { inherit dotagents; })
         ];
       };
     };

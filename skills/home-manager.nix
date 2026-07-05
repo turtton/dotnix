@@ -1,4 +1,4 @@
-{ dotagents, cnowledje }:
+{ dotagents }:
 { config, ... }:
 {
   programs.agent-skills = {
@@ -7,10 +7,6 @@
       dotagents = {
         path = dotagents;
         subdir = "skills";
-      };
-      cnowledje = {
-        path = cnowledje;
-        subdir = ".apm/skills";
       };
     };
     skills.enableAll = true;
