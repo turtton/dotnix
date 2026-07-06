@@ -13,6 +13,10 @@ in
     (import ./claude-code inputs)
     (import ./codex)
     (import ./opencode inputs)
-    (final: prev: { cnowledje = inputs.cnowledje.packages."${pkgs.system}".default; })
+    (final: prev: {
+      cnowledje = inputs.cnowledje.packages."${pkgs.system}".default;
+      # https://github.com/NixOS/nixpkgs/issues/536623
+      pnpm_10_29_2 = final.pnpm_10;
+    })
   ];
 }
