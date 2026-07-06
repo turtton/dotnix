@@ -37,6 +37,7 @@ in
       with pkgs;
       [
         cursor-cli
+        llm-agents.copilot-cli
       ]
       ++ pkgs.lib.optionals hostPlatform.isLinux [
         llm-agents.codex
