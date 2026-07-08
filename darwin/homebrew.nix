@@ -10,6 +10,7 @@
       "BarutSRB/tap"
       "steipete/tap"
       "fuwasegu/tap"
+      "can1357/tap"
     ];
     casks = [
       "macskk"
@@ -19,6 +20,7 @@
       "scroll-reverser"
       "airlingua"
       "deskpad"
+      "omp"
     ];
   };
 }
