@@ -10,17 +10,18 @@
       "BarutSRB/tap"
       "steipete/tap"
       "fuwasegu/tap"
-      "can1357/tap"
     ];
     casks = [
       "macskk"
-      "omniwm"
+      "barutsrb/tap/omniwm"
       "codexbar"
       "background-music"
       "scroll-reverser"
-      "airlingua"
+      "fuwasegu/tap/airlingua"
       "deskpad"
-      "omp"
+    ];
+    brews = [
+      "can1357/tap/omp"
     ];
   };
 }
