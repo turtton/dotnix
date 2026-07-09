@@ -1,26 +1,6 @@
-{ pkgs, ... }:
+{ ... }:
 let
-  claudeManagedSettings = pkgs.writeText "claude-code-managed-settings.json" (
-    builtins.toJSON {
-      allowManagedPermissionRulesOnly = true;
-      sandbox = {
-        enabled = true;
-        failIfUnavailable = true;
-        autoAllowBashIfSandboxed = true;
-        allowUnsandboxedCommands = false;
-        excludedCommands = [ ];
-        network = {
-          allowUnixSockets = [ ];
-          allowAllUnixSockets = false;
-          allowLocalBinding = false;
-          allowedDomains = [ ];
-          httpProxyPort = null;
-          socksProxyPort = null;
-        };
-        enableWeakerNestedSandbox = false;
-      };
-    }
-  );
+  claudeManagedSettings = ../overlay/claude-code/sandbox-settings.json;
 in
 {
   system = {

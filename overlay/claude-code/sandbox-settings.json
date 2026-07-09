@@ -1,0 +1,18 @@
+{
+	"$schema": "https://json.schemastore.org/claude-code-settings.json",
+	"allowManagedPermissionRulesOnly": true,
+	"sandbox": {
+		"enabled": true,
+		"failIfUnavailable": true,
+		"autoAllowBashIfSandboxed": true,
+		"allowUnsandboxedCommands": false,
+		"excludedCommands": [],
+		"network": {
+			"allowUnixSockets": ["/nix/var/nix/daemon-socket/socket"],
+			"allowAllUnixSockets": false,
+			"allowLocalBinding": false,
+			"allowedDomains": []
+		},
+		"enableWeakerNestedSandbox": false
+	}
+}
