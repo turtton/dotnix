@@ -20,8 +20,6 @@ let
           allowAllUnixSockets = false;
           allowLocalBinding = false;
           allowedDomains = [ ];
-          httpProxyPort = null;
-          socksProxyPort = null;
         };
         enableWeakerNestedSandbox = false;
       };
