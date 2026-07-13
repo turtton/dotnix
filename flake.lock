@@ -351,11 +351,11 @@
         "systems": "systems_2"
       },
       "locked": {
-        "lastModified": 1783492104,
-        "narHash": "sha256-hX5G9bNFPMa+i90GjyqPi5EKv3AzwmFN2DNvk7dHm7I=",
+        "lastModified": 1783678679,
+        "narHash": "sha256-yI8b5+RLQ/kLA/9iOyDUwzI6Lw+cBp3VyPyAZ8LwIHQ=",
         "owner": "turtton",
         "repo": "cnowledje",
-        "rev": "d6456c8f4a3e2a32978447f33135200514fafed6",
+        "rev": "4954c42dfde2efc1bed3edcf22ac21f62ab34b0f",
         "type": "github"
       },
       "original": {
@@ -388,11 +388,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1783628228,
-        "narHash": "sha256-q44gvBu4k0JZOeKiPdi1CEauqnsNtW1WJ9w0Qapo1ec=",
+        "lastModified": 1783891118,
+        "narHash": "sha256-ZZPy9T4X9kuVsQX3np+03FhQ1kWdHcdNUqyvAsUR9Yk=",
         "owner": "ilysenko",
         "repo": "codex-desktop-linux",
-        "rev": "60f875a42d928df37b6c3742cf649a8562650a36",
+        "rev": "413e484f47d300243397280338f19beb187025b2",
         "type": "github"
       },
       "original": {
