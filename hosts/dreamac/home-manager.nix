@@ -15,4 +15,8 @@
     ./../../home-manager/gui/term/ghostty.nix
     # ./../../home-manager/wm/aerospace
   ];
+
+  programs.zsh.envExtra = ''
+    export PATH="/opt/homebrew/bin:''${HOMEBREW_PREFIX}/opt/openssl/bin:$PATH"
+  '';
 }
