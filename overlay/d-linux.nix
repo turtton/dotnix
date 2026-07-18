@@ -9,7 +9,7 @@ in
     inputs.rust-overlay.overlays.default
     inputs.rustowl.overlays.default
     inputs.nix-cachyos-kernel.overlays.pinned
-    inputs.llm-agents.overlays.default
+    inputs.llm-agents.overlays.shared-nixpkgs
     (import ./claude-code inputs)
     (import ./codex)
     (import ./opencode inputs)

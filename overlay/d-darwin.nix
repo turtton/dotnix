@@ -9,7 +9,7 @@ in
     inputs.nix-vscode-extensions.overlays.default
     inputs.rust-overlay.overlays.default
     inputs.rustowl.overlays.default
-    inputs.llm-agents.overlays.default
+    inputs.llm-agents.overlays.shared-nixpkgs
     (import ./claude-code inputs)
     (import ./codex)
     (import ./opencode inputs)
