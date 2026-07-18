@@ -45,7 +45,7 @@
         };
         scale = 1.0;
       };
-      "PNP(BNQ) BenQ GL2460 J6G05593SL0" = {
+      "Xiaomi Corporation Mi Monitor Unknown" = {
         mode = {
           width = 1920;
           height = 1080;
