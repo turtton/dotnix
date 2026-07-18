@@ -12,36 +12,193 @@
 		}
 	},
 	"provider": {
-		"cursor-api": {
-			"name": "Cursor",
+		"cli-proxy-api": {
+			"name": "CLIProxyAPI",
 			"npm": "@ai-sdk/openai-compatible",
 			"options": {
-				"baseURL": "http://127.0.0.1:8787/v1"
+				"baseURL": "http://127.0.0.1:8317/v1"
 			},
 			"models": {
-				"composer-2.5": {
-					"name": "Composer 2.5",
+				// Claude Models
+				"claude-fable-5": {
+					"name": "Claude Fable 5",
+					"limit": {
+						"context": 1000000,
+						"output": 128000
+					},
 					"cost": {
-						"input": 0.5,
-						"output": 2.5,
-						"cache_read": 0.2
+						"input": 10,
+						"output": 50,
+						"cache_read": 1
 					}
 				},
-				"composer-2.5-fast": {
-					"name": "Composer 2.5 Fast",
+				// GPT Models
+				"gpt-5.6-sol": {
+					"name": "GPT-5.6 Sol",
+					"variants": {
+						"max": {},
+						"xhigh": {},
+						"high": {},
+						"medium": {},
+						"low": {}
+					},
+					"limit": {
+						"context": 1050000,
+						"output": 128000
+					}
+				},
+				"gpt-5.6-terra": {
+					"name": "GPT-5.6 Terra",
+					"variants": {
+						"max": {},
+						"xhigh": {},
+						"high": {},
+						"medium": {},
+						"low": {}
+					},
+					"limit": {
+						"context": 1050000,
+						"output": 128000
+					},
+					"cost": {
+						"input": 2.5,
+						"output": 15,
+						"cache_read": 0.25
+					}
+				},
+				"gpt-5.6-luna": {
+					"name": "GPT-5.6 Luna",
+					"variants": {
+						"max": {},
+						"xhigh": {},
+						"high": {},
+						"medium": {},
+						"low": {}
+					},
+					"limit": {
+						"context": 1050000,
+						"output": 128000
+					},
+					"cost": {
+						"input": 1,
+						"output": 6,
+						"cache_read": 0.1
+					}
+				},
+				// Open Weight Models
+				"deepseek-v4-pro": {
+					"name": "DeepSeek V4 Pro",
+					"variants": {
+						"max": {},
+						"high": {},
+						"medium": {}
+					},
+					"limit": {
+						"context": 1000000,
+						"output": 131072
+					},
+					"cost": {
+						"input": 0.35,
+						"output": 0.8,
+						"cache_read": 0.003
+					}
+				},
+				"deepseek-v4-flash": {
+					"name": "DeepSeek V4 Flash",
+					"variants": {
+						"max": {},
+						"high": {},
+						"medium": {}
+					},
+					"limit": {
+						"context": 1000000,
+						"output": 131072
+					},
+					"cost": {
+						"input": 0.12,
+						"output": 0.21,
+						"cache_read": 0.003
+					}
+				},
+				"kimi-k3": {
+					"name": "Kimi K3",
+					"limit": {
+						"context": 1048576,
+						"output": 131072
+					},
 					"cost": {
 						"input": 3,
 						"output": 15,
-						"cache_read": 0.5
+						"cache_read": 0.3
 					}
 				},
-				"gpt-5.5": {
-					"name": "GPT-5.5",
-					"reasoning": true,
+				"kimi-k2.7-code": {
+					"name": "Kimi K2.7 Code",
+					"limit": {
+						"context": 262144,
+						"output": 262144
+					},
+					"cost": {
+						"input": 0.55,
+						"output": 2.25,
+						"cache_read": 0.05
+					}
+				},
+				"glm-5.2": {
+					"name": "GLM-5.2",
+					"limit": {
+						"context": 1000000,
+						"output": 131072
+					},
 					"variants": {
-						"xhigh": {},
+						"max": {},
 						"high": {},
 						"medium": {}
+					},
+					"cost": {
+						"input": 0.5,
+						"output": 2.2,
+						"cache_read": 0.08
+					}
+				},
+				"glm-5.1": {
+					"name": "GLM-5.1",
+					"limit": {
+						"context": 1000000,
+						"output": 131072
+					},
+					"cost": {
+						"input": 0.45,
+						"output": 2.15,
+						"cache_read": 0.08
+					}
+				},
+				"gemma-4-31b-it": {
+					"name": "Gemma 4 31B IT",
+					"limit": {
+						"context": 262144,
+						"output": 262144
+					}
+				},
+				"minimax-m2.5": {
+					"name": "Minimax M2.5",
+					"limit": {
+						"context": 204144,
+						"output": 131072
+					}
+				},
+				"qwen3.5-397b-a17b": {
+					"name": "Qwen3.5 397B A17B",
+					"limit": {
+						"context": 262144,
+						"output": 262144
+					}
+				},
+				"greg-2-super": {
+					"name": "Greg2 Super",
+					"limit": {
+						"context": 229376,
+						"output": 229376
 					}
 				}
 			}
