@@ -104,6 +104,14 @@ isolated_home() {
     BWRAP_ARGS+=(--bind "$opencode_state" "${HOME}/.local/state/opencode")
   fi
 
+  # Claude Code 認証情報 (claude-quota-poll.sh が ~/.claude/.credentials.json を
+  # 参照し、リフレッシュ時に新トークンを書き戻すため読み書きで公開)
+  local claude_dir="${HOME}/.claude"
+  if [[ -d $claude_dir ]]; then
+    mkdir -p "${OPENCODE_HOME}/.claude"
+    BWRAP_ARGS+=(--bind "$claude_dir" "${HOME}/.claude")
+  fi
+
   # Rust ツールチェーン: rustup + cargo を読み書きで公開
   if [[ -d "${HOME}/.rustup" ]]; then
     mkdir -p "${OPENCODE_HOME}/.rustup"
@@ -415,11 +423,17 @@ OPENAI_QUOTA_OUTPUT_PATH="${OPENCODE_HOME}/.openai-quota"
 OPENAI_QUOTA_SCRIPT_PATH="${OPENCODE_HOME}/.openai-quota-poll.sh"
 CROF_QUOTA_OUTPUT_PATH="${OPENCODE_HOME}/.crof-quota"
 CROF_QUOTA_SCRIPT_PATH="${OPENCODE_HOME}/.crof-quota-poll.sh"
+OPENROUTER_QUOTA_OUTPUT_PATH="${OPENCODE_HOME}/.openrouter-quota"
+OPENROUTER_QUOTA_SCRIPT_PATH="${OPENCODE_HOME}/.openrouter-quota-poll.sh"
+CLAUDE_QUOTA_OUTPUT_PATH="${OPENCODE_HOME}/.claude-quota"
+CLAUDE_QUOTA_SCRIPT_PATH="${OPENCODE_HOME}/.claude-quota-poll.sh"
 PORT_OUTPUT_PATH="${OPENCODE_HOME}/.opencode-port"
 
 printf '%s\n' "N/A" >"$QUOTA_OUTPUT_PATH"
 printf '%s' "" >"$OPENAI_QUOTA_OUTPUT_PATH"
 printf '%s' "" >"$CROF_QUOTA_OUTPUT_PATH"
+printf '%s' "" >"$OPENROUTER_QUOTA_OUTPUT_PATH"
+printf '%s' "" >"$CLAUDE_QUOTA_OUTPUT_PATH"
 printf '%s' "N/A" >"$PORT_OUTPUT_PATH"
 cp "@quota-script@" "$QUOTA_SCRIPT_PATH"
 sed -i "s|__OUTPUT_PATH__|${HOME}/.copilot-quota|g" "$QUOTA_SCRIPT_PATH"
@@ -430,10 +444,18 @@ chmod +x "$OPENAI_QUOTA_SCRIPT_PATH"
 cp "@crof-quota-script@" "$CROF_QUOTA_SCRIPT_PATH"
 sed -i "s|__OUTPUT_PATH__|${HOME}/.crof-quota|g" "$CROF_QUOTA_SCRIPT_PATH"
 chmod +x "$CROF_QUOTA_SCRIPT_PATH"
+cp "@openrouter-quota-script@" "$OPENROUTER_QUOTA_SCRIPT_PATH"
+sed -i "s|__OUTPUT_PATH__|${HOME}/.openrouter-quota|g" "$OPENROUTER_QUOTA_SCRIPT_PATH"
+chmod +x "$OPENROUTER_QUOTA_SCRIPT_PATH"
+cp "@claude-quota-script@" "$CLAUDE_QUOTA_SCRIPT_PATH"
+sed -i "s|__OUTPUT_PATH__|${HOME}/.claude-quota|g" "$CLAUDE_QUOTA_SCRIPT_PATH"
+chmod +x "$CLAUDE_QUOTA_SCRIPT_PATH"
 cp "@tmux-conf@" "$TMUX_CONF_PATH"
 sed -i "s|__QUOTA_FILE__|${HOME}/.copilot-quota|g" "$TMUX_CONF_PATH"
 sed -i "s|__OPENAI_QUOTA_FILE__|${HOME}/.openai-quota|g" "$TMUX_CONF_PATH"
 sed -i "s|__CROF_QUOTA_FILE__|${HOME}/.crof-quota|g" "$TMUX_CONF_PATH"
+sed -i "s|__OPENROUTER_QUOTA_FILE__|${HOME}/.openrouter-quota|g" "$TMUX_CONF_PATH"
+sed -i "s|__CLAUDE_QUOTA_FILE__|${HOME}/.claude-quota|g" "$TMUX_CONF_PATH"
 sed -i "s|__PORT_FILE__|${HOME}/.opencode-port|g" "$TMUX_CONF_PATH"
 
 # サンドボックス内で実行するスクリプトの組み立て
@@ -493,6 +515,10 @@ if [ -t 0 ] && [ -t 1 ] && [ -t 2 ]; then
   openai_quota_pid=$!
   "$HOME/.crof-quota-poll.sh" &
   crof_quota_pid=$!
+  "$HOME/.openrouter-quota-poll.sh" &
+  openrouter_quota_pid=$!
+  "$HOME/.claude-quota-poll.sh" &
+  claude_quota_pid=$!
   tmux -f "$HOME/.tmux.conf" new-session -s opencode -- "$@"
   exit_code=$?
   if [ -n "${quota_pid:-}" ]; then
@@ -503,6 +529,12 @@ if [ -t 0 ] && [ -t 1 ] && [ -t 2 ]; then
   fi
   if [ -n "${crof_quota_pid:-}" ]; then
     kill "$crof_quota_pid" 2>/dev/null; wait "$crof_quota_pid" 2>/dev/null
+  fi
+  if [ -n "${openrouter_quota_pid:-}" ]; then
+    kill "$openrouter_quota_pid" 2>/dev/null; wait "$openrouter_quota_pid" 2>/dev/null
+  fi
+  if [ -n "${claude_quota_pid:-}" ]; then
+    kill "$claude_quota_pid" 2>/dev/null; wait "$claude_quota_pid" 2>/dev/null
   fi
   exit $exit_code
 fi

@@ -42,6 +42,8 @@ inputs: self: prev: {
               "@quota-script@"
               "@openai-quota-script@"
               "@crof-quota-script@"
+              "@openrouter-quota-script@"
+              "@claude-quota-script@"
             ]
             [
               "${opencode}/bin"
@@ -49,6 +51,8 @@ inputs: self: prev: {
               "${./copilot-quota-poll.sh}"
               "${./openai-quota-poll.sh}"
               "${./crof-quota-poll.sh}"
+              "${./openrouter-quota-poll.sh}"
+              "${./claude-quota-poll.sh}"
             ]
             (builtins.readFile (if isDarwin then ./sandbox-darwin.sh else ./sandbox.sh));
       };
