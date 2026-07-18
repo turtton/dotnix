@@ -96,7 +96,7 @@ in
           rm "$out/share/applications"
           mkdir -p "$out/share/applications"
         fi
-        cp --remove-destination "${claude-desktop}/share/applications/claude-desktop.desktop" "$out/share/applications/claude-desktop.desktop"
+        cp --remove-destination "${claude-desktop}/share/applications/com.anthropic.Claude.desktop" "$out/share/applications/com.anthropic.Claude.desktop"
         wrapProgram "$out/bin/claude-desktop" --set CLAUDE_USE_WAYLAND 1
       '';
     };
