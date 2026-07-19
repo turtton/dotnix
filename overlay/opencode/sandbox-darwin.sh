@@ -281,6 +281,7 @@ printf '%s' "" >"${HOME}/.openrouter-quota"
 # Claude quota は Linux 専用 (macOS 版 Claude Code は認証情報を Keychain に保存し、
 # sandbox-exec 内からは参照できないため)。tmux が cat する空ファイルだけ用意する
 printf '%s' "" >"${HOME}/.claude-quota"
+printf '%s' "" >"${HOME}/.kimi-quota"
 printf '%s' "N/A" >"${HOME}/.opencode-port"
 cp "@quota-script@" "${HOME}/.copilot-quota-poll.sh"
 chmod u+w "${HOME}/.copilot-quota-poll.sh" # Nix store からのコピーは 0444 のため書き込み可能にする
@@ -302,6 +303,11 @@ chmod u+w "${HOME}/.openrouter-quota-poll.sh"
 sed "s|__OUTPUT_PATH__|${HOME}/.openrouter-quota|g" "${HOME}/.openrouter-quota-poll.sh" >"${HOME}/.openrouter-quota-poll.sh.tmp"
 mv -f "${HOME}/.openrouter-quota-poll.sh.tmp" "${HOME}/.openrouter-quota-poll.sh"
 chmod +x "${HOME}/.openrouter-quota-poll.sh"
+cp "@kimi-quota-script@" "${HOME}/.kimi-quota-poll.sh"
+chmod u+w "${HOME}/.kimi-quota-poll.sh"
+sed "s|__OUTPUT_PATH__|${HOME}/.kimi-quota|g" "${HOME}/.kimi-quota-poll.sh" >"${HOME}/.kimi-quota-poll.sh.tmp"
+mv -f "${HOME}/.kimi-quota-poll.sh.tmp" "${HOME}/.kimi-quota-poll.sh"
+chmod +x "${HOME}/.kimi-quota-poll.sh"
 cp "@tmux-conf@" "${HOME}/.tmux.conf"
 chmod u+w "${HOME}/.tmux.conf"
 sed "s|__QUOTA_FILE__|${HOME}/.copilot-quota|g" "${HOME}/.tmux.conf" >"${HOME}/.tmux.conf.tmp"
@@ -313,6 +319,8 @@ mv -f "${HOME}/.tmux.conf.tmp" "${HOME}/.tmux.conf"
 sed "s|__OPENROUTER_QUOTA_FILE__|${HOME}/.openrouter-quota|g" "${HOME}/.tmux.conf" >"${HOME}/.tmux.conf.tmp"
 mv -f "${HOME}/.tmux.conf.tmp" "${HOME}/.tmux.conf"
 sed "s|__CLAUDE_QUOTA_FILE__|${HOME}/.claude-quota|g" "${HOME}/.tmux.conf" >"${HOME}/.tmux.conf.tmp"
+mv -f "${HOME}/.tmux.conf.tmp" "${HOME}/.tmux.conf"
+sed "s|__KIMI_QUOTA_FILE__|${HOME}/.kimi-quota|g" "${HOME}/.tmux.conf" >"${HOME}/.tmux.conf.tmp"
 mv -f "${HOME}/.tmux.conf.tmp" "${HOME}/.tmux.conf"
 sed "s|__PORT_FILE__|${HOME}/.opencode-port|g" "${HOME}/.tmux.conf" >"${HOME}/.tmux.conf.tmp"
 mv -f "${HOME}/.tmux.conf.tmp" "${HOME}/.tmux.conf"
@@ -373,6 +381,8 @@ if [ -t 0 ] && [ -t 1 ] && [ -t 2 ]; then
   crof_quota_pid=$!
   "$HOME/.openrouter-quota-poll.sh" &
   openrouter_quota_pid=$!
+  "$HOME/.kimi-quota-poll.sh" &
+  kimi_quota_pid=$!
   _session_name="opencode-${BASHPID}"
   tmux -f "$HOME/.tmux.conf" new-session -s "$_session_name" -- "$@"
   exit_code=$?
@@ -387,6 +397,9 @@ if [ -t 0 ] && [ -t 1 ] && [ -t 2 ]; then
   fi
   if [ -n "${openrouter_quota_pid:-}" ]; then
     kill "$openrouter_quota_pid" 2>/dev/null; wait "$openrouter_quota_pid" 2>/dev/null
+  fi
+  if [ -n "${kimi_quota_pid:-}" ]; then
+    kill "$kimi_quota_pid" 2>/dev/null; wait "$kimi_quota_pid" 2>/dev/null
   fi
   exit $exit_code
 fi

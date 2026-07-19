@@ -427,6 +427,8 @@ OPENROUTER_QUOTA_OUTPUT_PATH="${OPENCODE_HOME}/.openrouter-quota"
 OPENROUTER_QUOTA_SCRIPT_PATH="${OPENCODE_HOME}/.openrouter-quota-poll.sh"
 CLAUDE_QUOTA_OUTPUT_PATH="${OPENCODE_HOME}/.claude-quota"
 CLAUDE_QUOTA_SCRIPT_PATH="${OPENCODE_HOME}/.claude-quota-poll.sh"
+KIMI_QUOTA_OUTPUT_PATH="${OPENCODE_HOME}/.kimi-quota"
+KIMI_QUOTA_SCRIPT_PATH="${OPENCODE_HOME}/.kimi-quota-poll.sh"
 PORT_OUTPUT_PATH="${OPENCODE_HOME}/.opencode-port"
 
 printf '%s\n' "N/A" >"$QUOTA_OUTPUT_PATH"
@@ -434,6 +436,7 @@ printf '%s' "" >"$OPENAI_QUOTA_OUTPUT_PATH"
 printf '%s' "" >"$CROF_QUOTA_OUTPUT_PATH"
 printf '%s' "" >"$OPENROUTER_QUOTA_OUTPUT_PATH"
 printf '%s' "" >"$CLAUDE_QUOTA_OUTPUT_PATH"
+printf '%s' "" >"$KIMI_QUOTA_OUTPUT_PATH"
 printf '%s' "N/A" >"$PORT_OUTPUT_PATH"
 cp "@quota-script@" "$QUOTA_SCRIPT_PATH"
 sed -i "s|__OUTPUT_PATH__|${HOME}/.copilot-quota|g" "$QUOTA_SCRIPT_PATH"
@@ -450,12 +453,16 @@ chmod +x "$OPENROUTER_QUOTA_SCRIPT_PATH"
 cp "@claude-quota-script@" "$CLAUDE_QUOTA_SCRIPT_PATH"
 sed -i "s|__OUTPUT_PATH__|${HOME}/.claude-quota|g" "$CLAUDE_QUOTA_SCRIPT_PATH"
 chmod +x "$CLAUDE_QUOTA_SCRIPT_PATH"
+cp "@kimi-quota-script@" "$KIMI_QUOTA_SCRIPT_PATH"
+sed -i "s|__OUTPUT_PATH__|${HOME}/.kimi-quota|g" "$KIMI_QUOTA_SCRIPT_PATH"
+chmod +x "$KIMI_QUOTA_SCRIPT_PATH"
 cp "@tmux-conf@" "$TMUX_CONF_PATH"
 sed -i "s|__QUOTA_FILE__|${HOME}/.copilot-quota|g" "$TMUX_CONF_PATH"
 sed -i "s|__OPENAI_QUOTA_FILE__|${HOME}/.openai-quota|g" "$TMUX_CONF_PATH"
 sed -i "s|__CROF_QUOTA_FILE__|${HOME}/.crof-quota|g" "$TMUX_CONF_PATH"
 sed -i "s|__OPENROUTER_QUOTA_FILE__|${HOME}/.openrouter-quota|g" "$TMUX_CONF_PATH"
 sed -i "s|__CLAUDE_QUOTA_FILE__|${HOME}/.claude-quota|g" "$TMUX_CONF_PATH"
+sed -i "s|__KIMI_QUOTA_FILE__|${HOME}/.kimi-quota|g" "$TMUX_CONF_PATH"
 sed -i "s|__PORT_FILE__|${HOME}/.opencode-port|g" "$TMUX_CONF_PATH"
 
 # サンドボックス内で実行するスクリプトの組み立て
@@ -519,6 +526,8 @@ if [ -t 0 ] && [ -t 1 ] && [ -t 2 ]; then
   openrouter_quota_pid=$!
   "$HOME/.claude-quota-poll.sh" &
   claude_quota_pid=$!
+  "$HOME/.kimi-quota-poll.sh" &
+  kimi_quota_pid=$!
   tmux -f "$HOME/.tmux.conf" new-session -s opencode -- "$@"
   exit_code=$?
   if [ -n "${quota_pid:-}" ]; then
@@ -535,6 +544,9 @@ if [ -t 0 ] && [ -t 1 ] && [ -t 2 ]; then
   fi
   if [ -n "${claude_quota_pid:-}" ]; then
     kill "$claude_quota_pid" 2>/dev/null; wait "$claude_quota_pid" 2>/dev/null
+  fi
+  if [ -n "${kimi_quota_pid:-}" ]; then
+    kill "$kimi_quota_pid" 2>/dev/null; wait "$kimi_quota_pid" 2>/dev/null
   fi
   exit $exit_code
 fi
