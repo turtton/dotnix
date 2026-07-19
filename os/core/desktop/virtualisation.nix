@@ -11,6 +11,7 @@
   };
   environment.systemPackages = with pkgs; [
     virt-manager
-    winboat
+    # https://github.com/NixOS/nixpkgs/issues/537847
+    # winboat
   ];
 }
