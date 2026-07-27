@@ -150,6 +150,10 @@
       # url = "git+https://iris.radicle.xyz/zSj69SY75yV9h6LxyiQ3cxDTDSEV.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    senpi = {
+      url = "github:turtton/senpi-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     codex-desktop-linux = {
       url = "github:ilysenko/codex-desktop-linux";
       inputs.nixpkgs.follows = "nixpkgs";

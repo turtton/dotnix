@@ -7,6 +7,7 @@
 {
   imports = [
     ./opencode
+    ./senpi
   ];
   home = {
     packages =

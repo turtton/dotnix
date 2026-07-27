@@ -10,6 +10,7 @@ in
     inputs.rust-overlay.overlays.default
     inputs.rustowl.overlays.default
     inputs.llm-agents.overlays.shared-nixpkgs
+    (import ./senpi inputs)
     (import ./claude-code inputs)
     (import ./codex)
     (import ./opencode inputs)

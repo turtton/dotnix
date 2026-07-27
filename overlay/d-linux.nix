@@ -10,6 +10,7 @@ in
     inputs.rustowl.overlays.default
     inputs.nix-cachyos-kernel.overlays.pinned
     inputs.llm-agents.overlays.shared-nixpkgs
+    (import ./senpi inputs)
     (import ./claude-code inputs)
     (import ./codex)
     (import ./opencode inputs)

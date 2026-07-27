@@ -2400,6 +2400,7 @@
         "plasma-manager": "plasma-manager",
         "rust-overlay": "rust-overlay_2",
         "rustowl": "rustowl",
+        "senpi": "senpi",
         "siketyan-ghr": "siketyan-ghr",
         "skills-catalog": "skills-catalog",
         "split-monitor-workspaces": "split-monitor-workspaces",
@@ -2495,6 +2496,26 @@
       "original": {
         "owner": "cordx56",
         "repo": "rustowl",
+        "type": "github"
+      }
+    },
+    "senpi": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1785081150,
+        "narHash": "sha256-5Wf8LZvGspIQVMsCPyA1zFuDzGC4rRlnaM3ZMgh3mKU=",
+        "owner": "turtton",
+        "repo": "senpi-flake",
+        "rev": "51cf625a606dad53d063aac9bf92213a04ec18b2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "turtton",
+        "repo": "senpi-flake",
         "type": "github"
       }
     },
