@@ -29,5 +29,20 @@
       split_ratio = 0.5;
       auto_balance = "off";
     };
+
+    # Ghostty のウィンドウ作成/破棄時にタイル計算がずれるため、
+    # レイアウトの再適用を促す。label 付きにして yabairc 再読込時の重複登録を防ぐ
+    extraConfig = ''
+      yabai -m signal --add \
+        event=window_created \
+        app='^Ghostty$' \
+        label='ghostty_window_created_relayout' \
+        action='yabai -m space --layout bsp'
+      yabai -m signal --add \
+        event=window_destroyed \
+        app='^Ghostty$' \
+        label='ghostty_window_destroyed_relayout' \
+        action='yabai -m space --layout bsp'
+    '';
   };
 }
