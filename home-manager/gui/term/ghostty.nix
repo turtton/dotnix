@@ -26,7 +26,10 @@ in
     installVimSyntax = true;
     settings = {
       theme = "Catppuccin Mocha";
-      font-family = "Hack Nerd Font";
+      font-family = [
+        "Hack Nerd Font"
+        "Noto Sans Mono CJK JP"
+      ];
       font-size = 10;
       background-opacity = 0.7;
       background-blur = "macos-glass-clear";
