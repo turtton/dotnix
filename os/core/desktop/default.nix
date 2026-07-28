@@ -2,6 +2,7 @@
 {
   imports = [
     ../common
+    ./adguard.nix
     ./ld.nix
     ./network.nix
     ./virtualisation.nix

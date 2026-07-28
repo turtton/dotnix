@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "adguard-cli-flake": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1785232230,
+        "narHash": "sha256-xUaG1bVAlyYQxwXoi2oenF/bBuQtO+rm4AYiYoUmBjI=",
+        "owner": "turtton",
+        "repo": "adguard-cli-flake",
+        "rev": "963cc3e1d57aba40a1ae923aa9df5e6c7a20dfee",
+        "type": "github"
+      },
+      "original": {
+        "owner": "turtton",
+        "repo": "adguard-cli-flake",
+        "type": "github"
+      }
+    },
     "agent-skills-nix": {
       "inputs": {
         "home-manager": "home-manager_2",
@@ -2370,6 +2390,7 @@
     },
     "root": {
       "inputs": {
+        "adguard-cli-flake": "adguard-cli-flake",
         "ags": "ags",
         "claude-code-overlay": "claude-code-overlay",
         "claude-desktop": "claude-desktop",

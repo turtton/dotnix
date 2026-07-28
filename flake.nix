@@ -154,6 +154,10 @@
       url = "github:turtton/senpi-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    adguard-cli-flake = {
+      url = "github:turtton/adguard-cli-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     codex-desktop-linux = {
       url = "github:ilysenko/codex-desktop-linux";
       inputs.nixpkgs.follows = "nixpkgs";
