@@ -81,7 +81,14 @@ in
   teams-for-linux = forceWaylandIme { name = "teams-for-linux"; };
   claude-desktop =
     let
-      claude-desktop = inputs.claude-desktop.packages.${stdenv.system}.claude-desktop-fhs;
+      # The upstream flake builds claude-desktop-fhs with its own pinned
+      # nixpkgs, so our fix-fhs-launcher overlay (dieWithParent=false)
+      # cannot reach it. Rebuild the FHS env with OUR buildFHSEnv instead.
+      # The base app does not involve buildFHSEnv, so it can be reused as-is.
+      base = inputs.claude-desktop.packages.${stdenv.system}.claude-desktop;
+      claude-desktop = prev.callPackage (inputs.claude-desktop + "/nix/fhs.nix") {
+        claude-desktop = base;
+      };
     in
     prev.symlinkJoin {
       name = "claude-desktop-wrapped";
