@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # senpi を tmux セッション内で起動し、status-right に各種 LLM プロバイダの
 # quota を表示するラッパー (overlay/opencode/sandbox.sh の tmux 部分の簡略版)。
-# bwrap サンドボックスは行わない (senpi では pi-sandbox 拡張がツール実行を隔離する)。
+# bwrap サンドボックスは行わない。
 set -euo pipefail
 
 SENPI_BIN="@senpi-dir@/senpi"

@@ -1,25 +1,17 @@
 inputs: self: prev:
 let
   original = inputs.senpi.packages.${prev.stdenv.hostPlatform.system}.default;
-  isDarwin = prev.stdenv.isDarwin;
 
   launcher = self.writeShellApplication {
     name = "senpi-tmux";
-    runtimeInputs =
-      with self;
-      [
-        tmux
-        curl
-        jq
-        gh
-        gnused
-        coreutils
-      ]
-      # pi-sandbox 拡張の native バックエンドが bwrap と socat を必要とする (Linux)
-      ++ self.lib.optionals (!isDarwin) [
-        self.bubblewrap
-        self.socat
-      ];
+    runtimeInputs = with self; [
+      tmux
+      curl
+      jq
+      gh
+      gnused
+      coreutils
+    ];
     checkPhase = "";
     text =
       builtins.replaceStrings
@@ -49,6 +41,8 @@ let
   senpi-bare = self.writeShellScriptBin "senpi-bare" ''
     exec "${original}/bin/senpi" "$@"
   '';
+
+  senpiOverlay = inputs.senpi.overlays.default self prev;
 in
 {
   senpi = self.symlinkJoin {
@@ -65,5 +59,16 @@ in
     meta = original.meta // {
       mainProgram = "senpi";
     };
+  };
+
+  # packages.*.omo-senpi は senpi-flake 内部の config 無し pkgs で評価済みのため、
+  # unfree チェックが消費側の allowUnfree を無視して失敗する。overlays.default 経由で
+  # 自側 pkgs から構築する必要がある。
+  omo-senpi = senpiOverlay.omo-senpi;
+
+  # senpiOverlay.omo-cli は comment-checker を fixed point から auto-fill する前提の
+  # ため、attr 選り抜きでは必須引数が欠落して評価失敗する。直接 callPackage して明示する。
+  omo-cli = self.callPackage "${inputs.senpi}/omo-cli.nix" {
+    comment-checker = senpiOverlay.comment-checker;
   };
 }

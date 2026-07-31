@@ -2527,11 +2527,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785081150,
-        "narHash": "sha256-5Wf8LZvGspIQVMsCPyA1zFuDzGC4rRlnaM3ZMgh3mKU=",
+        "lastModified": 1785479269,
+        "narHash": "sha256-e8iqCH0TqE6bM4dV8q3QN00rNOfz2REzQtW8vl1ek0A=",
         "owner": "turtton",
         "repo": "senpi-flake",
-        "rev": "51cf625a606dad53d063aac9bf92213a04ec18b2",
+        "rev": "8b1868afcfccbbe22c152423af1f7b5eb3c55ede",
         "type": "github"
       },
       "original": {
