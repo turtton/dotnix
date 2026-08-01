@@ -47,6 +47,10 @@ done
 # ネスト検出を防ぐためホスト側の tmux 環境変数を消す
 unset TMUX TMUX_PANE || true
 
+# senpi プロセス配下で senpi が再起動された場合に tmux ラッパーが二重に走らないよう、
+# バイパスフラグを伝播する (opencode の OPENCODE_NO_SANDBOX と同じパターン)
+export SENPI_NO_TMUX=1
+
 # 既存セッションがあればアタッチ、なければ senpi を起動するセッションを作成
 tmux -f "$TMUX_CONF" new-session -A -s senpi -- "$SENPI_BIN" "$@"
 
