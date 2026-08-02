@@ -314,11 +314,11 @@
         "systems": "systems_2"
       },
       "locked": {
-        "lastModified": 1784875576,
-        "narHash": "sha256-1cb53J0c3YDSe+tYvq0dBdlZrZRl67tNqiegpH7BLRs=",
+        "lastModified": 1785684055,
+        "narHash": "sha256-IlfCNLlMERfltzK9Tdvki7TKi1c+dUzHylcDvI/JhGc=",
         "owner": "turtton",
         "repo": "cnowledje",
-        "rev": "301386b1f7ad3d9f286f178f0d87c1a70f4bd735",
+        "rev": "e61ef22515589dc6efc5612e5832755120c9851d",
         "type": "github"
       },
       "original": {
@@ -2493,11 +2493,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785482591,
-        "narHash": "sha256-UcBuYDTY9W/pRWggPiBzd9Mg5NrTFiRYUUrFsiOpKq4=",
+        "lastModified": 1785630751,
+        "narHash": "sha256-0/kXtL0TkFEmIqPWzWY9QA8dl8tv6JSL2cPeqlU5RoE=",
         "owner": "turtton",
         "repo": "senpi-flake",
-        "rev": "6254ab072fe4b02160faebaba7c341511a9f638d",
+        "rev": "8cfebb798db5ccf3393039a8723ac79d3196d608",
         "type": "github"
       },
       "original": {
