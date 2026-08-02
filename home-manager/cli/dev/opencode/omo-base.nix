@@ -1,0 +1,203 @@
+# Base oh-my-openagent (omo) configuration for the "[opencode]" harness section
+# of ~/.omo/omo.jsonc. Migrated from the former oc-go profile
+# (oh-my-openagent-go.json).
+#
+# Notes:
+# - `skills.sources` is injected in ./default.nix (needs configDir).
+# - Per-host overrides are deep-merged via packs.opencode.omoOverrides
+#   (see module/opencode).
+{
+  agents = {
+    sisyphus = {
+      model = "cli-proxy-api/kimi-k3";
+      fallback_models = [
+        { model = "cli-proxy-api/kimi-k2.7-code"; }
+        {
+          model = "cli-proxy-api/gpt-5.6-luna";
+          variant = "ultra";
+        }
+      ];
+    };
+    hephaestus = {
+      model = "cli-proxy-api/gpt-5.6-sol";
+      variant = "medium";
+      fallback_models = [
+        {
+          model = "cli-proxy-api/deepseek-v4-pro";
+          variant = "max";
+        }
+      ];
+    };
+    oracle = {
+      model = "cli-proxy-api/gpt-5.6-sol";
+      variant = "xhigh";
+      fallback_models = [
+        {
+          model = "cli-proxy-api/gpt-5.6-terra";
+          variant = "max";
+        }
+      ];
+    };
+    momus = {
+      model = "cli-proxy-api/gpt-5.6-sol";
+      variant = "xhigh";
+      fallback_models = [
+        {
+          model = "cli-proxy-api/gpt-5.6-terra";
+          variant = "max";
+        }
+      ];
+    };
+    metis = {
+      model = "cli-proxy-api/gpt-5.6-sol";
+      variant = "xhigh";
+      fallback_models = [
+        {
+          model = "cli-proxy-api/gpt-5.6-terra";
+          variant = "max";
+        }
+        {
+          model = "cli-proxy-api/glm-5.2";
+          variant = "max";
+        }
+      ];
+    };
+    prometheus = {
+      model = "cli-proxy-api/gpt-5.6-sol";
+      variant = "xhigh";
+      fallback_models = [
+        {
+          model = "cli-proxy-api/glm-5.2";
+          variant = "max";
+        }
+      ];
+    };
+    atlas = {
+      model = "cli-proxy-api/kimi-k3";
+      fallback_models = [
+        { model = "cli-proxy-api/kimi-k2.7-code"; }
+      ];
+    };
+    sisyphus-junior = {
+      model = "openrouter/kimi-k3";
+      fallback_models = [
+        { model = "cli-proxy-api/kimi-k2.7-code"; }
+        {
+          model = "cli-proxy-api/glm-5.2";
+          variant = "max";
+        }
+      ];
+    };
+    explore = {
+      model = "cli-proxy-api/glm-5.2";
+      variant = "max";
+      fallback_models = [
+        {
+          model = "cli-proxy-api/gpt-5.6-luna";
+          variant = "medium";
+        }
+      ];
+    };
+    librarian = {
+      model = "cli-proxy-api/glm-5.2";
+      variant = "max";
+      fallback_models = [
+        {
+          model = "cli-proxy-api/gpt-5.6-luna";
+          variant = "medium";
+        }
+      ];
+    };
+    multimodal-looker = {
+      model = "cli-proxy-api/kimi-k2.7-code";
+    };
+  };
+  categories = {
+    visual-engineering = {
+      model = "CrofAI/greg-2-super";
+      fallback_models = [
+        { model = "cli-proxy-api/kimi-k2.7-code"; }
+        {
+          model = "cli-proxy-api/glm-5.2";
+          variant = "max";
+        }
+      ];
+    };
+    ultrabrain = {
+      model = "cli-proxy-api/gpt-5.6-sol";
+      variant = "xhigh";
+      fallback_models = [
+        {
+          model = "cli-proxy-api/deepseek-v4-pro";
+          variant = "max";
+        }
+      ];
+    };
+    deep = {
+      model = "cli-proxy-api/gpt-5.6-sol";
+      variant = "high";
+      fallback_models = [
+        {
+          model = "cli-proxy-api/glm-5.2";
+          variant = "max";
+        }
+      ];
+    };
+    artistry = {
+      model = "cli-proxy-api/gpt-5.6-sol";
+      variant = "xhigh";
+      fallback_models = [
+        {
+          model = "cli-proxy-api/deepseek-v4-pro";
+          variant = "max";
+        }
+      ];
+    };
+    quick = {
+      model = "cli-proxy-api/deepseek-v4-flash";
+      variant = "max";
+      fallback_models = [
+        { model = "cli-proxy-api/kimi-k2.7-code"; }
+      ];
+    };
+    unspecified-low = {
+      model = "cli-proxy-api/glm-5.2";
+      variant = "max";
+      fallback_models = [ ];
+    };
+    unspecified-high = {
+      model = "cli-proxy-api/kimi-k3";
+      fallback_models = [ ];
+    };
+    writing = {
+      model = "cli-proxy-api/kimi-k2.7-code";
+      fallback_models = [ ];
+    };
+  };
+  tmux = {
+    enabled = true;
+  };
+  team_mode = {
+    enabled = true;
+    max_parallel_members = 4;
+    tmux_visualization = true;
+  };
+  background_task = {
+    providerConcurrency = {
+      openai = 3;
+      opencode-go = 10;
+      CrofAI = 20;
+    };
+    circuitBreaker = {
+      windowSize = 100;
+      repetitionThresholdPercent = 90;
+      maxToolCalls = 400;
+    };
+  };
+  git_master = {
+    git_env_prefix = "";
+    commit_footer = true;
+    include_co_authored_by = true;
+  };
+  runtime_fallback = true;
+}

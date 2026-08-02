@@ -8,23 +8,40 @@
 }:
 let
   configDir = "${config.xdg.configHome}/opencode";
-  goConfigDir = "${config.xdg.configHome}/opencode-go";
-  cgConfigDir = "${config.xdg.configHome}/opencode-cg";
+  omoDir = "${config.home.homeDirectory}/.omo";
 
-  replaceConfigDir =
-    dir: content: builtins.replaceStrings [ "@OPENCODE_CONFIG_DIR@" ] [ dir ] content;
+  # Base omo ("[opencode]" harness section) + per-host overrides.
+  # See module/opencode for the option definition.
+  omoBase = import ./omo-base.nix;
 
-  ohMyOpenagentMain = pkgs.writeText "oh-my-openagent.json" (
-    replaceConfigDir configDir (builtins.readFile ./oh-my-openagent.json)
-  );
+  # Extra skill sources, equivalent to the old @OPENCODE_CONFIG_DIR@ paths.
+  # git-commit is deployed here by agent-skills (dotagents); final-review is
+  # expected at the same location.
+  omoSkills = {
+    skills.sources = [
+      "${configDir}/skill/final-review"
+      "${configDir}/skill/git-commit"
+    ];
+  };
 
-  ohMyOpenagentGo = pkgs.writeText "oh-my-openagent-go.json" (
-    replaceConfigDir goConfigDir (builtins.readFile ./oh-my-openagent-go.json)
-  );
+  omoHarness = lib.recursiveUpdate (lib.recursiveUpdate omoBase omoSkills) config.packs.opencode.omoOverrides;
 
-  ohMyOpenagentCg = pkgs.writeText "oh-my-openagent-cg.json" (
-    replaceConfigDir cgConfigDir (builtins.readFile ./oh-my-openagent-cg.json)
-  );
+  omoConfig = {
+    "$schema" =
+      "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/omo.schema.json";
+    "[opencode]" = omoHarness;
+    # Keep the unification migration marker/history so the plugin never
+    # re-runs legacy oh-my-openagent.json migrations over this managed file.
+    legacy_migrations = {
+      "${config.xdg.configHome}/opencode-go/oh-my-openagent.json" = [
+        "model-version:openai/gpt-5.3-codex->openai/gpt-5.4"
+        "model-version:openai/gpt-5.4->openai/gpt-5.5"
+      ];
+    };
+    _migrations = [ "2026-07-opencode-config-unification" ];
+  };
+
+  omoJsonc = pkgs.writeText "omo.jsonc" (builtins.toJSON omoConfig);
 in
 {
   imports = [
@@ -40,57 +57,20 @@ in
       opencode
     ];
 
-  home.shellAliases = {
-    oc-go = "OPENCODE_CONFIG_DIR=${goConfigDir} opencode";
-    oc-cg = "OPENCODE_CONFIG_DIR=${cgConfigDir} opencode";
-  };
-
   home.activation.opencode = lib.hm.dag.entryAfter [ "writeBoundary" "agent-skills" ] ''
-    deploy_profile() {
-      local profile_dir="$1"
-      local config_jsonc="$2"
-      local openagent_json="$3"
-      local profile_name="$4"
+    # ~/.config/opencode (single profile, based on the former oc-go settings)
+    mkdir -p "${configDir}"
+    for f in opencode.jsonc AGENTS.md; do
+      [ -f "${configDir}/$f" ] && mv -f "${configDir}/$f" "${configDir}/$f.old"
+    done
+    cp -f ${./opencode.jsonc} "${configDir}/opencode.jsonc"
+    cp -f ${./AGENTS.md} "${configDir}/AGENTS.md"
+    chmod u+w "${configDir}/opencode.jsonc" "${configDir}/AGENTS.md"
 
-      for f in opencode.jsonc oh-my-openagent.json AGENTS.md; do
-        [ -f "$profile_dir/$f" ] && mv -f "$profile_dir/$f" "$profile_dir/$f.old"
-      done
-
-      mkdir -p "$profile_dir"
-
-      cp -f "$config_jsonc" "$profile_dir/opencode.jsonc"
-      cp -f "$openagent_json" "$profile_dir/oh-my-openagent.json"
-      cp -f "${./AGENTS.md}" "$profile_dir/AGENTS.md"
-
-      chmod u+w "$profile_dir/opencode.jsonc" "$profile_dir/oh-my-openagent.json" "$profile_dir/AGENTS.md"
-
-      if [ "$profile_dir" != "${configDir}" ]; then
-        if [ "$profile_name" = "cg" ]; then
-          rm -f "$profile_dir/opencode.json"
-        elif [ -f "${configDir}/opencode.json" ]; then
-          # Copy generated provider definitions for profiles that keep external providers.
-          cp -f "${configDir}/opencode.json" "$profile_dir/opencode.json"
-          chmod u+w "$profile_dir/opencode.json"
-        else
-          rm -f "$profile_dir/opencode.json"
-          echo "WARNING: ${configDir}/opencode.json not found. cursor-acp provider unavailable in $profile_name profile." >&2
-          echo "Run 'opencode' (main profile) first to generate it via the cursor-acp plugin." >&2
-        fi
-
-        # Mirror skills from main profile (deployed by agent-skills) to alternate profiles.
-        if [ -d "${configDir}/skill" ]; then
-          mkdir -p "$profile_dir/skill"
-          ${pkgs.rsync}/bin/rsync -aL --delete "${configDir}/skill/" "$profile_dir/skill/"
-        else
-          rm -rf "$profile_dir/skill"
-        fi
-
-        [ -d "$profile_dir/skill" ] && chmod -R u+w "$profile_dir/skill"
-      fi
-    }
-
-    deploy_profile "${configDir}" "${./opencode.jsonc}" "${ohMyOpenagentMain}" "main"
-    deploy_profile "${goConfigDir}" "${./opencode-go.jsonc}" "${ohMyOpenagentGo}" "go"
-    deploy_profile "${cgConfigDir}" "${./opencode-cg.jsonc}" "${ohMyOpenagentCg}" "cg"
+    # ~/.omo/omo.jsonc (oh-my-openagent unified config)
+    mkdir -p "${omoDir}"
+    [ -f "${omoDir}/omo.jsonc" ] && mv -f "${omoDir}/omo.jsonc" "${omoDir}/omo.jsonc.old"
+    cp -f ${omoJsonc} "${omoDir}/omo.jsonc"
+    chmod u+w "${omoDir}/omo.jsonc"
   '';
 }

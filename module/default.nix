@@ -10,5 +10,6 @@
     ./android.nix
     ./remote-desktop.nix
     ./vial.nix
+    ./opencode
   ];
 }
