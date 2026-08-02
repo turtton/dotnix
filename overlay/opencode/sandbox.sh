@@ -168,9 +168,11 @@ project_mount() {
   fi
 
   # --path-format=absolute: サブディレクトリ実行時の相対パス返却を回避
+  # || true: git リポジトリ外では rev-parse が 128 で失敗し、
+  # writeShellApplication の errexit でスクリプト全体が中断するのを防ぐ
   local git_dir git_common_dir main_repo_root
-  git_dir="$(git -C "$PROJECT_DIR" rev-parse --path-format=absolute --git-dir 2>/dev/null)"
-  git_common_dir="$(git -C "$PROJECT_DIR" rev-parse --path-format=absolute --git-common-dir 2>/dev/null)"
+  git_dir="$(git -C "$PROJECT_DIR" rev-parse --path-format=absolute --git-dir 2>/dev/null || true)"
+  git_common_dir="$(git -C "$PROJECT_DIR" rev-parse --path-format=absolute --git-common-dir 2>/dev/null || true)"
   if [[ -n $git_dir && -n $git_common_dir && $git_common_dir != "$git_dir" ]]; then
     main_repo_root="$(realpath "${git_common_dir}/.." 2>/dev/null)"
     # 失敗時・SHARE_TREE 配下なら既存マウントで到達可能なため追加不要
