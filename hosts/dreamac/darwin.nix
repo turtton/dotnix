@@ -7,7 +7,6 @@
     ./../../darwin/nix.nix
     ./../../darwin/container.nix
     ./../../darwin/skhd.nix
-    ./../../darwin/yabai
     ./../../darwin/system.nix
   ];
   ids.uids.nixbld = 401;

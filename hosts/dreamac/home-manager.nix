@@ -14,6 +14,7 @@
     ./../../home-manager/gui/term/alacritty.nix
     ./../../home-manager/gui/term/ghostty.nix
     # ./../../home-manager/wm/aerospace
+    ./../../home-manager/wm/omniwm
   ];
 
   programs.zsh.envExtra = ''

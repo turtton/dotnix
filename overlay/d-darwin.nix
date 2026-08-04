@@ -22,7 +22,7 @@ in
       # dgagent/dgesc が EndpointSecurity で
       # ファイル read を横取りし、undmg 展開直後のファイルを分類中だと open() が
       # 一時的に EPERM ("Operation not permitted") を返す。このため upstream の
-      # installPhase の操作が同梱アセットで非決定的に失敗する。 
+      # installPhase の操作が同梱アセットで非決定的に失敗する。
       # install 前に全ファイルを読めるようになるまで待つ(=DG に分類を完了させる)。
       jetbrains = prev.lib.mapAttrs (
         _name: pkg:

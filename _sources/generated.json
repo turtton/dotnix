@@ -1,6 +1,6 @@
 {
     "beutl": {
-        "cargoLocks": null,
+        "cargoLock": null,
         "date": null,
         "extract": null,
         "name": "beutl",
@@ -21,7 +21,7 @@
         "version": "v1.0.6"
     },
     "beutl-native-deps": {
-        "cargoLocks": null,
+        "cargoLock": null,
         "date": "2025-03-15",
         "extract": null,
         "name": "beutl-native-deps",
@@ -42,7 +42,7 @@
         "version": "339ad822e77365a652a0d9ac12d235ab2c53b77f"
     },
     "jetbrains-dolphin": {
-        "cargoLocks": null,
+        "cargoLock": null,
         "date": null,
         "extract": null,
         "name": "jetbrains-dolphin",
@@ -63,7 +63,7 @@
         "version": "1.4.2"
     },
     "jetbrains-nautilus": {
-        "cargoLocks": null,
+        "cargoLock": null,
         "date": "2021-05-17",
         "extract": null,
         "name": "jetbrains-nautilus",
@@ -83,8 +83,23 @@
         },
         "version": "c79f6ab6504bd1f1a9d1068f284c24f3227f51c1"
     },
+    "omniwm": {
+        "cargoLock": null,
+        "date": null,
+        "extract": null,
+        "name": "omniwm",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "name": null,
+            "sha256": "sha256-oaOCTpUQFQnrzlV2OSMsVwvaDcgefUTFFkKiRMB28nQ=",
+            "type": "url",
+            "url": "https://github.com/BarutSRB/OmniWM/releases/download/v0.5.9/OmniWM-v0.5.9.zip"
+        },
+        "version": "0.5.9"
+    },
     "wallpaper-springcity": {
-        "cargoLocks": null,
+        "cargoLock": null,
         "date": null,
         "extract": null,
         "name": "wallpaper-springcity",
