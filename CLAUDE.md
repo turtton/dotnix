@@ -4,64 +4,78 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This is a Nix/NixOS configuration repository that manages system configurations for multiple machines using Nix flakes. It supports both NixOS (Linux) and Darwin (macOS) systems with a focus on reproducible desktop environments.
+Nix flake managing NixOS (Linux) and nix-darwin (macOS) systems. The current primary desktop is **niri** with noctalia-shell (see README). Hyprland and XMonad configs are still in tree but outdated.
 
 ## Common Development Commands
 
-### System Management
+`nix develop` provides:
 
-- `nix develop` - Enter development shell with helper commands
-- `switch-nixos {hostname}` - Rebuild and switch NixOS configuration for a host
-- `switch-darwin {hostname}` - Rebuild and switch Darwin configuration
-- `switch-home {hostname}` - Switch home-manager configuration (legacy, integrated into system configs now)
-- `gen-template {hostname}` - Generate NixOS templates (e.g., for Proxmox LXC)
+- `switch-nixos {hostname}` - Rebuild and switch a NixOS host
+- `remote-switch-nixos {hostname} [target-host]` - Same, over SSH (target defaults to hostname)
+- `switch-darwin {hostname}` - Rebuild and switch a Darwin host
+- `switch-home {hostname}` - Standalone home-manager (legacy; HM is integrated into the system configs)
+- `gen-template {hostname}` - Generate NixOS templates (e.g. for Proxmox LXC)
 
-### Development Tools
+Other:
 
-- `nix fmt` - Format all code using treefmt (nixfmt, taplo, biome, stylish-haskell, yamlfmt, mdformat, shfmt)
-- `nvfetcher` - Update external package sources in \_sources/
+- `nix fmt` - treefmt (nixfmt, taplo, biome, stylish-haskell, yamlfmt, mdformat, shfmt)
+- `nvfetcher` - Regenerate `_sources/` from `nvfetcher.toml`. Use `nvfetcher --filter <pkg>` to avoid bumping unrelated packages.
 
 ### Available Hosts
 
-- **NixOS**: maindesk, bridgetop, virtbox, atticserver
+- **NixOS**: maindesk, bridgetop, virtbox, atticserver, wslac
 - **Darwin**: dreamac
 
 ## Architecture
 
-### Module Organization
+### `module/` - the shared module layer
 
-- **`hosts/`** - Per-machine configurations with hardware settings and system/user configs
-- **`home-manager/`** - User environment configurations:
-  - `cli/` - Terminal tools and development environments
-  - `gui/` - GUI applications
-  - `wm/` - Window manager configs (Hyprland, XMonad, Aerospace)
-- **`os/`** - System-level NixOS modules:
-  - `core/` - Essential services:
-    - `common/` - Shared settings for all environments (locale, nix, ssh, gpg, tailscale)
-    - `desktop/` - Desktop-specific settings (NetworkManager, libvirtd, nix-ld)
-    - `server/` - Server/LXC minimal configuration
-    - `shared/` - Backward compatibility layer (imports desktop)
-  - `desktop/` - Desktop services (fonts, sound, 1Password)
-  - `wm/` - Window manager system services
-- **`overlay/`** - Custom package definitions and modifications
-- **`darwin/`** - macOS-specific system configurations
+`module/` is injected into home-manager `sharedModules` for *every* configuration — NixOS, Darwin, and standalone HM (`hosts/default.nix:62,77,191`). Most subdirectories declare a `packs.<name>.enable` option defaulting to off, so hosts opt in:
 
-### Key Patterns
+```nix
+packs.niri.enable = true;
+packs.noctalia.enable = true;
+```
 
-- Host configurations combine hardware settings, system modules, and user configs
-- Overlays modify packages globally (e.g., forcing Wayland, IME fixes)
-- State version is pinned to 23.11 for compatibility
-- Uses Cachix for Hyprland and AGS binary caches
+**niri lives in `module/niri/`, not `home-manager/wm/`.** `home-manager/wm/` holds the older per-user WM configs (hyprland, xmonad, aerospace) plus `omniwm/` for macOS.
 
-### External Dependencies
+### Layout
 
-- nvfetcher tracks external sources defined in `nvfetcher.toml`
-- Generated sources are stored in `_sources/`
-- Custom packages include: beutl, claude-code, rustowl, various Wayland/IME fixes
+- **`hosts/`** - Per-machine entry points. `hosts/default.nix` holds the `createNixosConfig` / `createDarwinConfig` builders and every host definition. A host's WM is selected by a `confPath` pointing at `hosts/<host>/home-manager-*.nix`.
+- **`os/`** - NixOS system modules: `core/{common,desktop,server,secureboot}`, `desktop/`, `wm/`
+- **`darwin/`** - nix-darwin system modules
+- **`home-manager/{cli,gui,wm}/`** - User environment
+- **`overlay/`** - Package definitions and global fixes
+- **`nixosModules/`** + **`packages/`** - `preloader-signed` (PreLoader/HashTool for UEFI Secure Boot with systemd-boot), exported as flake outputs
+- **`skills/`** - Nested flake with its own `flake.lock` for the agent skills catalog
 
-## Important Notes
+### Overlays
 
-- When modifying host configurations, ensure hardware-configuration.nix matches the target system
-- The repository uses experimental Nix features: nix-command and flakes
-- Plasma configurations use generated files from plasma2nix
-- Window manager configurations are host-specific (see home-manager-\*.nix files)
+`overlay/d-linux.nix` and `overlay/d-darwin.nix` are the platform entry points — a new package must be registered in the right one. Both bind `generated = pkgs.callPackage ../_sources/generated.nix { }`, and nvfetcher-backed overlay files take their entry as the first argument:
+
+```nix
+(import ./omniwm.nix generated.omniwm)
+```
+
+Ordering within `d-linux.nix` is load-bearing in one place; see the `fix-libreoffice-fonts` comment before reordering.
+
+### State versions
+
+NixOS pins `stateVersion = "23.11"` (`hosts/default.nix:4`). Darwin uses `system.stateVersion = 5`.
+
+## macOS (dreamac) specifics
+
+- `mac-app-util` is wired into both `darwinModules` and HM `sharedModules`, giving GUI apps stable `/Applications` trampolines so TCC (Accessibility) grants survive store path changes.
+- Homebrew taps/casks are declared in `darwin/homebrew.nix` and managed by nix-darwin with `onActivation.cleanup = "zap"`, so deleting an entry uninstalls it. Note `autoUpdate` does not upgrade already-installed casks.
+- Digital Guardian (`dgagent`/`dgesc`) intercepts reads on freshly written files and returns transient `EPERM`. This breaks JetBrains builds — both while copying the DMG contents and while nix hashes `$out` afterwards, which leaves the output unregistered and causes a rebuild loop. `overlay/d-darwin.nix` works around it by waiting for readability in `preInstall` and `postInstall`. Expect this to resurface with any large bundled asset.
+
+## Comments
+
+Match the comment density of the surrounding code. Before finishing a new file, open the nearest equivalent existing file and compare — e.g. `module/niri/settings.nix` (~3%), `home-manager/wm/aerospace/default.nix` (0%). Target 10% or below.
+
+Only two things earn a comment:
+
+1. An external constraint the code cannot express, where a reader would otherwise "fix" it and break something. Examples: `bsdtar` is required in `overlay/omniwm.nix` or the notarized signature breaks; the JetBrains darwin builder sets `dontFixup = true` so `postFixup` never runs.
+1. Load-bearing ordering or invariants, such as the `fix-libreoffice-fonts` ORDERING note.
+
+Do not write: what the code already states; translation tables against the tool being replaced; justifications for the approach *not* taken; investigation history; or version-specific details that will rot. Those belong in the commit message or the conversation.
