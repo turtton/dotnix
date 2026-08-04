@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  hostPlatform,
   ...
 }:
 let
@@ -46,14 +47,14 @@ let
   );
 in
 {
-  # omo-cli は omo-senpi の ulw-loop/comment-checker コンポーネントが
-  # PATH から omo / comment-checker を発見するために必要。
   home.packages = [
     pkgs.senpi
     pkgs.omo-cli
     pkgs.ripgrep
-    pkgs.bubblewrap
     pkgs.socat
+  ]
+  ++ lib.optionals hostPlatform.isLinux [
+    pkgs.bubblewrap
   ];
 
   home.activation.senpi = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
