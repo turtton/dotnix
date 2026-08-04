@@ -7,6 +7,7 @@
 {
   imports = [
     ./opencode
+    ./omo
     ./senpi
   ];
   home = {
