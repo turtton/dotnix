@@ -21,6 +21,21 @@ let
   sandboxJson = pkgs.writeText "pi-sandbox.json" (
     builtins.toJSON {
       enabled = true;
+      filesystem = {
+        # pi-sandbox は設定された allowRead でデフォルトを「置換」する
+        # (merge ではない)ため、デフォルト分もここに列挙しておく。
+        allowRead = [
+          "."
+          "~/.omo"
+          "~/.config/opencode"
+          "~/.local/share/opencode"
+          "~/.local/state/opencode"
+          # スキル GUIDE 等のパッケージ同梱ファイルは評価時にパスが確定する
+          # ので事前許可し、read のたびのプロンプトを防ぐ。
+          "${pkgs.omo-senpi}"
+          "${pkgs.senpi}"
+        ];
+      };
       network.allowedDomains = [
         "npmjs.org"
         "*.npmjs.org"
