@@ -530,7 +530,11 @@ if [ -t 0 ] && [ -t 1 ] && [ -t 2 ]; then
   claude_quota_pid=$!
   "$HOME/.kimi-quota-poll.sh" &
   kimi_quota_pid=$!
-  tmux -f "$HOME/.tmux.conf" new-session -s opencode -- "$@"
+  # セッション名を起動元ディレクトリから導出する (同じディレクトリなら共有、別なら別セッション)
+  # tmux はセッション名に . と : を受け付けないためサニタイズし、同名ディレクトリはハッシュで区別する
+  dir_name=$(basename "$PWD" | tr -c '[:alnum:]_\n-' '-')
+  dir_hash=$(printf '%s' "$PWD" | sha256sum | cut -c1-8)
+  tmux -f "$HOME/.tmux.conf" new-session -A -s "opencode-$dir_name-$dir_hash" -- "$@"
   exit_code=$?
   if [ -n "${quota_pid:-}" ]; then
     kill "$quota_pid" 2>/dev/null; wait "$quota_pid" 2>/dev/null

@@ -51,8 +51,13 @@ unset TMUX TMUX_PANE || true
 # バイパスフラグを伝播する (opencode の OPENCODE_NO_SANDBOX と同じパターン)
 export SENPI_NO_TMUX=1
 
-# 既存セッションがあればアタッチ、なければ senpi を起動するセッションを作成
-tmux -f "$TMUX_CONF" new-session -A -s senpi -- "$SENPI_BIN" "$@"
+# セッション名を起動元ディレクトリから導出する。同じディレクトリからの
+# 起動は同じセッションにアタッチされ、別ディレクトリなら別セッションになる。
+# tmux はセッション名に . と : を受け付けないためサニタイズし、
+# 同名ディレクトリの衝突はパスのハッシュで区別する
+dir_name=$(basename "$PWD" | tr -c '[:alnum:]_\n-' '-')
+dir_hash=$(printf '%s' "$PWD" | sha256sum | cut -c1-8)
+tmux -f "$TMUX_CONF" new-session -A -s "senpi-$dir_name-$dir_hash" -- "$SENPI_BIN" "$@"
 
 for pid in "${pids[@]}"; do
   kill "$pid" 2>/dev/null || true
