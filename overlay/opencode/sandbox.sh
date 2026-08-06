@@ -104,6 +104,13 @@ isolated_home() {
     BWRAP_ARGS+=(--bind "$opencode_state" "${HOME}/.local/state/opencode")
   fi
 
+  # OMO 設定・状態ディレクトリ (omo.jsonc と codegraph/lsp-daemon 等のランタイム)
+  local omo_dir="${HOME}/.omo"
+  if [[ -d $omo_dir ]]; then
+    mkdir -p "${OPENCODE_HOME}/.omo"
+    BWRAP_ARGS+=(--bind "$omo_dir" "${HOME}/.omo")
+  fi
+
   # Claude Code 認証情報 (claude-quota-poll.sh が ~/.claude/.credentials.json を
   # 参照し、リフレッシュ時に新トークンを書き戻すため読み書きで公開)
   local claude_dir="${HOME}/.claude"
