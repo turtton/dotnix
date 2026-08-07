@@ -5,8 +5,11 @@ let
     package = pkgs.papirus-icon-theme;
   };
   theme = {
-    name = "Tokyonight-Dark";
-    package = pkgs.tokyonight-gtk-theme;
+    name = "catppuccin-mocha-blue-standard";
+    package = pkgs.catppuccin-gtk.override {
+      variant = "mocha";
+      accents = [ "blue" ];
+    };
   };
 in
 {

@@ -7,8 +7,11 @@
 let
   cfg = config.packs.niri;
   theme = {
-    name = "Tokyonight-Dark";
-    package = pkgs.tokyonight-gtk-theme;
+    name = "catppuccin-mocha-blue-standard";
+    package = pkgs.catppuccin-gtk.override {
+      variant = "mocha";
+      accents = [ "blue" ];
+    };
   };
   iconTheme = {
     name = "Papirus-Dark";
