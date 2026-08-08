@@ -43,9 +43,9 @@ let
         "model-version:openai/gpt-5.4->openai/gpt-5.5"
       ];
     };
-    # Pin both migration markers: senpi-base.nix is already in the
-    # post-reasoning-unification format, and re-running the migration would
-    # just rewrite the managed file at runtime.
+    # Pin both migration markers: senpi-base.nix and opencode-base.nix are
+    # already in the post-reasoning-unification format, and re-running the
+    # migration would just rewrite the managed file at runtime.
     _migrations = [
       "2026-07-opencode-config-unification"
       "2026-08-reasoning-unification"
