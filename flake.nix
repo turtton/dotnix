@@ -118,7 +118,8 @@
       };
     };
     niri-flake = {
-      url = "github:sodiboo/niri-flake";
+      # TODO: drop the rev pin once https://github.com/sodiboo/niri-flake/pull/1850 lands on main
+      url = "github:sodiboo/niri-flake?rev=6bb99ff875919f03ea6054026619d999061e1170";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     direnv-instant = {

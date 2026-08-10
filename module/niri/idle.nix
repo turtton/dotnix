@@ -7,7 +7,7 @@
 }:
 let
   cfg = config.packs.niri;
-  niri = lib.getExe inputs.niri-flake.packages.${system}.niri-stable;
+  niri = lib.getExe inputs.niri-flake.packages.${system}.niri-unstable;
   noctalia-shell = lib.getExe inputs.noctalia.packages.${system}.default;
   lock-cmd = "${noctalia-shell} ipc call lockScreen lock";
   monitor-on = "${niri} msg action power-on-monitors";

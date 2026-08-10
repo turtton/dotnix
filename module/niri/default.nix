@@ -37,7 +37,11 @@ in
       mkIf cfg.enable (
         if isHomeManager then
           {
-            programs.niri.enable = true;
+            programs.niri = {
+              enable = true;
+              # niri-stable cannot build until a niri release includes niri-wm/niri#4366 (libdisplay-info 0.3)
+              package = inputs.niri-flake.packages.${system}.niri-unstable;
+            };
 
             home.packages = with pkgs; [
               brightnessctl
@@ -70,7 +74,7 @@ in
           }
         else
           {
-            environment.systemPackages = [ inputs.niri-flake.packages.${system}.niri-stable ];
+            environment.systemPackages = [ inputs.niri-flake.packages.${system}.niri-unstable ];
 
             security.pam.services =
               let
@@ -91,7 +95,7 @@ in
             xdg.portal = {
               enable = true;
               extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
-              configPackages = [ inputs.niri-flake.packages.${system}.niri-stable ];
+              configPackages = [ inputs.niri-flake.packages.${system}.niri-unstable ];
             };
 
             programs.dconf.enable = true;
