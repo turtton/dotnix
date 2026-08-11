@@ -22,6 +22,7 @@
 				// Claude Models
 				"claude-fable-5": {
 					"name": "Claude Fable 5",
+					"reasoning": true,
 					"limit": {
 						"context": 1000000,
 						"output": 128000
@@ -35,6 +36,7 @@
 				// GPT Models
 				"gpt-5.6-sol": {
 					"name": "GPT-5.6 Sol",
+					"reasoning": true,
 					"variants": {
 						"max": {},
 						"xhigh": {},
@@ -49,6 +51,7 @@
 				},
 				"gpt-5.6-terra": {
 					"name": "GPT-5.6 Terra",
+					"reasoning": true,
 					"variants": {
 						"max": {},
 						"xhigh": {},
@@ -68,6 +71,7 @@
 				},
 				"gpt-5.6-luna": {
 					"name": "GPT-5.6 Luna",
+					"reasoning": true,
 					"variants": {
 						"max": {},
 						"xhigh": {},
@@ -88,6 +92,7 @@
 				// Open Weight Models
 				"deepseek-v4-pro": {
 					"name": "DeepSeek V4 Pro",
+					"reasoning": true,
 					"variants": {
 						"max": {},
 						"high": {},
@@ -105,6 +110,7 @@
 				},
 				"deepseek-v4-flash": {
 					"name": "DeepSeek V4 Flash",
+					"reasoning": true,
 					"variants": {
 						"max": {},
 						"high": {},
@@ -122,6 +128,7 @@
 				},
 				"kimi-k3": {
 					"name": "Kimi K3",
+					"reasoning": true,
 					"limit": {
 						"context": 1048576,
 						"output": 131072
@@ -134,6 +141,7 @@
 				},
 				"kimi-k2.7-code": {
 					"name": "Kimi K2.7 Code",
+					"reasoning": true,
 					"limit": {
 						"context": 262144,
 						"output": 262144
@@ -146,6 +154,7 @@
 				},
 				"glm-5.2": {
 					"name": "GLM-5.2",
+					"reasoning": true,
 					"limit": {
 						"context": 1000000,
 						"output": 131072
@@ -163,6 +172,7 @@
 				},
 				"glm-5.1": {
 					"name": "GLM-5.1",
+					"reasoning": true,
 					"limit": {
 						"context": 1000000,
 						"output": 131072
@@ -182,6 +192,7 @@
 				},
 				"minimax-m2.5": {
 					"name": "Minimax M2.5",
+					"reasoning": true,
 					"limit": {
 						"context": 204144,
 						"output": 131072
@@ -189,6 +200,7 @@
 				},
 				"qwen3.5-397b-a17b": {
 					"name": "Qwen3.5 397B A17B",
+					"reasoning": true,
 					"limit": {
 						"context": 262144,
 						"output": 262144
@@ -196,6 +208,7 @@
 				},
 				"greg-2-super": {
 					"name": "Greg2 Super",
+					"reasoning": true,
 					"limit": {
 						"context": 229376,
 						"output": 229376
@@ -212,6 +225,7 @@
 			"models": {
 				"deepseek-v4-pro": {
 					"name": "DeepSeek V4 Pro",
+					"reasoning": true,
 					"variants": {
 						"max": {},
 						"high": {},
@@ -229,6 +243,7 @@
 				},
 				"deepseek-v4-flash": {
 					"name": "DeepSeek V4 Flash",
+					"reasoning": true,
 					"variants": {
 						"max": {},
 						"high": {},
@@ -246,6 +261,7 @@
 				},
 				"kimi-k2.7-code": {
 					"name": "Kimi K2.7 Code",
+					"reasoning": true,
 					"limit": {
 						"context": 262144,
 						"output": 262144
@@ -258,6 +274,7 @@
 				},
 				"kimi-k2.6": {
 					"name": "Kimi K2.6",
+					"reasoning": true,
 					"limit": {
 						"context": 262144,
 						"output": 262144
@@ -265,6 +282,7 @@
 				},
 				"kimi-k2.5-lightning": {
 					"name": "Kimi K2.5 Lightning",
+					"reasoning": true,
 					"limit": {
 						"context": 131072,
 						"output": 32768
@@ -277,6 +295,7 @@
 				},
 				"glm-5.2": {
 					"name": "GLM-5.2",
+					"reasoning": true,
 					"limit": {
 						"context": 1000000,
 						"output": 131072
@@ -294,6 +313,7 @@
 				},
 				"glm-5.1": {
 					"name": "GLM-5.1",
+					"reasoning": true,
 					"limit": {
 						"context": 1000000,
 						"output": 131072
@@ -313,6 +333,7 @@
 				},
 				"minimax-m2.5": {
 					"name": "Minimax M2.5",
+					"reasoning": true,
 					"limit": {
 						"context": 204144,
 						"output": 131072
@@ -320,6 +341,7 @@
 				},
 				"qwen3.5-397b-a17b": {
 					"name": "Qwen3.5 397B A17B",
+					"reasoning": true,
 					"limit": {
 						"context": 262144,
 						"output": 262144
@@ -327,6 +349,7 @@
 				},
 				"greg-2-super": {
 					"name": "Greg2 Super",
+					"reasoning": true,
 					"limit": {
 						"context": 229376,
 						"output": 229376

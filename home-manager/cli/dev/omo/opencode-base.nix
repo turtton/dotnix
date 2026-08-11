@@ -3,17 +3,21 @@
 # (oh-my-openagent-go.json).
 #
 # Notes:
-# - Uses the post-2026-08-reasoning-unification format (`models` list with
-#   `reasoning` entries); the migration marker is pinned in ./default.nix, so
-#   reintroducing `fallback_models`/`variant` makes `omo doctor` flag this file.
+# - agents use `model` + `fallback_models`, NOT the newer `models` list: the
+#   released npm runtime (4.19.4) has no `models` key in AgentOverrideConfigSchema,
+#   so zod strips it and agent overrides are silently ignored (builtin fallback
+#   chains get used). The Nix `omo` CLI is a newer dev build that accepts both
+#   formats, so `omo doctor` may flag this as deprecated — that warning is
+#   expected until the npm release catches up. categories keep `models`
+#   (supported by both builds).
 # - `skills.sources` is injected in ./default.nix (needs configDir).
 # - Per-host overrides are deep-merged via packs.opencode.omoOverrides
 #   (see module/opencode).
 {
   agents = {
     sisyphus = {
-      models = [
-        "cli-proxy-api/kimi-k3"
+      model = "cli-proxy-api/kimi-k3";
+      fallback_models = [
         { model = "cli-proxy-api/kimi-k2.7-code"; }
         {
           model = "cli-proxy-api/gpt-5.6-luna";
@@ -22,11 +26,9 @@
       ];
     };
     hephaestus = {
-      models = [
-        {
-          model = "cli-proxy-api/gpt-5.6-sol";
-          reasoning = "medium";
-        }
+      model = "cli-proxy-api/gpt-5.6-sol";
+      reasoning = "medium";
+      fallback_models = [
         {
           model = "cli-proxy-api/deepseek-v4-pro";
           reasoning = "max";
@@ -34,11 +36,9 @@
       ];
     };
     oracle = {
-      models = [
-        {
-          model = "cli-proxy-api/gpt-5.6-sol";
-          reasoning = "xhigh";
-        }
+      model = "cli-proxy-api/gpt-5.6-sol";
+      reasoning = "xhigh";
+      fallback_models = [
         {
           model = "cli-proxy-api/gpt-5.6-terra";
           reasoning = "max";
@@ -46,11 +46,9 @@
       ];
     };
     momus = {
-      models = [
-        {
-          model = "cli-proxy-api/gpt-5.6-sol";
-          reasoning = "xhigh";
-        }
+      model = "cli-proxy-api/gpt-5.6-sol";
+      reasoning = "xhigh";
+      fallback_models = [
         {
           model = "cli-proxy-api/gpt-5.6-terra";
           reasoning = "max";
@@ -58,11 +56,9 @@
       ];
     };
     metis = {
-      models = [
-        {
-          model = "cli-proxy-api/gpt-5.6-sol";
-          reasoning = "xhigh";
-        }
+      model = "cli-proxy-api/gpt-5.6-sol";
+      reasoning = "xhigh";
+      fallback_models = [
         {
           model = "cli-proxy-api/gpt-5.6-terra";
           reasoning = "max";
@@ -74,11 +70,9 @@
       ];
     };
     prometheus = {
-      models = [
-        {
-          model = "cli-proxy-api/gpt-5.6-sol";
-          reasoning = "xhigh";
-        }
+      model = "cli-proxy-api/gpt-5.6-sol";
+      reasoning = "xhigh";
+      fallback_models = [
         {
           model = "cli-proxy-api/glm-5.2";
           reasoning = "max";
@@ -86,14 +80,14 @@
       ];
     };
     atlas = {
-      models = [
-        "cli-proxy-api/kimi-k3"
+      model = "cli-proxy-api/kimi-k3";
+      fallback_models = [
         { model = "cli-proxy-api/kimi-k2.7-code"; }
       ];
     };
     sisyphus-junior = {
-      models = [
-        "openrouter/kimi-k3"
+      model = "openrouter/kimi-k3";
+      fallback_models = [
         { model = "cli-proxy-api/kimi-k2.7-code"; }
         {
           model = "cli-proxy-api/glm-5.2";
@@ -102,11 +96,9 @@
       ];
     };
     explore = {
-      models = [
-        {
-          model = "cli-proxy-api/glm-5.2";
-          reasoning = "max";
-        }
+      model = "cli-proxy-api/glm-5.2";
+      reasoning = "max";
+      fallback_models = [
         {
           model = "cli-proxy-api/gpt-5.6-luna";
           reasoning = "medium";
@@ -114,11 +106,9 @@
       ];
     };
     librarian = {
-      models = [
-        {
-          model = "cli-proxy-api/glm-5.2";
-          reasoning = "max";
-        }
+      model = "cli-proxy-api/glm-5.2";
+      reasoning = "max";
+      fallback_models = [
         {
           model = "cli-proxy-api/gpt-5.6-luna";
           reasoning = "medium";
