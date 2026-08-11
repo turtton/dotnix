@@ -70,9 +70,13 @@
       ];
     };
     prometheus = {
-      model = "cli-proxy-api/gpt-5.6-sol";
+      model = "cli-proxy-api/claude-fable-5";
       reasoning = "xhigh";
       fallback_models = [
+        {
+          model = "cli-proxy-api/gpt-5.6-sol";
+          reasoning = "xhigh";
+        }
         {
           model = "cli-proxy-api/glm-5.2";
           reasoning = "max";
@@ -156,6 +160,10 @@
     };
     artistry = {
       models = [
+        {
+          model = "cli-proxy-api/claude-fable-5";
+          reasoning = "xhigh";
+        }
         {
           model = "cli-proxy-api/gpt-5.6-sol";
           reasoning = "xhigh";

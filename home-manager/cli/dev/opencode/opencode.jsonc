@@ -23,6 +23,13 @@
 				"claude-fable-5": {
 					"name": "Claude Fable 5",
 					"reasoning": true,
+					"variants": {
+						"max": {},
+						"xhigh": {},
+						"high": {},
+						"medium": {},
+						"low": {}
+					},
 					"limit": {
 						"context": 1000000,
 						"output": 128000
