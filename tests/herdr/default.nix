@@ -26,6 +26,12 @@ in
     touch $out
   '';
 
+  senpi-launcher-contract = pkgs.runCommand "senpi-herdr-launcher-contract" { nativeBuildInputs = testInputs; } ''
+    export FAKE_HERDR=${./fake-herdr.sh}
+    bash ${./senpi-launcher-contract.sh} ${../../overlay/senpi/senpi-herdr.sh}
+    touch $out
+  '';
+
   quota-contract = pkgs.runCommand "herdr-quota-contract" { nativeBuildInputs = testInputs; } ''
     export FAKE_HERDR=${./fake-herdr.sh}
     bash ${./quota-contract.sh} ${../../overlay/opencode/kimi-quota-poll.sh}

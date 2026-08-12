@@ -1,6 +1,7 @@
 inputs: self: prev:
 let
   original = inputs.senpi.packages.${prev.stdenv.hostPlatform.system}.default;
+  isDarwin = prev.stdenv.isDarwin;
 
   mkQuotaPoller =
     name:
@@ -9,6 +10,36 @@ let
         builtins.readFile (../opencode + "/${name}")
       )
     );
+
+  quotaPollers = {
+    copilot = mkQuotaPoller "copilot-quota-poll.sh";
+    openai = mkQuotaPoller "openai-quota-poll.sh";
+    crof = mkQuotaPoller "crof-quota-poll.sh";
+    openrouter = mkQuotaPoller "openrouter-quota-poll.sh";
+    claude = mkQuotaPoller "claude-quota-poll.sh";
+    kimi = mkQuotaPoller "kimi-quota-poll.sh";
+  };
+
+  herdrChild = self.writeText "senpi-herdr-child-wrapper.sh" (
+    builtins.replaceStrings
+      [
+        "@quota-script@"
+        "@openai-quota-script@"
+        "@crof-quota-script@"
+        "@openrouter-quota-script@"
+        "@claude-quota-script@"
+        "@kimi-quota-script@"
+      ]
+      [
+        "${quotaPollers.copilot}"
+        "${quotaPollers.openai}"
+        "${quotaPollers.crof}"
+        "${quotaPollers.openrouter}"
+        "${quotaPollers.claude}"
+        "${quotaPollers.kimi}"
+      ]
+      (builtins.readFile ./senpi-herdr-child-wrapper.sh)
+  );
 
   launcher = self.writeShellApplication {
     name = "senpi-tmux";
@@ -36,14 +67,36 @@ let
         [
           "${original}/bin"
           "${./tmux.conf}"
-          "${mkQuotaPoller "copilot-quota-poll.sh"}"
-          "${mkQuotaPoller "openai-quota-poll.sh"}"
-          "${mkQuotaPoller "crof-quota-poll.sh"}"
-          "${mkQuotaPoller "openrouter-quota-poll.sh"}"
-          "${mkQuotaPoller "claude-quota-poll.sh"}"
-          "${mkQuotaPoller "kimi-quota-poll.sh"}"
+          "${quotaPollers.copilot}"
+          "${quotaPollers.openai}"
+          "${quotaPollers.crof}"
+          "${quotaPollers.openrouter}"
+          "${quotaPollers.claude}"
+          "${quotaPollers.kimi}"
         ]
         (builtins.readFile ./senpi-tmux.sh);
+  };
+
+  launcher-herdr = self.writeShellApplication {
+    name = "senpi-herdr";
+    runtimeInputs =
+      with self;
+      [
+        herdr
+        curl
+        jq
+        gh
+        gnused
+        coreutils
+      ]
+      ++ self.lib.optionals (!isDarwin) [
+        util-linux
+      ];
+    checkPhase = "";
+    text = builtins.replaceStrings [ "@senpi-dir@" "@child-wrapper@" ] [
+      "${original}/bin"
+      "${herdrChild}"
+    ] (builtins.readFile ./senpi-herdr.sh);
   };
 
   launcher-legacy = self.writeShellApplication {
@@ -94,6 +147,7 @@ in
     name = "${original.name}-wrapped";
     paths = [
       launcher
+      launcher-herdr
       launcher-legacy
       senpi-bare
     ];
