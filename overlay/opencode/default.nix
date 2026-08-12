@@ -13,6 +13,14 @@ inputs: self: prev: {
       });
       isDarwin = prev.stdenv.isDarwin;
 
+      mkQuotaPoller =
+        name:
+        self.writeText name (
+          builtins.replaceStrings [ "__QUOTA_REPORT__" ] [ "${./quota-report.sh}" ] (
+            builtins.readFile (./. + "/${name}")
+          )
+        );
+
       sandbox = self.writeShellApplication {
         name = "opencode-sandbox";
         runtimeInputs =
@@ -49,12 +57,12 @@ inputs: self: prev: {
             [
               "${opencode}/bin"
               "${./tmux.conf}"
-              "${./copilot-quota-poll.sh}"
-              "${./openai-quota-poll.sh}"
-              "${./crof-quota-poll.sh}"
-              "${./openrouter-quota-poll.sh}"
-              "${./claude-quota-poll.sh}"
-              "${./kimi-quota-poll.sh}"
+              "${mkQuotaPoller "copilot-quota-poll.sh"}"
+              "${mkQuotaPoller "openai-quota-poll.sh"}"
+              "${mkQuotaPoller "crof-quota-poll.sh"}"
+              "${mkQuotaPoller "openrouter-quota-poll.sh"}"
+              "${mkQuotaPoller "claude-quota-poll.sh"}"
+              "${mkQuotaPoller "kimi-quota-poll.sh"}"
             ]
             (builtins.readFile (if isDarwin then ./sandbox-darwin.sh else ./sandbox.sh));
       };

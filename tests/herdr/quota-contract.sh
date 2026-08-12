@@ -30,8 +30,40 @@ export FAKE_HERDR_STATE="$WORK/herdr-state"
 export FAKE_HERDR_LOG="$WORK/herdr.log"
 export FAKE_API_RESPONSE_FILE="$WORK/api-response.json"
 mkdir -p "$HOME/.local/share/opencode" "$XDG_STATE_HOME" "$FAKE_HERDR_STATE"
-printf '{"kimi-for-coding":{"key":"fake-token"}}' >"$HOME/.local/share/opencode/auth.json"
 : >"$FAKE_HERDR_LOG"
+
+# プロバイダごとの認証情報と API レスポンス fixture
+API_FIXTURE=""
+case "$PROVIDER" in
+kimi)
+  printf '{"kimi-for-coding":{"key":"fake-token"}}' >"$HOME/.local/share/opencode/auth.json"
+  API_FIXTURE='{"usage":{"limit":100,"remaining":40},"limits":[{"detail":{"limit":100,"used":25},"window":{"duration":300}}]}'
+  ;;
+openai)
+  printf '{"openai":{"access":"fake-token"}}' >"$HOME/.local/share/opencode/auth.json"
+  API_FIXTURE='{"rate_limit":{"primary_window":{"used_percent":42},"secondary_window":{"used_percent":17}}}'
+  ;;
+crof)
+  printf '{"crof":{"key":"fake-token"}}' >"$HOME/.local/share/opencode/auth.json"
+  API_FIXTURE='{"credits":12.345}'
+  ;;
+openrouter)
+  printf '{"openrouter":{"key":"fake-token"}}' >"$HOME/.local/share/opencode/auth.json"
+  API_FIXTURE='{"data":{"limit_remaining":5.5}}'
+  ;;
+claude)
+  mkdir -p "$HOME/.claude"
+  printf '{"claudeAiOauth":{"accessToken":"fake-token"}}' >"$HOME/.claude/.credentials.json"
+  API_FIXTURE='{"five_hour":{"utilization":33},"seven_day":{"utilization":12}}'
+  ;;
+copilot)
+  API_FIXTURE='{"quota_snapshots":{"premium_interactions":{"entitlement":300,"remaining":117}}}'
+  ;;
+*)
+  echo "unknown provider: $PROVIDER" >&2
+  exit 2
+  ;;
+esac
 
 FAKE_BIN="$WORK/bin"
 mkdir -p "$FAKE_BIN"
@@ -45,6 +77,15 @@ cat "$FAKE_API_RESPONSE_FILE"
 EOF
 sed -i "1s|^#!.*|#!$BASH_BIN|" "$FAKE_BIN/herdr"
 chmod +x "$FAKE_BIN/herdr" "$FAKE_BIN/curl"
+if [[ $PROVIDER == copilot ]]; then
+  printf '#!%s\n' "$BASH_BIN" >"$FAKE_BIN/gh"
+  cat >>"$FAKE_BIN/gh" <<'EOF'
+echo "gh $*" >>"$FAKE_CURL_LOG"
+[[ -f $FAKE_API_RESPONSE_FILE ]] || exit 1
+cat "$FAKE_API_RESPONSE_FILE"
+EOF
+  chmod +x "$FAKE_BIN/gh"
+fi
 export FAKE_CURL_LOG="$WORK/curl.log"
 : >"$FAKE_CURL_LOG"
 export PATH="$FAKE_BIN:$PATH"
@@ -60,9 +101,7 @@ export HERDR_PANE_ID
 HERDR_PANE_ID=$(jq -r '.result.root_pane.pane_id' <<<"$created")
 METADATA_LOG="$FAKE_HERDR_STATE/sessions/$HERDR_SESSION/metadata.log"
 
-cat >"$FAKE_API_RESPONSE_FILE" <<'EOF'
-{"usage":{"limit":100,"remaining":40},"limits":[{"detail":{"limit":100,"used":25},"window":{"duration":300}}]}
-EOF
+printf '%s\n' "$API_FIXTURE" >"$FAKE_API_RESPONSE_FILE"
 
 tests=0 fails=0
 ok() {

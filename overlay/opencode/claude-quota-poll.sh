@@ -2,8 +2,11 @@
 # Claude quota ポーリング (api.anthropic.com/api/oauth/usage; best-effort 表示用)
 # Claude Code の OAuth 認証情報 (~/.claude/.credentials.json) を利用する。
 # macOS 版 Claude Code は Keychain 保存のためこのスクリプトは Linux 専用。
-# __OUTPUT_PATH__ はセットアップ時に sed で実パスに置換される
-OUTPUT_FILE="__OUTPUT_PATH__"
+# ビルド時に quota-report.sh のストアパスが埋め込まれる
+QUOTA_REPORT="__QUOTA_REPORT__"
+if [[ ! -x $QUOTA_REPORT ]]; then
+  QUOTA_REPORT="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/quota-report.sh"
+fi
 CREDENTIALS_FILE="${HOME}/.claude/.credentials.json"
 
 # Claude Code の公開 OAuth client_id
@@ -92,7 +95,6 @@ render_quota() {
   local token json
   token=$(jq -r '.claudeAiOauth.accessToken // empty' "$CREDENTIALS_FILE" 2>/dev/null)
   if [[ -z $token ]]; then
-    : >"$OUTPUT_FILE"
     return
   fi
 
@@ -101,7 +103,6 @@ render_quota() {
   if ! is_valid_usage "$json"; then
     # レートリミットは一時的なものなのでリフレッシュは試みず諦める
     if echo "$json" | jq -e '.error.type == "rate_limit_error"' >/dev/null 2>&1; then
-      : >"$OUTPUT_FILE"
       return
     fi
 
@@ -122,7 +123,6 @@ render_quota() {
     fi
 
     if ! is_valid_usage "$json"; then
-      : >"$OUTPUT_FILE"
       return
     fi
   fi
@@ -133,47 +133,15 @@ render_quota() {
   secondary_pct=$(echo "$json" | jq -r 'if .seven_day == null then "" else (.seven_day.utilization // 0) | floor end' 2>/dev/null)
 
   if [[ -z $primary_pct || $primary_pct == "null" ]]; then
-    : >"$OUTPUT_FILE"
     return
   fi
 
-  local bar=" │ "
-
-  local filled5=$((primary_pct / 10))
-  [[ $filled5 -gt 10 ]] && filled5=10
-  [[ $filled5 -lt 0 ]] && filled5=0
-  local empty5=$((10 - filled5))
-
-  bar+="#[bg=#181825,fg=#fab387] 󰛄 "
-  if [[ $filled5 -gt 0 ]]; then
-    bar+="#[bg=#fab387,fg=#11111b]"
-    for ((i = 0; i < filled5; i++)); do bar+="█"; done
-  fi
-  if [[ $empty5 -gt 0 ]]; then
-    bar+="#[bg=#313244,fg=#585b70]"
-    for ((i = 0; i < empty5; i++)); do bar+="░"; done
-  fi
-  bar+="#[bg=#181825,fg=#cdd6f4] ${primary_pct}% "
-
+  local value="5h ${primary_pct}%"
   if [[ -n $secondary_pct && $secondary_pct != "null" ]]; then
-    local filledw=$((secondary_pct / 10))
-    [[ $filledw -gt 10 ]] && filledw=10
-    [[ $filledw -lt 0 ]] && filledw=0
-    local emptyw=$((10 - filledw))
-
-    bar+="#[bg=#181825,fg=#f9e2af] 󰃭 "
-    if [[ $filledw -gt 0 ]]; then
-      bar+="#[bg=#f9e2af,fg=#11111b]"
-      for ((i = 0; i < filledw; i++)); do bar+="█"; done
-    fi
-    if [[ $emptyw -gt 0 ]]; then
-      bar+="#[bg=#313244,fg=#585b70]"
-      for ((i = 0; i < emptyw; i++)); do bar+="░"; done
-    fi
-    bar+="#[bg=#181825,fg=#cdd6f4] ${secondary_pct}%"
+    value+=" / week ${secondary_pct}%"
   fi
 
-  echo "$bar" >"$OUTPUT_FILE"
+  "$QUOTA_REPORT" claude "$value"
 }
 
 render_quota

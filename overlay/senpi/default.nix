@@ -2,6 +2,14 @@ inputs: self: prev:
 let
   original = inputs.senpi.packages.${prev.stdenv.hostPlatform.system}.default;
 
+  mkQuotaPoller =
+    name:
+    self.writeText name (
+      builtins.replaceStrings [ "__QUOTA_REPORT__" ] [ "${../opencode/quota-report.sh}" ] (
+        builtins.readFile (../opencode + "/${name}")
+      )
+    );
+
   launcher = self.writeShellApplication {
     name = "senpi-tmux";
     runtimeInputs = with self; [
@@ -28,12 +36,12 @@ let
         [
           "${original}/bin"
           "${./tmux.conf}"
-          "${../opencode/copilot-quota-poll.sh}"
-          "${../opencode/openai-quota-poll.sh}"
-          "${../opencode/crof-quota-poll.sh}"
-          "${../opencode/openrouter-quota-poll.sh}"
-          "${../opencode/claude-quota-poll.sh}"
-          "${../opencode/kimi-quota-poll.sh}"
+          "${mkQuotaPoller "copilot-quota-poll.sh"}"
+          "${mkQuotaPoller "openai-quota-poll.sh"}"
+          "${mkQuotaPoller "crof-quota-poll.sh"}"
+          "${mkQuotaPoller "openrouter-quota-poll.sh"}"
+          "${mkQuotaPoller "claude-quota-poll.sh"}"
+          "${mkQuotaPoller "kimi-quota-poll.sh"}"
         ]
         (builtins.readFile ./senpi-tmux.sh);
   };
