@@ -106,6 +106,13 @@
         rust-overlay.follows = "rust-overlay";
       };
     };
+    herdr = {
+      url = "github:herdrdev/herdr/v0.8.0";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        rust-overlay.follows = "rust-overlay";
+      };
+    };
     noctalia = {
       url = "github:noctalia-dev/noctalia/legacy-v4";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -265,6 +272,7 @@
           opencode-latest = overlays.opencode-latest;
           opencode = overlays.opencode;
           ghr = overlays.siketyan-ghr;
+          herdr = overlays.herdr;
           zen-browser = zen-browser.packages.${system}.default;
           cnowledje = overlays.cnowledje;
         }
