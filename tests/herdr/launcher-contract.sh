@@ -25,6 +25,8 @@ export XDG_STATE_HOME="$WORK/xdg-state"
 export FAKE_HERDR_STATE="$WORK/herdr-state"
 export FAKE_HERDR_LOG="$WORK/herdr.log"
 export OPENCODE_BIN=/bin/true
+export OPENCODE_NO_SANDBOX=
+export OPENCODE_HERDR_TEST_MODE=1
 mkdir -p "$HOME" "$XDG_STATE_HOME" "$FAKE_HERDR_STATE"
 : >"$FAKE_HERDR_LOG"
 

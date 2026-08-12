@@ -21,6 +21,59 @@ inputs: self: prev: {
           )
         );
 
+      quotaPollers = {
+        copilot = mkQuotaPoller "copilot-quota-poll.sh";
+        openai = mkQuotaPoller "openai-quota-poll.sh";
+        crof = mkQuotaPoller "crof-quota-poll.sh";
+        openrouter = mkQuotaPoller "openrouter-quota-poll.sh";
+        claude = mkQuotaPoller "claude-quota-poll.sh";
+        kimi = mkQuotaPoller "kimi-quota-poll.sh";
+      };
+
+      sandboxChild = self.writeText "opencode-child-wrapper.sh" (
+        builtins.replaceStrings
+          [
+            "@quota-script@"
+            "@openai-quota-script@"
+            "@crof-quota-script@"
+            "@openrouter-quota-script@"
+            "@claude-quota-script@"
+            "@kimi-quota-script@"
+            "@quota-report@"
+          ]
+          [
+            "${quotaPollers.copilot}"
+            "${quotaPollers.openai}"
+            "${quotaPollers.crof}"
+            "${quotaPollers.openrouter}"
+            "${quotaPollers.claude}"
+            "${quotaPollers.kimi}"
+            "${./quota-report.sh}"
+          ]
+          (builtins.readFile ./child-wrapper.sh)
+      );
+
+      sandboxChildDarwin = self.writeText "opencode-child-wrapper-darwin.sh" (
+        builtins.replaceStrings
+          [
+            "@quota-script@"
+            "@openai-quota-script@"
+            "@crof-quota-script@"
+            "@openrouter-quota-script@"
+            "@kimi-quota-script@"
+            "@quota-report@"
+          ]
+          [
+            "${quotaPollers.copilot}"
+            "${quotaPollers.openai}"
+            "${quotaPollers.crof}"
+            "${quotaPollers.openrouter}"
+            "${quotaPollers.kimi}"
+            "${./quota-report.sh}"
+          ]
+          (builtins.readFile ./child-wrapper-darwin.sh)
+      );
+
       sandbox = self.writeShellApplication {
         name = "opencode-sandbox";
         runtimeInputs =
@@ -46,6 +99,7 @@ inputs: self: prev: {
           builtins.replaceStrings
             [
               "@opencode-dir@"
+              "@child-wrapper@"
               "@tmux-conf@"
               "@quota-script@"
               "@openai-quota-script@"
@@ -53,19 +107,24 @@ inputs: self: prev: {
               "@openrouter-quota-script@"
               "@claude-quota-script@"
               "@kimi-quota-script@"
+              "@quota-report@"
             ]
             [
               "${opencode}/bin"
+              "${if isDarwin then sandboxChildDarwin else sandboxChild}"
               "${./tmux.conf}"
-              "${mkQuotaPoller "copilot-quota-poll.sh"}"
-              "${mkQuotaPoller "openai-quota-poll.sh"}"
-              "${mkQuotaPoller "crof-quota-poll.sh"}"
-              "${mkQuotaPoller "openrouter-quota-poll.sh"}"
-              "${mkQuotaPoller "claude-quota-poll.sh"}"
-              "${mkQuotaPoller "kimi-quota-poll.sh"}"
+              "${quotaPollers.copilot}"
+              "${quotaPollers.openai}"
+              "${quotaPollers.crof}"
+              "${quotaPollers.openrouter}"
+              "${quotaPollers.claude}"
+              "${quotaPollers.kimi}"
+              "${./quota-report.sh}"
             ]
             (builtins.readFile (if isDarwin then ./sandbox-darwin.sh else ./sandbox.sh));
       };
+
+      legacyAsset = name: self.writeText "legacy-${name}" (builtins.readFile (./legacy + "/${name}"));
 
       sandbox-legacy = self.writeShellApplication {
         name = "opencode-tmux";
@@ -102,13 +161,13 @@ inputs: self: prev: {
             ]
             [
               "${opencode}/bin"
-              "${./legacy/tmux.conf}"
-              "${./legacy/copilot-quota-poll.sh}"
-              "${./legacy/openai-quota-poll.sh}"
-              "${./legacy/crof-quota-poll.sh}"
-              "${./legacy/openrouter-quota-poll.sh}"
-              "${./legacy/claude-quota-poll.sh}"
-              "${./legacy/kimi-quota-poll.sh}"
+              "${legacyAsset "tmux.conf"}"
+              "${legacyAsset "copilot-quota-poll.sh"}"
+              "${legacyAsset "openai-quota-poll.sh"}"
+              "${legacyAsset "crof-quota-poll.sh"}"
+              "${legacyAsset "openrouter-quota-poll.sh"}"
+              "${legacyAsset "claude-quota-poll.sh"}"
+              "${legacyAsset "kimi-quota-poll.sh"}"
             ]
             (builtins.readFile (if isDarwin then ./legacy/sandbox-darwin.sh else ./legacy/sandbox.sh));
       };

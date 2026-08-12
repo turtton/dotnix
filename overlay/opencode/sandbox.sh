@@ -4,8 +4,120 @@
 
 OPENCODE_BIN="${OPENCODE_BIN:-@opencode-dir@/opencode}"
 
+if [[ -n ${OPENCODE_NO_SANDBOX:-} && -z ${OPENCODE_HERDR_CHILD:-} ]]; then
+  exec "$OPENCODE_BIN" "$@"
+fi
+
 PROJECT_DIR="$(pwd)"
+CANONICAL_PROJECT_DIR="$(pwd -P)"
 REPO_ROOT="$(git -C "$PROJECT_DIR" rev-parse --show-toplevel 2>/dev/null || echo "$PROJECT_DIR")"
+
+shell_quote() {
+  local value=$1
+  printf "'%s'" "${value//\'/\'\"\'\"\'}"
+}
+
+launch_herdr() {
+  local base hash session state_dir lock_dir pane_file pane_id="" inject=false
+  local status_output process_info created command socket_path attempt
+
+  base=$(basename "$PROJECT_DIR" | LC_ALL=C sed 's/[^[:alnum:]]/-/g')
+  hash=$(printf '%s' "$CANONICAL_PROJECT_DIR" | sha256sum | cut -c1-8)
+  session="opencode-${base}-${hash}"
+  state_dir="${XDG_STATE_HOME:-$HOME/.local/state}/herdr-launchers/$session"
+  lock_dir="$state_dir/lock"
+  pane_file="$state_dir/pane-id"
+  mkdir -p "$state_dir"
+
+  for attempt in $(seq 1 200); do
+    if mkdir "$lock_dir" 2>/dev/null; then
+      break
+    fi
+    sleep 0.05
+  done
+  if [[ ! -d $lock_dir ]]; then
+    echo "opencode-sandbox: ERROR: timed out waiting for launcher lock: $lock_dir" >&2
+    exit 1
+  fi
+  trap 'rmdir "$lock_dir" 2>/dev/null || true' EXIT INT TERM
+
+  status_output=$(herdr --session "$session" status 2>/dev/null || true)
+  if ! grep -q 'status: running' <<<"$status_output"; then
+    setsid herdr --session "$session" server </dev/null >"$state_dir/server.log" 2>&1 &
+    for attempt in $(seq 1 200); do
+      if herdr --session "$session" workspace list >/dev/null 2>&1; then
+        break
+      fi
+      sleep 0.05
+    done
+    if ! herdr --session "$session" workspace list >/dev/null 2>&1; then
+      echo "opencode-sandbox: ERROR: herdr server did not become ready for $session" >&2
+      exit 1
+    fi
+    status_output=$(herdr --session "$session" status 2>/dev/null || true)
+  fi
+
+  if [[ -n ${HERDR_SOCKET_PATH:-} ]]; then
+    socket_path=$HERDR_SOCKET_PATH
+  else
+    socket_path=$(sed -n 's/^[[:space:]]*socket:[[:space:]]*//p' <<<"$status_output" | tail -n 1)
+    if [[ -z $socket_path ]]; then
+      socket_path="$HOME/.config/herdr/sessions/$session/herdr.sock"
+    fi
+  fi
+
+  if [[ -s $pane_file ]]; then
+    pane_id=$(<"$pane_file")
+    if ! herdr --session "$session" pane get "$pane_id" >/dev/null 2>&1; then
+      pane_id=""
+      rm -f "$pane_file"
+    else
+      process_info=$(herdr --session "$session" pane process-info --pane "$pane_id" 2>/dev/null || true)
+      if jq -e '.result.process_info as $p | $p.foreground_process_group_id == $p.shell_pid and $p.foreground_processes[0].pid == $p.shell_pid' \
+        >/dev/null 2>&1 <<<"$process_info"; then
+        inject=true
+      fi
+    fi
+  fi
+
+  if [[ -z $pane_id ]]; then
+    created=$(herdr --session "$session" workspace create --cwd "$PROJECT_DIR" --label "$session" --no-focus)
+    pane_id=$(jq -r '.result.root_pane.pane_id // empty' <<<"$created")
+    if [[ -z $pane_id ]]; then
+      echo "opencode-sandbox: ERROR: herdr workspace creation returned no pane id" >&2
+      exit 1
+    fi
+    printf '%s\n' "$pane_id" >"$pane_file"
+    inject=true
+  fi
+
+  if $inject; then
+    if [[ -n ${OPENCODE_HERDR_TEST_MODE:-} && $# -gt 0 ]]; then
+      command=$(shell_quote "$1")
+      shift
+      for arg in "$@"; do
+        command+=" $(shell_quote "$arg")"
+      done
+    else
+      command="env OPENCODE_NO_SANDBOX= OPENCODE_HERDR_CHILD=1 HERDR_SESSION=$(shell_quote "$session") HERDR_SOCKET_PATH=$(shell_quote "$socket_path") HERDR_PANE_ID=$(shell_quote "$pane_id") OPENCODE_BIN=$(shell_quote "$OPENCODE_BIN") $(shell_quote "${BASH_SOURCE[0]}")"
+      for arg in "$@"; do
+        command+=" $(shell_quote "$arg")"
+      done
+    fi
+    herdr --session "$session" pane run "$pane_id" "$command"
+  fi
+
+  rmdir "$lock_dir"
+  trap - EXIT INT TERM
+  unset HERDR_ENV HERDR_PANE_ID HERDR_TAB_ID HERDR_WORKSPACE_ID
+  export HERDR_SESSION="$session" HERDR_SOCKET_PATH="$socket_path"
+  exec herdr --session "$session"
+}
+
+if [[ -z ${OPENCODE_HERDR_CHILD:-} ]] && [[ -t 0 && -t 1 && -t 2 ]]; then
+  launch_herdr "$@"
+fi
+
 # メモリ節約: /var/tmp (ディスク) を優先し、失敗時のみ tmpfs にフォールバック
 if ! OPENCODE_HOME="$(mktemp -d /var/tmp/opencodebox-XXXXXXXX 2>/dev/null)"; then
   OPENCODE_HOME="$(mktemp -d "${TMPDIR:-/tmp}/opencodebox-XXXXXXXX")"
@@ -75,6 +187,15 @@ isolated_home() {
     --perms 1777 --tmpfs /tmp
     --bind "$OPENCODE_HOME" "$HOME"
   )
+
+  if [[ -n ${HERDR_SOCKET_PATH:-} ]]; then
+    local socket_dir
+    socket_dir=$(dirname "$HERDR_SOCKET_PATH")
+    if [[ $socket_dir == "$REAL_HOME"/* ]]; then
+      mkdir -p "${OPENCODE_HOME}${socket_dir#"$REAL_HOME"}"
+      BWRAP_ARGS+=(--bind "$socket_dir" "$socket_dir")
+    fi
+  fi
 
   # OpenCode 設定ディレクトリ全体をマウント (opencode.json, AGENTS.md等)
   if [[ -d $OPENCODE_CONFIG ]]; then
@@ -149,6 +270,13 @@ namespace_and_env() {
     # opencode: サンドボックスのネストを防ぐ (OMO の subagent 起動時に再度サンドボックスが起動しないように)
     --setenv OPENCODE_NO_SANDBOX 1
   )
+
+  local herdr_vars=(HERDR_SESSION HERDR_SOCKET_PATH HERDR_ENV HERDR_PANE_ID HERDR_TAB_ID HERDR_WORKSPACE_ID)
+  for var in "${herdr_vars[@]}"; do
+    if [[ -n ${!var:-} ]]; then
+      BWRAP_ARGS+=(--setenv "$var" "${!var}")
+    fi
+  done
 
   # XDG Base Directory 変数の転送 (opencode は XDG 準拠)
   # XDG_RUNTIME_DIR: Wayland, podman rootless ソケット等が依存
@@ -425,147 +553,5 @@ if [[ -f $SANDBOX_EXTRA ]]; then
   source "$SANDBOX_EXTRA"
 fi
 
-TMUX_CONF_PATH="${OPENCODE_HOME}/.tmux.conf"
-QUOTA_OUTPUT_PATH="${OPENCODE_HOME}/.copilot-quota"
-QUOTA_SCRIPT_PATH="${OPENCODE_HOME}/.copilot-quota-poll.sh"
-OPENAI_QUOTA_OUTPUT_PATH="${OPENCODE_HOME}/.openai-quota"
-OPENAI_QUOTA_SCRIPT_PATH="${OPENCODE_HOME}/.openai-quota-poll.sh"
-CROF_QUOTA_OUTPUT_PATH="${OPENCODE_HOME}/.crof-quota"
-CROF_QUOTA_SCRIPT_PATH="${OPENCODE_HOME}/.crof-quota-poll.sh"
-OPENROUTER_QUOTA_OUTPUT_PATH="${OPENCODE_HOME}/.openrouter-quota"
-OPENROUTER_QUOTA_SCRIPT_PATH="${OPENCODE_HOME}/.openrouter-quota-poll.sh"
-CLAUDE_QUOTA_OUTPUT_PATH="${OPENCODE_HOME}/.claude-quota"
-CLAUDE_QUOTA_SCRIPT_PATH="${OPENCODE_HOME}/.claude-quota-poll.sh"
-KIMI_QUOTA_OUTPUT_PATH="${OPENCODE_HOME}/.kimi-quota"
-KIMI_QUOTA_SCRIPT_PATH="${OPENCODE_HOME}/.kimi-quota-poll.sh"
-PORT_OUTPUT_PATH="${OPENCODE_HOME}/.opencode-port"
-
-printf '%s\n' "N/A" >"$QUOTA_OUTPUT_PATH"
-printf '%s' "" >"$OPENAI_QUOTA_OUTPUT_PATH"
-printf '%s' "" >"$CROF_QUOTA_OUTPUT_PATH"
-printf '%s' "" >"$OPENROUTER_QUOTA_OUTPUT_PATH"
-printf '%s' "" >"$CLAUDE_QUOTA_OUTPUT_PATH"
-printf '%s' "" >"$KIMI_QUOTA_OUTPUT_PATH"
-printf '%s' "N/A" >"$PORT_OUTPUT_PATH"
-cp "@quota-script@" "$QUOTA_SCRIPT_PATH"
-sed -i "s|__OUTPUT_PATH__|${HOME}/.copilot-quota|g" "$QUOTA_SCRIPT_PATH"
-chmod +x "$QUOTA_SCRIPT_PATH"
-cp "@openai-quota-script@" "$OPENAI_QUOTA_SCRIPT_PATH"
-sed -i "s|__OUTPUT_PATH__|${HOME}/.openai-quota|g" "$OPENAI_QUOTA_SCRIPT_PATH"
-chmod +x "$OPENAI_QUOTA_SCRIPT_PATH"
-cp "@crof-quota-script@" "$CROF_QUOTA_SCRIPT_PATH"
-sed -i "s|__OUTPUT_PATH__|${HOME}/.crof-quota|g" "$CROF_QUOTA_SCRIPT_PATH"
-chmod +x "$CROF_QUOTA_SCRIPT_PATH"
-cp "@openrouter-quota-script@" "$OPENROUTER_QUOTA_SCRIPT_PATH"
-sed -i "s|__OUTPUT_PATH__|${HOME}/.openrouter-quota|g" "$OPENROUTER_QUOTA_SCRIPT_PATH"
-chmod +x "$OPENROUTER_QUOTA_SCRIPT_PATH"
-cp "@claude-quota-script@" "$CLAUDE_QUOTA_SCRIPT_PATH"
-sed -i "s|__OUTPUT_PATH__|${HOME}/.claude-quota|g" "$CLAUDE_QUOTA_SCRIPT_PATH"
-chmod +x "$CLAUDE_QUOTA_SCRIPT_PATH"
-cp "@kimi-quota-script@" "$KIMI_QUOTA_SCRIPT_PATH"
-sed -i "s|__OUTPUT_PATH__|${HOME}/.kimi-quota|g" "$KIMI_QUOTA_SCRIPT_PATH"
-chmod +x "$KIMI_QUOTA_SCRIPT_PATH"
-cp "@tmux-conf@" "$TMUX_CONF_PATH"
-sed -i "s|__QUOTA_FILE__|${HOME}/.copilot-quota|g" "$TMUX_CONF_PATH"
-sed -i "s|__OPENAI_QUOTA_FILE__|${HOME}/.openai-quota|g" "$TMUX_CONF_PATH"
-sed -i "s|__CROF_QUOTA_FILE__|${HOME}/.crof-quota|g" "$TMUX_CONF_PATH"
-sed -i "s|__OPENROUTER_QUOTA_FILE__|${HOME}/.openrouter-quota|g" "$TMUX_CONF_PATH"
-sed -i "s|__CLAUDE_QUOTA_FILE__|${HOME}/.claude-quota|g" "$TMUX_CONF_PATH"
-sed -i "s|__KIMI_QUOTA_FILE__|${HOME}/.kimi-quota|g" "$TMUX_CONF_PATH"
-sed -i "s|__PORT_FILE__|${HOME}/.opencode-port|g" "$TMUX_CONF_PATH"
-
-# サンドボックス内で実行するスクリプトの組み立て
-# TTY がある場合は tmux セッション内で起動 (OMO の tmux ペイン分割を有効化)
-# --port: OMO がサブエージェントペインで `opencode attach` するために HTTP API の TCP リスナーが必要
-#         デフォルト --port 0 ではリスナーが起動せず、OMO の isServerRunning() ヘルスチェックが失敗する
-# 非対話環境 (パイプ等) では直接実行
-INNER_SCRIPT='
-cd "$1"; shift
-
-port="${OPENCODE_PORT:-4096}"
-bin=$1; shift
-
-# ユーザー引数から --port 値を抽出 (-- 以降は位置引数なので打ち切る)
-# 複数指定時は最後の有効な値を採用する (opencode CLI と同じ挙動)
-actual_port="$port"
-has_port=false
-port_valid=false
-grab_next=false
-for arg in "$@"; do
-  if $grab_next; then
-    case "$arg" in
-      -*) grab_next=false ;;
-      "") grab_next=false ;;
-      *)  actual_port="$arg"; port_valid=true; grab_next=false ;;
-    esac
-    continue
-  fi
-  case "$arg" in
-    --) break ;;
-    --port=?*) has_port=true; port_valid=true; actual_port="${arg#--port=}" ;;
-    --port=)   has_port=true ;;
-    --port)    has_port=true; grab_next=true ;;
-  esac
-done
-
-if ! $has_port; then
-  set -- "$@" --port "$port"
-fi
-set -- "$bin" "$@"
-
-# port 0 = listener 無効、has_port かつ値が取れなかった場合も N/A
-if ! $port_valid && $has_port; then
-  printf '%s' "N/A" > "$HOME/.opencode-port"
-elif [ "$actual_port" = "0" ]; then
-  printf '%s' "N/A" > "$HOME/.opencode-port"
-else
-  printf '%s' "$actual_port" > "$HOME/.opencode-port"
-fi
-
-if [ -t 0 ] && [ -t 1 ] && [ -t 2 ]; then
-  if gh auth status >/dev/null 2>&1; then
-    "$HOME/.copilot-quota-poll.sh" &
-    quota_pid=$!
-  fi
-  "$HOME/.openai-quota-poll.sh" &
-  openai_quota_pid=$!
-  "$HOME/.crof-quota-poll.sh" &
-  crof_quota_pid=$!
-  "$HOME/.openrouter-quota-poll.sh" &
-  openrouter_quota_pid=$!
-  "$HOME/.claude-quota-poll.sh" &
-  claude_quota_pid=$!
-  "$HOME/.kimi-quota-poll.sh" &
-  kimi_quota_pid=$!
-  # セッション名を起動元ディレクトリから導出する (同じディレクトリなら共有、別なら別セッション)
-  # tmux はセッション名に . と : を受け付けないためサニタイズし、同名ディレクトリはハッシュで区別する
-  dir_name=$(basename "$PWD" | tr -c '[:alnum:]_\n-' '-')
-  dir_hash=$(printf '%s' "$PWD" | sha256sum | cut -c1-8)
-  tmux -f "$HOME/.tmux.conf" new-session -A -s "opencode-$dir_name-$dir_hash" -- "$@"
-  exit_code=$?
-  if [ -n "${quota_pid:-}" ]; then
-    kill "$quota_pid" 2>/dev/null; wait "$quota_pid" 2>/dev/null
-  fi
-  if [ -n "${openai_quota_pid:-}" ]; then
-    kill "$openai_quota_pid" 2>/dev/null; wait "$openai_quota_pid" 2>/dev/null
-  fi
-  if [ -n "${crof_quota_pid:-}" ]; then
-    kill "$crof_quota_pid" 2>/dev/null; wait "$crof_quota_pid" 2>/dev/null
-  fi
-  if [ -n "${openrouter_quota_pid:-}" ]; then
-    kill "$openrouter_quota_pid" 2>/dev/null; wait "$openrouter_quota_pid" 2>/dev/null
-  fi
-  if [ -n "${claude_quota_pid:-}" ]; then
-    kill "$claude_quota_pid" 2>/dev/null; wait "$claude_quota_pid" 2>/dev/null
-  fi
-  if [ -n "${kimi_quota_pid:-}" ]; then
-    kill "$kimi_quota_pid" 2>/dev/null; wait "$kimi_quota_pid" 2>/dev/null
-  fi
-  exit $exit_code
-fi
-
-exec "$@"
-'
-
 exec bwrap "${BWRAP_ARGS[@]}" \
-  bash -c "$INNER_SCRIPT" bash "$PROJECT_DIR" "$OPENCODE_BIN" "$@"
+  bash "@child-wrapper@" "$PROJECT_DIR" "$OPENCODE_BIN" "$@"

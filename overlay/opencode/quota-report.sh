@@ -15,6 +15,7 @@ fi
 provider="$1"
 case "$provider" in
 copilot | openai | crof | openrouter | claude | kimi) ;;
+opencode_port) ;;
 *)
   echo "quota-report.sh: unknown provider: $provider" >&2
   exit 2
@@ -22,11 +23,17 @@ copilot | openai | crof | openrouter | claude | kimi) ;;
 esac
 
 value=$(printf '%s' "$2" | LC_ALL=C tr -d '\000-\037\177')
+if [[ $provider == opencode_port ]]; then
+  source=opencode:port
+else
+  source="quota:$provider"
+fi
 token="${provider}=${value}"
 token="${token:0:80}"
 
-output=$(herdr --session "$HERDR_SESSION" pane report-metadata "$HERDR_PANE_ID" \
-  --source "quota:$provider" --token "$token" --ttl-ms 200000 2>&1) && exit 0
+output=$(env -u HERDR_ENV -u HERDR_PANE_ID -u HERDR_TAB_ID -u HERDR_WORKSPACE_ID \
+  herdr --session "$HERDR_SESSION" pane report-metadata "$HERDR_PANE_ID" \
+  --source "$source" --token "$token" --ttl-ms 200000 2>&1) && exit 0
 
 # pane 消失はポーラーの終了条件なので成功扱い。それ以外の失敗は metadata を捏造せず非ゼロ終了
 if grep -q pane_not_found <<<"$output"; then
