@@ -59,6 +59,52 @@ inputs: self: prev: {
             (builtins.readFile (if isDarwin then ./sandbox-darwin.sh else ./sandbox.sh));
       };
 
+      sandbox-legacy = self.writeShellApplication {
+        name = "opencode-tmux";
+        runtimeInputs =
+          with self;
+          [
+            jq
+            git
+            gh
+            gnupg
+            coreutils
+            tmux
+            curl
+          ]
+          ++ self.lib.optionals (!isDarwin) [
+            self.bubblewrap
+            self.iproute2
+            self.gnugrep
+            self.gnused
+          ];
+
+        checkPhase = "";
+        text =
+          builtins.replaceStrings
+            [
+              "@opencode-dir@"
+              "@tmux-conf@"
+              "@quota-script@"
+              "@openai-quota-script@"
+              "@crof-quota-script@"
+              "@openrouter-quota-script@"
+              "@claude-quota-script@"
+              "@kimi-quota-script@"
+            ]
+            [
+              "${opencode}/bin"
+              "${./legacy/tmux.conf}"
+              "${./legacy/copilot-quota-poll.sh}"
+              "${./legacy/openai-quota-poll.sh}"
+              "${./legacy/crof-quota-poll.sh}"
+              "${./legacy/openrouter-quota-poll.sh}"
+              "${./legacy/claude-quota-poll.sh}"
+              "${./legacy/kimi-quota-poll.sh}"
+            ]
+            (builtins.readFile (if isDarwin then ./legacy/sandbox-darwin.sh else ./legacy/sandbox.sh));
+      };
+
       # Wrapper script that uses sandbox by default
       opencode-wrapper-script = self.writeText "opencode-wrapper.sh" ''
         #!/usr/bin/env bash
@@ -83,7 +129,10 @@ inputs: self: prev: {
     self.symlinkJoin {
       inherit (opencode) pname version;
       name = "${opencode.name}-wrapped";
-      paths = [ opencode-wrapper ];
+      paths = [
+        opencode-wrapper
+        sandbox-legacy
+      ];
       postBuild = ''
         mv "$out/bin/opencode-wrapper" "$out/bin/opencode"
       '';
