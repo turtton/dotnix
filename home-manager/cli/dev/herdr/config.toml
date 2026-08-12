@@ -1,0 +1,31 @@
+onboarding = false
+
+[theme]
+name = "catppuccin"
+
+[experimental]
+kitty_graphics = true
+
+[ui.sidebar.agents]
+row_gap = 0
+rows = [
+  [
+    "state_icon",
+    "agent",
+    "workspace",
+    "tab",
+  ],
+  [
+    { token = "$opencode_port", fg = "#89b4fa" },
+    { token = "$copilot", fg = "#cdd6f4" },
+  ],
+  [
+    { token = "$openai", fg = "#89b4fa" },
+    { token = "$claude", fg = "#fab387" },
+    { token = "$kimi", fg = "#a6e3a1" },
+  ],
+  [
+    { token = "$crof", fg = "#4e56c8" },
+    { token = "$openrouter", fg = "#94e2d5" },
+  ],
+]

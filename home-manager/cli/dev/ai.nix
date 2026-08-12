@@ -8,6 +8,7 @@
   imports = [
     ./opencode
     ./omo
+    ./herdr
     ./senpi
   ];
   home = {
