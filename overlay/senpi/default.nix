@@ -38,6 +38,42 @@ let
         (builtins.readFile ./senpi-tmux.sh);
   };
 
+  launcher-legacy = self.writeShellApplication {
+    name = "senpi-tmux-legacy";
+    runtimeInputs = with self; [
+      tmux
+      curl
+      jq
+      gh
+      gnused
+      coreutils
+    ];
+    checkPhase = "";
+    text =
+      builtins.replaceStrings
+        [
+          "@senpi-dir@"
+          "@tmux-conf@"
+          "@quota-script@"
+          "@openai-quota-script@"
+          "@crof-quota-script@"
+          "@openrouter-quota-script@"
+          "@claude-quota-script@"
+          "@kimi-quota-script@"
+        ]
+        [
+          "${original}/bin"
+          "${./legacy/tmux.conf}"
+          "${../opencode/legacy/copilot-quota-poll.sh}"
+          "${../opencode/legacy/openai-quota-poll.sh}"
+          "${../opencode/legacy/crof-quota-poll.sh}"
+          "${../opencode/legacy/openrouter-quota-poll.sh}"
+          "${../opencode/legacy/claude-quota-poll.sh}"
+          "${../opencode/legacy/kimi-quota-poll.sh}"
+        ]
+        (builtins.readFile ./legacy/senpi-tmux.sh);
+  };
+
   senpi-bare = self.writeShellScriptBin "senpi-bare" ''
     exec "${original}/bin/senpi" "$@"
   '';
@@ -50,10 +86,12 @@ in
     name = "${original.name}-wrapped";
     paths = [
       launcher
+      launcher-legacy
       senpi-bare
     ];
     postBuild = ''
       mv "$out/bin/senpi-tmux" "$out/bin/senpi"
+      mv "$out/bin/senpi-tmux-legacy" "$out/bin/senpi-tmux"
       ln -s "$out/bin/senpi" "$out/bin/pi"
     '';
     meta = original.meta // {
