@@ -9,8 +9,8 @@ let
   settingsFile = (pkgs.formats.toml { }).generate "omniwm-settings.toml" settings;
 
   # OmniWM は settings.toml に [state] やワークスペース/モニタの UUID を書き戻すため、
-  # read-only な symlink にすると保存に失敗する。false で完全固定にできるが GUI は使えなくなる。
-  mutableSettings = true;
+  # read-only な symlink にはできない。activation で宣言分だけを既存ファイルへマージする。
+  mergeSettings = pkgs.python3.withPackages (ps: [ ps.tomli-w ]);
 
   appBundle = "${pkgs.omniwm}/Applications/OmniWM.app";
 in
@@ -28,18 +28,11 @@ in
     };
   };
 
-  xdg.configFile = lib.mkIf (!mutableSettings) {
-    "omniwm/settings.toml".source = settingsFile;
-  };
-
-  home.activation = lib.mkIf mutableSettings {
-    omniwmSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      target="${config.xdg.configHome}/omniwm/settings.toml"
-      if [ ! -e "$target" ]; then
-        run mkdir -p "$(dirname "$target")"
-        run install -m 0644 ${settingsFile} "$target"
-        run echo "omniwm: seeded $target"
-      fi
-    '';
-  };
+  # マージ後のファイルでエージェントが起動するよう setupLaunchAgents より前に走らせる。
+  home.activation.omniwmSettings =
+    lib.hm.dag.entryBetween [ "setupLaunchAgents" ] [ "writeBoundary" ]
+      ''
+        run ${mergeSettings}/bin/python3 ${./merge-settings.py} \
+          ${settingsFile} "${config.xdg.configHome}/omniwm/settings.toml"
+      '';
 }
