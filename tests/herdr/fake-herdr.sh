@@ -87,16 +87,39 @@ server)
   while :; do sleep 3600; done
   ;;
 workspace)
-  case "${2:-}" in
+  sub="${2:-}"
+  case "$sub" in
   list)
     require_server "workspace:list"
-    echo '{"id":"cli:workspace:list","result":{"type":"workspace_list","workspaces":[]}}'
+    sdir="$(session_dir "$session")"
+    focused=""
+    [[ -f $sdir/focused ]] && focused=$(<"$sdir/focused")
+    first=1
+    printf '{"id":"cli:workspace:list","result":{"type":"workspace_list","workspaces":['
+    for wdir in "$sdir"/workspaces/w*/; do
+      [[ -d $wdir ]] || continue
+      wid=$(basename "$wdir")
+      label=$(<"$wdir/label")
+      num="${wid#w}"
+      foc=false
+      if [[ -n $focused ]]; then
+        [[ $focused == "$wid" ]] && foc=true
+      else
+        [[ $num == 1 ]] && foc=true
+      fi
+      ((first)) || printf ','
+      first=0
+      jq -nc --arg wid "$wid" --arg label "$label" --argjson num "$num" --argjson foc "$foc" \
+        '{active_tab_id:($wid+":t1"),agent_status:"unknown",focused:$foc,label:$label,number:$num,pane_count:1,tab_count:1,workspace_id:$wid}'
+    done
+    printf ']}}\n'
     ;;
   create)
     require_server "workspace:create"
     shift 2
     cwd="$PWD"
     label=""
+    do_focus=false
     while [[ $# -gt 0 ]]; do
       case "$1" in
       --cwd)
@@ -107,7 +130,11 @@ workspace)
         label="$2"
         shift 2
         ;;
-      --focus | --no-focus) shift ;;
+      --focus)
+        do_focus=true
+        shift
+        ;;
+      --no-focus) shift ;;
       --env) shift 2 ;;
       *) shift ;;
       esac
@@ -123,6 +150,8 @@ workspace)
     pane_id="$wid:p1"
     shell_pid=$((10000 + num))
     [[ -z $label ]] && label="$num"
+    printf '%s' "$label" >"$sdir/workspaces/w$num/label"
+    $do_focus && printf '%s' "$wid" >"$sdir/focused"
     pdir="$(pane_dir "$session" "$pane_id")"
     mkdir -p "$pdir"
     printf '%s' "$cwd" >"$pdir/cwd"
@@ -136,6 +165,31 @@ workspace)
       --arg pane "$pane_id" --arg tab "$wid:t1" --arg term "$term_id" \
       '{id:"cli:workspace:create",result:{root_pane:{agent_status:"unknown",cwd:$cwd,focused:true,foreground_cwd:$cwd,pane_id:$pane,revision:0,scroll:{max_offset_from_bottom:0,offset_from_bottom:0,viewport_rows:24},tab_id:$tab,terminal_id:$term,workspace_id:$wid},tab:{agent_status:"unknown",focused:true,label:"1",number:1,pane_count:1,tab_id:$tab,workspace_id:$wid},type:"workspace_created",workspace:{active_tab_id:$tab,agent_status:"unknown",focused:true,label:$label,number:1,pane_count:1,tab_count:1,workspace_id:$wid}}}'
     ;;
+  get)
+    require_server "workspace:get"
+    wid="${3:-}"
+    sdir="$(session_dir "$session")"
+    if [[ ! -d $sdir/workspaces/$wid ]]; then
+      printf '{"id":"cli:workspace:get","error":{"code":"workspace_not_found","message":"no workspace with id %s"}}\n' "$wid"
+      exit 1
+    fi
+    label=$(<"$sdir/workspaces/$wid/label")
+    num="${wid#w}"
+    jq -nc --arg wid "$wid" --arg label "$label" --argjson num "$num" \
+      '{id:"cli:workspace:get",result:{type:"workspace_info",workspace:{active_tab_id:($wid+":t1"),agent_status:"unknown",focused:false,label:$label,number:$num,pane_count:1,tab_count:1,workspace_id:$wid}}}'
+    ;;
+  focus)
+    require_server "workspace:focus"
+    wid="${3:-}"
+    sdir="$(session_dir "$session")"
+    if [[ ! -d $sdir/workspaces/$wid ]]; then
+      printf '{"id":"cli:workspace:focus","error":{"code":"workspace_not_found","message":"no workspace with id %s"}}\n' "$wid"
+      exit 1
+    fi
+    printf '%s' "$wid" >"$sdir/focused"
+    jq -nc --arg wid "$wid" \
+      '{id:"cli:workspace:focus",result:{type:"workspace_focused",workspace_id:$wid}}'
+    ;;
   *)
     echo "fake-herdr: unknown workspace subcommand: ${2:-}" >&2
     exit 2
@@ -145,6 +199,24 @@ workspace)
 pane)
   sub="${2:-}"
   case "$sub" in
+  list)
+    require_server "pane:list"
+    sdir="$(session_dir "$session")"
+    first=1
+    printf '{"id":"cli:pane:list","result":{"type":"pane_list","panes":['
+    for pdir in "$sdir"/panes/*/; do
+      [[ -d $pdir ]] || continue
+      key=$(basename "$pdir")
+      pane_id="${key/_/:}"
+      wid="${pane_id%%:*}"
+      cwd=$(<"$pdir/cwd")
+      ((first)) || printf ','
+      first=0
+      jq -nc --arg pane "$pane_id" --arg wid "$wid" --arg tab "$wid:t1" --arg cwd "$cwd" \
+        '{agent_status:"unknown",cwd:$cwd,focused:false,foreground_cwd:$cwd,pane_id:$pane,revision:0,tab_id:$tab,workspace_id:$wid}'
+    done
+    printf ']}}\n'
+    ;;
   get)
     require_server "pane:get"
     pane_id="${3:-}"

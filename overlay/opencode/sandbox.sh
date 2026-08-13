@@ -17,18 +17,35 @@ shell_quote() {
   printf "'%s'" "${value//\'/\'\"\'\"\'}"
 }
 
-launch_herdr() {
-  local base hash session state_dir lock_dir pane_file pane_id="" inject=false
-  local status_output process_info created command socket_path attempt
+hcli() {
+  local herdr_bin="" candidate
+  if [[ -n ${OPENCODE_HERDR_TEST_MODE:-} ]]; then
+    while IFS= read -r candidate; do
+      if [[ $candidate != /nix/store/* ]]; then
+        herdr_bin=$candidate
+        break
+      fi
+    done < <(type -a -p herdr)
+  fi
+  [[ -n $herdr_bin ]] || herdr_bin=$(command -v herdr)
+  env -u HERDR_ENV -u HERDR_PANE_ID -u HERDR_TAB_ID -u HERDR_WORKSPACE_ID \
+    "$herdr_bin" --session "$HERDR_SESSION" "$@"
+}
 
-  base=$(basename "$PROJECT_DIR" | LC_ALL=C sed 's/[^[:alnum:]]/-/g')
-  hash=$(printf '%s' "$CANONICAL_PROJECT_DIR" | sha256sum | cut -c1-8)
-  session="opencode-${base}-${hash}"
-  state_dir="${XDG_STATE_HOME:-$HOME/.local/state}/herdr-launchers/$session"
+launch_herdr_context() {
+  local label state_dir lock_dir workspace_json panes_json created process_info
+  local workspace_id="" pane_id="" command attempt candidate arg
+
+  label="opencode-$(basename "$CANONICAL_PROJECT_DIR" | LC_ALL=C sed 's/[^[:alnum:]]/-/g')"
+  state_dir="${XDG_STATE_HOME:-$HOME/.local/state}/herdr-launchers/${HERDR_SESSION}-${label}"
   lock_dir="$state_dir/lock"
-  pane_file="$state_dir/pane-id"
-  mkdir -p "$state_dir"
 
+  if ! workspace_json=$(hcli workspace list 2>/dev/null); then
+    echo "opencode-sandbox: WARNING: herdr session is unavailable; running without herdr context" >&2
+    return 1
+  fi
+
+  mkdir -p "$state_dir"
   for attempt in $(seq 1 200); do
     if mkdir "$lock_dir" 2>/dev/null; then
       break
@@ -41,81 +58,73 @@ launch_herdr() {
   fi
   trap 'rmdir "$lock_dir" 2>/dev/null || true' EXIT INT TERM
 
-  status_output=$(herdr --session "$session" status 2>/dev/null || true)
-  if ! grep -q 'status: running' <<<"$status_output"; then
-    setsid herdr --session "$session" server </dev/null >"$state_dir/server.log" 2>&1 &
-    for attempt in $(seq 1 200); do
-      if herdr --session "$session" workspace list >/dev/null 2>&1; then
-        break
-      fi
-      sleep 0.05
-    done
-    if ! herdr --session "$session" workspace list >/dev/null 2>&1; then
-      echo "opencode-sandbox: ERROR: herdr server did not become ready for $session" >&2
-      exit 1
-    fi
-    status_output=$(herdr --session "$session" status 2>/dev/null || true)
+  if ! workspace_json=$(hcli workspace list 2>/dev/null) ||
+    ! panes_json=$(hcli pane list 2>/dev/null); then
+    echo "opencode-sandbox: WARNING: herdr session became unavailable; running without herdr context" >&2
+    rmdir "$lock_dir"
+    trap - EXIT INT TERM
+    return 1
   fi
 
-  if [[ -n ${HERDR_SOCKET_PATH:-} ]]; then
-    socket_path=$HERDR_SOCKET_PATH
+  while IFS= read -r candidate; do
+    [[ -n $candidate ]] || continue
+    pane_id=$(jq -r --arg wid "$candidate" --arg cwd "$CANONICAL_PROJECT_DIR" \
+      '.result.panes[] | select(.workspace_id == $wid and .cwd == $cwd) | .pane_id' \
+      <<<"$panes_json" | sed -n '1p')
+    if [[ -n $pane_id ]]; then
+      workspace_id=$candidate
+      break
+    fi
+  done < <(jq -r --arg label "$label" \
+    '.result.workspaces[] | select(.label == $label) | .workspace_id' <<<"$workspace_json")
+
+  if [[ -n $pane_id ]]; then
+    hcli workspace focus "$workspace_id" >/dev/null
+    process_info=$(hcli pane process-info --pane "$pane_id" 2>/dev/null || true)
+    if ! jq -e '.result.process_info as $p | $p.foreground_process_group_id == $p.shell_pid and $p.foreground_processes[0].pid == $p.shell_pid' \
+      >/dev/null 2>&1 <<<"$process_info"; then
+      rmdir "$lock_dir"
+      trap - EXIT INT TERM
+      return 0
+    fi
   else
-    socket_path=$(sed -n 's/^[[:space:]]*socket:[[:space:]]*//p' <<<"$status_output" | tail -n 1)
-    if [[ -z $socket_path ]]; then
-      socket_path="$HOME/.config/herdr/sessions/$session/herdr.sock"
-    fi
-  fi
-
-  if [[ -s $pane_file ]]; then
-    pane_id=$(<"$pane_file")
-    if ! herdr --session "$session" pane get "$pane_id" >/dev/null 2>&1; then
-      pane_id=""
-      rm -f "$pane_file"
-    else
-      process_info=$(herdr --session "$session" pane process-info --pane "$pane_id" 2>/dev/null || true)
-      if jq -e '.result.process_info as $p | $p.foreground_process_group_id == $p.shell_pid and $p.foreground_processes[0].pid == $p.shell_pid' \
-        >/dev/null 2>&1 <<<"$process_info"; then
-        inject=true
-      fi
-    fi
-  fi
-
-  if [[ -z $pane_id ]]; then
-    created=$(herdr --session "$session" workspace create --cwd "$PROJECT_DIR" --label "$session" --no-focus)
+    created=$(hcli workspace create --cwd "$CANONICAL_PROJECT_DIR" --label "$label" --focus)
     pane_id=$(jq -r '.result.root_pane.pane_id // empty' <<<"$created")
     if [[ -z $pane_id ]]; then
       echo "opencode-sandbox: ERROR: herdr workspace creation returned no pane id" >&2
       exit 1
     fi
-    printf '%s\n' "$pane_id" >"$pane_file"
-    inject=true
   fi
 
-  if $inject; then
-    if [[ -n ${OPENCODE_HERDR_TEST_MODE:-} && $# -gt 0 ]]; then
-      command=$(shell_quote "$1")
-      shift
-      for arg in "$@"; do
-        command+=" $(shell_quote "$arg")"
-      done
-    else
-      command="env OPENCODE_NO_SANDBOX= OPENCODE_HERDR_CHILD=1 HERDR_SESSION=$(shell_quote "$session") HERDR_SOCKET_PATH=$(shell_quote "$socket_path") HERDR_PANE_ID=$(shell_quote "$pane_id") OPENCODE_BIN=$(shell_quote "$OPENCODE_BIN") $(shell_quote "${BASH_SOURCE[0]}")"
-      for arg in "$@"; do
-        command+=" $(shell_quote "$arg")"
-      done
-    fi
-    herdr --session "$session" pane run "$pane_id" "$command"
+  if [[ -n ${OPENCODE_HERDR_TEST_MODE:-} && $# -gt 0 ]]; then
+    command=$(shell_quote "$1")
+    shift
+  else
+    command="env OPENCODE_NO_SANDBOX= OPENCODE_HERDR_CHILD=1 HERDR_SESSION=$(shell_quote "$HERDR_SESSION") HERDR_SOCKET_PATH=$(shell_quote "$HERDR_SOCKET_PATH") HERDR_PANE_ID=$(shell_quote "$pane_id") OPENCODE_BIN=$(shell_quote "$OPENCODE_BIN") $(shell_quote "${BASH_SOURCE[0]}")"
   fi
+  for arg in "$@"; do
+    command+=" $(shell_quote "$arg")"
+  done
+  hcli pane run "$pane_id" "$command"
+
+  for attempt in $(seq 1 20); do
+    process_info=$(hcli pane process-info --pane "$pane_id" 2>/dev/null || true)
+    if ! jq -e '.result.process_info as $p | $p.foreground_process_group_id == $p.shell_pid and $p.foreground_processes[0].pid == $p.shell_pid' \
+      >/dev/null 2>&1 <<<"$process_info"; then
+      break
+    fi
+    sleep 0.05
+  done
 
   rmdir "$lock_dir"
   trap - EXIT INT TERM
-  unset HERDR_ENV HERDR_PANE_ID HERDR_TAB_ID HERDR_WORKSPACE_ID
-  export HERDR_SESSION="$session" HERDR_SOCKET_PATH="$socket_path"
-  exec herdr --session "$session"
+  return 0
 }
 
-if [[ -z ${OPENCODE_HERDR_CHILD:-} ]] && [[ -t 0 && -t 1 && -t 2 ]]; then
-  launch_herdr "$@"
+if [[ -z ${OPENCODE_HERDR_CHILD:-} && -n ${HERDR_ENV:-} ]]; then
+  if launch_herdr_context "$@"; then
+    exit 0
+  fi
 fi
 
 # メモリ節約: /var/tmp (ディスク) を優先し、失敗時のみ tmpfs にフォールバック

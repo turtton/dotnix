@@ -80,6 +80,7 @@ inputs: self: prev: {
           with self;
           [
             jq
+            herdr
             git
             gh
             gnupg

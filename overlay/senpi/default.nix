@@ -41,66 +41,8 @@ let
       (builtins.readFile ./senpi-herdr-child-wrapper.sh)
   );
 
-  launcher = self.writeShellApplication {
+  launcher-tmux = self.writeShellApplication {
     name = "senpi-tmux";
-    runtimeInputs = with self; [
-      tmux
-      curl
-      jq
-      gh
-      gnused
-      coreutils
-    ];
-    checkPhase = "";
-    text =
-      builtins.replaceStrings
-        [
-          "@senpi-dir@"
-          "@tmux-conf@"
-          "@quota-script@"
-          "@openai-quota-script@"
-          "@crof-quota-script@"
-          "@openrouter-quota-script@"
-          "@claude-quota-script@"
-          "@kimi-quota-script@"
-        ]
-        [
-          "${original}/bin"
-          "${./tmux.conf}"
-          "${quotaPollers.copilot}"
-          "${quotaPollers.openai}"
-          "${quotaPollers.crof}"
-          "${quotaPollers.openrouter}"
-          "${quotaPollers.claude}"
-          "${quotaPollers.kimi}"
-        ]
-        (builtins.readFile ./senpi-tmux.sh);
-  };
-
-  launcher-herdr = self.writeShellApplication {
-    name = "senpi-herdr";
-    runtimeInputs =
-      with self;
-      [
-        herdr
-        curl
-        jq
-        gh
-        gnused
-        coreutils
-      ]
-      ++ self.lib.optionals (!isDarwin) [
-        util-linux
-      ];
-    checkPhase = "";
-    text = builtins.replaceStrings [ "@senpi-dir@" "@child-wrapper@" ] [
-      "${original}/bin"
-      "${herdrChild}"
-    ] (builtins.readFile ./senpi-herdr.sh);
-  };
-
-  launcher-legacy = self.writeShellApplication {
-    name = "senpi-tmux-legacy";
     runtimeInputs = with self; [
       tmux
       curl
@@ -135,6 +77,40 @@ let
         (builtins.readFile ./legacy/senpi-tmux.sh);
   };
 
+  launcher-herdr = self.writeShellApplication {
+    name = "senpi-herdr";
+    runtimeInputs =
+      with self;
+      [
+        herdr
+        curl
+        jq
+        gh
+        gnused
+        coreutils
+      ]
+      ++ self.lib.optionals (!isDarwin) [
+        util-linux
+      ];
+    checkPhase = "";
+    text =
+      builtins.replaceStrings
+        [ "@senpi-dir@" "@child-wrapper@" ]
+        [
+          "${original}/bin"
+          "${herdrChild}"
+        ]
+        (builtins.readFile ./senpi-herdr.sh);
+  };
+
+  launcher = self.writeShellScriptBin "senpi" ''
+    if [[ -n ''${HERDR_ENV:-} ]]; then
+      exec "${launcher-herdr}/bin/senpi-herdr" "$@"
+    else
+      exec "${launcher-tmux}/bin/senpi-tmux" "$@"
+    fi
+  '';
+
   senpi-bare = self.writeShellScriptBin "senpi-bare" ''
     exec "${original}/bin/senpi" "$@"
   '';
@@ -147,13 +123,11 @@ in
     name = "${original.name}-wrapped";
     paths = [
       launcher
+      launcher-tmux
       launcher-herdr
-      launcher-legacy
       senpi-bare
     ];
     postBuild = ''
-      mv "$out/bin/senpi-tmux" "$out/bin/senpi"
-      mv "$out/bin/senpi-tmux-legacy" "$out/bin/senpi-tmux"
       ln -s "$out/bin/senpi" "$out/bin/pi"
     '';
     meta = original.meta // {
