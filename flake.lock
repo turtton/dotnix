@@ -1612,11 +1612,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786252007,
-        "narHash": "sha256-B43/S2NVWQ3CJslyQPkvKQzkEgZLzYpyZr3iGiQZHEo=",
+        "lastModified": 1786624805,
+        "narHash": "sha256-ae0eUxU8ZiyjcVOY0cEH18SPCjnYtzEkWLcibENxk3c=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "2c27c5fcb51edf0ac740e944c2c357016d9ea2d9",
+        "rev": "3bc0b9b42903680a450addcf1dd655b92bc2c54f",
         "type": "github"
       },
       "original": {
@@ -2543,11 +2543,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786364638,
-        "narHash": "sha256-8iXx/isWWi29eilQg2KWdg1ZTJ1lXrQ+gw6CLGiQ4jE=",
+        "lastModified": 1786580918,
+        "narHash": "sha256-lAXMh69R4YVy2v/lOVY/KiPx1FoIrSFgXK7W75mGn3w=",
         "owner": "turtton",
         "repo": "senpi-flake",
-        "rev": "00df0ee00dbb18a39caf3bff04b27682f1c3754d",
+        "rev": "f4afc878de4cf703ebd69fedbcbadeda49eb1275",
         "type": "github"
       },
       "original": {
