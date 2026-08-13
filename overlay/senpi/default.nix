@@ -3,43 +3,7 @@ let
   original = inputs.senpi.packages.${prev.stdenv.hostPlatform.system}.default;
   isDarwin = prev.stdenv.isDarwin;
 
-  mkQuotaPoller =
-    name:
-    self.writeText name (
-      builtins.replaceStrings [ "__QUOTA_REPORT__" ] [ "${../opencode/quota-report.sh}" ] (
-        builtins.readFile (../opencode + "/${name}")
-      )
-    );
-
-  quotaPollers = {
-    copilot = mkQuotaPoller "copilot-quota-poll.sh";
-    openai = mkQuotaPoller "openai-quota-poll.sh";
-    crof = mkQuotaPoller "crof-quota-poll.sh";
-    openrouter = mkQuotaPoller "openrouter-quota-poll.sh";
-    claude = mkQuotaPoller "claude-quota-poll.sh";
-    kimi = mkQuotaPoller "kimi-quota-poll.sh";
-  };
-
-  herdrChild = self.writeText "senpi-herdr-child-wrapper.sh" (
-    builtins.replaceStrings
-      [
-        "@quota-script@"
-        "@openai-quota-script@"
-        "@crof-quota-script@"
-        "@openrouter-quota-script@"
-        "@claude-quota-script@"
-        "@kimi-quota-script@"
-      ]
-      [
-        "${quotaPollers.copilot}"
-        "${quotaPollers.openai}"
-        "${quotaPollers.crof}"
-        "${quotaPollers.openrouter}"
-        "${quotaPollers.claude}"
-        "${quotaPollers.kimi}"
-      ]
-      (builtins.readFile ./senpi-herdr-child-wrapper.sh)
-  );
+  herdrChild = import ./herdr-child.nix { inherit (self) writeText writeShellScript; };
 
   launcher-tmux = self.writeShellApplication {
     name = "senpi-tmux";
