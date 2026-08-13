@@ -199,12 +199,12 @@
     };
   };
   tmux = {
-    enabled = false;
+    enabled = true;
   };
   team_mode = {
     enabled = true;
     max_parallel_members = 4;
-    tmux_visualization = false;
+    tmux_visualization = true;
   };
   background_task = {
     providerConcurrency = {
