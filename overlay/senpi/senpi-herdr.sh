@@ -69,53 +69,62 @@ if ! pane_json=$(hcli pane list); then
   exit 1
 fi
 
-match=$(jq -nr \
+# 2インスタンス目以降は "<label>-N" を名乗るため、同一cwdの既存インスタンスを全数拾う
+matches=$(jq -nr \
   --arg label "$label" \
   --arg cwd "$CANON" \
   --argjson workspaces "$workspace_json" \
   --argjson panes "$pane_json" '
-    first(
-      $workspaces.result.workspaces[]
-      | select(.label == $label)
-      | .workspace_id as $wid
-      | $panes.result.panes[]
-      | select(.workspace_id == $wid and .cwd == $cwd)
-      | [.workspace_id, .pane_id]
-      | @tsv
-    ) // empty
+    $workspaces.result.workspaces[]
+    | select(.label == $label or (.label | test("^" + $label + "-[0-9]+$")))
+    | .workspace_id as $wid
+    | (first($panes.result.panes[] | select(.workspace_id == $wid and .cwd == $cwd)) // empty)
+    | [$wid, .pane_id]
+    | @tsv
   ')
 
-inject=false
-if [[ -n $match ]]; then
-  IFS=$'\t' read -r workspace_id pane_id <<<"$match"
-  hcli workspace focus "$workspace_id" >/dev/null
-  if pane_is_idle "$pane_id"; then
-    inject=true
+match_count=0
+if [[ -n $matches ]]; then
+  match_count=$(wc -l <<<"$matches")
+fi
+
+pane_id=""
+while IFS=$'\t' read -r candidate_wid candidate_pid; do
+  [[ -n ${candidate_pid:-} ]] || continue
+  if pane_is_idle "$candidate_pid"; then
+    workspace_id=$candidate_wid
+    pane_id=$candidate_pid
+    break
   fi
+done <<<"$matches"
+
+if [[ -n $pane_id ]]; then
+  hcli workspace focus "$workspace_id" >/dev/null
 else
-  created=$(hcli workspace create --cwd "$CANON" --label "$label" --focus)
+  new_label=$label
+  if ((match_count > 0)); then
+    new_label="${label}-$((match_count + 1))"
+  fi
+  created=$(hcli workspace create --cwd "$CANON" --label "$new_label" --focus)
   pane_id=$(jq -r '.result.root_pane.pane_id // empty' <<<"$created")
   if [[ -z $pane_id ]]; then
     echo "senpi-herdr: ERROR: herdr workspace creation returned no pane id" >&2
     exit 1
   fi
-  inject=true
 fi
 
-if $inject; then
-  # herdr の既知エージェント表に senpi は無く、ヒントが無いと claude-sdk-oauth の auth probe を Claude Code と誤認する
-  command="env SENPI_HERDR_CHILD=1 HERDR_AGENT=pi HERDR_SESSION=$(shell_quote "$session") HERDR_SOCKET_PATH=$(shell_quote "$socket_path") HERDR_PANE_ID=$(shell_quote "$pane_id") $(shell_quote "$CHILD_WRAPPER") $(shell_quote "$CANON") $(shell_quote "$SENPI_BIN")"
-  for arg in "$@"; do
-    command+=" $(shell_quote "$arg")"
-  done
-  hcli pane run "$pane_id" "$command"
-  for _ in $(seq 1 20); do
-    if ! pane_is_idle "$pane_id"; then
-      break
-    fi
-    sleep 0.05
-  done
-fi
+# herdr の既知エージェント表に senpi は無く、ヒントが無いと claude-sdk-oauth の auth probe を Claude Code と誤認する
+command="env SENPI_HERDR_CHILD=1 HERDR_AGENT=pi HERDR_SESSION=$(shell_quote "$session") HERDR_SOCKET_PATH=$(shell_quote "$socket_path") HERDR_PANE_ID=$(shell_quote "$pane_id") $(shell_quote "$CHILD_WRAPPER") $(shell_quote "$CANON") $(shell_quote "$SENPI_BIN")"
+for arg in "$@"; do
+  command+=" $(shell_quote "$arg")"
+done
+hcli pane run "$pane_id" "$command"
+for _ in $(seq 1 20); do
+  if ! pane_is_idle "$pane_id"; then
+    break
+  fi
+  sleep 0.05
+done
 
 rmdir "$lock_dir"
 trap - EXIT INT TERM

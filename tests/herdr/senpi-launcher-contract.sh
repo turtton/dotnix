@@ -3,7 +3,8 @@
 # Contract for the herdr-context senpi launcher (senpi-herdr):
 #   - outside herdr (no HERDR_ENV) it must never invoke herdr (execs senpi-bare)
 #   - inside herdr it opens/reuses a per-directory workspace in the CURRENT
-#     session (never starts a server, never attaches a nested TUI)
+#     session; a launch that finds every existing same-directory instance busy
+#     gets its own workspace (never starts a server, never attaches a nested TUI)
 # Exit 0 iff all assertions pass.
 set -u
 
@@ -163,24 +164,25 @@ else
   not_ok "inside herdr: expected 1 create + 1 pane run, 0 server, 0 attach (create=$(create_count) run=$(run_count) server=$(server_count) attach=$(attach_count))"
 fi
 
-# 3: reattach while pane busy → focus existing workspace, no second injection
+# 3: second launch while pane busy → own workspace + injection (multi-instance)
 run_tty "$dir_a" 3
-if [[ $(run_count) -eq 1 && $(create_count) -eq 1 && $(focus_count) -ge 1 ]]; then
-  ok "busy pane: focuses existing workspace without reinjecting"
+if [[ $(run_count) -eq 2 && $(create_count) -eq 2 ]] && grep -q -- "--label ${want_label}-2" "$FAKE_HERDR_LOG"; then
+  ok "busy pane: second instance gets its own workspace (${want_label}-2)"
 else
-  not_ok "busy pane: expected run=1 create=1 focus>=1 (run=$(run_count) create=$(create_count) focus=$(focus_count))"
+  not_ok "busy pane: expected run=2 create=2 with label ${want_label}-2 (run=$(run_count) create=$(create_count))"
 fi
 
-# 4: idle shell after senpi exit → reinjection allowed on next launch
+# 4: every instance idle after exit → relaunch reuses an idle workspace
 sleep 4
 run_tty "$dir_a" 3
-if [[ $(run_count) -eq 2 && $(create_count) -eq 1 ]]; then
-  ok "idle shell after senpi exit: reinjection allowed"
+if [[ $(run_count) -eq 3 && $(create_count) -eq 2 ]]; then
+  ok "idle workspaces after senpi exit: reinjection reuses existing workspace"
 else
-  not_ok "idle reinjection: expected run=2 create=1 (run=$(run_count) create=$(create_count))"
+  not_ok "idle reuse: expected run=3 create=2 (run=$(run_count) create=$(create_count))"
 fi
 
-# 5: concurrent launches in the same directory → exactly one injection
+# 5: concurrent launches in the same directory → lock serializes; the second
+#    sees the first busy and creates its own workspace
 dir_c="$WORK/proj-race"
 mkdir -p "$dir_c"
 reset_log
@@ -189,10 +191,10 @@ p1=$!
 run_tty "$dir_c" 5 &
 p2=$!
 wait "$p1" "$p2"
-if [[ $(run_count) -eq 1 && $(create_count) -eq 1 ]]; then
-  ok "concurrent launches: exactly one injection"
+if [[ $(run_count) -eq 2 && $(create_count) -eq 2 ]]; then
+  ok "concurrent launches: one workspace and injection each"
 else
-  not_ok "concurrent launches: expected run=1 create=1 (run=$(run_count) create=$(create_count))"
+  not_ok "concurrent launches: expected run=2 create=2 (run=$(run_count) create=$(create_count))"
 fi
 
 # 6: same basename in different parents → separate workspaces by cwd match;
