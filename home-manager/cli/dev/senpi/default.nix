@@ -22,18 +22,53 @@ let
     builtins.toJSON {
       enabled = true;
       filesystem = {
-        # pi-sandbox は設定された allowRead でデフォルトを「置換」する
-        # (merge ではない)ため、デフォルト分もここに列挙しておく。
+        # pi-sandbox は設定された allowRead/allowWrite でデフォルトを「置換」する
+        # (merge ではない)ため、デフォルト分 (".", "/tmp") もここに列挙しておく。
+        # 許可範囲は overlay/opencode/sandbox.sh が bind/ro-bind する領域に揃える。
+        # denyRead/denyWrite は未設定でデフォルト (["/Users", "/home"] 等) を維持し、
+        # ここに列挙したパスが /home 配下の carve-out として許可される。
         allowRead = [
           "."
           "~/.omo"
+          "~/.senpi"
           "~/.config/opencode"
           "~/.local/share/opencode"
           "~/.local/state/opencode"
-          # スキル GUIDE 等のパッケージ同梱ファイルは評価時にパスが確定する
-          # ので事前許可し、read のたびのプロンプトを防ぐ。
-          "${pkgs.omo-senpi}"
-          "${pkgs.senpi}"
+          "~/.cache/opencode"
+          "~/.config/herdr"
+          "~/.gitconfig"
+          "~/.config/git"
+          "~/.config/gh"
+          "~/.docker"
+          "~/.config/containers"
+          "/etc"
+          "/usr"
+          "/bin"
+          "/lib"
+          "/lib64"
+          "/nix"
+          "/run/current-system"
+          "/run/booted-system"
+          "/run/nixos"
+          "/run/wrappers"
+          "/run/systemd/resolve"
+          "/run/opengl-driver"
+          "/run/opengl-driver-32"
+        ];
+        allowWrite = [
+          "."
+          "/tmp"
+          "~/.omo"
+          "~/.senpi"
+          "~/.config/opencode"
+          "~/.local/share/opencode"
+          "~/.local/state/opencode"
+          "~/.cache/opencode"
+          "~/.claude"
+          "~/.rustup"
+          "~/.cargo"
+          "~/.gnupg"
+          "/nix/var/nix/daemon-socket"
         ];
       };
       network.allowedDomains = [
