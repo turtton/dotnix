@@ -303,10 +303,6 @@
             chromium = overlays.chromium;
             spotify = overlays.spotify;
             obsidian = overlays.obsidian;
-            discord = overlays.discord;
-            discord-ptb = overlays.discord-ptb;
-            slack = overlays.slack;
-            teams-for-linux = overlays.teams-for-linux;
             vscode = overlays.vscode;
             zoom-us = overlays.zoom-us;
             cachyos-kernel-latest = overlays.cachyosKernels.linuxPackages-cachyos-latest.kernel;
