@@ -13,25 +13,38 @@ let
       maxTokens = m.output;
     }
     // (if m.reasoning or false then { reasoning = true; } else { })
-    // (if m ? cost then {
-      cost = {
-        inherit (m.cost) input output;
-        cacheRead = m.cost.cacheRead;
-        cacheWrite = 0;
-      };
-    } else { })
-    // (if m.reasoning or false then {
-      thinkingLevelMap = {
-        off = "none";
-        minimal = "low";
-        low = "low";
-        medium = "medium";
-        high = "high";
-        xhigh = "high";
-        max = "high";
-      };
-      compat.supportsReasoningEffort = true;
-    } else { });
+    // (
+      if m ? cost then
+        {
+          cost = {
+            inherit (m.cost) input output;
+            cacheRead = m.cost.cacheRead;
+            cacheWrite = 0;
+          };
+        }
+      else
+        { }
+    )
+    // (
+      if m.reasoning or false then
+        {
+          thinkingLevelMap = {
+            off = "none";
+            minimal = "low";
+            low = "low";
+            medium = "medium";
+            high = "high";
+            xhigh = "high";
+            max = "high";
+          };
+          compat.supportsReasoningEffort = true;
+          # pi-ai auto-detects supportsDeveloperRole=true for unrecognized providers,
+          # and CLIProxyAPI's kimi upstream rejects role "developer" with HTTP 400.
+          compat.supportsDeveloperRole = false;
+        }
+      else
+        { }
+    );
 
   ids = [
     "claude-fable-5"
