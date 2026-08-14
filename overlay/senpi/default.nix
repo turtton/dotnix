@@ -5,6 +5,36 @@ let
 
   herdrChild = import ./herdr-child.nix { inherit (self) writeText writeShellScript; };
 
+  sandbox = self.writeShellApplication {
+    name = "senpi-sandbox";
+    runtimeInputs = with self; [
+      jq
+      git
+      gh
+      gnupg
+      coreutils
+      curl
+      bubblewrap
+      gnugrep
+      gnused
+    ];
+    checkPhase = "";
+    text =
+      builtins.replaceStrings
+        [ "@senpi-dir@" "@child-wrapper@" ]
+        [
+          "${original}/bin"
+          "${herdrChild}"
+        ]
+        (builtins.readFile ./sandbox.sh);
+  };
+
+  sandboxShim = self.writeShellScript "senpi-sandbox-shim.sh" (
+    builtins.replaceStrings [ "@senpi-sandbox@" ] [ "${sandbox}/bin/senpi-sandbox" ] (
+      builtins.readFile ./senpi-sandbox-shim.sh
+    )
+  );
+
   launcher-tmux = self.writeShellApplication {
     name = "senpi-tmux";
     runtimeInputs = with self; [
@@ -62,16 +92,18 @@ let
         [ "@senpi-dir@" "@child-wrapper@" ]
         [
           "${original}/bin"
-          "${herdrChild}"
+          "${sandboxShim}"
         ]
         (builtins.readFile ./senpi-herdr.sh);
   };
 
   launcher = self.writeShellScriptBin "senpi" ''
-    if [[ -n ''${HERDR_ENV:-} ]]; then
+    if [[ -n ''${SENPI_NO_SANDBOX:-} ]]; then
+      exec "${senpi-bare}/bin/senpi-bare" "$@"
+    elif [[ -n ''${HERDR_ENV:-} && -z ''${SENPI_HERDR_CHILD:-} ]]; then
       exec "${launcher-herdr}/bin/senpi-herdr" "$@"
     else
-      exec "${launcher-tmux}/bin/senpi-tmux" "$@"
+      exec "${sandbox}/bin/senpi-sandbox" "$@"
     fi
   '';
 
@@ -90,6 +122,7 @@ in
       launcher-tmux
       launcher-herdr
       senpi-bare
+      sandbox
     ];
     postBuild = ''
       ln -s "$out/bin/senpi" "$out/bin/pi"
