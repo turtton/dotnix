@@ -29,12 +29,14 @@ let
       };
     };
 
-  pick = ids: builtins.listToAttrs (
-    map (id: {
-      name = id;
-      value = mkModel proxyModels.${id};
-    }) ids
-  );
+  pick =
+    ids:
+    builtins.listToAttrs (
+      map (id: {
+        name = id;
+        value = mkModel proxyModels.${id};
+      }) ids
+    );
 in
 {
   "$schema" = "https://opencode.ai/config.json";

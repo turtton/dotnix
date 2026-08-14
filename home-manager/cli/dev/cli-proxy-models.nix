@@ -7,7 +7,13 @@
   "claude-fable-5" = {
     name = "Claude Fable 5";
     reasoning = true;
-    variants = [ "max" "xhigh" "high" "medium" "low" ];
+    variants = [
+      "max"
+      "xhigh"
+      "high"
+      "medium"
+      "low"
+    ];
     context = 1000000;
     output = 128000;
     cost = {
@@ -19,14 +25,26 @@
   "gpt-5.6-sol" = {
     name = "GPT-5.6 Sol";
     reasoning = true;
-    variants = [ "max" "xhigh" "high" "medium" "low" ];
+    variants = [
+      "max"
+      "xhigh"
+      "high"
+      "medium"
+      "low"
+    ];
     context = 1050000;
     output = 128000;
   };
   "gpt-5.6-terra" = {
     name = "GPT-5.6 Terra";
     reasoning = true;
-    variants = [ "max" "xhigh" "high" "medium" "low" ];
+    variants = [
+      "max"
+      "xhigh"
+      "high"
+      "medium"
+      "low"
+    ];
     context = 1050000;
     output = 128000;
     cost = {
@@ -38,7 +56,13 @@
   "gpt-5.6-luna" = {
     name = "GPT-5.6 Luna";
     reasoning = true;
-    variants = [ "max" "xhigh" "high" "medium" "low" ];
+    variants = [
+      "max"
+      "xhigh"
+      "high"
+      "medium"
+      "low"
+    ];
     context = 1050000;
     output = 128000;
     cost = {
@@ -50,7 +74,11 @@
   "deepseek-v4-pro" = {
     name = "DeepSeek V4 Pro";
     reasoning = true;
-    variants = [ "max" "high" "medium" ];
+    variants = [
+      "max"
+      "high"
+      "medium"
+    ];
     context = 1000000;
     output = 131072;
     cost = {
@@ -62,7 +90,11 @@
   "deepseek-v4-flash" = {
     name = "DeepSeek V4 Flash";
     reasoning = true;
-    variants = [ "max" "high" "medium" ];
+    variants = [
+      "max"
+      "high"
+      "medium"
+    ];
     context = 1000000;
     output = 131072;
     cost = {
@@ -113,7 +145,11 @@
   "glm-5.2" = {
     name = "GLM-5.2";
     reasoning = true;
-    variants = [ "max" "high" "medium" ];
+    variants = [
+      "max"
+      "high"
+      "medium"
+    ];
     context = 1000000;
     output = 131072;
     cost = {
