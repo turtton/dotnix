@@ -13,9 +13,12 @@ let
   testInputs = with pkgs; [
     bash
     coreutils
+    curl
     gnugrep
     gnused
     jq
+    procps
+    python3
     util-linux
   ];
 
@@ -31,6 +34,13 @@ in
     bash ${./launcher-contract.sh} ${../../overlay/opencode/sandbox.sh}
     touch $out
   '';
+
+  child-wrapper-contract =
+    pkgs.runCommand "herdr-child-wrapper-contract" { nativeBuildInputs = testInputs; }
+      ''
+        bash ${./child-wrapper-contract.sh} ${../../overlay/opencode/child-wrapper.sh}
+        touch $out
+      '';
 
   senpi-launcher-contract =
     pkgs.runCommand "senpi-herdr-launcher-contract" { nativeBuildInputs = testInputs; }

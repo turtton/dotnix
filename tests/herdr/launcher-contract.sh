@@ -13,11 +13,13 @@ SELF_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 FAKE_HERDR_SRC="${FAKE_HERDR:-$SELF_DIR/fake-herdr.sh}"
 
 WORK=$(mktemp -d)
+http_pid=""
 cleanup() {
   local f
   for f in "$WORK"/herdr-state/sessions/*/server.pid; do
     [[ -f $f ]] && kill "$(<"$f")" 2>/dev/null
   done
+  [[ -n $http_pid ]] && kill "$http_pid" 2>/dev/null
   rm -rf "$WORK"
 }
 trap cleanup EXIT
@@ -75,7 +77,8 @@ run_tty() {
     else
       printf 'exec bash %q' "$LAUNCHER"
     fi
-    printf ' %q' "$@"
+    # $#=0 でも printf が空の '' を一度出力してしまうのを防ぐ
+    if [[ $# -gt 0 ]]; then printf ' %q' "$@"; fi
     printf '\n'
   } >"$runner"
   chmod +x "$runner"
@@ -226,6 +229,71 @@ if [[ $match -eq 1 ]]; then
   ok "special-character arguments survive to the pane command"
 else
   not_ok "argument survival (pane argv: $(printf '<%s> ' "${got[@]:-}"))"
+fi
+
+# 8-10: shared-server attach — sandbox.sh consults
+# ~/.local/state/opencode/herdr-servers/<sha1(cwd)>.json and, when the server
+# answers /global/health, attaches in the current pane instead of touching herdr
+http_pid=""
+SHARED_PORT=44567
+docroot="$WORK/health-root"
+mkdir -p "$docroot/global"
+printf '{"healthy":true}' >"$docroot/global/health"
+python3 -m http.server "$SHARED_PORT" --bind 127.0.0.1 --directory "$docroot" >/dev/null 2>&1 &
+http_pid=$!
+for _ in $(seq 1 50); do
+  curl -sf -m 1 "http://127.0.0.1:$SHARED_PORT/global/health" >/dev/null 2>&1 && break
+  sleep 0.1
+done
+
+cat >"$FAKE_BIN/bwrap" <<EOF
+#!$BASH_BIN
+echo "\$@" >>"$WORK/bwrap.log"
+EOF
+chmod +x "$FAKE_BIN/bwrap"
+: >"$WORK/bwrap.log"
+
+write_registry() {
+  local dir=$1 url=$2 canon key regdir
+  canon=$(cd "$dir" && pwd -P)
+  key=$(printf %s "$canon" | sha1sum | cut -d' ' -f1)
+  regdir="$HOME/.local/state/opencode/herdr-servers"
+  mkdir -p "$regdir"
+  printf '{"url":"%s","cwd":"%s"}' "$url" "$canon" >"$regdir/$key.json"
+}
+
+# 8: live shared server for the same cwd → zero herdr invocations, bwrap gets attach
+write_registry "$dir_a" "http://127.0.0.1:$SHARED_PORT"
+reset_log
+: >"$WORK/bwrap.log"
+run_tty "$dir_a"
+if [[ ! -s $FAKE_HERDR_LOG ]] && grep -q "attach http://127.0.0.1:$SHARED_PORT" "$WORK/bwrap.log"; then
+  ok "live shared server: attaches in current pane without herdr"
+else
+  not_ok "live shared server: expected no herdr calls and bwrap attach (bwrap log: $(<"$WORK/bwrap.log"))"
+fi
+
+# 9: dead registered server → falls back to the normal herdr workspace flow
+dir_dead="$WORK/proj-dead"
+mkdir -p "$dir_dead"
+write_registry "$dir_dead" "http://127.0.0.1:9"
+reset_log
+: >"$WORK/bwrap.log"
+run_tty "$dir_dead"
+if [[ $(create_count) -eq 1 && $(run_count) -eq 1 && ! -s $WORK/bwrap.log ]]; then
+  ok "dead shared server: normal herdr workspace flow"
+else
+  not_ok "dead shared server: expected create=1 run=1 no bwrap (create=$(create_count) run=$(run_count) bwrap=$(<"$WORK/bwrap.log"))"
+fi
+
+# 10: subcommand launch bypasses attach even while a shared server is live
+reset_log
+: >"$WORK/bwrap.log"
+run_tty "$dir_a" run hello
+if [[ ! -s $WORK/bwrap.log && $(run_count) -eq 1 ]]; then
+  ok "subcommand: no attach, normal injection"
+else
+  not_ok "subcommand: expected no bwrap and 1 pane run (run=$(run_count) bwrap=$(<"$WORK/bwrap.log"))"
 fi
 
 printf '# %d/%d assertions failed\n' "$fails" "$tests"

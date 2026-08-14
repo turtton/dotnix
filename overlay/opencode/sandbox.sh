@@ -121,7 +121,31 @@ launch_herdr_context() {
   return 0
 }
 
+# 位置引数や --port 指定は opencode の CLI 上 TUI 起動ではないため attach 対象外
+ATTACH_URL=""
 if [[ -z ${OPENCODE_HERDR_CHILD:-} && -n ${HERDR_ENV:-} ]]; then
+  is_plain_tui=true
+  for arg in "$@"; do
+    case $arg in
+    --port | --port=* | --hostname | --hostname=*) is_plain_tui=false ;;
+    -*) ;;
+    *) is_plain_tui=false ;;
+    esac
+  done
+  if $is_plain_tui; then
+    server_registry="${HOME}/.local/state/opencode/herdr-servers/$(printf %s "$CANONICAL_PROJECT_DIR" | sha1sum | cut -d' ' -f1).json"
+    if [[ -f $server_registry ]]; then
+      shared_url=$(jq -r '.url // empty' "$server_registry" 2>/dev/null || true)
+      if [[ -n $shared_url ]] && curl -sf -m 2 "$shared_url/global/health" >/dev/null 2>&1; then
+        ATTACH_URL=$shared_url
+        # OMO が正しいサーバーに接続できるよう共有サーバーのポートを引き継ぐ
+        OPENCODE_PORT=${ATTACH_URL##*:}
+      fi
+    fi
+  fi
+fi
+
+if [[ -z ${OPENCODE_HERDR_CHILD:-} && -n ${HERDR_ENV:-} && -z $ATTACH_URL ]]; then
   if launch_herdr_context "$@"; then
     exit 0
   fi
@@ -539,6 +563,9 @@ trap 'rm -rf "$OPENCODE_HOME"' EXIT INT TERM
 # OpenCode 設定ディレクトリの確保
 mkdir -p "$OPENCODE_CONFIG"
 
+# isolated_home が bind mount する前提のため先に作る (attach サーバー登録の置き場)
+mkdir -p "${HOME}/.local/state/opencode"
+
 # 各関数を順に呼び出して BWRAP_ARGS を構築
 base_filesystem
 selective_run_mounts
@@ -560,6 +587,10 @@ SANDBOX_EXTRA="${REPO_ROOT}/.opencode/sandbox-extra.sh"
 if [[ -f $SANDBOX_EXTRA ]]; then
   # shellcheck source=/dev/null
   source "$SANDBOX_EXTRA"
+fi
+
+if [[ -n $ATTACH_URL ]]; then
+  set -- attach "$ATTACH_URL" "$@"
 fi
 
 exec bwrap "${BWRAP_ARGS[@]}" \
