@@ -174,7 +174,19 @@ jobs:
           PACKAGE: ${{ matrix.packages }}
       - name: Push to attic
         if: success()
-        run: attic push home ./result
+        run: |
+          # tailscaled ingress stalls under concurrent large uploads (issue #72); retry with backoff
+          for attempt in 1 2 3; do
+            if attic push home ./result; then
+              exit 0
+            fi
+            if [ "$attempt" -lt 3 ]; then
+              delay=$((attempt * 30 + RANDOM % 30))
+              echo "attic push failed (attempt $attempt/3); retrying in ${delay}s"
+              sleep "$delay"
+            fi
+          done
+          exit 1
   build-darwin:
     name: Build packages on Mac
     runs-on: macos-latest
@@ -223,7 +235,19 @@ jobs:
           PACKAGE: ${{ matrix.packages }}
       - name: Push to attic
         if: success()
-        run: attic push home ./result
+        run: |
+          # tailscaled ingress stalls under concurrent large uploads (issue #72); retry with backoff
+          for attempt in 1 2 3; do
+            if attic push home ./result; then
+              exit 0
+            fi
+            if [ "$attempt" -lt 3 ]; then
+              delay=$((attempt * 30 + RANDOM % 30))
+              echo "attic push failed (attempt $attempt/3); retrying in ${delay}s"
+              sleep "$delay"
+            fi
+          done
+          exit 1
   build-rocm-base:
     name: Build ROCm base packages on Linux
     runs-on: ubuntu-latest
@@ -272,7 +296,18 @@ jobs:
           nix build --fallback --no-link --print-out-paths ".#$PACKAGE" > "$paths_file"
           mapfile -t paths < "$paths_file"
           (( ${#paths[@]} > 0 ))
-          attic push home "${paths[@]}"
+          # tailscaled ingress stalls under concurrent large uploads (issue #72); retry with backoff
+          for attempt in 1 2 3; do
+            if attic push home "${paths[@]}"; then
+              exit 0
+            fi
+            if [ "$attempt" -lt 3 ]; then
+              delay=$((attempt * 30 + RANDOM % 30))
+              echo "attic push failed (attempt $attempt/3); retrying in ${delay}s"
+              sleep "$delay"
+            fi
+          done
+          exit 1
         env:
           PACKAGE: ${{ matrix.packages }}
   build-downstream:
@@ -320,7 +355,18 @@ jobs:
           nix build --fallback --no-link --print-out-paths ".#$PACKAGE" > "$paths_file"
           mapfile -t paths < "$paths_file"
           (( ${#paths[@]} > 0 ))
-          attic push home "${paths[@]}"
+          # tailscaled ingress stalls under concurrent large uploads (issue #72); retry with backoff
+          for attempt in 1 2 3; do
+            if attic push home "${paths[@]}"; then
+              exit 0
+            fi
+            if [ "$attempt" -lt 3 ]; then
+              delay=$((attempt * 30 + RANDOM % 30))
+              echo "attic push failed (attempt $attempt/3); retrying in ${delay}s"
+              sleep "$delay"
+            fi
+          done
+          exit 1
         env:
           PACKAGE: ${{ matrix.packages }}
   all-workflows-passed:
