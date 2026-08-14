@@ -60,6 +60,36 @@ in
     touch $out
   '';
 
+  # RED: overlay/senpi/sandbox.sh は未作成のため path 不在の eval エラーで失敗する
+  senpi-sandbox-contract =
+    pkgs.runCommand "senpi-sandbox-contract" { nativeBuildInputs = testInputs; }
+      ''
+        bash ${./senpi-sandbox-contract.sh} ${../../overlay/senpi/sandbox.sh}
+        touch $out
+      '';
+
+  # RED: child-wrapper 呼出規約 (project_dir, senpi_bin, args...) を senpi-sandbox
+  # 呼び出しへ変換する shim。overlay/senpi/senpi-sandbox-shim.sh として作成される予定。
+  senpi-sandbox-shim-executable =
+    let
+      shim = ../../overlay/senpi/senpi-sandbox-shim.sh;
+    in
+    pkgs.runCommand "senpi-sandbox-shim-executable" { } (
+      if builtins.pathExists shim then
+        ''
+          if [ ! -x ${shim} ]; then
+            echo "senpi-sandbox-shim.sh is not executable: ${shim}" >&2
+            exit 1
+          fi
+          touch $out
+        ''
+      else
+        ''
+          echo "senpi-sandbox-shim.sh does not exist yet (expected: overlay/senpi/senpi-sandbox-shim.sh)" >&2
+          exit 1
+        ''
+    );
+
   quota-contract = pkgs.runCommand "herdr-quota-contract" { nativeBuildInputs = testInputs; } ''
     export FAKE_HERDR=${./fake-herdr.sh}
     bash ${./quota-contract.sh} ${../../overlay/opencode/kimi-quota-poll.sh}
