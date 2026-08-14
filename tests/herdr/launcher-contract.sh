@@ -28,7 +28,6 @@ export HOME="$WORK/home"
 export XDG_STATE_HOME="$WORK/xdg-state"
 export FAKE_HERDR_STATE="$WORK/herdr-state"
 export FAKE_HERDR_LOG="$WORK/herdr.log"
-export OPENCODE_BIN=/bin/true
 export OPENCODE_NO_SANDBOX=
 export OPENCODE_HERDR_TEST_MODE=1
 mkdir -p "$HOME" "$XDG_STATE_HOME" "$FAKE_HERDR_STATE"
@@ -41,6 +40,44 @@ cp "$FAKE_HERDR_SRC" "$FAKE_BIN/herdr"
 sed -i "1s|^#!.*|#!$BASH_BIN|" "$FAKE_BIN/herdr"
 chmod +x "$FAKE_BIN/herdr"
 export PATH="$FAKE_BIN:$PATH"
+
+# launcher は `attach --help` をパースして中継可能フラグを導出するため、
+# 実フォーマット通りの help を返すスタブを OPENCODE_BIN に使う
+OPENCODE_STUB="$WORK/opencode-stub"
+{
+  printf '#!%s\n' "$BASH_BIN"
+  cat <<'EOF'
+if [[ ${1:-} == attach && ${2:-} == --help ]]; then
+  cat <<'HELP'
+opencode attach <url>
+
+attach to a running opencode server
+
+Positionals:
+  url  http://localhost:4096                                      [string] [required]
+
+Options:
+  -h, --help          show help                                   [boolean]
+  -v, --version       show version number                         [boolean]
+      --print-logs    print logs to stderr                        [boolean]
+      --log-level     log level                                    [string]
+      --pure          run without external plugins                [boolean]
+      --dir           directory to run in                          [string]
+  -c, --continue      continue the last session                   [boolean]
+  -s, --session       session id to continue                       [string]
+      --fork          fork the session when continuing            [boolean]
+  -p, --password      basic auth password                          [string]
+  -u, --username      basic auth username                          [string]
+      --mini          start the minimal interactive interface     [boolean]
+      --no-replay     disable mini session history replay         [boolean]
+      --replay-limit  cap visible mini replay                      [number]
+HELP
+fi
+exit 0
+EOF
+} >"$OPENCODE_STUB"
+chmod +x "$OPENCODE_STUB"
+export OPENCODE_BIN="$OPENCODE_STUB"
 
 TEST_SESSION="contract-session"
 

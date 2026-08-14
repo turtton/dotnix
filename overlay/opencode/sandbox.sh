@@ -121,12 +121,60 @@ launch_herdr_context() {
   return 0
 }
 
-# attach に中継できるのは attach が解釈できるフラグのみ (opencode CLI の
-# attach サブコマンドのオプション一覧に依存)。TUI 専用フラグや位置引数は
-# 従来の herdr フローに回す。help/version は pane 移動せずその場で出力する
+# attach に中継できるフラグは `opencode attach --help` から実行時に導出する
+# (静的リストは CLI 更新から取り残されるため)。パース失敗時はフラグ付き起動を
+# すべて herdr フローに回す安全側フォールバック
+attach_flag_table() {
+  local bin_id cache_dir cache parsed
+  bin_id=$(readlink -f "$OPENCODE_BIN" | sha1sum | cut -d' ' -f1)
+  cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/opencode"
+  cache="$cache_dir/attach-flags-$bin_id"
+  if [[ ! -f $cache ]]; then
+    # yargs は端末幅でオプション行を折り返すため COLUMNS を固定し、
+    # opencode の help は stderr に出るため 2>&1 で拾う
+    parsed=$(COLUMNS=1000 "$OPENCODE_BIN" attach --help 2>&1 | awk '
+      function flush() {
+        if (has) {
+          if (cur == "") cur = "b"
+          if (s != "") print cur ":" s
+          if (l != "") print cur ":" l
+        }
+        has = 0; s = ""; l = ""; cur = ""
+      }
+      /^ +(-[a-z], |--)/ {
+        flush()
+        has = 1
+        if (match($0, /-[a-z],/)) s = substr($0, RSTART, 2)
+        if (match($0, /--[a-z][a-z-]*/)) l = substr($0, RSTART, RLENGTH)
+        if ($0 ~ /\[(string|number|array)\]/) cur = "v"
+        else if ($0 ~ /\[boolean\]/) cur = "b"
+        next
+      }
+      # 型マーカー ([string] 等) だけが折り返された継続行を前行のオプションに帰属させる
+      /^ +\[/ {
+        if (has && cur == "") {
+          if ($0 ~ /\[(string|number|array)\]/) cur = "v"
+          else if ($0 ~ /\[boolean\]/) cur = "b"
+        }
+        next
+      }
+      { flush() }
+      END { flush() }')
+    [[ -n $parsed ]] || return 1
+    mkdir -p "$cache_dir"
+    printf '%s\n' "$parsed" >"$cache.$$"
+    mv "$cache.$$" "$cache"
+  fi
+  cat "$cache"
+}
+
+flag_known() { grep -qFx "b:$1" <<<"$attach_flags" || grep -qFx "v:$1" <<<"$attach_flags"; }
+flag_takes_value() { grep -qFx "v:$1" <<<"$attach_flags"; }
+
 ATTACH_URL=""
 skip_herdr=false
 if [[ -z ${OPENCODE_HERDR_CHILD:-} && -n ${HERDR_ENV:-} ]]; then
+  attach_flags=$(attach_flag_table || true)
   is_plain_tui=true
   expect_value=false
   for arg in "$@"; do
@@ -135,9 +183,16 @@ if [[ -z ${OPENCODE_HERDR_CHILD:-} && -n ${HERDR_ENV:-} ]]; then
       continue
     fi
     case $arg in
+    # help/version は pane 移動せずその場で出力する
     -h | --help | -v | --version) skip_herdr=true ;;
-    -s | --session | -p | --password | -u | --username | --dir | --replay-limit | --log-level) expect_value=true ;;
-    -c | --continue | --fork | --mini | --no-replay | --print-logs | --pure | --session=* | --password=* | --username=* | --dir=* | --replay-limit=* | --log-level=*) ;;
+    --*=*) flag_known "${arg%%=*}" || is_plain_tui=false ;;
+    -*)
+      if flag_takes_value "$arg"; then
+        expect_value=true
+      elif ! flag_known "$arg"; then
+        is_plain_tui=false
+      fi
+      ;;
     *) is_plain_tui=false ;;
     esac
   done
