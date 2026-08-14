@@ -13,7 +13,6 @@
   agents = {
     explore = {
       models = [
-        "openai-codex/gpt-5.6-luna-fast"
         "crofai/deepseek-v4-flash-0731"
         "crofai/glm-5.2"
         "kimi-coding/kimi-k3"
@@ -22,7 +21,6 @@
     };
     librarian = {
       models = [
-        "openai-codex/gpt-5.6-luna-fast"
         "crofai/deepseek-v4-flash-0731"
         "crofai/glm-5.2"
         "kimi-coding/kimi-k3"
@@ -49,12 +47,12 @@
     momus = {
       models = [
         {
-          model = "openai-codex/gpt-5.6-terra";
-          reasoning = "high";
-        }
-        {
           model = "openai-codex/gpt-5.6-sol";
           reasoning = "xhigh";
+        }
+        {
+          model = "openai-codex/gpt-5.6-terra";
+          reasoning = "max";
         }
         {
           model = "anthropic/claude-opus-5";
@@ -72,7 +70,6 @@
   categories = {
     quick = {
       models = [
-        "openai-codex/gpt-5.6-luna-fast"
         "crofai/deepseek-v4-flash-0731"
         "crofai/glm-5.2"
         "kimi-coding/kimi-k3"
@@ -146,18 +143,18 @@
     architect = {
       models = [
         {
-          model = "anthropic/claude-opus-5";
-          reasoning = "high";
+          model = "anthropic/claude-fable-5";
+          reasoning = "xhigh";
         }
         {
           model = "openai-codex/gpt-5.6-sol";
           reasoning = "high";
         }
-        "crofai/glm-5.2"
         {
           model = "kimi-coding/kimi-k3";
           reasoning = "xhigh";
         }
+        "crofai/glm-5.2"
         "crofai/kimi-k3-eco"
       ];
     };
@@ -178,10 +175,7 @@
     };
     visual-engineering = {
       models = [
-        {
-          model = "anthropic/claude-opus-5";
-          reasoning = "max";
-        }
+        "crofai/greg-2-super"
         {
           model = "kimi-coding/kimi-k3";
           reasoning = "xhigh";
