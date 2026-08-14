@@ -311,18 +311,27 @@ launch_herdr_context() {
   return 0
 }
 
-# 位置引数や --port 指定は opencode の CLI 上 TUI 起動ではないため attach 対象外
+# attach に中継できるのは attach が解釈できるフラグのみ (opencode CLI の
+# attach サブコマンドのオプション一覧に依存)。TUI 専用フラグや位置引数は
+# 従来の herdr フローに回す。help/version は pane 移動せずその場で出力する
 ATTACH_URL=""
+skip_herdr=false
 if [[ -z ${OPENCODE_HERDR_CHILD:-} && -n ${HERDR_ENV:-} ]]; then
   is_plain_tui=true
+  expect_value=false
   for arg in "$@"; do
+    if $expect_value; then
+      expect_value=false
+      continue
+    fi
     case $arg in
-    --port | --port=* | --hostname | --hostname=*) is_plain_tui=false ;;
-    -*) ;;
+    -h | --help | -v | --version) skip_herdr=true ;;
+    -s | --session | -p | --password | -u | --username | --dir | --replay-limit | --log-level) expect_value=true ;;
+    -c | --continue | --fork | --mini | --no-replay | --print-logs | --pure | --session=* | --password=* | --username=* | --dir=* | --replay-limit=* | --log-level=*) ;;
     *) is_plain_tui=false ;;
     esac
   done
-  if $is_plain_tui; then
+  if $is_plain_tui && ! $skip_herdr; then
     server_registry="${HOME}/.local/state/opencode/herdr-servers/$(printf %s "$PROJECT_DIR" | sha1sum | cut -d' ' -f1).json"
     if [[ -f $server_registry ]]; then
       shared_url=$(jq -r '.url // empty' "$server_registry" 2>/dev/null || true)
@@ -336,7 +345,7 @@ if [[ -z ${OPENCODE_HERDR_CHILD:-} && -n ${HERDR_ENV:-} ]]; then
   fi
 fi
 
-if [[ -z ${OPENCODE_HERDR_CHILD:-} && -n ${HERDR_ENV:-} && -z $ATTACH_URL ]]; then
+if [[ -z ${OPENCODE_HERDR_CHILD:-} && -n ${HERDR_ENV:-} && -z $ATTACH_URL ]] && ! $skip_herdr; then
   if launch_herdr_context "$@"; then
     exit 0
   fi

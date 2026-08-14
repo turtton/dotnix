@@ -296,5 +296,35 @@ else
   not_ok "subcommand: expected no bwrap and 1 pane run (run=$(run_count) bwrap=$(<"$WORK/bwrap.log"))"
 fi
 
+# 11: --help prints locally: neither herdr nor attach even with a live server
+reset_log
+: >"$WORK/bwrap.log"
+run_tty "$dir_a" --help
+if [[ ! -s $FAKE_HERDR_LOG ]] && grep -q -- "--help" "$WORK/bwrap.log" && ! grep -q attach "$WORK/bwrap.log"; then
+  ok "help flag: prints locally without herdr or attach"
+else
+  not_ok "help flag: expected local run with --help (bwrap=$(<"$WORK/bwrap.log"))"
+fi
+
+# 12: attach-compatible flags (-s <id>) are forwarded to the attach TUI
+reset_log
+: >"$WORK/bwrap.log"
+run_tty "$dir_a" -s ses_1
+if [[ ! -s $FAKE_HERDR_LOG ]] && grep -q "attach http://127.0.0.1:$SHARED_PORT -s ses_1" "$WORK/bwrap.log"; then
+  ok "attach-compatible flags: forwarded to attach"
+else
+  not_ok "attach-compatible flags: expected attach with -s ses_1 (bwrap=$(<"$WORK/bwrap.log"))"
+fi
+
+# 13: TUI-only flags (--model) fall back to the herdr workspace flow
+reset_log
+: >"$WORK/bwrap.log"
+run_tty "$dir_a" --model foo
+if [[ ! -s $WORK/bwrap.log && $(run_count) -eq 1 ]]; then
+  ok "TUI-only flags: no attach, normal injection"
+else
+  not_ok "TUI-only flags: expected no bwrap and 1 pane run (run=$(run_count) bwrap=$(<"$WORK/bwrap.log"))"
+fi
+
 printf '# %d/%d assertions failed\n' "$fails" "$tests"
 [[ $fails -eq 0 ]]
