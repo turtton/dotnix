@@ -103,7 +103,8 @@ else
 fi
 
 if $inject; then
-  command="env SENPI_HERDR_CHILD=1 HERDR_SESSION=$(shell_quote "$session") HERDR_SOCKET_PATH=$(shell_quote "$socket_path") HERDR_PANE_ID=$(shell_quote "$pane_id") $(shell_quote "$CHILD_WRAPPER") $(shell_quote "$CANON") $(shell_quote "$SENPI_BIN")"
+  # herdr の既知エージェント表に senpi は無く、ヒントが無いと claude-sdk-oauth の auth probe を Claude Code と誤認する
+  command="env SENPI_HERDR_CHILD=1 HERDR_AGENT=pi HERDR_SESSION=$(shell_quote "$session") HERDR_SOCKET_PATH=$(shell_quote "$socket_path") HERDR_PANE_ID=$(shell_quote "$pane_id") $(shell_quote "$CHILD_WRAPPER") $(shell_quote "$CANON") $(shell_quote "$SENPI_BIN")"
   for arg in "$@"; do
     command+=" $(shell_quote "$arg")"
   done

@@ -209,7 +209,17 @@ else
   not_ok "same basename: expected create=2 run=3 (create=$(create_count) run=$(run_count))"
 fi
 
-# 7: arguments with spaces/quotes/dollar/semicolons survive to the pane intact
+# 7: injected command carries HERDR_AGENT=pi
+reset_log
+export SENPI_BIN=/bin/true
+run_tty "$dir_a"
+if grep -q 'HERDR_AGENT=pi' "$FAKE_HERDR_LOG"; then
+  ok "injected command sets HERDR_AGENT=pi"
+else
+  not_ok "injected command must set HERDR_AGENT=pi"
+fi
+
+# 8: arguments with spaces/quotes/dollar/semicolons survive to the pane intact
 recorder="$WORK/argv-recorder.sh"
 argv_out="$WORK/argv.out"
 cat >"$recorder" <<EOF
