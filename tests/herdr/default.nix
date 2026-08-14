@@ -27,6 +27,20 @@ let
   senpiHerdrChild = import ../../overlay/senpi/herdr-child.nix {
     inherit (pkgs) writeText writeShellScript;
   };
+
+  # overlay/opencode/default.nix の mkQuotaPoller と同じ規約で __QUOTA_REPORT__ を置換する。
+  # ビルドサンドボックスには /usr/bin/env が無いので、quota-report の shebang は
+  # bash のストアパスに張り替えないとポーラーからの直接 exec が失敗する
+  quotaReport = pkgs.runCommand "quota-report.sh" { } ''
+    sed "1s|^#!.*|#!${pkgs.bash}/bin/bash|" ${../../overlay/opencode/quota-report.sh} > $out
+    chmod +x $out
+  '';
+
+  kimiQuotaPoller = pkgs.writeText "kimi-quota-poll.sh" (
+    builtins.replaceStrings [ "__QUOTA_REPORT__" ] [ "${quotaReport}" ] (
+      builtins.readFile ../../overlay/opencode/kimi-quota-poll.sh
+    )
+  );
 in
 {
   launcher-contract = pkgs.runCommand "herdr-launcher-contract" { nativeBuildInputs = testInputs; } ''
@@ -92,7 +106,7 @@ in
 
   quota-contract = pkgs.runCommand "herdr-quota-contract" { nativeBuildInputs = testInputs; } ''
     export FAKE_HERDR=${./fake-herdr.sh}
-    bash ${./quota-contract.sh} ${../../overlay/opencode/kimi-quota-poll.sh}
+    bash ${./quota-contract.sh} ${kimiQuotaPoller}
     touch $out
   '';
 }
