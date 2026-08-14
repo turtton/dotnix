@@ -61,6 +61,7 @@ let
           "~/.omo"
           "~/.senpi"
           "~/.config/opencode"
+          "~/.config/herdr/sessions"
           "~/.local/share/opencode"
           "~/.local/state/opencode"
           "~/.cache/opencode"
