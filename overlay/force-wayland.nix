@@ -1,61 +1,6 @@
 inputs: self: prev:
 with prev;
 let
-  forceWaylandIme =
-    {
-      name,
-      desktopName ? name,
-      binaryNames ? [ name ],
-      package ? null,
-    }:
-    let
-      targetPackege = if package == null then prev.${name} else package;
-    in
-    prev.symlinkJoin {
-      pname = targetPackege.pname or name;
-      version = targetPackege.version or "unknown";
-      name = "${name}-wrapped";
-      paths = [ targetPackege ];
-      buildInputs = [ prev.makeWrapper ];
-      postBuild =
-        let
-          desktopEntryPath = "/share/applications/${desktopName}.desktop";
-          paths = map (binaryName: "/bin/${binaryName}") binaryNames;
-          seds = map (
-            path:
-            ''sed -e "s|Exec=${targetPackege + path}|Exec=$out${path}|" "${
-              targetPackege + desktopEntryPath
-            }" > "$out${desktopEntryPath}"''
-          ) paths;
-          wrapPrograms = map (
-            path:
-            ''wrapProgram "$out${path}" --add-flags "'--enable-wayland-ime' '--enable-features=UseOzonePlatform' '--ozone-platform=wayland'"''
-          ) paths;
-        in
-        ''
-          # desktop
-          # FHS packages (discord) ship $out/share as a store symlink; lndir
-          # preserves it, and rm through it hits the read-only store
-          if [[ -L "$out/share" ]]; then
-          	share_target=$(readlink "$out/share")
-          	rm "$out/share"
-          	mkdir -p "$out/share"
-          	for entry in "$share_target"/*; do
-          		ln -s "$entry" "$out/share/"
-          	done
-          fi
-          if [[ -L "$out/share/applications" ]]; then
-          	rm "$out/share/applications"
-          	mkdir -p "$out/share/applications"
-          else
-          	rm "$out${desktopEntryPath}"
-          fi
-
-            ${prev.lib.concatStringsSep "\n" seds}
-
-          	${prev.lib.concatStringsSep "\n" wrapPrograms}
-        '';
-    };
   overrideCommandLine =
     pkg:
     pkg.override {
@@ -72,23 +17,15 @@ in
   google-chrome = overrideCommandLine prev.google-chrome;
   obsidian = overrideCommandLine prev.obsidian;
   vscode = overrideCommandLine prev.vscode;
-  spotify = forceWaylandIme { name = "spotify"; };
-  discord = forceWaylandIme rec {
-    name = "discord";
-    binaryNames = [
-      name
-      "Discord"
-    ];
+  # nixpkgs only unsets DISPLAY under NIXOS_OZONE_WL; CEF needs the flag for fcitx
+  spotify = prev.symlinkJoin {
+    name = "spotify-wrapped";
+    paths = [ prev.spotify ];
+    buildInputs = [ prev.makeWrapper ];
+    postBuild = ''
+      wrapProgram "$out/bin/spotify" --add-flags "--enable-wayland-ime=true"
+    '';
   };
-  discord-ptb = forceWaylandIme {
-    name = "discord-ptb";
-    binaryNames = [
-      "discordptb"
-      "DiscordPTB"
-    ];
-  };
-  slack = forceWaylandIme { name = "slack"; };
-  teams-for-linux = forceWaylandIme { name = "teams-for-linux"; };
   claude-desktop =
     let
       # The upstream flake builds claude-desktop-fhs with its own pinned
