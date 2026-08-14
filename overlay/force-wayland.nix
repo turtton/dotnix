@@ -34,6 +34,16 @@ let
         in
         ''
           # desktop
+          # FHS packages (discord) ship $out/share as a store symlink; lndir
+          # preserves it, and rm through it hits the read-only store
+          if [[ -L "$out/share" ]]; then
+          	share_target=$(readlink "$out/share")
+          	rm "$out/share"
+          	mkdir -p "$out/share"
+          	for entry in "$share_target"/*; do
+          		ln -s "$entry" "$out/share/"
+          	done
+          fi
           if [[ -L "$out/share/applications" ]]; then
           	rm "$out/share/applications"
           	mkdir -p "$out/share/applications"
