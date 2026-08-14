@@ -7,17 +7,21 @@ let
 
   sandbox = self.writeShellApplication {
     name = "senpi-sandbox";
-    runtimeInputs = with self; [
-      jq
-      git
-      gh
-      gnupg
-      coreutils
-      curl
-      bubblewrap
-      gnugrep
-      gnused
-    ];
+    runtimeInputs =
+      with self;
+      [
+        jq
+        git
+        gh
+        gnupg
+        coreutils
+        curl
+      ]
+      ++ self.lib.optionals (!isDarwin) [
+        self.bubblewrap
+        self.gnugrep
+        self.gnused
+      ];
     checkPhase = "";
     text =
       builtins.replaceStrings
@@ -26,7 +30,7 @@ let
           "${original}/bin"
           "${herdrChild}"
         ]
-        (builtins.readFile ./sandbox.sh);
+        (builtins.readFile (if isDarwin then ./sandbox-darwin.sh else ./sandbox.sh));
   };
 
   sandboxShim = self.writeShellScript "senpi-sandbox-shim.sh" (
