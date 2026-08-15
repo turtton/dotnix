@@ -173,6 +173,8 @@ project_mount() {
       [[ $main_repo_root != "$SHARE_TREE/"* ]]; then
       BWRAP_ARGS+=(--ro-bind "$main_repo_root" "$main_repo_root")
     fi
+    # worktree の git 操作は共通 .git への書き込みを要するため、ro マウント後に rw で上書きする
+    BWRAP_ARGS+=(--bind "$git_common_dir" "$git_common_dir")
   fi
 
   BWRAP_ARGS+=(--bind "$REPO_ROOT" "$REPO_ROOT")
