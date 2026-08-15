@@ -106,6 +106,11 @@
   "kimi-k3" = {
     name = "Kimi K3";
     reasoning = true;
+    variants = [
+      "max"
+      "high"
+      "medium"
+    ];
     context = 1048576;
     output = 131072;
     cost = {
@@ -117,6 +122,11 @@
   "kimi-k2.7-code" = {
     name = "Kimi K2.7 Code";
     reasoning = true;
+    variants = [
+      "max"
+      "high"
+      "medium"
+    ];
     context = 262144;
     output = 262144;
     cost = {
