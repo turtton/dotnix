@@ -87,8 +87,40 @@
       cacheRead = 0.003;
     };
   };
+  "deepseek-v4-pro-0813" = {
+    name = "DeepSeek V4 Pro 0813";
+    reasoning = true;
+    variants = [
+      "max"
+      "high"
+      "medium"
+    ];
+    context = 1000000;
+    output = 131072;
+    cost = {
+      input = 0.35;
+      output = 0.8;
+      cacheRead = 0.01;
+    };
+  };
   "deepseek-v4-flash" = {
     name = "DeepSeek V4 Flash";
+    reasoning = true;
+    variants = [
+      "max"
+      "high"
+      "medium"
+    ];
+    context = 1000000;
+    output = 131072;
+    cost = {
+      input = 0.12;
+      output = 0.21;
+      cacheRead = 0.003;
+    };
+  };
+  "deepseek-v4-flash-0731" = {
+    name = "DeepSeek V4 Flash 0731";
     reasoning = true;
     variants = [
       "max"
@@ -117,6 +149,22 @@
       input = 3;
       output = 15;
       cacheRead = 0.3;
+    };
+  };
+  "kimi-k3-eco" = {
+    name = "Kimi K3 Eco";
+    reasoning = true;
+    variants = [
+      "max"
+      "high"
+      "medium"
+    ];
+    context = 1048576;
+    output = 131072;
+    cost = {
+      input = 1;
+      output = 4;
+      cacheRead = 0.1;
     };
   };
   "kimi-k2.7-code" = {

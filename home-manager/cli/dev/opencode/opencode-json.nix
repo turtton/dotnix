@@ -45,6 +45,7 @@ in
     "opencode-comments-plugin"
     "@simonwjackson/opencode-direnv"
     "opencode-wakatime"
+    "opencode-cache-hit"
   ];
   agent.title.model = "opencode-go/minimax-m2.7";
   provider = {
@@ -75,7 +76,11 @@ in
       options.baseURL = "https://crof.ai/v1";
       models = pick [
         "deepseek-v4-pro"
+        "deepseek-v4-pro-0813"
         "deepseek-v4-flash"
+        "deepseek-v4-flash-0731"
+        "kimi-k3-eco"
+        "kimi-k3"
         "kimi-k2.7-code"
         "kimi-k2.6"
         "kimi-k2.5-lightning"
