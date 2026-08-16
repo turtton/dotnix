@@ -83,6 +83,20 @@
         }
       ];
     };
+    plan = {
+      model = "cli-proxy-api/claude-fable-5";
+      reasoning = "xhigh";
+      fallback_models = [
+        {
+          model = "cli-proxy-api/gpt-5.6-sol";
+          reasoning = "xhigh";
+        }
+        {
+          model = "cli-proxy-api/glm-5.2";
+          reasoning = "max";
+        }
+      ];
+    };
     atlas = {
       model = "cli-proxy-api/kimi-k3";
       fallback_models = [
@@ -192,7 +206,13 @@
       ];
     };
     unspecified-high = {
-      models = [ "cli-proxy-api/kimi-k3" ];
+      models = [
+        "cli-proxy-api/kimi-k3-eco"
+        {
+          model = "cli-proxy-api/gpt-5.6-sol";
+          reasoning = "high";
+        }
+      ];
     };
     writing = {
       models = [ "cli-proxy-api/kimi-k2.7-code" ];
