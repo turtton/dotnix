@@ -17,6 +17,7 @@
       "scroll-reverser"
       "fuwasegu/tap/airlingua"
       "deskpad"
+      "bruno"
     ];
     brews = [
       "can1357/tap/omp"
