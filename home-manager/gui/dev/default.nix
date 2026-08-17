@@ -16,7 +16,10 @@
   home.packages =
     with pkgs;
     [
-      hoppscotch # WebAPI dev	tool
+      # WebAPI dev tool
+      hoppscotch
+      bruno
+
       gitify
       lens
       dbeaver-bin
