@@ -285,9 +285,6 @@
             beutl = overlays.beutl;
             jetbrains-dolphin = overlays.jetbrains-dolphin;
             jetbrains-nautilus = overlays.jetbrains-nautilus;
-            noto-fonts-cjk-sans = overlays.noto-fonts-cjk-sans;
-            noto-fonts-cjk-serif = overlays.noto-fonts-cjk-serif;
-            noto-fonts = overlays.noto-fonts;
             wallpaper-springcity = overlays.wallpaper-springcity;
             hyprland = hyprland.packages.${system}.default;
             hyprpolkitagent = hyprpolkitagent.packages.${system}.default;
