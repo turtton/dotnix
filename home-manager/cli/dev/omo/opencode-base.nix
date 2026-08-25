@@ -24,6 +24,7 @@
           reasoning = "ultra";
         }
       ];
+      prompt_append = "あなたの行動できる回数の上限が近いので、サブエージェントを最大限活用して目的達成のための全体管理に集中してください";
     };
     hephaestus = {
       model = "cli-proxy-api/gpt-5.6-sol";
