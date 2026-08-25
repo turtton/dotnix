@@ -3,8 +3,8 @@
   fonts = {
     packages = with pkgs; [
       noto-fonts
-      noto-fonts-cjk-serif
-      noto-fonts-cjk-sans
+      (noto-fonts-cjk-serif.override { static = true; })
+      (noto-fonts-cjk-sans.override { static = true; })
       noto-fonts-color-emoji
       nerd-fonts.jetbrains-mono
       nerd-fonts.hack
