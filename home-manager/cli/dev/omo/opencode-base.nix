@@ -46,18 +46,22 @@
       ];
     };
     momus = {
-      model = "cli-proxy-api/gpt-5.6-sol";
-      reasoning = "xhigh";
+      model = "cli-proxy-api/gpt-5.6-terra";
+      reasoning = "high";
       fallback_models = [
         {
-          model = "cli-proxy-api/gpt-5.6-terra";
+          model = "cli-proxy-api/gpt-5.6-sol";
+          reasoning = "xhigh";
+        }
+        {
+          model = "cli-proxy-api/glm-5.2";
           reasoning = "max";
         }
       ];
     };
     metis = {
-      model = "cli-proxy-api/gpt-5.6-sol";
-      reasoning = "xhigh";
+      model = "cli-proxy-api/kimi-k3";
+      reasoning = "low";
       fallback_models = [
         {
           model = "cli-proxy-api/gpt-5.6-terra";
@@ -70,21 +74,21 @@
       ];
     };
     prometheus = {
-      model = "cli-proxy-api/claude-fable-5";
+      model = "anthropic/claude-fable-5";
       reasoning = "xhigh";
       fallback_models = [
+        {
+          model = "cli-proxy-api/kimi-k3";
+          reasoning = "max";
+        }
         {
           model = "cli-proxy-api/gpt-5.6-sol";
           reasoning = "xhigh";
         }
-        {
-          model = "cli-proxy-api/glm-5.2";
-          reasoning = "max";
-        }
       ];
     };
     plan = {
-      model = "cli-proxy-api/claude-fable-5";
+      model = "anthropic/claude-fable-5";
       reasoning = "xhigh";
       fallback_models = [
         {
@@ -114,34 +118,45 @@
       ];
     };
     explore = {
-      model = "cli-proxy-api/glm-5.2";
-      reasoning = "max";
+      model = "openai/gpt-5.6-luna-fast";
+      reasoning = "low";
       fallback_models = [
         {
-          model = "cli-proxy-api/gpt-5.6-luna";
-          reasoning = "medium";
+          model = "cli-proxy-api/deepseek-v4-flash";
+          reasoning = "max";
         }
       ];
     };
     librarian = {
-      model = "cli-proxy-api/glm-5.2";
-      reasoning = "max";
+      model = "openai/gpt-5.6-luna-fast";
+      reasoning = "low";
       fallback_models = [
         {
-          model = "cli-proxy-api/gpt-5.6-luna";
-          reasoning = "medium";
+          model = "cli-proxy-api/deepseek-v4-flash";
+          reasoning = "max";
         }
       ];
     };
     multimodal-looker = {
-      model = "cli-proxy-api/kimi-k2.7-code";
+      model = "cli-proxy-api/gpt-5.6-sol";
+      reasoning = "low";
+      fallback_models = [
+        {
+          model = "cli-proxy-api/kimi-k3";
+          reasoning = "max";
+        }
+        {
+          model = "cli-proxy-api/kimi-k2.7-code";
+          reasoning = "max";
+        }
+      ];
     };
   };
   categories = {
     visual-engineering = {
       models = [
         "CrofAI/greg-2-super"
-        { model = "cli-proxy-api/kimi-k2.7-code"; }
+        { model = "cli-proxy-api/kimi-k3"; }
         {
           model = "cli-proxy-api/glm-5.2";
           reasoning = "max";
@@ -152,7 +167,7 @@
       models = [
         {
           model = "cli-proxy-api/gpt-5.6-sol";
-          reasoning = "xhigh";
+          reasoning = "max";
         }
         {
           model = "cli-proxy-api/deepseek-v4-pro";
@@ -164,7 +179,7 @@
       models = [
         {
           model = "cli-proxy-api/gpt-5.6-sol";
-          reasoning = "high";
+          reasoning = "medium";
         }
         {
           model = "cli-proxy-api/glm-5.2";
@@ -175,7 +190,7 @@
     artistry = {
       models = [
         {
-          model = "cli-proxy-api/claude-fable-5";
+          model = "anthropic/claude-fable-5";
           reasoning = "xhigh";
         }
         {
@@ -191,16 +206,23 @@
     quick = {
       models = [
         {
-          model = "cli-proxy-api/deepseek-v4-flash";
-          reasoning = "max";
+          model = "openai/gpt-5.6-luna-fast";
+          reasoning = "low";
         }
-        { model = "cli-proxy-api/kimi-k2.7-code"; }
+        {
+          model = "cli-proxy-api/deepseek-v4-flash";
+          reasoning = "off";
+        }
       ];
     };
     unspecified-low = {
       models = [
         {
-          model = "cli-proxy-api/glm-5.2";
+          model = "cli-proxy-api/gpt-5.6-terra";
+          reasoning = "high";
+        }
+        {
+          model = "cli-proxy-api/deepseek-v4-pro";
           reasoning = "max";
         }
       ];
@@ -215,7 +237,12 @@
       ];
     };
     writing = {
-      models = [ "cli-proxy-api/kimi-k2.7-code" ];
+      models = [
+        {
+          model = "cli-proxy-api/kimik-3-eco";
+          reasoning = "low";
+        }
+      ];
     };
   };
   tmux = {
