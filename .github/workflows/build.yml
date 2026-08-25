@@ -114,9 +114,6 @@ jobs:
           - obsidian
           - vscode
           - zoom-us
-          - noto-fonts-cjk-sans
-          - noto-fonts-cjk-serif
-          - noto-fonts
           - zen-browser
           - rustowl
           # - beutl
