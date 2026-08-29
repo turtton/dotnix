@@ -148,7 +148,9 @@
       "high"
       "medium"
     ];
-    context = 1048576;
+    # Effective quality matches the 1M window only up to ~256K
+    # (Moonshot's own docs); compact before degradation sets in.
+    context = 393216;
     output = 131072;
     cost = {
       input = 2;
@@ -165,7 +167,8 @@
       "high"
       "medium"
     ];
-    context = 1048576;
+    # Same cap as kimi-k3; see the comment there.
+    context = 393216;
     output = 131072;
     cost = {
       input = 1;
