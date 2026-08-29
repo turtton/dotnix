@@ -230,7 +230,10 @@
     };
     unspecified-high = {
       models = [
-        "cli-proxy-api/kimi-k3-eco"
+        {
+          model = "cli-proxy-api/glm-5.3";
+          reasoning = "max";
+        }
         {
           model = "cli-proxy-api/gpt-5.6-sol";
           reasoning = "high";

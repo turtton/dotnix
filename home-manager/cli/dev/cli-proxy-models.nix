@@ -205,6 +205,41 @@
       cacheRead = 0.05;
     };
   };
+  # GLM-5.3 is text-only; GLM-5.3-Flash is the multimodal one.
+  "glm-5.3" = {
+    name = "GLM-5.3";
+    reasoning = true;
+    variants = [
+      "max"
+      "high"
+      "medium"
+    ];
+    context = 1000000;
+    output = 131072;
+    cost = {
+      input = 1.4;
+      output = 4.4;
+      cacheRead = 0.26;
+    };
+  };
+  "glm-5.3-flash" = {
+    name = "GLM-5.3 Flash";
+    reasoning = true;
+    image = true;
+    variants = [
+      "max"
+      "high"
+      "medium"
+    ];
+    context = 1000000;
+    output = 131072;
+    # List price; Z.ai runs a 50% launch promo through 2026-09-09.
+    cost = {
+      input = 0.15;
+      output = 0.5;
+      cacheRead = 0.03;
+    };
+  };
   "glm-5.2" = {
     name = "GLM-5.2";
     reasoning = true;
