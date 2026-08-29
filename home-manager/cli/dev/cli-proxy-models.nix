@@ -2,11 +2,12 @@
 # (127.0.0.1:8317). Consumed by:
 #   - ./opencode/opencode-json.nix  -> ~/.config/opencode/opencode.jsonc
 #   - ./senpi/default.nix           -> ~/.senpi/agent/models.json
-# Optional per-model keys: reasoning, variants (opencode), cost.
+# Optional per-model keys: reasoning, image (vision input), variants (opencode), cost.
 {
   "claude-fable-5" = {
     name = "Claude Fable 5";
     reasoning = true;
+    image = true;
     variants = [
       "max"
       "xhigh"
@@ -25,6 +26,7 @@
   "gpt-5.6-sol" = {
     name = "GPT-5.6 Sol";
     reasoning = true;
+    image = true;
     variants = [
       "max"
       "xhigh"
@@ -38,6 +40,7 @@
   "gpt-5.6-terra" = {
     name = "GPT-5.6 Terra";
     reasoning = true;
+    image = true;
     variants = [
       "max"
       "xhigh"
@@ -56,6 +59,7 @@
   "gpt-5.6-luna" = {
     name = "GPT-5.6 Luna";
     reasoning = true;
+    image = true;
     variants = [
       "max"
       "xhigh"
@@ -130,14 +134,15 @@
     context = 1000000;
     output = 131072;
     cost = {
-      input = 0.12;
-      output = 0.21;
+      input = 0.08;
+      output = 0.10;
       cacheRead = 0.003;
     };
   };
   "kimi-k3" = {
     name = "Kimi K3";
     reasoning = true;
+    image = true;
     variants = [
       "max"
       "high"
@@ -146,14 +151,15 @@
     context = 1048576;
     output = 131072;
     cost = {
-      input = 3;
-      output = 15;
-      cacheRead = 0.3;
+      input = 2;
+      output = 8;
+      cacheRead = 0.25;
     };
   };
   "kimi-k3-eco" = {
     name = "Kimi K3 Eco";
     reasoning = true;
+    image = true;
     variants = [
       "max"
       "high"
@@ -170,6 +176,7 @@
   "kimi-k2.7-code" = {
     name = "Kimi K2.7 Code";
     reasoning = true;
+    image = true;
     variants = [
       "max"
       "high"
@@ -186,18 +193,13 @@
   "kimi-k2.6" = {
     name = "Kimi K2.6";
     reasoning = true;
+    image = true;
     context = 262144;
     output = 262144;
-  };
-  "kimi-k2.5-lightning" = {
-    name = "Kimi K2.5 Lightning";
-    reasoning = true;
-    context = 131072;
-    output = 32768;
     cost = {
-      input = 1.0;
-      output = 3.0;
-      cacheRead = 0.2;
+      input = 0.5;
+      output = 1.99;
+      cacheRead = 0.05;
     };
   };
   "glm-5.2" = {
@@ -211,9 +213,9 @@
     context = 1000000;
     output = 131072;
     cost = {
-      input = 0.5;
-      output = 2.2;
-      cacheRead = 0.08;
+      input = 0.3;
+      output = 1.05;
+      cacheRead = 0.05;
     };
   };
   "glm-5.1" = {
@@ -229,8 +231,14 @@
   };
   "gemma-4-31b-it" = {
     name = "Gemma 4 31B IT";
+    image = true;
     context = 262144;
     output = 262144;
+    cost = {
+      input = 0.1;
+      output = 0.3;
+      cacheRead = 0.02;
+    };
   };
   "minimax-m2.5" = {
     name = "Minimax M2.5";
@@ -243,11 +251,21 @@
     reasoning = true;
     context = 262144;
     output = 262144;
+    cost = {
+      input = 0.35;
+      output = 1.75;
+      cacheRead = 0.07;
+    };
   };
   "greg-2-super" = {
     name = "Greg2 Super";
     reasoning = true;
     context = 229376;
     output = 229376;
+    cost = {
+      input = 1.5;
+      output = 5;
+      cacheRead = 0.25;
+    };
   };
 }

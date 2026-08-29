@@ -14,6 +14,15 @@ let
       };
     }
     // optionalAttrs (m.reasoning or false) { reasoning = true; }
+    // optionalAttrs (m.image or false) {
+      modalities = {
+        input = [
+          "text"
+          "image"
+        ];
+        output = [ "text" ];
+      };
+    }
     // optionalAttrs (m ? variants) {
       variants = builtins.listToAttrs (
         map (v: {
@@ -61,6 +70,7 @@ in
         "deepseek-v4-pro"
         "deepseek-v4-flash"
         "kimi-k3"
+        "kimi-k3-eco"
         "kimi-k2.7-code"
         "glm-5.2"
         "glm-5.1"
@@ -83,11 +93,9 @@ in
         "kimi-k3"
         "kimi-k2.7-code"
         "kimi-k2.6"
-        "kimi-k2.5-lightning"
         "glm-5.2"
         "glm-5.1"
         "gemma-4-31b-it"
-        "minimax-m2.5"
         "qwen3.5-397b-a17b"
         "greg-2-super"
       ];
