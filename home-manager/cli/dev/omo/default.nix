@@ -19,11 +19,9 @@ let
   senpiBase = import ./senpi-base.nix;
 
   # Extra skill sources, equivalent to the old @OPENCODE_CONFIG_DIR@ paths.
-  # git-commit is deployed here by agent-skills (dotagents); final-review is
-  # expected at the same location.
+  # git-commit is deployed here by agent-skills (dotagents).
   omoSkills = {
     skills.sources = [
-      "${configDir}/skill/final-review"
       "${configDir}/skill/git-commit"
     ];
   };
