@@ -55,6 +55,7 @@ in
     "@simonwjackson/opencode-direnv"
     "opencode-wakatime"
     "opencode-cache-hit"
+    "@tarquinen/opencode-dcp"
   ];
   agent.title.model = "opencode-go/minimax-m2.7";
   provider = {
