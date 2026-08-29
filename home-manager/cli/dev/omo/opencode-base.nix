@@ -243,7 +243,7 @@
     writing = {
       models = [
         {
-          model = "cli-proxy-api/kimik-3-eco";
+          model = "cli-proxy-api/kimi-k3";
           reasoning = "low";
         }
       ];
