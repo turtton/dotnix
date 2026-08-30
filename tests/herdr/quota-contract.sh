@@ -65,6 +65,10 @@ copilot)
   ;;
 esac
 
+if [[ -n ${FIXTURE_JSON:-} ]]; then
+  API_FIXTURE="$FIXTURE_JSON"
+fi
+
 FAKE_BIN="$WORK/bin"
 mkdir -p "$FAKE_BIN"
 BASH_BIN=$(command -v bash)
@@ -181,6 +185,27 @@ if [[ -s $METADATA_LOG ]]; then
   fi
 else
   not_ok "token values (no metadata recorded)"
+fi
+
+# reported value must show only the larger of the 5h/weekly percentages
+case "$PROVIDER" in
+kimi) expected_token="kimi=week 60%" ;;
+openai)
+  if [[ -n ${FIXTURE_JSON:-} ]]; then
+    expected_token="openai=week 42%"
+  else
+    expected_token="openai=5h 42%"
+  fi
+  ;;
+*) expected_token="" ;;
+esac
+if [[ -n $expected_token ]]; then
+  expected_log_token=${expected_token// /\\ }
+  if grep -qF -- "--token $expected_log_token" "$FAKE_HERDR_LOG"; then
+    ok "reported token is $expected_token (larger of 5h/weekly only)"
+  else
+    not_ok "expected token '$expected_token' in report-metadata"
+  fi
 fi
 
 # 3: API failure must not emit report-metadata with error bodies

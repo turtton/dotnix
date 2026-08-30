@@ -41,6 +41,12 @@ let
       builtins.readFile ../../overlay/opencode/kimi-quota-poll.sh
     )
   );
+
+  openaiQuotaPoller = pkgs.writeText "openai-quota-poll.sh" (
+    builtins.replaceStrings [ "__QUOTA_REPORT__" ] [ "${quotaReport}" ] (
+      builtins.readFile ../../overlay/opencode/openai-quota-poll.sh
+    )
+  );
 in
 {
   launcher-contract = pkgs.runCommand "herdr-launcher-contract" { nativeBuildInputs = testInputs; } ''
@@ -109,4 +115,21 @@ in
     bash ${./quota-contract.sh} ${kimiQuotaPoller}
     touch $out
   '';
+
+  quota-contract-openai =
+    pkgs.runCommand "herdr-quota-contract-openai" { nativeBuildInputs = testInputs; }
+      ''
+        export FAKE_HERDR=${./fake-herdr.sh}
+        bash ${./quota-contract.sh} ${openaiQuotaPoller} openai
+        touch $out
+      '';
+
+  quota-contract-openai-weekly-only =
+    pkgs.runCommand "herdr-quota-contract-openai-weekly-only" { nativeBuildInputs = testInputs; }
+      ''
+        export FAKE_HERDR=${./fake-herdr.sh}
+        export FIXTURE_JSON='{"rate_limit":{"primary_window":{"used_percent":42},"secondary_window":null}}'
+        bash ${./quota-contract.sh} ${openaiQuotaPoller} openai
+        touch $out
+      '';
 }

@@ -75,16 +75,23 @@ render_quota() {
 
   local primary_pct secondary_pct
   primary_pct=$(echo "$json" | jq -r '(.rate_limit.primary_window.used_percent // 0) | floor' 2>/dev/null)
-  # secondary_window は 5h limit 廃止後 null になる (API が null を返す)
+  # secondary_window は 5h limit 廃止後 null になる。その場合 primary_window が weekly limit を指す
   secondary_pct=$(echo "$json" | jq -r 'if .rate_limit.secondary_window == null then "" else (.rate_limit.secondary_window.used_percent // 0) | floor end' 2>/dev/null)
 
   if [[ -z $primary_pct || $primary_pct == "null" ]]; then
     return
   fi
 
-  local value="5h ${primary_pct}%"
+  # 5h と weekly を両方出すと表示幅が足りないため、使用率が大きい方のみ出す
+  local value
   if [[ -n $secondary_pct && $secondary_pct != "null" ]]; then
-    value+=" / week ${secondary_pct}%"
+    if ((secondary_pct > primary_pct)); then
+      value="week ${secondary_pct}%"
+    else
+      value="5h ${primary_pct}%"
+    fi
+  else
+    value="week ${primary_pct}%"
   fi
 
   "$QUOTA_REPORT" openai "$value"

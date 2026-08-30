@@ -42,16 +42,20 @@ render_quota() {
   session_pct=$(echo "$json" | jq -r "${PCT_FILTER} pct(.limits[0].detail)" 2>/dev/null)
   weekly_pct=$(echo "$json" | jq -r "${PCT_FILTER} pct(.usage)" 2>/dev/null)
 
-  if [[ -z $session_pct && -z $weekly_pct ]]; then
-    return
-  fi
-
+  # 5h と weekly を両方出すと表示幅が足りないため、使用率が大きい方のみ出す
   local value=""
-  if [[ -n $session_pct && $session_pct != "null" ]]; then
+  if [[ -n $weekly_pct && $weekly_pct != "null" ]]; then
+    if [[ -z $session_pct || $session_pct == "null" ]] || ((weekly_pct > session_pct)); then
+      value="week ${weekly_pct}%"
+    else
+      value="5h ${session_pct}%"
+    fi
+  elif [[ -n $session_pct && $session_pct != "null" ]]; then
     value="5h ${session_pct}%"
   fi
-  if [[ -n $weekly_pct && $weekly_pct != "null" ]]; then
-    value+="${value:+ / }week ${weekly_pct}%"
+
+  if [[ -z $value ]]; then
+    return
   fi
 
   "$QUOTA_REPORT" kimi "$value"
