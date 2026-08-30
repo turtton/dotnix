@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Usage: child-wrapper-contract.sh <child-wrapper-script>
-# Contract for the child wrapper's shared-server registry:
-#   - TUI mode registers the embedded server URL under
-#     ~/.local/state/opencode/herdr-servers/<sha1(cwd)>.json once healthy
-#   - the entry is removed when the wrapper exits
-#   - attach mode never registers and never appends --port
+# Contract for the child wrapper:
+#   - TUI mode appends --port <OPENCODE_PORT>
+#   - attach mode never appends --port
+# (The per-cwd shared-server registry was removed; every launch now gets its
+# own server, so nothing keys behavior off registry files anymore.)
 # Exit 0 iff all assertions pass.
 set -u
 
@@ -14,7 +14,6 @@ TEST_PORT=44568
 child_pid=""
 cleanup() {
   [[ -n $child_pid ]] && kill -TERM -- -"$child_pid" 2>/dev/null
-  pkill -f "http.server $TEST_PORT" 2>/dev/null
   pkill -f "$WORK/fake-opencode" 2>/dev/null
   rm -rf "$WORK"
 }
@@ -25,9 +24,6 @@ mkdir -p "$HOME"
 
 projdir="$WORK/proj"
 mkdir -p "$projdir"
-canon=$(cd "$projdir" && pwd -P)
-key=$(printf %s "$canon" | sha1sum | cut -d' ' -f1)
-registry="$HOME/.local/state/opencode/herdr-servers/$key.json"
 
 FAKE_OC="$WORK/fake-opencode"
 export FAKE_OC_LOG="$WORK/fake-oc.args"
@@ -35,18 +31,6 @@ export FAKE_OC_LOG="$WORK/fake-oc.args"
 printf '#!%s\n' "$(command -v bash)" >"$FAKE_OC"
 cat >>"$FAKE_OC" <<'EOF'
 printf '%s\n' "$@" >"$FAKE_OC_LOG"
-port=""
-prev=""
-for a in "$@"; do
-  if [[ $prev == --port ]]; then port=$a; fi
-  prev=$a
-done
-if [[ -n $port ]]; then
-  docroot=$(mktemp -d)
-  mkdir -p "$docroot/global"
-  printf '{"healthy":true}' >"$docroot/global/health"
-  python3 -m http.server "$port" --bind 127.0.0.1 --directory "$docroot" >/dev/null 2>&1 &
-fi
 sleep infinity
 EOF
 chmod +x "$FAKE_OC"
@@ -63,62 +47,41 @@ not_ok() {
   [[ -s $WORK/child.err ]] && sed 's/^/  child stderr: /' "$WORK/child.err"
 }
 
+wait_for_argv() {
+  for _ in $(seq 1 100); do
+    [[ -s $FAKE_OC_LOG ]] && return 0
+    sleep 0.1
+  done
+  return 1
+}
+
 printf '# child wrapper under test: %s\n' "$CHILD"
 
-# 1: TUI mode registers the server once /global/health answers
+# 1: the wrapper appends --port <OPENCODE_PORT> for the embedded server
 # setsid でプロセスグループを分け、pane 終了時の道連れ終了をグループ kill で再現する
 setsid env HERDR_SESSION=t HERDR_PANE_ID=1 OPENCODE_PORT=$TEST_PORT \
   bash "$CHILD" "$projdir" "$FAKE_OC" >/dev/null 2>"$WORK/child.err" &
 child_pid=$!
 
-found=false
-for _ in $(seq 1 150); do
-  [[ -f $registry ]] && {
-    found=true
-    break
-  }
-  sleep 0.1
-done
-if $found && jq -e --arg url "http://127.0.0.1:$TEST_PORT" --arg cwd "$canon" \
-  '.url == $url and .cwd == $cwd' "$registry" >/dev/null 2>&1; then
-  ok "tui mode: registers server url keyed by cwd"
-else
-  not_ok "tui mode: registry missing or wrong content (registry=$registry found=$found)"
-fi
-
-# 2: the wrapper appends --port <OPENCODE_PORT> for the embedded server
+wait_for_argv
 if grep -qx -- "--port" "$FAKE_OC_LOG" && grep -qx "$TEST_PORT" "$FAKE_OC_LOG"; then
   ok "tui mode: appends --port for the embedded server"
 else
-  not_ok "tui mode: expected --port $TEST_PORT in fake argv ($(paste -sd' ' "$FAKE_OC_LOG"))"
+  not_ok "tui mode: expected --port $TEST_PORT in fake argv ($(paste -sd' ' "$FAKE_OC_LOG" 2>/dev/null))"
 fi
-
-# 3: exiting the wrapper removes the registry entry
 kill -TERM -- -"$child_pid" 2>/dev/null
-removed=false
-for _ in $(seq 1 100); do
-  [[ ! -f $registry ]] && {
-    removed=true
-    break
-  }
-  sleep 0.1
-done
 child_pid=""
-if $removed; then
-  ok "wrapper exit: registry entry removed"
-else
-  not_ok "wrapper exit: registry entry still present"
-fi
 
-# 4: attach mode neither registers nor appends --port
+# 2: attach mode never appends --port
+rm -f "$FAKE_OC_LOG"
 setsid env HERDR_SESSION=t HERDR_PANE_ID=1 OPENCODE_PORT=$TEST_PORT \
   bash "$CHILD" "$projdir" "$FAKE_OC" attach "http://127.0.0.1:$TEST_PORT" >/dev/null 2>&1 &
 child_pid=$!
-sleep 3
-if [[ ! -f $registry ]] && ! grep -qx -- "--port" "$FAKE_OC_LOG"; then
-  ok "attach mode: no registry, no --port"
+wait_for_argv
+if [[ $(head -n1 "$FAKE_OC_LOG" 2>/dev/null) == attach ]] && ! grep -qx -- "--port" "$FAKE_OC_LOG"; then
+  ok "attach mode: no --port appended"
 else
-  not_ok "attach mode: registry=$(test -f "$registry" && echo present || echo absent) argv=$(paste -sd' ' "$FAKE_OC_LOG")"
+  not_ok "attach mode: expected no --port (argv: $(paste -sd' ' "$FAKE_OC_LOG" 2>/dev/null))"
 fi
 kill -TERM -- -"$child_pid" 2>/dev/null
 child_pid=""

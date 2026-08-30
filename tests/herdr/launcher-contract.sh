@@ -4,6 +4,8 @@
 #   - outside herdr (no HERDR_ENV) it must never invoke herdr, even on a TTY
 #   - inside herdr it opens/reuses a per-directory workspace in the CURRENT
 #     session (never starts a server, never attaches a nested TUI)
+#   - the per-cwd shared-server registry was removed; stale files under
+#     ~/.local/state/opencode/herdr-servers must not alter the pane flow
 # Exit 0 iff all assertions pass.
 set -u
 
@@ -41,41 +43,10 @@ sed -i "1s|^#!.*|#!$BASH_BIN|" "$FAKE_BIN/herdr"
 chmod +x "$FAKE_BIN/herdr"
 export PATH="$FAKE_BIN:$PATH"
 
-# launcher は `attach --help` をパースして中継可能フラグを導出するため、
-# 実フォーマット通りの help を返すスタブを OPENCODE_BIN に使う
+# OPENCODE_BIN の位置スタブ。launcher は本体を直接呼び出さないが、
+# OPENCODE_BIN を参照する箇所があるため常に設定しておく
 OPENCODE_STUB="$WORK/opencode-stub"
-{
-  printf '#!%s\n' "$BASH_BIN"
-  cat <<'EOF'
-if [[ ${1:-} == attach && ${2:-} == --help ]]; then
-  cat <<'HELP'
-opencode attach <url>
-
-attach to a running opencode server
-
-Positionals:
-  url  http://localhost:4096                                      [string] [required]
-
-Options:
-  -h, --help          show help                                   [boolean]
-  -v, --version       show version number                         [boolean]
-      --print-logs    print logs to stderr                        [boolean]
-      --log-level     log level                                    [string]
-      --pure          run without external plugins                [boolean]
-      --dir           directory to run in                          [string]
-  -c, --continue      continue the last session                   [boolean]
-  -s, --session       session id to continue                       [string]
-      --fork          fork the session when continuing            [boolean]
-  -p, --password      basic auth password                          [string]
-  -u, --username      basic auth username                          [string]
-      --mini          start the minimal interactive interface     [boolean]
-      --no-replay     disable mini session history replay         [boolean]
-      --replay-limit  cap visible mini replay                      [number]
-HELP
-fi
-exit 0
-EOF
-} >"$OPENCODE_STUB"
+printf '#!%s\nexit 0\n' "$BASH_BIN" >"$OPENCODE_STUB"
 chmod +x "$OPENCODE_STUB"
 export OPENCODE_BIN="$OPENCODE_STUB"
 
@@ -268,9 +239,8 @@ else
   not_ok "argument survival (pane argv: $(printf '<%s> ' "${got[@]:-}"))"
 fi
 
-# 8-10: shared-server attach — sandbox.sh consults
-# ~/.local/state/opencode/herdr-servers/<sha1(cwd)>.json and, when the server
-# answers /global/health, attaches in the current pane instead of touching herdr
+# 8-9: shared-server registry は廃止済み。~/.local/state/opencode/herdr-servers に
+# ファイルが残っていても (生きたサーバーを指していても) 常に herdr pane フローに流れる
 http_pid=""
 SHARED_PORT=44567
 docroot="$WORK/health-root"
@@ -288,7 +258,6 @@ cat >"$FAKE_BIN/bwrap" <<EOF
 echo "\$@" >>"$WORK/bwrap.log"
 EOF
 chmod +x "$FAKE_BIN/bwrap"
-: >"$WORK/bwrap.log"
 
 write_registry() {
   local dir=$1 url=$2 canon key regdir
@@ -299,68 +268,69 @@ write_registry() {
   printf '{"url":"%s","cwd":"%s"}' "$url" "$canon" >"$regdir/$key.json"
 }
 
-# 8: live shared server for the same cwd → zero herdr invocations, bwrap gets attach
+# 8: live registered server for the same cwd is ignored → herdr pane flow
 write_registry "$dir_a" "http://127.0.0.1:$SHARED_PORT"
 reset_log
-: >"$WORK/bwrap.log"
-run_tty "$dir_a"
-if [[ ! -s $FAKE_HERDR_LOG ]] && grep -q "attach http://127.0.0.1:$SHARED_PORT" "$WORK/bwrap.log"; then
-  ok "live shared server: attaches in current pane without herdr"
+rm -f "$WORK/bwrap.log"
+run_tty "$dir_a" /bin/true
+if [[ $(run_count) -eq 1 && $(create_count) -eq 0 && ! -s $WORK/bwrap.log ]]; then
+  ok "registered server ignored: reinjects into the herdr pane, no attach"
 else
-  not_ok "live shared server: expected no herdr calls and bwrap attach (bwrap log: $(<"$WORK/bwrap.log"))"
+  not_ok "registered server ignored: expected run=1 create=0 no bwrap (run=$(run_count) create=$(create_count) bwrap=$(<"$WORK/bwrap.log" 2>/dev/null))"
 fi
 
-# 9: dead registered server → falls back to the normal herdr workspace flow
+# 9: dead registered server entry is equally ignored → normal herdr workspace flow
 dir_dead="$WORK/proj-dead"
 mkdir -p "$dir_dead"
 write_registry "$dir_dead" "http://127.0.0.1:9"
 reset_log
-: >"$WORK/bwrap.log"
-run_tty "$dir_dead"
+rm -f "$WORK/bwrap.log"
+run_tty "$dir_dead" /bin/true
 if [[ $(create_count) -eq 1 && $(run_count) -eq 1 && ! -s $WORK/bwrap.log ]]; then
-  ok "dead shared server: normal herdr workspace flow"
+  ok "dead registered server: normal herdr workspace flow"
 else
-  not_ok "dead shared server: expected create=1 run=1 no bwrap (create=$(create_count) run=$(run_count) bwrap=$(<"$WORK/bwrap.log"))"
+  not_ok "dead registered server: expected create=1 run=1 no bwrap (create=$(create_count) run=$(run_count) bwrap=$(<"$WORK/bwrap.log" 2>/dev/null))"
 fi
 
-# 10: subcommand launch bypasses attach even while a shared server is live
+# 10: subcommand launch goes through the normal pane injection even with a
+# registered server live
 reset_log
-: >"$WORK/bwrap.log"
+rm -f "$WORK/bwrap.log"
 run_tty "$dir_a" run hello
 if [[ ! -s $WORK/bwrap.log && $(run_count) -eq 1 ]]; then
   ok "subcommand: no attach, normal injection"
 else
-  not_ok "subcommand: expected no bwrap and 1 pane run (run=$(run_count) bwrap=$(<"$WORK/bwrap.log"))"
+  not_ok "subcommand: expected no bwrap and 1 pane run (run=$(run_count) bwrap=$(<"$WORK/bwrap.log" 2>/dev/null))"
 fi
 
-# 11: --help prints locally: neither herdr nor attach even with a live server
+# 11: --help prints locally without touching herdr
 reset_log
-: >"$WORK/bwrap.log"
+rm -f "$WORK/bwrap.log"
 run_tty "$dir_a" --help
 if [[ ! -s $FAKE_HERDR_LOG ]] && grep -q -- "--help" "$WORK/bwrap.log" && ! grep -q attach "$WORK/bwrap.log"; then
   ok "help flag: prints locally without herdr or attach"
 else
-  not_ok "help flag: expected local run with --help (bwrap=$(<"$WORK/bwrap.log"))"
+  not_ok "help flag: expected local run with --help (bwrap=$(<"$WORK/bwrap.log" 2>/dev/null || :))"
 fi
 
-# 12: attach-compatible flags (-s <id>) are forwarded to the attach TUI
+# 12: session flags (-s <id>) go through the herdr pane flow (no shared attach)
 reset_log
-: >"$WORK/bwrap.log"
+rm -f "$WORK/bwrap.log"
 run_tty "$dir_a" -s ses_1
-if [[ ! -s $FAKE_HERDR_LOG ]] && grep -q "attach http://127.0.0.1:$SHARED_PORT -s ses_1" "$WORK/bwrap.log"; then
-  ok "attach-compatible flags: forwarded to attach"
+if [[ ! -s $WORK/bwrap.log && $(run_count) -eq 1 && $(create_count) -eq 0 ]]; then
+  ok "session flags: herdr pane flow, no attach"
 else
-  not_ok "attach-compatible flags: expected attach with -s ses_1 (bwrap=$(<"$WORK/bwrap.log"))"
+  not_ok "session flags: expected no bwrap and 1 pane run (run=$(run_count) create=$(create_count) bwrap=$(<"$WORK/bwrap.log" 2>/dev/null))"
 fi
 
-# 13: TUI-only flags (--model) fall back to the herdr workspace flow
+# 13: TUI-only flags (--model) go through the herdr workspace flow
 reset_log
-: >"$WORK/bwrap.log"
+rm -f "$WORK/bwrap.log"
 run_tty "$dir_a" --model foo
 if [[ ! -s $WORK/bwrap.log && $(run_count) -eq 1 ]]; then
-  ok "TUI-only flags: no attach, normal injection"
+  ok "TUI-only flags: normal injection"
 else
-  not_ok "TUI-only flags: expected no bwrap and 1 pane run (run=$(run_count) bwrap=$(<"$WORK/bwrap.log"))"
+  not_ok "TUI-only flags: expected no bwrap and 1 pane run (run=$(run_count) bwrap=$(<"$WORK/bwrap.log" 2>/dev/null))"
 fi
 
 printf '# %d/%d assertions failed\n' "$fails" "$tests"

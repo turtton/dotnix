@@ -311,103 +311,21 @@ launch_herdr_context() {
   return 0
 }
 
-# attach に中継できるフラグは `opencode attach --help` から実行時に導出する
-# (静的リストは CLI 更新から取り残されるため)。パース失敗時はフラグ付き起動を
-# すべて herdr フローに回す安全側フォールバック
-attach_flag_table() {
-  local bin_id cache_dir cache parsed
-  bin_id=$(readlink -f "$OPENCODE_BIN" | shasum -a 1 | cut -d' ' -f1)
-  cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/opencode"
-  cache="$cache_dir/attach-flags-$bin_id"
-  if [[ ! -f $cache ]]; then
-    # yargs は端末幅でオプション行を折り返すため COLUMNS を固定し、
-    # opencode の help は stderr に出るため 2>&1 で拾う
-    parsed=$(COLUMNS=1000 "$OPENCODE_BIN" attach --help 2>&1 | awk '
-      function flush() {
-        if (has) {
-          if (cur == "") cur = "b"
-          if (s != "") print cur ":" s
-          if (l != "") print cur ":" l
-        }
-        has = 0; s = ""; l = ""; cur = ""
-      }
-      /^ +(-[a-z], |--)/ {
-        flush()
-        has = 1
-        if (match($0, /-[a-z],/)) s = substr($0, RSTART, 2)
-        if (match($0, /--[a-z][a-z-]*/)) l = substr($0, RSTART, RLENGTH)
-        if ($0 ~ /\[(string|number|array)\]/) cur = "v"
-        else if ($0 ~ /\[boolean\]/) cur = "b"
-        next
-      }
-      # 型マーカー ([string] 等) だけが折り返された継続行を前行のオプションに帰属させる
-      /^ +\[/ {
-        if (has && cur == "") {
-          if ($0 ~ /\[(string|number|array)\]/) cur = "v"
-          else if ($0 ~ /\[boolean\]/) cur = "b"
-        }
-        next
-      }
-      { flush() }
-      END { flush() }')
-    [[ -n $parsed ]] || return 1
-    mkdir -p "$cache_dir"
-    printf '%s\n' "$parsed" >"$cache.$$"
-    mv "$cache.$$" "$cache"
-  fi
-  cat "$cache"
-}
-
-flag_known() { grep -qFx "b:$1" <<<"$attach_flags" || grep -qFx "v:$1" <<<"$attach_flags"; }
-flag_takes_value() { grep -qFx "v:$1" <<<"$attach_flags"; }
-
-ATTACH_URL=""
 skip_herdr=false
 if [[ -z ${OPENCODE_HERDR_CHILD:-} && -n ${HERDR_ENV:-} ]]; then
-  attach_flags=$(attach_flag_table || true)
-  is_plain_tui=true
-  expect_value=false
   for arg in "$@"; do
-    if $expect_value; then
-      expect_value=false
-      continue
-    fi
     case $arg in
     # help/version は pane 移動せずその場で出力する
     -h | --help | -v | --version) skip_herdr=true ;;
-    --*=*) flag_known "${arg%%=*}" || is_plain_tui=false ;;
-    -*)
-      if flag_takes_value "$arg"; then
-        expect_value=true
-      elif ! flag_known "$arg"; then
-        is_plain_tui=false
-      fi
-      ;;
-    *) is_plain_tui=false ;;
+    *) ;;
     esac
   done
-  if $is_plain_tui && ! $skip_herdr; then
-    server_registry="${HOME}/.local/state/opencode/herdr-servers/$(printf %s "$PROJECT_DIR" | sha1sum | cut -d' ' -f1).json"
-    if [[ -f $server_registry ]]; then
-      shared_url=$(jq -r '.url // empty' "$server_registry" 2>/dev/null || true)
-      if [[ -n $shared_url ]] && curl -sf -m 2 "$shared_url/global/health" >/dev/null 2>&1; then
-        ATTACH_URL=$shared_url
-        # OMO が正しいサーバーに接続できるよう共有サーバーのポートを引き継ぐ
-        OPENCODE_PORT=${ATTACH_URL##*:}
-        export OPENCODE_PORT
-      fi
-    fi
-  fi
 fi
 
-if [[ -z ${OPENCODE_HERDR_CHILD:-} && -n ${HERDR_ENV:-} && -z $ATTACH_URL ]] && ! $skip_herdr; then
+if [[ -z ${OPENCODE_HERDR_CHILD:-} && -n ${HERDR_ENV:-} ]] && ! $skip_herdr; then
   if launch_herdr_context "$@"; then
     exit 0
   fi
-fi
-
-if [[ -n $ATTACH_URL ]]; then
-  set -- attach "$ATTACH_URL" "$@"
 fi
 
 run_direct "$@"

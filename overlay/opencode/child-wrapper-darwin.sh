@@ -8,7 +8,6 @@ opencode_bin=$1
 shift
 
 poller_pids=()
-registry_file=""
 
 cleanup() {
   local pid
@@ -16,10 +15,6 @@ cleanup() {
     kill "$pid" 2>/dev/null || true
     wait "$pid" 2>/dev/null || true
   done
-  if [[ -n $registry_file && -f $registry_file ]] &&
-    jq -e --argjson pid $$ '.pid == $pid' "$registry_file" >/dev/null 2>&1; then
-    rm -f "$registry_file"
-  fi
   rm -rf "$HOME"
 }
 trap cleanup EXIT
@@ -105,31 +100,6 @@ if [[ -n ${HERDR_SESSION:-} && -n ${HERDR_PANE_ID:-} ]]; then
   poller_pids+=("$!")
   poll_port "$actual_port" &
   poller_pids+=("$!")
-
-  # サブコマンド起動時は TUI のサーバーが立たないため登録しない (opencode CLI のサブコマンド一覧に依存)
-  case ${1:-} in
-  attach | run | serve | web | acp | mcp | debug | providers | auth | agent | upgrade | uninstall | models | stats | export | import | github | pr | session | plugin | plug | db | completion) ;;
-  *)
-    if [[ $actual_port =~ ^[0-9]+$ ]]; then
-      # isolated_home の symlink 経由で実ホームの state dir に届く
-      registry_dir="$HOME/.local/state/opencode/herdr-servers"
-      registry_file="$registry_dir/$(printf %s "$project_dir" | sha1sum | cut -d' ' -f1).json"
-      (
-        for _ in $(seq 1 100); do
-          if curl -sf -m 1 "http://127.0.0.1:${actual_port}/global/health" >/dev/null 2>&1; then
-            mkdir -p "$registry_dir"
-            jq -n --arg url "http://127.0.0.1:${actual_port}" --arg cwd "$project_dir" --argjson pid $$ \
-              '{url: $url, cwd: $cwd, pid: $pid}' >"$registry_file.tmp"
-            mv "$registry_file.tmp" "$registry_file"
-            break
-          fi
-          sleep 0.1
-        done
-      ) &
-      poller_pids+=("$!")
-    fi
-    ;;
-  esac
 fi
 
 cd "$project_dir"
