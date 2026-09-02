@@ -75,7 +75,7 @@
       ];
     };
     prometheus = {
-      model = "anthropic/claude-fable-5";
+      model = "anthropic/claude-fable-5-1";
       reasoning = "xhigh";
       fallback_models = [
         {
@@ -89,7 +89,7 @@
       ];
     };
     plan = {
-      model = "anthropic/claude-fable-5";
+      model = "anthropic/claude-fable-5-1";
       reasoning = "xhigh";
       fallback_models = [
         {
@@ -97,7 +97,7 @@
           reasoning = "xhigh";
         }
         {
-          model = "cli-proxy-api/glm-5.2";
+          model = "cli-proxy-api/kimi-k3";
           reasoning = "max";
         }
       ];
@@ -191,7 +191,7 @@
     artistry = {
       models = [
         {
-          model = "anthropic/claude-fable-5";
+          model = "anthropic/claude-fable-5-1";
           reasoning = "xhigh";
         }
         {
