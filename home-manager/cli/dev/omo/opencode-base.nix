@@ -235,8 +235,8 @@
           reasoning = "max";
         }
         {
-          model = "cli-proxy-api/gpt-5.6-sol";
-          reasoning = "high";
+          model = "cli-proxy-api/kimi-k3";
+          reasoning = "max";
         }
       ];
     };
