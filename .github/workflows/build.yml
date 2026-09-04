@@ -169,13 +169,13 @@ jobs:
         if: success()
         run: |
           # tailscaled ingress stalls under concurrent large uploads (issue #72); retry with backoff
-          for attempt in 1 2 3; do
+          for attempt in 1 2 3 4; do
             if attic push home ./result; then
               exit 0
             fi
-            if [ "$attempt" -lt 3 ]; then
-              delay=$((attempt * 30 + RANDOM % 30))
-              echo "attic push failed (attempt $attempt/3); retrying in ${delay}s"
+            if [ "$attempt" -lt 4 ]; then
+              delay=$((attempt * 120 + RANDOM % 60))
+              echo "attic push failed (attempt $attempt/4); retrying in ${delay}s"
               sleep "$delay"
             fi
           done
@@ -230,13 +230,13 @@ jobs:
         if: success()
         run: |
           # tailscaled ingress stalls under concurrent large uploads (issue #72); retry with backoff
-          for attempt in 1 2 3; do
+          for attempt in 1 2 3 4; do
             if attic push home ./result; then
               exit 0
             fi
-            if [ "$attempt" -lt 3 ]; then
-              delay=$((attempt * 30 + RANDOM % 30))
-              echo "attic push failed (attempt $attempt/3); retrying in ${delay}s"
+            if [ "$attempt" -lt 4 ]; then
+              delay=$((attempt * 120 + RANDOM % 60))
+              echo "attic push failed (attempt $attempt/4); retrying in ${delay}s"
               sleep "$delay"
             fi
           done
@@ -290,13 +290,13 @@ jobs:
           mapfile -t paths < "$paths_file"
           (( ${#paths[@]} > 0 ))
           # tailscaled ingress stalls under concurrent large uploads (issue #72); retry with backoff
-          for attempt in 1 2 3; do
+          for attempt in 1 2 3 4; do
             if attic push home "${paths[@]}"; then
               exit 0
             fi
-            if [ "$attempt" -lt 3 ]; then
-              delay=$((attempt * 30 + RANDOM % 30))
-              echo "attic push failed (attempt $attempt/3); retrying in ${delay}s"
+            if [ "$attempt" -lt 4 ]; then
+              delay=$((attempt * 120 + RANDOM % 60))
+              echo "attic push failed (attempt $attempt/4); retrying in ${delay}s"
               sleep "$delay"
             fi
           done
@@ -349,13 +349,13 @@ jobs:
           mapfile -t paths < "$paths_file"
           (( ${#paths[@]} > 0 ))
           # tailscaled ingress stalls under concurrent large uploads (issue #72); retry with backoff
-          for attempt in 1 2 3; do
+          for attempt in 1 2 3 4; do
             if attic push home "${paths[@]}"; then
               exit 0
             fi
-            if [ "$attempt" -lt 3 ]; then
-              delay=$((attempt * 30 + RANDOM % 30))
-              echo "attic push failed (attempt $attempt/3); retrying in ${delay}s"
+            if [ "$attempt" -lt 4 ]; then
+              delay=$((attempt * 120 + RANDOM % 60))
+              echo "attic push failed (attempt $attempt/4); retrying in ${delay}s"
               sleep "$delay"
             fi
           done
