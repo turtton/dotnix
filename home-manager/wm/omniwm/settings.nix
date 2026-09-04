@@ -81,7 +81,7 @@ in
     invertDirection = true;
   };
 
-  workspaceBar.enabled = false;
+  workspaceBar.enabled = true;
 
   statusBar = {
     showWorkspaceName = true;

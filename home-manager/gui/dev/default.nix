@@ -16,15 +16,14 @@
   home.packages =
     with pkgs;
     [
-      # WebAPI dev tool
-      hoppscotch
-      bruno
+      hoppscotch # WebAPI dev tool
 
       gitify
       lens
       dbeaver-bin
     ]
     ++ lib.optionals hostPlatform.isLinux [
+      bruno
       drawio # also works darwin but I do not use it
       isaacsim-webrtc-streaming-client
     ];

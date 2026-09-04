@@ -70,5 +70,10 @@ map <leader>J Ji <ESC>
 " Just makes me nervous
 map H h
 
+" macSKK switches to kana mode with Ctrl+J, which IdeaVim also takes as i_CTRL-J
+sethandler <C-J> a:vim
+noremap <C-J> <Nop>
+inoremap <C-J> <Nop>
+
 """ Strict mode for development ---------------
 " set ideastrictmode
