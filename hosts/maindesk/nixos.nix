@@ -80,4 +80,6 @@
   hardware.bluetooth.enable = true;
 
   networking.wireguard.enable = true;
+
+  programs.anime-game-launcher.enable = true;
 }

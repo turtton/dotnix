@@ -66,6 +66,7 @@ let
           inputs.nixos-wsl.nixosModules.wsl
         ]
         ++ (lib.optionals (users != [ ]) [
+          inputs.aagl.nixosModules.default
           inputs.home-manager.nixosModules.home-manager
           ### home-manager configurations ####
           {

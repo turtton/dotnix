@@ -14,6 +14,7 @@
       "https://cache.numtide.com"
       # codex cache
       "https://codex-cli.cachix.org"
+      "https://ezkea.cachix.org"
     ];
     extra-trusted-public-keys = [
       "home:7Fjx4vYDLZAOseF/QaouAVdlCBiPpIMKj0BPjgieBAE="
@@ -25,6 +26,7 @@
       "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
       "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
       "codex-cli.cachix.org-1:1Br3H1hHoRYG22n//cGKJOk3cQXgYobUel6O8DgSing="
+      "ezkea.cachix.org-1:ioBmUbJTZIKsHmWWXPe1FSFbeVe+afhfgqgTSNd34eI="
     ];
   };
   inputs = {
@@ -188,6 +190,10 @@
     };
     skills-catalog = {
       url = "path:./skills";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    aagl = {
+      url = "github:ezKEa/aagl-gtk-on-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
