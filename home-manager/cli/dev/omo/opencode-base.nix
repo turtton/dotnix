@@ -1,5 +1,5 @@
 # Base oh-my-openagent (omo) configuration for the "[opencode]" harness section
-# of ~/.omo/omo.jsonc. Migrated from the former oc-go profile
+# of ~/.omo/omo.jsonc. Migrated from the former oc-go profileopencode-base
 # (oh-my-openagent-go.json).
 #
 # Notes:
@@ -47,15 +47,11 @@
       ];
     };
     momus = {
-      model = "cli-proxy-api/gpt-5.6-terra";
-      reasoning = "high";
+      model = "cli-proxy-api/gpt-6-astra";
+      reasoning = "xhigh";
       fallback_models = [
         {
-          model = "cli-proxy-api/gpt-5.6-sol";
-          reasoning = "xhigh";
-        }
-        {
-          model = "cli-proxy-api/glm-5.2";
+          model = "cli-proxy-api/glm-5.3";
           reasoning = "max";
         }
       ];
@@ -167,6 +163,10 @@
     ultrabrain = {
       models = [
         {
+          model = "cli-proxy-api/gpt-6-astra";
+          reasoning = "max";
+        }
+        {
           model = "cli-proxy-api/gpt-5.6-sol";
           reasoning = "max";
         }
@@ -178,6 +178,10 @@
     };
     deep = {
       models = [
+        {
+          model = "cli-proxy-api/gpt-6-astra";
+          reasoning = "high";
+        }
         {
           model = "cli-proxy-api/gpt-5.6-sol";
           reasoning = "medium";
@@ -230,6 +234,10 @@
     };
     unspecified-high = {
       models = [
+        {
+          model = "cli-proxy-api/gpt-6-astra";
+          reasoning = "high";
+        }
         {
           model = "cli-proxy-api/glm-5.3";
           reasoning = "max";
