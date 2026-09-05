@@ -79,7 +79,6 @@ let
                 sharedOptions
                 inputs.nix-index-database.homeModules.default
                 inputs.zen-browser.homeModules.beta
-                inputs.codex-desktop-linux.homeManagerModules.default
               ];
               extraSpecialArgs = {
                 inherit
@@ -193,7 +192,6 @@ let
               inputs.nix-index-database.homeModules.default
               inputs.zen-browser.homeModules.beta
               inputs.mac-app-util.homeManagerModules.default
-              inputs.codex-desktop-linux.homeManagerModules.default
             ];
             users."${username}" = homeModule // {
               home = {

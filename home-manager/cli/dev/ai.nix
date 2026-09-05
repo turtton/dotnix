@@ -20,6 +20,7 @@
       ]
       ++ pkgs.lib.optionals hostPlatform.isLinux [
         llm-agents.codex
+        llm-agents.chatgpt
         codex-latest
         llm-agents.cli-proxy-api
       ];
@@ -39,12 +40,6 @@
   programs = {
     claude-code = {
       enable = true;
-    };
-    codexDesktopLinux = {
-      enable = hostPlatform.isLinux;
-      computerUseUi.enable = true;
-      remoteMobileControl.enable = true;
-      remoteControl.enable = true;
     };
   };
 }

@@ -168,10 +168,6 @@
       url = "github:turtton/adguard-cli-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    codex-desktop-linux = {
-      url = "github:ilysenko/codex-desktop-linux";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
