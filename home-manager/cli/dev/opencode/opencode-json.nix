@@ -65,6 +65,7 @@ in
       options.baseURL = "http://127.0.0.1:8317/v1";
       models = pick [
         "claude-fable-5"
+        "gpt-6-astra"
         "gpt-5.6-sol"
         "gpt-5.6-terra"
         "gpt-5.6-luna"

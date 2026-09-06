@@ -75,6 +75,26 @@
       cacheRead = 0.1;
     };
   };
+  # Prompts over 272K input bill at 2x input/cache and 1.5x output (OpenAI long-context tier).
+  "gpt-6-astra" = {
+    name = "GPT-6 Astra";
+    reasoning = true;
+    image = true;
+    variants = [
+      "max"
+      "xhigh"
+      "high"
+      "medium"
+      "low"
+    ];
+    context = 1050000;
+    output = 128000;
+    cost = {
+      input = 10;
+      output = 50;
+      cacheRead = 1;
+    };
+  };
   "deepseek-v4-pro" = {
     name = "DeepSeek V4 Pro";
     reasoning = true;
