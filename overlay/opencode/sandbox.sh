@@ -142,6 +142,11 @@ fi
 if ! OPENCODE_HOME="$(mktemp -d /var/tmp/opencodebox-XXXXXXXX 2>/dev/null)"; then
   OPENCODE_HOME="$(mktemp -d "${TMPDIR:-/tmp}/opencodebox-XXXXXXXX")"
 fi
+# エージェントの一時ファイル置き場 (sandbox 内 /tmp) も同じくディスク側へ
+if ! OPENCODE_TMP="$(mktemp -d /var/tmp/opencodebox-tmp-XXXXXXXX 2>/dev/null)"; then
+  OPENCODE_TMP="$(mktemp -d "${TMPDIR:-/tmp}/opencodebox-tmp-XXXXXXXX")"
+fi
+chmod 1777 "$OPENCODE_TMP"
 OPENCODE_CONFIG="${OPENCODE_CONFIG_DIR:-${HOME}/.config/opencode}"
 if [[ -n ${OPENCODE_CONFIG_DIR:-} && ${OPENCODE_CONFIG_DIR:0:1} != "/" ]]; then
   echo "opencode-sandbox: ERROR: OPENCODE_CONFIG_DIR must be an absolute path" >&2
@@ -204,7 +209,7 @@ nix_store() {
 # 隔離ホームディレクトリ: 一時ホームに OpenCode 設定をマウント
 isolated_home() {
   BWRAP_ARGS+=(
-    --perms 1777 --tmpfs /tmp
+    --bind "$OPENCODE_TMP" /tmp
     --bind "$OPENCODE_HOME" "$HOME"
   )
 
@@ -547,7 +552,10 @@ opencode_port() {
 # =============================================================================
 
 # 一時ホームのクリーンアップ (mktemp -d で作成済み)
-trap 'rm -rf "$OPENCODE_HOME"' EXIT INT TERM
+# 最後の bwrap 呼び出しは exec しない: exec すると EXIT トラップが発火せず残滓が溜まる
+trap 'rm -rf "$OPENCODE_HOME" "$OPENCODE_TMP"' EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
 
 # OpenCode 設定ディレクトリの確保
 mkdir -p "$OPENCODE_CONFIG"
@@ -578,5 +586,5 @@ if [[ -f $SANDBOX_EXTRA ]]; then
   source "$SANDBOX_EXTRA"
 fi
 
-exec bwrap "${BWRAP_ARGS[@]}" \
+bwrap "${BWRAP_ARGS[@]}" \
   bash "@child-wrapper@" "$PROJECT_DIR" "$OPENCODE_BIN" "$@"

@@ -13,6 +13,11 @@ REPO_ROOT="$(git -C "$PROJECT_DIR" rev-parse --show-toplevel 2>/dev/null || echo
 if ! SENPI_HOME="$(mktemp -d /var/tmp/senpibox-XXXXXXXX 2>/dev/null)"; then
   SENPI_HOME="$(mktemp -d "${TMPDIR:-/tmp}/senpibox-XXXXXXXX")"
 fi
+# エージェントの一時ファイル置き場 (sandbox 内 /tmp) も同じくディスク側へ
+if ! SENPI_TMP="$(mktemp -d /var/tmp/senpibox-tmp-XXXXXXXX 2>/dev/null)"; then
+  SENPI_TMP="$(mktemp -d "${TMPDIR:-/tmp}/senpibox-tmp-XXXXXXXX")"
+fi
+chmod 1777 "$SENPI_TMP"
 XDG_RUNTIME="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
 
 REAL_REPO="$(realpath "$REPO_ROOT")"
@@ -59,7 +64,7 @@ nix_store() {
 
 isolated_home() {
   BWRAP_ARGS+=(
-    --perms 1777 --tmpfs /tmp
+    --bind "$SENPI_TMP" /tmp
     --bind "$SENPI_HOME" "$HOME"
   )
 
@@ -312,7 +317,10 @@ display_clipboard() {
   fi
 }
 
-trap 'rm -rf "$SENPI_HOME"' EXIT INT TERM
+# 最後の bwrap 呼び出しは exec しない: exec すると EXIT トラップが発火せず残滓が溜まる
+trap 'rm -rf "$SENPI_HOME" "$SENPI_TMP"' EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
 
 base_filesystem
 selective_run_mounts
@@ -334,4 +342,4 @@ if [[ -f $SANDBOX_EXTRA ]]; then
   source "$SANDBOX_EXTRA"
 fi
 
-exec bwrap "${BWRAP_ARGS[@]}" bash "@child-wrapper@" "$PROJECT_DIR" "$SENPI_BIN" "$@"
+bwrap "${BWRAP_ARGS[@]}" bash "@child-wrapper@" "$PROJECT_DIR" "$SENPI_BIN" "$@"

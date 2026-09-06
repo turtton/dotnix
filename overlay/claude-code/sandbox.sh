@@ -6,7 +6,15 @@ CLAUDE_CODE_BIN="${CLAUDE_CODE_BIN:-@claude-code-dir@/claude}"
 
 PROJECT_DIR="$(pwd)"
 REPO_ROOT="$(git -C "$PROJECT_DIR" rev-parse --show-toplevel 2>/dev/null || echo "$PROJECT_DIR")"
-CLAUDE_HOME="$(mktemp -d "${TMPDIR:-/tmp}/claudebox-XXXXXXXX")"
+# メモリ節約: /var/tmp (ディスク) を優先し、失敗時のみ tmpfs にフォールバック
+if ! CLAUDE_HOME="$(mktemp -d /var/tmp/claudebox-XXXXXXXX 2>/dev/null)"; then
+  CLAUDE_HOME="$(mktemp -d "${TMPDIR:-/tmp}/claudebox-XXXXXXXX")"
+fi
+# エージェントの一時ファイル置き場 (sandbox 内 /tmp) も同じくディスク側へ
+if ! CLAUDE_TMP="$(mktemp -d /var/tmp/claudebox-tmp-XXXXXXXX 2>/dev/null)"; then
+  CLAUDE_TMP="$(mktemp -d "${TMPDIR:-/tmp}/claudebox-tmp-XXXXXXXX")"
+fi
+chmod 1777 "$CLAUDE_TMP"
 CLAUDE_CONFIG="${HOME}/.claude"
 CLAUDE_JSON="${HOME}/.claude.json"
 XDG_RUNTIME="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
@@ -65,7 +73,7 @@ nix_store() {
 # 隔離ホームディレクトリ: 一時ホームに Claude 設定をマウント
 isolated_home() {
   BWRAP_ARGS+=(
-    --perms 1777 --tmpfs /tmp
+    --bind "$CLAUDE_TMP" /tmp
     --bind "$CLAUDE_HOME" "$HOME"
     --bind "$CLAUDE_CONFIG" "${HOME}/.claude"
     --bind "$CLAUDE_JSON" "${HOME}/.claude.json"
@@ -269,7 +277,10 @@ chrome_integration() {
 # =============================================================================
 
 # 一時ホームのクリーンアップ (mktemp -d で作成済み)
-trap 'rm -rf "$CLAUDE_HOME"' EXIT INT TERM
+# 最後の bwrap 呼び出しは exec しない: exec すると EXIT トラップが発火せず残滓が溜まる
+trap 'rm -rf "$CLAUDE_HOME" "$CLAUDE_TMP"' EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
 
 # Claude 設定ファイルの確保
 mkdir -p "$CLAUDE_CONFIG"
@@ -318,4 +329,4 @@ else
   )"
 fi
 
-exec bwrap "${BWRAP_ARGS[@]}" bash -c "$INNER_SCRIPT"
+bwrap "${BWRAP_ARGS[@]}" bash -c "$INNER_SCRIPT"

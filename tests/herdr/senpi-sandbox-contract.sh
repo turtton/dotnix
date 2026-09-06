@@ -156,9 +156,8 @@ if [[ -f $log ]]; then
   has_seq "$log" --bind "$dir_a" "$dir_a" || missing+="repo-bind "
   has_seq "$log" --setenv SENPI_NO_SANDBOX 1 || missing+="setenv-SENPI_NO_SANDBOX "
   has_seq "$log" --bind "$HOME/.senpi" "$HOME/.senpi" || missing+="senpi-dir-bind "
-  if ! has_seq "$log" --tmpfs /tmp && ! has_bind_to "$log" "$HOME"; then
-    missing+="tmpfs-/tmp-or-temp-home "
-  fi
+  has_bind_to "$log" /tmp || missing+="bind-/tmp(disk-backed) "
+  has_bind_to "$log" "$HOME" || missing+="temp-home-bind "
   has_seq "$log" bash @child-wrapper@ "$dir_a" "$SENPI_BIN" || missing+="child-wrapper-tail "
 fi
 if [[ -z $missing ]]; then
