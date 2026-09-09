@@ -9,7 +9,7 @@
 }:
 if isHomeManager then
   let
-    noctalia-shell = lib.getExe inputs.noctalia.packages.${system}.default;
+    noctalia = lib.getExe inputs.noctalia.packages.${system}.default;
   in
   {
     programs.wlogout = {
@@ -60,7 +60,7 @@ if isHomeManager then
         }
         {
           label = "lock";
-          action = "${noctalia-shell} ipc call lockScreen lock";
+          action = "${noctalia} msg session lock";
           text = "Lock";
           keybind = "l";
         }

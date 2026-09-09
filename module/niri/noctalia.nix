@@ -11,34 +11,32 @@ in
       # https://docs.noctalia.dev/getting-started/compositor-settings/#option-2-stationary-wallpaper
       layer-rules = [
         {
-          matches = [ { namespace = "^noctalia-overview*"; } ];
+          matches = [ { namespace = "^noctalia-wallpaper"; } ];
           place-within-backdrop = true;
         }
       ];
 
-      spawn-at-startup = [ { command = [ "noctalia-shell" ]; } ];
+      spawn-at-startup = [ { command = [ "noctalia" ]; } ];
 
       binds = {
         "Mod+V".action.spawn = [
-          "noctalia-shell"
-          "ipc"
-          "call"
-          "launcher"
+          "noctalia"
+          "msg"
+          "panel-toggle"
           "clipboard"
         ];
         "Mod+d".action.spawn = [
-          "noctalia-shell"
-          "ipc"
-          "call"
+          "noctalia"
+          "msg"
+          "panel-toggle"
           "launcher"
-          "toggle"
         ];
         "Mod+Shift+d".action.spawn = [
-          "noctalia-shell"
-          "ipc"
-          "call"
+          "noctalia"
+          "msg"
+          "panel-toggle"
           "launcher"
-          "calculator"
+          "/calc"
         ];
       };
     };

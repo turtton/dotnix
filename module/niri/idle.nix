@@ -8,8 +8,8 @@
 let
   cfg = config.packs.niri;
   niri = lib.getExe inputs.niri-flake.packages.${system}.niri-unstable;
-  noctalia-shell = lib.getExe inputs.noctalia.packages.${system}.default;
-  lock-cmd = "${noctalia-shell} ipc call lockScreen lock";
+  noctalia = lib.getExe inputs.noctalia.packages.${system}.default;
+  lock-cmd = "${noctalia} msg session lock";
   monitor-on = "${niri} msg action power-on-monitors";
   monitor-off = "${niri} msg action power-off-monitors";
 in

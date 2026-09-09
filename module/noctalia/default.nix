@@ -35,134 +35,54 @@ in
             inputs.noctalia.packages.${system}.default
             wl-clipboard
             cliphist
-            kdePackages.qttools
           ];
-          programs.noctalia-shell = {
+          programs.noctalia = {
             enable = true;
-            plugins = {
-              sources = [
-                {
-                  enabled = true;
-                  name = "Official Noctalia Plugins";
-                  url = "https://github.com/noctalia-dev/noctalia-plugins";
-                }
-              ];
-              states = {
-                kde-connect = {
-                  enabled = true;
-                  sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-                };
-                privacy-indicator = {
-                  enabled = true;
-                  sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-                };
-              };
-              version = 2;
-            };
             settings = {
-              settingsVersion = 16;
-              setupCompleted = true;
-              bar = {
-                density = "compact";
+              bar.main = {
                 position = "left";
-                showCapsule = false;
-                floating = false;
-                marginVertical = 0.20;
-                widgets = {
-                  left = [
-                    {
-                      id = "ControlCenter";
-                      useDistroLogo = true;
-                    }
-                    {
-                      id = "WiFi";
-                    }
-                    {
-                      id = "Bluetooth";
-                    }
-                    {
-                      id = "plugin:kde-connect";
-                    }
-                    {
-                      id = "MediaMini";
-                    }
-                    {
-                      id = "ActiveWindow";
-                      showIcon = true;
-                    }
-                  ];
-                  center = [
-                    {
-                      hideUnoccupied = false;
-                      id = "Workspace";
-                      labelMode = "none";
-                    }
-                  ];
-                  right = [
-                    {
-                      id = "Tray";
-                    }
-                    {
-                      id = "plugin:privacy-indicator";
-                    }
-                    {
-                      id = "SystemMonitor";
-                      compactMode = false;
-                      showCpuTemp = true;
-                      showDiskUsage = true;
-                      showDiskUsageAsPercent = true;
-                      showCpuUsage = true;
-                      showGpuUsage = true;
-                      showMemoryUsage = true;
-                      showMemoryAsPercent = false;
-                      showNetworkStats = false;
-                    }
-                    {
-                      alwaysShowPercentage = false;
-                      id = "Battery";
-                      warningThreshold = 20;
-                    }
-                    {
-                      id = "Volume";
-                    }
-                    {
-                      formatHorizontal = "HH:mm";
-                      formatVertical = "HH mm";
-                      id = "Clock";
-                      useMonospacedFont = true;
-                      usePrimaryColor = true;
-                    }
-                    {
-                      id = "NotificationHistory";
-                    }
-                  ];
-                };
+                capsule = false;
+                start = [
+                  "control-center"
+                  "network"
+                  "bluetooth"
+                  "media"
+                ];
+                center = [ "workspaces" ];
+                end = [
+                  "tray"
+                  "privacy"
+                  "battery"
+                  "volume"
+                  "clock"
+                  "notifications"
+                ];
               };
-              dock = {
-                enabled = false;
-                displayMode = "auto_hide";
-                backgroundOpacity = 0.8;
-                floatingRatio = 1;
-                size = 1;
-                onlySameOutput = true;
-                monitors = [ ];
-                pinnedApps = [ ];
-                colorizeIcons = false;
+              widget.workspaces = {
+                show_labels = false;
+                labels_only_when_occupied = false;
+                hide_when_empty = false;
+              };
+              dock.enabled = false;
+              theme = {
+                mode = "dark";
+                source = "builtin";
+                builtin = "Catppuccin";
               };
               wallpaper = {
+                enabled = true;
+                fill_mode = "crop";
                 directory = "${pkgs.wallpaper-outerspace}";
               };
-              colorSchemes.predefinedScheme = "Catppuccin";
-              appLauncher = {
-                enableClipboardHistory = true;
-              };
-              general = {
-                avatarImage = "${pkgs.nixos-icons}/share/icons/hicolor/256x256/apps/nix-snowflake.png";
-                radiusRatio = 0.2;
+              shell = {
+                avatar_path = "${pkgs.nixos-icons}/share/icons/hicolor/256x256/apps/nix-snowflake.png";
+                corner_radius_scale = 0.2;
+                clipboard_enabled = true;
+                time_format = "{:%H:%M}";
               };
               location = {
-                monthBeforeDay = true;
-                name = "Kyoto, Japan";
+                auto_locate = false;
+                address = "Kyoto, Japan";
               };
             };
           };
@@ -171,9 +91,9 @@ in
         (lib.mkIf hyprlandEnabled {
           wayland.windowManager.hyprland.settings = {
             bind = [
-              "$mainMod, V, exec, noctalia-shell ipc call launcher clipboard"
-              "$mainMod, d, exec, noctalia-shell ipc call launcher toggle"
-              "$mainMod SHIFT, d, exec, noctalia-shell ipc call launcher calculator"
+              "$mainMod, V, exec, noctalia msg panel-toggle clipboard"
+              "$mainMod, d, exec, noctalia msg panel-toggle launcher"
+              "$mainMod SHIFT, d, exec, noctalia msg panel-toggle launcher /calc"
             ];
           };
         })

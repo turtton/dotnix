@@ -85,8 +85,8 @@
     ];
   };
 
-  programs.noctalia-shell.settings = {
-    bar.monitors = [ "DP-1" ];
-    notifications.monitors = [ "DP-1" ];
+  programs.noctalia.settings = {
+    bar.main.monitor.primary.match = "DP-1";
+    notification.monitors = [ "DP-1" ];
   };
 }
