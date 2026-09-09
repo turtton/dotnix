@@ -39,7 +39,10 @@
       mainMonitor = "eDP-1";
     in
     {
-      bar.main.monitor.primary.match = mainMonitor;
+      bar.main.monitor.primary = {
+        match = mainMonitor;
+        enabled = true;
+      };
       notification.monitors = [ mainMonitor ];
     };
 }
