@@ -40,6 +40,8 @@ in
             enable = true;
             settings = {
               bar.main = {
+                # Keep the bar pinned to the per-host primary output; hosts enable it on their monitor.
+                enabled = false;
                 position = "left";
                 capsule = false;
                 start = [
@@ -47,6 +49,7 @@ in
                   "network"
                   "bluetooth"
                   "media"
+                  "active_window"
                 ];
                 center = [ "workspaces" ];
                 end = [
@@ -58,6 +61,7 @@ in
                   "notifications"
                 ];
               };
+              battery.warning_threshold = 20;
               widget.workspaces = {
                 show_labels = false;
                 labels_only_when_occupied = false;

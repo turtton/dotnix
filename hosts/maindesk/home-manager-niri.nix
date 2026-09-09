@@ -86,7 +86,10 @@
   };
 
   programs.noctalia.settings = {
-    bar.main.monitor.primary.match = "DP-1";
+    bar.main.monitor.primary = {
+      match = "DP-1";
+      enabled = true;
+    };
     notification.monitors = [ "DP-1" ];
   };
 }

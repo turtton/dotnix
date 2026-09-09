@@ -54,7 +54,10 @@
   };
 
   programs.noctalia.settings = {
-    bar.main.monitor.primary.match = "eDP-1";
+    bar.main.monitor.primary = {
+      match = "eDP-1";
+      enabled = true;
+    };
     notification.monitors = [ "eDP-1" ];
   };
 }
