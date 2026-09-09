@@ -152,12 +152,11 @@
   categories = {
     visual-engineering = {
       models = [
-        "CrofAI/greg-2-super"
-        { model = "cli-proxy-api/kimi-k3"; }
         {
-          model = "cli-proxy-api/glm-5.2";
-          reasoning = "max";
+          model = "cli-proxy-api/gpt-6-astra";
+          reasoning = "xhigh";
         }
+        { model = "cli-proxy-api/kimi-k3"; }
       ];
     };
     ultrabrain = {
