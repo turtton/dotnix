@@ -1,7 +1,6 @@
 { config, ... }:
 let
-  lock-cmd =
-    if config.programs.hyprlock.enable then "hyprlock" else "noctalia-shell ipc call lockScreen lock";
+  lock-cmd = if config.programs.hyprlock.enable then "hyprlock" else "noctalia msg session lock";
 in
 {
   services.hypridle = {

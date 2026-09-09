@@ -40,12 +40,12 @@
       "KEYBASE_AUTOSTART=1 keybase-gui"
     ];
   };
-  programs.noctalia-shell.settings =
+  programs.noctalia.settings =
     let
-      mainMonitor = [ "DP-1" ];
+      mainMonitor = "DP-1";
     in
     {
-      bar.monitors = mainMonitor;
-      notifications.monitors = mainMonitor;
+      bar.main.monitor.primary.match = mainMonitor;
+      notification.monitors = [ mainMonitor ];
     };
 }

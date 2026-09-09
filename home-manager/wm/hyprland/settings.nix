@@ -31,7 +31,7 @@ in
       "${pkgs.gitify}/bin/gitify"
     ]
     ++ lib.optionals noctaliaCfg.enable [
-      "noctalia-shell"
+      "noctalia"
     ];
     windowrule =
       let
