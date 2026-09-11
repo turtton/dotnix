@@ -9,7 +9,7 @@
     ./ssh.nix
   ];
 
-  services.journald.extraConfig = ''
-    SystemMaxFileSize=300M
-  '';
+  services.journald.settings.Journal = {
+    SystemMaxFileSize = "300M";
+  };
 }
