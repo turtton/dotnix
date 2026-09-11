@@ -35,10 +35,10 @@
             ### Svelte
             svelte.svelte-vscode
           ]
-          ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
+          ++ pkgs.lib.optionals pkgs.stdenv.hostPlatform.isDarwin [
             saoudrizwan.claude-dev
           ]
-          ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
+          ++ pkgs.lib.optionals pkgs.stdenv.hostPlatform.isLinux [
           ]
         )
         ++ (with pkgs; [
@@ -75,7 +75,7 @@
         "claudeCode.preferredLocation" = "panel";
         "claudeCode.useTerminal" = true;
       }
-      // pkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
+      // pkgs.lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
         "cline.chromeExecutablePath" = pkgs.lib.makeBinPath [ pkgs.chromium ] + "/" + pkgs.chromium.pname;
       };
     };

@@ -1,7 +1,7 @@
 inputs: self: prev:
 let
   original = inputs.senpi.packages.${prev.stdenv.hostPlatform.system}.default;
-  isDarwin = prev.stdenv.isDarwin;
+  isDarwin = prev.stdenv.hostPlatform.isDarwin;
 
   herdrChild = import ./herdr-child.nix { inherit (self) writeText writeShellScript; };
 

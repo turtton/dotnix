@@ -11,7 +11,7 @@ inputs: self: prev: {
           OPENCODE_CHANNEL = "latest";
         };
       });
-      isDarwin = prev.stdenv.isDarwin;
+      isDarwin = prev.stdenv.hostPlatform.isDarwin;
 
       mkQuotaPoller =
         name:

@@ -18,7 +18,7 @@
       fastfetch
       gnuplot_qt # graphing ulitity
     ]
-    ++ lib.optionals stdenv.isLinux [
+    ++ lib.optionals stdenv.hostPlatform.isLinux [
       unar
     ];
 

@@ -2,7 +2,7 @@ inputs: self: prev: {
   claude-code =
     let
       claude-code = inputs.claude-code-overlay.packages.${prev.stdenv.hostPlatform.system}.default;
-      isDarwin = prev.stdenv.isDarwin;
+      isDarwin = prev.stdenv.hostPlatform.isDarwin;
       useWrapperSandbox = if isDarwin then "0" else "1";
       sandboxTarget = if isDarwin then "${claude-code}/bin/claude" else "${sandbox}/bin/claude-sandbox";
       sandbox = self.writeShellApplication {
