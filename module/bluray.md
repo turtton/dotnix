@@ -23,13 +23,23 @@ Examples use `/dev/sr1` (the second optical drive here). Substitute your actual 
 
 ## VLC
 
-VLC does NOT use the MakeMKV backend. nixpkgs vlc links `libbluray-full`, which hardcodes nixpkgs libaacs/libbdplus and ignores the env vars. To use VLC, place a KEYDB.cfg at `~/.config/aacs/KEYDB.cfg` (public VUK database, e.g. the fvonline-db file referenced by the Arch Wiki), then:
+VLC does NOT use the MakeMKV backend. nixpkgs vlc links `libbluray-full`, which hardcodes nixpkgs libaacs/libbdplus and ignores the env vars. VLC therefore needs a KEYDB.cfg.
+
+Download the public VUK database from `https://fvonline-db.bplaced.net/fv_download.php?lang=eng` (the old `keydb_eng.zip` URL is dead). The zip contains a single `keydb.cfg` (~65MB); the unzip listing shows its build date, which tells you the DB freshness. Place it at `~/.config/aacs/KEYDB.cfg` (filename case matters). KEYDB.cfg is never committed to this repo. When a newer disc fails with `AACS handled : no`, re-download and replace the file.
+
+Verify without a GUI using the nixpkgs backend via inline env vars, expecting `AACS handled : yes`:
+
+```sh
+LIBAACS_PATH=<libaacs-store>/lib/libaacs LIBBDPLUS_PATH=<libbdplus-store>/lib/libbdplus bd_info /dev/sr1
+```
+
+Get the store paths from the repo with `nix eval --raw .#nixosConfigurations.maindesk.pkgs.libaacs.outPath` (same for libbdplus), then:
 
 ```sh
 vlc bluray:///dev/sr1
 ```
 
-KEYDB.cfg is never committed to this repo.
+The disc menu shows (HDMV menus work without Java; BD-J menus would need a JRE). VLC logs print `First play: 1, Top menu: 1` when the menu loads, a useful grep for headless debugging.
 
 ## Switching backend
 
