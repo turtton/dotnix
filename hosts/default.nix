@@ -307,6 +307,7 @@ in
         };
         packs.winapps.enable = false;
         packs.vial.enable = true;
+        packs.bluray.enable = true;
         packs.bitwarden = {
           enable = true;
           ssh-agent = true;
