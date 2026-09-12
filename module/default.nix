@@ -10,6 +10,7 @@
     ./android.nix
     ./remote-desktop.nix
     ./vial.nix
+    ./bluray.nix
     ./opencode
   ];
 }
