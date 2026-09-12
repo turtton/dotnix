@@ -71,12 +71,12 @@
       ];
     };
     prometheus = {
-      model = "anthropic/claude-fable-5-1";
-      reasoning = "xhigh";
+      model = "cli-proxy-api/kimi-k3";
+      reasoning = "max";
       fallback_models = [
         {
-          model = "cli-proxy-api/kimi-k3";
-          reasoning = "max";
+          model = "cli-proxy-api/gpt-6-astra";
+          reasoning = "xhigh";
         }
         {
           model = "cli-proxy-api/gpt-5.6-sol";
@@ -85,15 +85,15 @@
       ];
     };
     plan = {
-      model = "anthropic/claude-fable-5-1";
-      reasoning = "xhigh";
+      model = "cli-proxy-api/kimi-k3";
+      reasoning = "max";
       fallback_models = [
         {
           model = "cli-proxy-api/gpt-5.6-sol";
           reasoning = "xhigh";
         }
         {
-          model = "cli-proxy-api/kimi-k3";
+          model = "cli-proxy-api/glm-5.3";
           reasoning = "max";
         }
       ];
@@ -194,7 +194,7 @@
     artistry = {
       models = [
         {
-          model = "anthropic/claude-fable-5-1";
+          model = "cli-proxy-api/gpt-6-astra";
           reasoning = "xhigh";
         }
         {
