@@ -15,6 +15,8 @@ in
           place-within-backdrop = true;
         }
       ];
+      # Required by the option-2 setup above so niri's default workspace background doesn't hide the backdrop.
+      layout.background-color = "transparent";
 
       spawn-at-startup = [ { command = [ "noctalia" ]; } ];
 
