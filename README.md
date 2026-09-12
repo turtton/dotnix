@@ -10,6 +10,8 @@ My dotfiles for NixOS
 - Editor: [Neovim](https://github.com/turtton/myvim.nix)
 - Terminal: [Alacritty](https://alacritty.org)
 
+# [Blu-ray playback](./module/bluray.md)
+
 <details>
 <summary>
 Hyprland (outdated)
