@@ -34,7 +34,8 @@ hcli() {
 
 launch_herdr_context() {
   local label state_dir lock_dir workspace_json panes_json created process_info
-  local workspace_id="" pane_id="" command attempt candidate arg
+  local workspace_id="" pane_id="" command attempt candidate_wid candidate_pid arg
+  local matches match_count=0 new_label
 
   label="opencode-$(basename "$CANONICAL_PROJECT_DIR" | LC_ALL=C sed 's/[^[:alnum:]]/-/g')"
   state_dir="${XDG_STATE_HOME:-$HOME/.local/state}/herdr-launchers/${HERDR_SESSION}-${label}"
@@ -66,29 +67,41 @@ launch_herdr_context() {
     return 1
   fi
 
-  while IFS= read -r candidate; do
-    [[ -n $candidate ]] || continue
-    pane_id=$(jq -r --arg wid "$candidate" --arg cwd "$CANONICAL_PROJECT_DIR" \
-      '.result.panes[] | select(.workspace_id == $wid and .cwd == $cwd) | .pane_id' \
-      <<<"$panes_json" | sed -n '1p')
-    if [[ -n $pane_id ]]; then
-      workspace_id=$candidate
+  matches=$(jq -nr \
+    --arg label "$label" \
+    --arg cwd "$CANONICAL_PROJECT_DIR" \
+    --argjson workspaces "$workspace_json" \
+    --argjson panes "$panes_json" '
+      $workspaces.result.workspaces[]
+      | select(.label == $label or (.label | test("^" + $label + "-[0-9]+$")))
+      | .workspace_id as $wid
+      | (first($panes.result.panes[] | select(.workspace_id == $wid and .cwd == $cwd)) // empty)
+      | [$wid, .pane_id]
+      | @tsv
+    ')
+  if [[ -n $matches ]]; then
+    match_count=$(wc -l <<<"$matches")
+  fi
+
+  while IFS=$'\t' read -r candidate_wid candidate_pid; do
+    [[ -n ${candidate_pid:-} ]] || continue
+    process_info=$(hcli pane process-info --pane "$candidate_pid" 2>/dev/null || true)
+    if jq -e '.result.process_info as $p | $p.foreground_process_group_id == $p.shell_pid and $p.foreground_processes[0].pid == $p.shell_pid' \
+      >/dev/null 2>&1 <<<"$process_info"; then
+      workspace_id=$candidate_wid
+      pane_id=$candidate_pid
       break
     fi
-  done < <(jq -r --arg label "$label" \
-    '.result.workspaces[] | select(.label == $label) | .workspace_id' <<<"$workspace_json")
+  done <<<"$matches"
 
   if [[ -n $pane_id ]]; then
     hcli workspace focus "$workspace_id" >/dev/null
-    process_info=$(hcli pane process-info --pane "$pane_id" 2>/dev/null || true)
-    if ! jq -e '.result.process_info as $p | $p.foreground_process_group_id == $p.shell_pid and $p.foreground_processes[0].pid == $p.shell_pid' \
-      >/dev/null 2>&1 <<<"$process_info"; then
-      rmdir "$lock_dir"
-      trap - EXIT INT TERM
-      return 0
-    fi
   else
-    created=$(hcli workspace create --cwd "$CANONICAL_PROJECT_DIR" --label "$label" --focus)
+    new_label=$label
+    if ((match_count > 0)); then
+      new_label="${label}-$((match_count + 1))"
+    fi
+    created=$(hcli workspace create --cwd "$CANONICAL_PROJECT_DIR" --label "$new_label" --focus)
     pane_id=$(jq -r '.result.root_pane.pane_id // empty' <<<"$created")
     if [[ -z $pane_id ]]; then
       echo "opencode-sandbox: ERROR: herdr workspace creation returned no pane id" >&2
