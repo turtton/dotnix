@@ -53,6 +53,10 @@ in
                 ];
                 center = [ "workspaces" ];
                 end = [
+                  "sysmon-cpu"
+                  "sysmon-temp"
+                  "sysmon-mem"
+                  "sysmon-disk"
                   "tray"
                   "privacy"
                   "battery"
@@ -62,10 +66,33 @@ in
                 ];
               };
               battery.warning_threshold = 20;
-              widget.workspaces = {
-                show_labels = false;
-                labels_only_when_occupied = false;
-                hide_when_empty = false;
+              widget = {
+                workspaces = {
+                  show_labels = false;
+                  labels_only_when_occupied = false;
+                  hide_when_empty = false;
+                };
+                sysmon-cpu = {
+                  type = "sysmon";
+                  stat = "cpu_usage";
+                  visualization = "none";
+                };
+                sysmon-temp = {
+                  type = "sysmon";
+                  stat = "cpu_temp";
+                  visualization = "none";
+                };
+                sysmon-mem = {
+                  type = "sysmon";
+                  stat = "ram_pct";
+                  visualization = "none";
+                };
+                sysmon-disk = {
+                  type = "sysmon";
+                  stat = "disk_used_pct";
+                  path = "/";
+                  visualization = "none";
+                };
               };
               dock.enabled = false;
               theme = {
