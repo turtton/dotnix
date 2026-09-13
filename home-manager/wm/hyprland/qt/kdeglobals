@@ -1,5 +1,5 @@
 [General]
-TerminalApplication=ghostty
+TerminalApplication=dolphin-terminal
 
 [UiSettings]
 ColorScheme=kvantum
