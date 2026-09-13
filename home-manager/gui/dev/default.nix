@@ -10,7 +10,6 @@
         [ ]
     )
     ++ [
-      ./idea
       ./ai.nix
     ];
   home.packages =

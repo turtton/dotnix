@@ -12,5 +12,6 @@
     ./vial.nix
     ./bluray.nix
     ./opencode
+    ./jetbrains
   ];
 }

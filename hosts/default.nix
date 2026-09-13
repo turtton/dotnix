@@ -312,6 +312,18 @@ in
           enable = true;
           ssh-agent = true;
         };
+        packs.jetbrains = {
+          toolbox.enable = true;
+          ides = {
+            idea.enable = true;
+            webstorm.enable = true;
+            rust-rover.enable = true;
+            datagrip.enable = true;
+            pycharm.enable = true;
+            clion.enable = true;
+            rider.enable = true;
+          };
+        };
       };
     };
     bridgetop = createSystem {
@@ -364,6 +376,18 @@ in
         packs.bitwarden = {
           enable = true;
           ssh-agent = true;
+        };
+        packs.jetbrains = {
+          toolbox.enable = true;
+          ides = {
+            idea.enable = true;
+            webstorm.enable = true;
+            rust-rover.enable = true;
+            datagrip.enable = true;
+            pycharm.enable = true;
+            clion.enable = true;
+            rider.enable = true;
+          };
         };
       };
     };
