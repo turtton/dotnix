@@ -20,7 +20,7 @@
     ./../../os/desktop/openrazer.nix
     ./../../os/desktop/steam.nix
     ./../../os/desktop/vr.nix
-    ./../../os/desktop/wifiman.nix
+    # ./../../os/desktop/wifiman.nix
   ]
   ++ (with inputs.nixos-hardware.nixosModules; [
     common-cpu-amd
