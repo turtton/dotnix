@@ -3,7 +3,7 @@
   networking.networkmanager = {
     enable = true;
     plugins = with pkgs; [
-      networkmanager-fortisslvpn
+      networkmanager-openconnect
       networkmanager-l2tp
       networkmanager_strongswan
     ];
