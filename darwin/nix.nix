@@ -30,7 +30,7 @@
       ];
       trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        "home:7Fjx4vYDLZAOseF/QaouAVdlCBiPpIMKj0BPjgieBAE="
+        "home:00byWMpTTw/3xTntv8EF6LQmlWlR9RU5Tl0GVG5Vwn8="
       ];
       warn-dirty = false;
     };

@@ -17,7 +17,7 @@
       "https://ezkea.cachix.org"
     ];
     extra-trusted-public-keys = [
-      "home:7Fjx4vYDLZAOseF/QaouAVdlCBiPpIMKj0BPjgieBAE="
+      "home:00byWMpTTw/3xTntv8EF6LQmlWlR9RU5Tl0GVG5Vwn8="
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       "ags.cachix.org-1:naAvMrz0CuYqeyGNyLgE010iUiuf/qx6kYrUv3NwAJ8="
       "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
