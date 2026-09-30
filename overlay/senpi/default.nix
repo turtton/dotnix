@@ -1,6 +1,9 @@
 inputs: self: prev:
 let
-  original = inputs.senpi.packages.${prev.stdenv.hostPlatform.system}.default;
+  original = self.writeShellScriptBin "senpi" ''
+    export OMO_CODING_AGENT_DIR="''${OMO_CODING_AGENT_DIR:-$HOME/.senpi/agent}"
+    exec "${self.omo-native}/bin/omo" "$@"
+  '';
   isDarwin = prev.stdenv.hostPlatform.isDarwin;
 
   herdrChild = import ./herdr-child.nix { inherit (self) writeText writeShellScript; };
@@ -117,10 +120,11 @@ let
 
   senpiOverlay = inputs.senpi.overlays.default self prev;
 in
-{
+senpiOverlay
+// {
   senpi = self.symlinkJoin {
-    inherit (original) pname version;
-    name = "${original.name}-wrapped";
+    inherit (self.omo-native) pname version;
+    name = "${self.omo-native.name}-wrapped";
     paths = [
       launcher
       launcher-tmux
@@ -131,19 +135,8 @@ in
     postBuild = ''
       ln -s "$out/bin/senpi" "$out/bin/pi"
     '';
-    meta = original.meta // {
+    meta = self.omo-native.meta // {
       mainProgram = "senpi";
     };
-  };
-
-  # packages.*.omo-senpi は senpi-flake 内部の config 無し pkgs で評価済みのため、
-  # unfree チェックが消費側の allowUnfree を無視して失敗する。overlays.default 経由で
-  # 自側 pkgs から構築する必要がある。
-  omo-senpi = senpiOverlay.omo-senpi;
-
-  # senpiOverlay.omo-cli は comment-checker を fixed point から auto-fill する前提の
-  # ため、attr 選り抜きでは必須引数が欠落して評価失敗する。直接 callPackage して明示する。
-  omo-cli = self.callPackage "${inputs.senpi}/omo-cli.nix" {
-    comment-checker = senpiOverlay.comment-checker;
   };
 }

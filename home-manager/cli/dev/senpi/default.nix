@@ -10,9 +10,7 @@ let
   settingsJson = pkgs.writeText "senpi-settings.json" (
     builtins.toJSON {
       permissionPreset = "full-access";
-      packages = [
-        "${pkgs.omo-senpi}${pkgs.omo-senpi.pluginPath}"
-      ];
+      packages = [ ];
     }
   );
 
@@ -25,9 +23,11 @@ in
 {
   home.packages = [
     pkgs.senpi
-    pkgs.omo-cli
+    pkgs.omo-native
     pkgs.ripgrep
   ];
+
+  home.sessionVariables.OMO_CODING_AGENT_DIR = "${config.home.homeDirectory}/${agentDir}";
 
   home.activation.senpi = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     senpi_dir="$HOME/${agentDir}"
