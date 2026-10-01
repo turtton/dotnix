@@ -1,6 +1,6 @@
 # Builds the senpi models.json document registering the local CLIProxyAPI as
 # provider "cli-proxy-api". The provider id must stay "cli-proxy-api" because
-# ~/.omo/omo.jsonc [senpi] references models as cli-proxy-api/<id>; the
+# ~/.omo/omo.jsonc [native] references models as cli-proxy-api/<id>; the
 # catalog is shared with opencode.jsonc via ../cli-proxy-models.nix.
 { proxyModels }:
 let

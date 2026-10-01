@@ -1,23 +1,9 @@
-# Base oh-my-openagent (omo) configuration for the "[opencode]" harness section
-# of ~/.omo/omo.jsonc. Migrated from the former oc-go profileopencode-base
-# (oh-my-openagent-go.json).
-#
-# Notes:
-# - agents use `model` + `fallback_models`, NOT the newer `models` list: the
-#   released npm runtime (4.19.4) has no `models` key in AgentOverrideConfigSchema,
-#   so zod strips it and agent overrides are silently ignored (builtin fallback
-#   chains get used). The Nix `omo` CLI is a newer dev build that accepts both
-#   formats, so `omo doctor` may flag this as deprecated — that warning is
-#   expected until the npm release catches up. categories keep `models`
-#   (supported by both builds).
-# - `skills.sources` is injected in ./default.nix (needs configDir).
-# - Per-host overrides are deep-merged via packs.opencode.omoOverrides
-#   (see module/opencode).
+# OpenCode harness settings for ~/.omo/omo.jsonc.
 {
   agents = {
     sisyphus = {
-      model = "cli-proxy-api/kimi-k3";
-      fallback_models = [
+      models = [
+        { model = "cli-proxy-api/kimi-k3"; }
         { model = "cli-proxy-api/kimi-k2.7-code"; }
         {
           model = "cli-proxy-api/gpt-5.6-luna";
@@ -26,9 +12,11 @@
       ];
     };
     hephaestus = {
-      model = "cli-proxy-api/gpt-5.6-sol";
-      reasoning = "medium";
-      fallback_models = [
+      models = [
+        {
+          model = "cli-proxy-api/gpt-5.6-sol";
+          reasoning = "medium";
+        }
         {
           model = "cli-proxy-api/deepseek-v4-pro";
           reasoning = "max";
@@ -36,9 +24,11 @@
       ];
     };
     oracle = {
-      model = "cli-proxy-api/gpt-5.6-sol";
-      reasoning = "xhigh";
-      fallback_models = [
+      models = [
+        {
+          model = "cli-proxy-api/gpt-5.6-sol";
+          reasoning = "xhigh";
+        }
         {
           model = "cli-proxy-api/gpt-5.6-terra";
           reasoning = "max";
@@ -46,9 +36,11 @@
       ];
     };
     momus = {
-      model = "cli-proxy-api/gpt-6-astra";
-      reasoning = "xhigh";
-      fallback_models = [
+      models = [
+        {
+          model = "cli-proxy-api/gpt-6-astra";
+          reasoning = "xhigh";
+        }
         {
           model = "cli-proxy-api/glm-5.3";
           reasoning = "max";
@@ -56,9 +48,11 @@
       ];
     };
     metis = {
-      model = "cli-proxy-api/kimi-k3";
-      reasoning = "low";
-      fallback_models = [
+      models = [
+        {
+          model = "cli-proxy-api/kimi-k3";
+          reasoning = "low";
+        }
         {
           model = "cli-proxy-api/gpt-5.6-terra";
           reasoning = "max";
@@ -70,9 +64,11 @@
       ];
     };
     prometheus = {
-      model = "cli-proxy-api/kimi-k3";
-      reasoning = "max";
-      fallback_models = [
+      models = [
+        {
+          model = "cli-proxy-api/kimi-k3";
+          reasoning = "max";
+        }
         {
           model = "cli-proxy-api/gpt-6-astra";
           reasoning = "xhigh";
@@ -84,9 +80,11 @@
       ];
     };
     plan = {
-      model = "cli-proxy-api/kimi-k3";
-      reasoning = "max";
-      fallback_models = [
+      models = [
+        {
+          model = "cli-proxy-api/kimi-k3";
+          reasoning = "max";
+        }
         {
           model = "cli-proxy-api/gpt-5.6-sol";
           reasoning = "xhigh";
@@ -98,14 +96,14 @@
       ];
     };
     atlas = {
-      model = "cli-proxy-api/kimi-k3";
-      fallback_models = [
+      models = [
+        { model = "cli-proxy-api/kimi-k3"; }
         { model = "cli-proxy-api/kimi-k2.7-code"; }
       ];
     };
     sisyphus-junior = {
-      model = "openrouter/kimi-k3";
-      fallback_models = [
+      models = [
+        { model = "openrouter/kimi-k3"; }
         { model = "cli-proxy-api/kimi-k2.7-code"; }
         {
           model = "cli-proxy-api/glm-5.2";
@@ -114,9 +112,11 @@
       ];
     };
     explore = {
-      model = "openai/gpt-5.6-luna-fast";
-      reasoning = "low";
-      fallback_models = [
+      models = [
+        {
+          model = "openai/gpt-5.6-luna-fast";
+          reasoning = "low";
+        }
         {
           model = "cli-proxy-api/deepseek-v4-flash";
           reasoning = "max";
@@ -124,9 +124,11 @@
       ];
     };
     librarian = {
-      model = "openai/gpt-5.6-luna-fast";
-      reasoning = "low";
-      fallback_models = [
+      models = [
+        {
+          model = "openai/gpt-5.6-luna-fast";
+          reasoning = "low";
+        }
         {
           model = "cli-proxy-api/deepseek-v4-flash";
           reasoning = "max";
@@ -134,9 +136,11 @@
       ];
     };
     multimodal-looker = {
-      model = "cli-proxy-api/gpt-5.6-sol";
-      reasoning = "low";
-      fallback_models = [
+      models = [
+        {
+          model = "cli-proxy-api/gpt-5.6-sol";
+          reasoning = "low";
+        }
         {
           model = "cli-proxy-api/kimi-k3";
           reasoning = "max";
@@ -174,7 +178,7 @@
         }
       ];
     };
-    deep = {
+    deep-low = {
       models = [
         {
           model = "cli-proxy-api/gpt-6-astra";
@@ -186,6 +190,22 @@
         }
         {
           model = "cli-proxy-api/glm-5.2";
+          reasoning = "max";
+        }
+      ];
+    };
+    deep-high = {
+      models = [
+        {
+          model = "cli-proxy-api/gpt-6-astra";
+          reasoning = "max";
+        }
+        {
+          model = "cli-proxy-api/gpt-5.6-sol";
+          reasoning = "max";
+        }
+        {
+          model = "cli-proxy-api/deepseek-v4-pro";
           reasoning = "max";
         }
       ];
@@ -276,7 +296,6 @@
   git_master = {
     git_env_prefix = "";
     commit_footer = true;
-    include_co_authored_by = true;
   };
   runtime_fallback = true;
 }

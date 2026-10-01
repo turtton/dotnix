@@ -9,17 +9,10 @@ let
   configDir = "${config.xdg.configHome}/opencode";
   omoDir = "${config.home.homeDirectory}/.omo";
 
-  # Base omo "[opencode]" harness section + per-host overrides.
-  # See module/opencode for the option definition.
   opencodeBase = import ./opencode-base.nix;
 
-  # Base omo "[senpi]" harness section. senpi resolves only its own section
-  # (no fallback to "[opencode]"), so it must be managed here explicitly or
-  # every switch drops it. See ./senpi-base.nix header for provenance.
   senpiBase = import ./senpi-base.nix;
 
-  # Extra skill sources, equivalent to the old @OPENCODE_CONFIG_DIR@ paths.
-  # git-commit is deployed here by agent-skills (dotagents).
   omoSkills = {
     skills.sources = [
       "${configDir}/skill/git-commit"
@@ -32,7 +25,7 @@ let
     "$schema" =
       "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/omo.schema.json";
     "[opencode]" = opencodeHarness;
-    "[senpi]" = senpiBase;
+    "[native]" = senpiBase;
     # Keep the unification migration marker/history so the plugin never
     # re-runs legacy oh-my-openagent.json migrations over this managed file.
     legacy_migrations = {
@@ -41,9 +34,6 @@ let
         "model-version:openai/gpt-5.4->openai/gpt-5.5"
       ];
     };
-    # Pin both migration markers so the plugin never re-runs migrations over
-    # this managed file. Note opencode-base.nix agents intentionally keep the
-    # pre-unification model/fallback_models shape; see its header.
     _migrations = [
       "2026-07-opencode-config-unification"
       "2026-08-reasoning-unification"

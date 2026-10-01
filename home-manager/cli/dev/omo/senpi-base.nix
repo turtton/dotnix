@@ -1,14 +1,4 @@
-# Base oh-my-openagent (omo) configuration for the "[senpi]" harness section
-# of ~/.omo/omo.jsonc. Model specs mirror the "[opencode]" section
-# (./opencode-base.nix): everything routes through the local CLIProxyAPI,
-# which is registered as senpi provider "cli-proxy-api" via
-# ~/.senpi/agent/models.json (see ../senpi/default.nix).
-#
-# Notes:
-# - Uses the post-2026-08-reasoning-unification format (`models` list with
-#   `reasoning` entries); the migration marker is pinned in ./default.nix.
-# - architect and the agents section have no "[opencode]" counterpart; their
-#   chains follow the same provider set.
+# Native harness settings for ~/.omo/omo.jsonc.
 {
   agents = {
     explore = {
@@ -35,7 +25,7 @@
         }
       ];
     };
-    metis = {
+    plan-consultant = {
       models = [
         {
           model = "cli-proxy-api/gpt-5.6-sol";
@@ -51,7 +41,7 @@
         }
       ];
     };
-    momus = {
+    plan-reviewer = {
       models = [
         {
           model = "cli-proxy-api/gpt-5.6-sol";
@@ -85,7 +75,7 @@
     unspecified-high = {
       models = [ "cli-proxy-api/kimi-k3" ];
     };
-    deep = {
+    deep-low = {
       models = [
         {
           model = "cli-proxy-api/gpt-5.6-sol";
@@ -93,6 +83,18 @@
         }
         {
           model = "cli-proxy-api/glm-5.2";
+          reasoning = "max";
+        }
+      ];
+    };
+    deep-high = {
+      models = [
+        {
+          model = "cli-proxy-api/gpt-5.6-sol";
+          reasoning = "xhigh";
+        }
+        {
+          model = "cli-proxy-api/deepseek-v4-pro";
           reasoning = "max";
         }
       ];
