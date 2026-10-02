@@ -13,13 +13,9 @@ let
   hyprlandEnabled = config.wayland.windowManager.hyprland.enable or false;
 in
 {
-  imports =
-    lib.optionals (isHomeManager && hostPlatform.isLinux) [
-      inputs.noctalia.homeModules.default
-    ]
-    ++ lib.optionals (!isHomeManager && hostPlatform.isLinux) [
-      inputs.noctalia.nixosModules.default
-    ];
+  imports = lib.optionals (!isHomeManager && hostPlatform.isLinux) [
+    inputs.noctalia.nixosModules.default
+  ];
 
   options.packs.noctalia = {
     enable = lib.mkEnableOption "Noctalia shell (bar, launcher, lock screen)";
@@ -32,12 +28,12 @@ in
       lib.mkMerge [
         {
           home.packages = with pkgs; [
-            inputs.noctalia.packages.${system}.default
             wl-clipboard
             cliphist
           ];
           programs.noctalia = {
             enable = true;
+            package = inputs.noctalia.packages.${system}.default;
             settings = {
               bar.main = {
                 # Keep the bar pinned to the per-host primary output; hosts enable it on their monitor.
