@@ -242,9 +242,7 @@
         };
         overlayFile =
           if pkgs.stdenv.hostPlatform.isLinux then ./overlay/d-linux.nix else ./overlay/d-darwin.nix;
-        overlays = pkgs.lib.attrsets.mergeAttrsList (
-          map (overlay: overlay pkgs pkgs) (import overlayFile { inherit pkgs inputs; }).nixpkgs.overlays
-        );
+        overlays = pkgs.appendOverlays (import overlayFile { inherit pkgs inputs; }).nixpkgs.overlays;
       in
       with pkgs;
       {
