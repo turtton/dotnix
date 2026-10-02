@@ -23,7 +23,7 @@
     SSH_AUTH_SOCK = "/run/user/1000/radicle-ssh-agent.sock";
   };
   programs = {
-    radicle.enable = true;
+    # radicle.enable = true;
     delta = {
       enable = true;
       enableGitIntegration = true;
