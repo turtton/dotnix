@@ -14,6 +14,7 @@ in
       "Mod+Return".action.spawn = [ "ghostty" ];
       "Mod+Shift+Q".action.close-window = { };
       "Mod+F".action.fullscreen-window = { };
+      "Mod+O".action.toggle-window-rule-opacity = { };
       "Mod+Alt+F".action.set-column-width = "100%";
       "Mod+Shift+F".action.toggle-window-floating = { };
       "Mod+Shift+E".action.spawn = [ "wlogout" ];
