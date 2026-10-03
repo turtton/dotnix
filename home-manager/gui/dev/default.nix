@@ -24,7 +24,7 @@
     ++ lib.optionals hostPlatform.isLinux [
       bruno
       drawio # also works darwin but I do not use it
-      isaacsim-webrtc-streaming-client
+      # isaacsim-webrtc-streaming-client
     ];
   programs.zed-editor.enable = true;
 }
