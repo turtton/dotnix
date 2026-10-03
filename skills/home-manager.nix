@@ -1,5 +1,19 @@
 { dotagents }:
 { config, lib, ... }:
+let
+  skillCategories = import (dotagents + "/nix/skills.nix");
+  categoryTargets = {
+    generic = [
+      "agents"
+      "opencode"
+      "senpi"
+    ];
+    omo = [
+      "opencode"
+      "senpi"
+    ];
+  };
+in
 {
   programs.agent-skills = {
     enable = true;
@@ -12,14 +26,7 @@
     skills.explicit = lib.mapAttrs (name: skill: {
       from = skill.source;
       path = skill.relPath;
-      agents = [
-        "opencode"
-        "senpi"
-      ]
-      ++ lib.optional (builtins.elem name [
-        "missing-tools"
-        "worktree-pr"
-      ]) "agents";
+      agents = categoryTargets.${skillCategories.${name}};
     }) config.programs.agent-skills.catalog;
     targets.agents = {
       enable = true;
