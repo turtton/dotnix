@@ -5,6 +5,7 @@ let
   categoryTargets = {
     generic = [
       "agents"
+      "claude"
       "opencode"
       "senpi"
     ];
@@ -32,6 +33,12 @@ in
       enable = true;
       dest = "${config.home.homeDirectory}/.agents/skills";
       structure = "copy-tree";
+    };
+    # copy-tree runs rsync --delete, which would wipe the claude.ai-managed ~/.claude/skills/synced.
+    targets.claude = {
+      enable = true;
+      dest = ".claude/skills";
+      structure = "link";
     };
     targets.opencode = {
       enable = true;

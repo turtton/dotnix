@@ -10,6 +10,7 @@
     ./omo
     ./herdr
     ./senpi
+    ./claude-code
   ];
   home = {
     packages =
@@ -35,11 +36,6 @@
       Type = "simple";
       ExecStart = "${lib.getExe pkgs.llm-agents.cli-proxy-api} -config %h/.config/cli-proxy-api/config.yaml";
       Restart = "on-failure";
-    };
-  };
-  programs = {
-    claude-code = {
-      enable = true;
     };
   };
 }
