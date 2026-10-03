@@ -424,11 +424,11 @@
     "dotagents": {
       "flake": false,
       "locked": {
-        "lastModified": 1791005556,
-        "narHash": "sha256-1LWS46ZkNP6BaJxa4GZYV/5W2scPcLz1iDYq/J1yWM0=",
+        "lastModified": 1791031193,
+        "narHash": "sha256-Z4/G21ooiu2r6rURimqIW7RLf1u44+COhRS44RGqKOw=",
         "owner": "turtton",
         "repo": "dotagents",
-        "rev": "80a98692da84cd1e46d14978790918c7f142a7f2",
+        "rev": "9ec2cfee5b93562048dac744a68027d24e6b5d51",
         "type": "github"
       },
       "original": {
