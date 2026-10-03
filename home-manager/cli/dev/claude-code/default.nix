@@ -12,7 +12,7 @@ let
     };
     statusLine = {
       type = "command";
-      command = "bun x ccusage statusline";
+      command = lib.getExe statusline;
       padding = 0;
     };
     enabledPlugins = {
@@ -25,6 +25,14 @@ let
         repo = "turtton/claude-plugins";
       };
     };
+  };
+  statusline = pkgs.writeShellApplication {
+    name = "claude-statusline";
+    runtimeInputs = [
+      pkgs.bun
+      pkgs.jq
+    ];
+    text = builtins.readFile ./statusline.sh;
   };
   settingsFile = (pkgs.formats.json { }).generate "claude-code-settings.json" settings;
 in
