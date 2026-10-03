@@ -97,6 +97,7 @@
         ".DS_Store"
         ".idea"
         ".vscode"
+        ".worktrees"
         "*.local.md"
         "*.local.json"
         ".gemini"
