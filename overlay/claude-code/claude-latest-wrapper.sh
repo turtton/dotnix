@@ -10,14 +10,10 @@ if [ -z "$claude_code_store" ] || [ ! -d "$claude_code_store/bin" ]; then
   exit 1
 fi
 
-export PATH="${claude_code_store}/bin${PATH:+:$PATH}"
+sandbox_path="@sandbox-path@"
+export PATH="${claude_code_store}/bin${sandbox_path:+:$sandbox_path}${PATH:+:$PATH}"
 
-if [ $# -eq 0 ] && [ "@use-sandbox@" = "1" ]; then
-  export CLAUDE_CODE_BIN="${claude_code_store}/bin/claude"
-  target="@sandbox@"
-else
-  target="${claude_code_store}/bin/claude"
-fi
+target="${claude_code_store}/bin/claude"
 
 if [ -n "${CLAUDE_CONFIG_DIR:-}" ]; then
   exec "$target" "$@"

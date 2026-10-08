@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
+    ./claude-code.nix
     ./containerized.nix
     ./gpg.nix
     ./locale.nix

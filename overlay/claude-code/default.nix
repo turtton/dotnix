@@ -2,39 +2,19 @@ inputs: self: prev: {
   claude-code =
     let
       claude-code = inputs.claude-code-overlay.packages.${prev.stdenv.hostPlatform.system}.default;
-      isDarwin = prev.stdenv.hostPlatform.isDarwin;
-      useWrapperSandbox = if isDarwin then "0" else "1";
-      sandboxTarget = if isDarwin then "${claude-code}/bin/claude" else "${sandbox}/bin/claude-sandbox";
-      sandbox = self.writeShellApplication {
-        name = "claude-sandbox";
-        runtimeInputs =
-          with self;
-          [
-            jq
-            git
-            gnupg
-            coreutils
-          ]
-          ++ self.lib.optionals (!isDarwin) [
-            self.bubblewrap
-          ];
-        checkPhase = "";
-        text = builtins.replaceStrings [ "@claude-code-dir@" ] [ "${claude-code}/bin" ] (
-          builtins.readFile (if isDarwin then ./sandbox-darwin.sh else ./sandbox.sh)
-        );
-      };
+      sandboxDeps = self.lib.optionals prev.stdenv.hostPlatform.isLinux [
+        self.bubblewrap
+        self.socat
+      ];
       claude-wrapper-script = self.substitute {
         src = ./claude-wrapper.sh;
         substitutions = [
           "--subst-var-by"
-          "sandbox"
-          sandboxTarget
-          "--subst-var-by"
           "claude-code-dir"
           "${claude-code}/bin"
           "--subst-var-by"
-          "use-sandbox"
-          useWrapperSandbox
+          "path-prefix"
+          (self.lib.makeBinPath ([ claude-code ] ++ sandboxDeps))
         ];
       };
       claude-wrapper = self.writeShellScriptBin "claude-wrapper" (
@@ -44,11 +24,8 @@ inputs: self: prev: {
         src = ./claude-latest-wrapper.sh;
         substitutions = [
           "--subst-var-by"
-          "sandbox"
-          sandboxTarget
-          "--subst-var-by"
-          "use-sandbox"
-          useWrapperSandbox
+          "sandbox-path"
+          (self.lib.makeBinPath sandboxDeps)
         ];
       };
       claude-latest-wrapper = self.writeShellScriptBin "claude-latest-wrapper" (

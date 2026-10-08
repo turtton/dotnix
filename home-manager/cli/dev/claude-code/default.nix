@@ -7,6 +7,7 @@ let
     autoCompactEnabled = true;
     teammateMode = "in-process";
     skipDangerousModePermissionPrompt = true;
+    permissions.defaultMode = "auto";
     env = {
       CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
     };

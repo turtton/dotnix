@@ -1,12 +1,8 @@
 #!/usr/bin/env bash
 
-export PATH="@claude-code-dir@${PATH:+:$PATH}"
+export PATH="@path-prefix@${PATH:+:$PATH}"
 
-if [ $# -eq 0 ] && [ "@use-sandbox@" = "1" ]; then
-  target="@sandbox@"
-else
-  target="@claude-code-dir@/claude"
-fi
+target="@claude-code-dir@/claude"
 
 if [ -n "$CLAUDE_CONFIG_DIR" ]; then
   exec "$target" "$@"
