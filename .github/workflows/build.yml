@@ -125,7 +125,6 @@ jobs:
           - xwayland-satellite
           - cachyos-kernel-latest
           - opencode
-          - mixxx
           - ghr
           - cnowledje
     steps:

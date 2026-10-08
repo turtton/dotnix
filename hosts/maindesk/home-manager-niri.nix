@@ -1,4 +1,9 @@
-{ lib, ... }:
+{
+  config,
+  lib,
+  osConfig,
+  ...
+}:
 {
   imports = [
     ./../../home-manager/cli/shared
@@ -83,6 +88,33 @@
       }
       { command = [ "keybase-gui" ]; }
     ];
+  };
+
+  programs.rclone = {
+    enable = true;
+    remotes.nextcloud = {
+      config = {
+        type = "webdav";
+        url = "https://nextcloud.taile2777.ts.net/remote.php/dav/files/Music-A";
+        vendor = "nextcloud";
+        user = "Music-A";
+      };
+      secrets.pass = osConfig.sops.secrets.nextcloud-music-password.path;
+      mounts.Music = {
+        enable = true;
+        mountPoint = "${config.home.homeDirectory}/Music/Nextcloud";
+        options = {
+          read-only = true;
+          vfs-cache-max-size = "20G";
+          vfs-cache-max-age = "720h";
+        };
+      };
+    };
+  };
+  # Tailscale (a system unit) cannot be ordered against from a user unit, so retry until it is up.
+  systemd.user.services."rclone-mount:Music@nextcloud" = {
+    Unit.StartLimitIntervalSec = 0;
+    Service.RestartSec = 10;
   };
 
   programs.noctalia.settings = {

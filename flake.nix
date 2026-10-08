@@ -172,12 +172,9 @@
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    mixxx = {
-      url = "github:turtton/mixxx";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "utils";
-      };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     mac-app-util.url = "github:hraban/mac-app-util";
     cnowledje = {
@@ -306,7 +303,6 @@
             cachyos-kernel-latest = overlays.cachyosKernels.linuxPackages-cachyos-latest.kernel;
             noctalia-shell = noctalia.packages.${system}.default;
             xwayland-satellite = niri-flake.packages.${system}.xwayland-satellite-unstable;
-            mixxx = overlays.mixxx;
           }
         );
         devShells.default = mkShell {
@@ -318,6 +314,8 @@
             zizmor
             nh
             gh
+            sops
+            ssh-to-age
             inputs.llm-agents.packages.${system}.apm
             (writeScriptBin "switch-home" ''
               nh home switch . -C"$@"
@@ -344,6 +342,9 @@
             #   hpkgs.xmonad-contrib
             # ]))
           ];
+          env = {
+            SOPS_AGE_KEY_CMD = "rbw get dotnix-age-key";
+          };
         };
       }
     );

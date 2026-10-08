@@ -1601,29 +1601,6 @@
         "type": "github"
       }
     },
-    "mixxx": {
-      "inputs": {
-        "flake-utils": [
-          "utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1778244474,
-        "narHash": "sha256-a1tw1A9B300FbD7CoijpDOnRcKLqvOp9m0N0QvvZsUU=",
-        "owner": "turtton",
-        "repo": "mixxx",
-        "rev": "e2220fc6cb0ce5cccaf1b70645afe8b0b04f9bcd",
-        "type": "github"
-      },
-      "original": {
-        "owner": "turtton",
-        "repo": "mixxx",
-        "type": "github"
-      }
-    },
     "niri-flake": {
       "inputs": {
         "niri-stable": "niri-stable",
@@ -2349,7 +2326,6 @@
         "lanzaboote": "lanzaboote",
         "llm-agents": "llm-agents_2",
         "mac-app-util": "mac-app-util",
-        "mixxx": "mixxx",
         "niri-flake": "niri-flake",
         "nix-cachyos-kernel": "nix-cachyos-kernel",
         "nix-darwin": "nix-darwin",
@@ -2369,6 +2345,7 @@
         "senpi": "senpi",
         "siketyan-ghr": "siketyan-ghr",
         "skills-catalog": "skills-catalog",
+        "sops-nix": "sops-nix",
         "split-monitor-workspaces": "split-monitor-workspaces",
         "treefmt-nix": "treefmt-nix_4",
         "turtton-neovim": "turtton-neovim",
@@ -2552,6 +2529,26 @@
         "type": "path"
       },
       "parent": []
+    },
+    "sops-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791103873,
+        "narHash": "sha256-nFxM+pKoZ8LJAEnUXARyCaOAloWgaW9kZQOSjWzKcTE=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "dcd241ba97088c22569d1573286e1b9daad340c0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "type": "github"
+      }
     },
     "split-monitor-workspaces": {
       "inputs": {

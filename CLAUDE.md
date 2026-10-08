@@ -48,6 +48,7 @@ packs.noctalia.enable = true;
 - **`overlay/`** - Package definitions and global fixes
 - **`nixosModules/`** + **`packages/`** - `preloader-signed` (PreLoader/HashTool for UEFI Secure Boot with systemd-boot), exported as flake outputs
 - **`skills/`** - Nested flake with its own `flake.lock` for the agent skills catalog
+- **`secrets/`** - sops-nix files. Recipients live in `.sops.yaml`: an admin age key (`~/.config/sops/age/keys.txt`) plus each host's SSH host key via `ssh-to-age`. Adding a host means adding its recipient and running `sops updatekeys`.
 
 ### Overlays
 

@@ -61,6 +61,7 @@ let
           ./../overlay/d-linux.nix
           ./../module
           sharedOptions
+          inputs.sops-nix.nixosModules.sops
         ]
         ++ (lib.optionals isWsl) [
           inputs.nixos-wsl.nixosModules.wsl

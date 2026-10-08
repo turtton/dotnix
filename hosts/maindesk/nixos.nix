@@ -81,5 +81,10 @@
 
   networking.wireguard.enable = true;
 
+  sops = {
+    defaultSopsFile = ./../../secrets/maindesk.yaml;
+    secrets.nextcloud-music-password.owner = "turtton";
+  };
+
   programs.anime-game-launcher.enable = true;
 }

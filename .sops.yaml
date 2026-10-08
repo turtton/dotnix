@@ -1,0 +1,9 @@
+keys:
+  - &admin age1pdjrsnqyc7a62j7p7a4jh5fmesmua2u5fmmf47vnhtk2fgtwwg7qekt4wy
+  - &maindesk age1jzcggm7rx35ds3zewrr5nl0kl0h5v6vl0j64z9gl57a9k3cj35msnhzqzl
+creation_rules:
+  - path_regex: secrets/maindesk\.yaml$
+    key_groups:
+      - age:
+          - *admin
+          - *maindesk
