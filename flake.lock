@@ -336,11 +336,11 @@
         "systems": "systems_2"
       },
       "locked": {
-        "lastModified": 1791287501,
-        "narHash": "sha256-4Vw4mGucNcNNKaG6Dv/+vH4jnRn/sdWi5LJdCgRz/48=",
+        "lastModified": 1791542815,
+        "narHash": "sha256-j3J8vkTTmmfSB1PClECXgOJQYKxpqkTciSYxm59GKy0=",
         "owner": "turtton",
         "repo": "cnowledje",
-        "rev": "cf16826c1b542fa07fa78e720ef70170dd58ccaf",
+        "rev": "c37f605491b3949090192c5d563494e8a0b99e0a",
         "type": "github"
       },
       "original": {
