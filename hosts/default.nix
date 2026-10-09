@@ -309,10 +309,7 @@ in
         packs.winapps.enable = false;
         packs.vial.enable = true;
         packs.bluray.enable = true;
-        packs.bitwarden = {
-          enable = true;
-          ssh-agent = true;
-        };
+        packs.bitwarden.enable = true;
         packs.jetbrains = {
           toolbox.enable = true;
           ides = {
@@ -374,10 +371,7 @@ in
         packs.bemoji.enable = true;
         packs.remote-desktop.enable = true;
         packs.vial.enable = true;
-        packs.bitwarden = {
-          enable = true;
-          ssh-agent = true;
-        };
+        packs.bitwarden.enable = true;
         packs.jetbrains = {
           toolbox.enable = true;
           ides = {
@@ -431,10 +425,7 @@ in
       ];
       sharedOptions = {
         packs.bemoji.enable = true;
-        packs.bitwarden = {
-          enable = true;
-          ssh-agent = true;
-        };
+        packs.bitwarden.enable = true;
       };
     };
     atticserver = createSystem {

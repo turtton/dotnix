@@ -68,7 +68,8 @@ in
 
             xdg.userDirs.createDirectories = true;
             services = {
-              gnome-keyring.enable = true;
+              # niri-flake's home module enables this unconditionally; the NixOS side starts the daemon via PAM and D-Bus activation instead
+              gnome-keyring.enable = lib.mkForce false;
               kdeconnect.indicator = true;
             };
           }
@@ -88,6 +89,7 @@ in
               };
 
             services = {
+              gnome.gnome-keyring.enable = true;
               upower.enable = true;
               power-profiles-daemon.enable = true;
             };
