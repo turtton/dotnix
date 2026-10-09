@@ -49,12 +49,12 @@ in
                 ];
                 center = [ "workspaces" ];
                 end = [
+                  "tray"
+                  "privacy"
                   "sysmon-cpu"
                   "sysmon-temp"
                   "sysmon-mem"
                   "sysmon-disk"
-                  "tray"
-                  "privacy"
                   "battery"
                   "volume"
                   "clock"
