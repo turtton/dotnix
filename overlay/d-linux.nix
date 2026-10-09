@@ -16,7 +16,6 @@ in
     (import ./opencode inputs)
     (import ./fix-fhs-launcher.nix)
     (import ./fix-dolphin-mime.nix inputs)
-    (import ./fix-tauon-desktop.nix)
     (import ./fix-ime.nix)
     (import ./force-wayland.nix inputs)
     (import ./isaacsim.nix)
