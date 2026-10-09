@@ -23,11 +23,11 @@
     "dotagents": {
       "flake": false,
       "locked": {
-        "lastModified": 1791031193,
+        "lastModified": 1791031378,
         "narHash": "sha256-Z4/G21ooiu2r6rURimqIW7RLf1u44+COhRS44RGqKOw=",
         "owner": "turtton",
         "repo": "dotagents",
-        "rev": "9ec2cfee5b93562048dac744a68027d24e6b5d51",
+        "rev": "7139fdedbaf98bd22eaf5ac2f01045487b944268",
         "type": "github"
       },
       "original": {
@@ -38,11 +38,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1790822859,
-        "narHash": "sha256-69xHQhAeMAD2wDXO7T2pcOZIF9Sga2W+JkmY2a11Ops=",
+        "lastModified": 1791456040,
+        "narHash": "sha256-H83yz/do+hjOO0uujHyH8RgtIQP2v7Mw+cLwcZK/xKc=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "c59305bab2065cfecc4944690d9eedbb56f3a9fa",
+        "rev": "e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
         "type": "github"
       },
       "original": {
