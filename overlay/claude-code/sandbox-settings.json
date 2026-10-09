@@ -5,13 +5,11 @@
 		"enabled": true,
 		"failIfUnavailable": true,
 		"autoAllowBashIfSandboxed": true,
-		"allowUnsandboxedCommands": false,
+		"allowUnsandboxedCommands": true,
 		"excludedCommands": [],
 		"network": {
 			"allowUnixSockets": [
-				"/nix/var/nix/daemon-socket/socket",
-				"/run/user/1000/gnupg/S.gpg-agent",
-				"/run/user/1000/gnupg/S.keyboxd"
+				"/nix/var/nix/daemon-socket/socket"
 			],
 			"allowAllUnixSockets": false,
 			"allowLocalBinding": false,
