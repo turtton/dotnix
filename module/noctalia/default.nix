@@ -62,6 +62,16 @@ in
                 ];
               };
               battery.warning_threshold = 20;
+              notification = {
+                filter_order = [ "mute" ];
+                filter.mute = {
+                  enabled = true;
+                  match_content = ".*";
+                  show_toast = true;
+                  save_history = true;
+                  play_sound = false;
+                };
+              };
               widget = {
                 workspaces = {
                   show_labels = false;
