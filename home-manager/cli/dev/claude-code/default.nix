@@ -16,6 +16,17 @@ let
       command = lib.getExe statusline;
       padding = 0;
     };
+    hooks.PostToolUse = [
+      {
+        matcher = "Write|Edit|MultiEdit";
+        hooks = [
+          {
+            type = "command";
+            command = "${lib.getExe' pkgs.bun "bunx"} @code-yeongyu/comment-checker";
+          }
+        ];
+      }
+    ];
     enabledPlugins = {
       "review-gate@review-gate-marketplace" = true;
       "plan-reviewer@review-gate-marketplace" = true;
