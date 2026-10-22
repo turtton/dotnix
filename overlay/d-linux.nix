@@ -13,6 +13,7 @@ in
     (import ./senpi inputs)
     (import ./claude-code inputs)
     (import ./codex)
+    (import ./safe-chain.nix)
     (import ./opencode inputs)
     (import ./fix-fhs-launcher.nix)
     (import ./fix-dolphin-mime.nix inputs)

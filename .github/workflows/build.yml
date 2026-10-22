@@ -127,6 +127,7 @@ jobs:
           - opencode
           - ghr
           - cnowledje
+          - safe-chain
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -192,6 +193,7 @@ jobs:
           - ghr
           - zen-browser
           - cnowledje
+          - safe-chain
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

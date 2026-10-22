@@ -14,6 +14,7 @@ in
     (import ./senpi inputs)
     (import ./claude-code inputs)
     (import ./codex)
+    (import ./safe-chain.nix)
     (import ./opencode inputs)
     (import ./omniwm.nix generated.omniwm)
     (final: prev: {

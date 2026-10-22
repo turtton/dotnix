@@ -267,6 +267,7 @@
           rustowl = rustowl.packages.${system}.default;
           claude-code = overlays.claude-code;
           codex-latest = overlays.codex-latest;
+          safe-chain = overlays.safe-chain;
           opencode-latest = overlays.opencode-latest;
           opencode = overlays.opencode;
           ghr = overlays.siketyan-ghr;

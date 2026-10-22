@@ -19,6 +19,7 @@ in
     ./ai.nix
     ./cargo.nix
     ./container.nix
+    ./safe-chain.nix
   ];
   home.packages =
     with pkgs;
