@@ -64,4 +64,8 @@ in
     install -m 0644 "${claudeManagedSettings}" "/Library/Application Support/ClaudeCode/managed-settings.json"
   '';
   security.pam.services.sudo_local.touchIdAuth = true;
+  security.pki.caCertificateBlacklist = [
+    "Comodo AAA Services root"
+    "emSign ECC Root CA - G3"
+  ];
 }
