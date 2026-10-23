@@ -15,6 +15,9 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
+    defaultKeymap = "viins";
+    localVariables.KEYTIMEOUT = 1;
+
     plugins = [
       {
         name = "zsh-nix-shell";
