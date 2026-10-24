@@ -9,6 +9,7 @@ in
     inputs.rust-overlay.overlays.default
     inputs.rustowl.overlays.default
     inputs.nix-cachyos-kernel.overlays.pinned
+    (import ./fix-cachyos-module-certificates.nix inputs)
     inputs.llm-agents.overlays.shared-nixpkgs
     (import ./senpi inputs)
     (import ./claude-code inputs)
