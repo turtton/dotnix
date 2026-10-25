@@ -42,9 +42,6 @@
     }
   ];
 
-  system.boot.loader.kernelFile = "bzImage";
-  hardware.deviceTree.enable = false;
-
   services = {
     # Enable CUPS to print documents.
     printing = {

@@ -9,7 +9,7 @@
       # ghr cache
       "https://siketyan.cachix.org"
       # Cachy OS kernel
-      "https://attic.xuyh0120.win/lantian"
+      "https://cache.lantian.pub/lantian"
       # llm-agents cache
       "https://cache.numtide.com"
       # codex cache
@@ -23,7 +23,7 @@
       "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
       "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
       "siketyan.cachix.org-1:WNNtRH3yo7wUpQ0aURUTCq2BpF97m4UsP0h1nKe6pAA="
-      "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
+      "lantian:WVGO7vsRMSEN+h7Lp7kv6SAmrkEXgUGbbXm7jMDjBuQ="
       "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
       "codex-cli.cachix.org-1:1Br3H1hHoRYG22n//cGKJOk3cQXgYobUel6O8DgSing="
       "ezkea.cachix.org-1:ioBmUbJTZIKsHmWWXPe1FSFbeVe+afhfgqgTSNd34eI="
