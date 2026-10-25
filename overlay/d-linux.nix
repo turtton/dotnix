@@ -20,6 +20,7 @@ in
     (import ./fix-fhs-launcher.nix)
     (import ./fix-dolphin-mime.nix inputs)
     (import ./fix-ime.nix)
+    (import ./fix-tauon.nix)
     (import ./force-wayland.nix inputs)
     (import ./isaacsim.nix)
     (import ./beutl { inherit (generated) beutl beutl-native-deps; })
