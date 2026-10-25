@@ -9,7 +9,9 @@ in
     inputs.rust-overlay.overlays.default
     inputs.rustowl.overlays.default
     inputs.nix-cachyos-kernel.overlays.pinned
-    inputs.llm-agents.overlays.shared-nixpkgs
+    (_final: prev: {
+      llm-agents = inputs.llm-agents.packages.${prev.stdenv.hostPlatform.system};
+    })
     (import ./senpi inputs)
     (import ./claude-code inputs)
     (import ./codex)
