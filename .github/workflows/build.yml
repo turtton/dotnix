@@ -87,6 +87,8 @@ jobs:
           df -h
           rm -rf "${AGENT_TOOLSDIRECTORY}"
           df -h
+      - name: Replace git-crypt files with dummies
+        run: cp hosts/dreamac/identity.example.nix hosts/dreamac/identity.nix
       - name: Check
         run: |
           # Check only Darwin-compatible outputs to avoid building Linux packages

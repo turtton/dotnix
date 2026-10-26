@@ -195,6 +195,7 @@
     };
   };
   home.packages = with pkgs; [
+    git-crypt
     gitmoji-cli
   ];
 }

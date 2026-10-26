@@ -1,0 +1,4 @@
+{
+  hostname = "dreamac";
+  username = "user";
+}

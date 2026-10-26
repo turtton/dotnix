@@ -308,6 +308,7 @@
         devShells.default = mkShell {
           packages = [
             git
+            git-crypt
             nvfetcher
             home-manager
             pinact

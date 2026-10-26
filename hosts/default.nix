@@ -481,8 +481,7 @@ in
   darwin = {
     "dreamac" = createDarwinConfig {
       system = "aarch64-darwin";
-      hostname = "dreamac";
-      username = "s_ohashi";
+      inherit (import ./dreamac/identity.nix) hostname username;
       modules = [
         ./dreamac/darwin.nix
       ];
