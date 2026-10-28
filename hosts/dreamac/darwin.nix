@@ -9,6 +9,6 @@
     ./../../darwin/skhd.nix
     ./../../darwin/system.nix
   ];
-  ids.uids.nixbld = 401;
-  ids.gids.nixbld = 402;
+  ids.uids.nixbld = 360;
+  ids.gids.nixbld = 550;
 }
