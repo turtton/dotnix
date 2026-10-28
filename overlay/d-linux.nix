@@ -29,7 +29,6 @@ in
     (import ./wallpapers.nix generated.wallpaper-springcity)
     (import ./wifiman-desktop.nix)
     (import ./app-replacements.nix inputs)
-    (import ./herdr.nix inputs)
     #    (import ./webapp.nix)
     (final: prev: {
       cnowledje = inputs.cnowledje.packages."${pkgs.system}".default;

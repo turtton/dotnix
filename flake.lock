@@ -911,30 +911,6 @@
         "type": "github"
       }
     },
-    "herdr": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "rust-overlay": [
-          "rust-overlay"
-        ]
-      },
-      "locked": {
-        "lastModified": 1785783176,
-        "narHash": "sha256-empFQ+hrnCh2JhOzQRWSCLV0YoZC3DXW3bY6k8YuJjk=",
-        "owner": "herdrdev",
-        "repo": "herdr",
-        "rev": "346411fa21afd297f5ed3b3fa56f9e3fbf7654b7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "herdrdev",
-        "ref": "v0.8.0",
-        "repo": "herdr",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -1560,11 +1536,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792883840,
-        "narHash": "sha256-fOCJxUUwPleEubikxI0jiscUTz+GJdb1aJRoteXCRk0=",
+        "lastModified": 1793167323,
+        "narHash": "sha256-JxeqQKUhBn5kj6xfE4nIrxw/q3jFJyT+TKc8mLsnuhc=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "e1e35b247842f7366c4e51904a24673139380dd1",
+        "rev": "91ff550fe42d4dd51dcf8b6bad87a0134fe7f314",
         "type": "github"
       },
       "original": {
@@ -2330,7 +2306,6 @@
         "cnowledje": "cnowledje",
         "direnv-instant": "direnv-instant",
         "flake-utils": "flake-utils_2",
-        "herdr": "herdr",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
         "hyprpolkitagent": "hyprpolkitagent",

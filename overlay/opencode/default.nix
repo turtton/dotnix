@@ -80,7 +80,7 @@ inputs: self: prev: {
           with self;
           [
             jq
-            herdr
+            llm-agents.herdr
             git
             gh
             gnupg

@@ -83,7 +83,7 @@ let
     runtimeInputs =
       with self;
       [
-        herdr
+        llm-agents.herdr
         curl
         jq
         gh
