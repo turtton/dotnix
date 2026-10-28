@@ -8,9 +8,7 @@
 		"allowUnsandboxedCommands": true,
 		"excludedCommands": [],
 		"network": {
-			"allowUnixSockets": [
-				"/nix/var/nix/daemon-socket/socket"
-			],
+			"allowUnixSockets": ["/nix/var/nix/daemon-socket/socket"],
 			"allowAllUnixSockets": false,
 			"allowLocalBinding": false,
 			"allowedDomains": []
