@@ -153,6 +153,7 @@ let
       username,
       modules,
       homeModule,
+      sharedOptions ? { }, # Additional options to be passed to home-manager and nix-darwin
     }:
     let
       originPkgs = inputs.nixpkgs.legacyPackages.${system};
@@ -190,6 +191,7 @@ let
             useUserPackages = true;
             sharedModules = [
               ./../module
+              sharedOptions
               inputs.nix-index-database.homeModules.default
               inputs.zen-browser.homeModules.beta
               inputs.mac-app-util.homeManagerModules.default
@@ -486,6 +488,9 @@ in
         ./dreamac/darwin.nix
       ];
       homeModule = import ./dreamac/home-manager.nix;
+      sharedOptions = {
+        packs.jetbrains.ideavimrc.enable = true;
+      };
     };
   };
   home-manager = {

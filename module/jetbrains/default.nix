@@ -10,10 +10,12 @@ let
   inherit (lib) mkIf mkEnableOption optionals;
 
   cfg = config.packs.jetbrains;
-  anyEnabled = cfg.toolbox.enable || lib.any (ide: ide.enable) (lib.attrValues cfg.ides);
+  anyEnabled =
+    cfg.toolbox.enable || cfg.ideavimrc.enable || lib.any (ide: ide.enable) (lib.attrValues cfg.ides);
 in
 {
   options.packs.jetbrains = {
+    ideavimrc.enable = mkEnableOption "Only enable .ideavimrc config file";
     toolbox.enable = mkEnableOption "JetBrains Toolbox (Linux only)";
     ides = {
       idea.enable = mkEnableOption "IntelliJ IDEA";

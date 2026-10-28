@@ -17,12 +17,6 @@
     ./../../home-manager/wm/omniwm
   ];
 
-  packs.jetbrains.ides = {
-    idea.enable = true;
-    datagrip.enable = true;
-    webstorm.enable = true;
-  };
-
   programs.zsh.envExtra = ''
     export PATH="/opt/homebrew/bin:''${HOMEBREW_PREFIX}/opt/openssl/bin:$PATH"
   '';
