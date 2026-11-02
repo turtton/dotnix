@@ -172,7 +172,7 @@ jobs:
         run: |
           # tailscaled ingress stalls under concurrent large uploads (issue #72); retry with backoff
           for attempt in 1 2 3 4; do
-            if attic push home ./result; then
+            if attic push --jobs 1 home ./result; then
               exit 0
             fi
             if [ "$attempt" -lt 4 ]; then
@@ -234,7 +234,7 @@ jobs:
         run: |
           # tailscaled ingress stalls under concurrent large uploads (issue #72); retry with backoff
           for attempt in 1 2 3 4; do
-            if attic push home ./result; then
+            if attic push --jobs 1 home ./result; then
               exit 0
             fi
             if [ "$attempt" -lt 4 ]; then
@@ -286,15 +286,19 @@ jobs:
           df -h
           rm -rf "${AGENT_TOOLSDIRECTORY}"
           df -h
-      - name: Build and push
+      - name: Build
         run: |
-          paths_file="$(mktemp)"
-          nix build --fallback --no-link --print-out-paths ".#$PACKAGE" > "$paths_file"
-          mapfile -t paths < "$paths_file"
+          nix build --fallback --no-link --print-out-paths ".#$PACKAGE" > "$RUNNER_TEMP/attic-paths"
+        env:
+          PACKAGE: ${{ matrix.packages }}
+      - name: Push to attic
+        if: success()
+        run: |
+          mapfile -t paths < "$RUNNER_TEMP/attic-paths"
           (( ${#paths[@]} > 0 ))
           # tailscaled ingress stalls under concurrent large uploads (issue #72); retry with backoff
           for attempt in 1 2 3 4; do
-            if attic push home "${paths[@]}"; then
+            if attic push --jobs 1 home "${paths[@]}"; then
               exit 0
             fi
             if [ "$attempt" -lt 4 ]; then
@@ -304,8 +308,6 @@ jobs:
             fi
           done
           exit 1
-        env:
-          PACKAGE: ${{ matrix.packages }}
   build-downstream:
     name: Build downstream packages on Linux
     needs: [build-rocm-base]
@@ -345,15 +347,19 @@ jobs:
           df -h
           rm -rf "${AGENT_TOOLSDIRECTORY}"
           df -h
-      - name: Build and push
+      - name: Build
         run: |
-          paths_file="$(mktemp)"
-          nix build --fallback --no-link --print-out-paths ".#$PACKAGE" > "$paths_file"
-          mapfile -t paths < "$paths_file"
+          nix build --fallback --no-link --print-out-paths ".#$PACKAGE" > "$RUNNER_TEMP/attic-paths"
+        env:
+          PACKAGE: ${{ matrix.packages }}
+      - name: Push to attic
+        if: success()
+        run: |
+          mapfile -t paths < "$RUNNER_TEMP/attic-paths"
           (( ${#paths[@]} > 0 ))
           # tailscaled ingress stalls under concurrent large uploads (issue #72); retry with backoff
           for attempt in 1 2 3 4; do
-            if attic push home "${paths[@]}"; then
+            if attic push --jobs 1 home "${paths[@]}"; then
               exit 0
             fi
             if [ "$attempt" -lt 4 ]; then
@@ -363,8 +369,6 @@ jobs:
             fi
           done
           exit 1
-        env:
-          PACKAGE: ${{ matrix.packages }}
   all-workflows-passed:
     name: Checks all workflows passed
     if: always()
