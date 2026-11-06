@@ -15,8 +15,8 @@ in
   environment.systemPackages = with pkgs; [
     podman
     podman-compose
-    docker
-    docker-compose
+    # docker
+    # docker-compose
   ];
   # Used for podman virtual environment
   # launchd.agents.podman-machine-start = {
