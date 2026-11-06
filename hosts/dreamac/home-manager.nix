@@ -17,6 +17,8 @@
     ./../../home-manager/wm/omniwm
   ];
 
+  programs.tmux.enable = true;
+
   programs.zsh.envExtra = ''
     export PATH="/opt/homebrew/bin:''${HOMEBREW_PREFIX}/opt/openssl/bin:$PATH"
   '';
