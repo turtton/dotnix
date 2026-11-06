@@ -21,6 +21,7 @@
     ];
     brews = [
       "can1357/tap/omp"
+      "newrelic-cli"
     ];
   };
 }

@@ -11,15 +11,15 @@ in
   home = {
     packages = [
       nvim-project.default
-      pkgs.neovide
-    ];
+    ]
+    ++ lib.optional (!pkgs.stdenv.hostPlatform.isDarwin) pkgs.neovide;
     sessionVariables.EDITOR = "nvim";
     file.".config/nvim" = {
       source = nvim-project.config;
       recursive = true;
     };
   };
-  xdg.mimeApps.defaultApplications = {
+  xdg.mimeApps.defaultApplications = lib.mkIf (!pkgs.stdenv.hostPlatform.isDarwin) {
     "text/plain" = [ "${pkgs.neovide}/share/applications/neovide.desktop" ];
   };
 }
