@@ -86,7 +86,7 @@
           "-silent"
         ];
       }
-      { command = [ "keybase-gui" ]; }
+      #{ command = [ "keybase-gui" ]; }
     ];
   };
 

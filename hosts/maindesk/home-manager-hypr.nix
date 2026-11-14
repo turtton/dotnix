@@ -37,7 +37,7 @@
       "[workspace 24] bitwarden"
       "[workspace 9 silent] vesktop"
       "steam -silent"
-      "KEYBASE_AUTOSTART=1 keybase-gui"
+      # "KEYBASE_AUTOSTART=1 keybase-gui"
     ];
   };
   programs.noctalia.settings =
