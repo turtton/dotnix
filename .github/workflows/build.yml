@@ -129,7 +129,6 @@ jobs:
           - xwayland-satellite
           - cachyos-kernel-latest
           - opencode
-          - ghr
           - cnowledje
           - safe-chain
     steps:
@@ -195,7 +194,6 @@ jobs:
           - rustowl
           - claude-code
           - opencode
-          - ghr
           - zen-browser
           - cnowledje
           - safe-chain

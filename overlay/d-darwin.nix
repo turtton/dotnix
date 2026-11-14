@@ -5,7 +5,6 @@ let
 in
 {
   nixpkgs.overlays = [
-    (import ./app-replacements.nix inputs)
     inputs.nix-vscode-extensions.overlays.default
     inputs.rust-overlay.overlays.default
     inputs.rustowl.overlays.default

@@ -2329,7 +2329,6 @@
         "rust-overlay": "rust-overlay_3",
         "rustowl": "rustowl",
         "senpi": "senpi",
-        "siketyan-ghr": "siketyan-ghr",
         "skills-catalog": "skills-catalog",
         "sops-nix": "sops-nix",
         "split-monitor-workspaces": "split-monitor-workspaces",
@@ -2466,35 +2465,6 @@
       "original": {
         "owner": "turtton",
         "repo": "senpi-flake",
-        "type": "github"
-      }
-    },
-    "siketyan-ghr": {
-      "inputs": {
-        "flake-utils": [
-          "utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "rust-overlay": [
-          "rust-overlay"
-        ],
-        "treefmt-nix": [
-          "treefmt-nix"
-        ]
-      },
-      "locked": {
-        "lastModified": 1794239522,
-        "narHash": "sha256-R3IAbfaABsfYy2Ifs+wM4pYfwyw6r5DOrp4ng4wNCFM=",
-        "owner": "siketyan",
-        "repo": "ghr",
-        "rev": "6a332bd2ba93e2a96eaf0d068cbce48e749911be",
-        "type": "github"
-      },
-      "original": {
-        "owner": "siketyan",
-        "repo": "ghr",
         "type": "github"
       }
     },

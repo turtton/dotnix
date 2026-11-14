@@ -6,8 +6,6 @@
       "https://ags.cachix.org"
       "https://noctalia.cachix.org"
       "https://niri.cachix.org"
-      # ghr cache
-      "https://siketyan.cachix.org"
       # Cachy OS kernel
       "https://cache.lantian.pub/lantian"
       # llm-agents cache
@@ -22,7 +20,6 @@
       "ags.cachix.org-1:naAvMrz0CuYqeyGNyLgE010iUiuf/qx6kYrUv3NwAJ8="
       "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
       "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
-      "siketyan.cachix.org-1:WNNtRH3yo7wUpQ0aURUTCq2BpF97m4UsP0h1nKe6pAA="
       "lantian:WVGO7vsRMSEN+h7Lp7kv6SAmrkEXgUGbbXm7jMDjBuQ="
       "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
       "codex-cli.cachix.org-1:1Br3H1hHoRYG22n//cGKJOk3cQXgYobUel6O8DgSing="
@@ -129,15 +126,6 @@
       inputs = {
         nixpkgs.follows = "nixpkgs";
         treefmt-nix.follows = "treefmt-nix";
-      };
-    };
-    siketyan-ghr = {
-      url = "github:siketyan/ghr";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        treefmt-nix.follows = "treefmt-nix";
-        rust-overlay.follows = "rust-overlay";
-        flake-utils.follows = "utils";
       };
     };
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
@@ -262,7 +250,6 @@
           safe-chain = overlays.safe-chain;
           opencode-latest = overlays.opencode-latest;
           opencode = overlays.opencode;
-          ghr = overlays.siketyan-ghr;
           zen-browser = zen-browser.packages.${system}.default;
           cnowledje = overlays.cnowledje;
         }
