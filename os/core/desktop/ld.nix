@@ -22,7 +22,7 @@
       libpciaccess
 
       glib
-      gtk2
+      gtk3
       bzip2
       zlib
       gdk-pixbuf
@@ -69,7 +69,7 @@
       libvorbis
       SDL
       SDL2_image
-      glew110
+      glew_1_10
       openssl
       libidn
       tbb
@@ -81,7 +81,6 @@
       flac
       freeglut
       libjpeg
-      libpng12
       libpulseaudio
       libsamplerate
       libmikmod
