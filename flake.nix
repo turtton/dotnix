@@ -238,6 +238,7 @@
             global.excludes = [
               ".direnv/*"
               "_sources/*"
+              "hosts/dreamac/identity.nix"
               "overlay/beutl/deps.json"
               "home-manager/wm/hyprland/waybar/*.css"
             ];
