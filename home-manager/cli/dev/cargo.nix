@@ -15,7 +15,6 @@
       crate2nix
     ]
     ++ lib.optionals hostPlatform.isLinux [
-      rustowl
       # Linter error occured on darwin
       cargo-watch # auto-reload
     ];

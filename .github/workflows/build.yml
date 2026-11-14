@@ -119,7 +119,6 @@ jobs:
           - vscode
           - zoom-us
           - zen-browser
-          - rustowl
           # - beutl
           - isaacsim-webrtc-streaming-client
           - claude-desktop
@@ -191,7 +190,6 @@ jobs:
       fail-fast: false
       matrix:
         packages:
-          - rustowl
           - claude-code
           - opencode
           - zen-browser

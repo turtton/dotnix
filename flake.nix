@@ -98,13 +98,6 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
-    rustowl = {
-      url = "github:nix-community/rustowl-flake";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        rust-overlay.follows = "rust-overlay";
-      };
-    };
     noctalia = {
       url = "github:noctalia-dev/noctalia/cachix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -178,7 +171,6 @@
       hyprpolkitagent,
       rust-overlay,
       treefmt-nix,
-      rustowl,
       noctalia,
       niri-flake,
       zen-browser,
@@ -245,7 +237,6 @@
           };
         };
         packages = {
-          rustowl = rustowl.packages.${system}.default;
           claude-code = overlays.claude-code;
           codex-latest = overlays.codex-latest;
           safe-chain = overlays.safe-chain;
