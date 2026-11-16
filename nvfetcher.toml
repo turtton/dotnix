@@ -11,10 +11,10 @@ src.github = "MrVivekRajan/Hypr-Dots"
 fetch.url = "https://raw.githubusercontent.com/MrVivekRajan/Hypr-Dots/refs/heads/Type-2/Spring-City/.config/swww/wall.png"
 
 [omniwm]
-src.github = "BarutSRB/OmniWM"
+src.github = "OmniNull/OmniWM"
 # $ver から v を落とし、URL 側で付け直す
 src.prefix = "v"
-fetch.url = "https://github.com/BarutSRB/OmniWM/releases/download/v$ver/OmniWM-v$ver.zip"
+fetch.url = "https://github.com/OmniNull/OmniWM/releases/download/v$ver/OmniWM-v$ver.zip"
 
 [jetbrains-dolphin]
 src.github = "alex1701c/JetBrainsDolphinPlugin"

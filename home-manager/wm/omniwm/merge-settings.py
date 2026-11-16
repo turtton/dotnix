@@ -17,6 +17,13 @@ import tomli_w
 
 UNASSIGNED = "Unassigned"
 
+# 0.8.0 で改名された ID。残すとアプリの schema 移行で新 ID と衝突する。
+LEGACY_IDS = {
+    f"set{kind}Span.{op}10Percent"
+    for kind in ("ContainerPrimary", "WindowPrimary", "WindowSecondary")
+    for op in ("decrease", "increase")
+}
+
 
 def load(path):
     try:
@@ -37,6 +44,7 @@ def deep_merge(current, desired):
 
 
 def merge_hotkeys(current, desired):
+    current = [entry for entry in current if entry["id"] not in LEGACY_IDS]
     by_id = {entry["id"]: dict(entry) for entry in current}
     order = [entry["id"] for entry in current]
 

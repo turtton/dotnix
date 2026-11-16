@@ -59,14 +59,13 @@ in
   };
 
   niri = {
-    columnWidthPresets = [
+    containerPrimarySpanPresets = [
       0.3333333333333333
       0.5
       0.6666666666666666
     ];
     visibleContainerCount = 2;
     singleWindowFit = "none";
-    maxWindowsPerColumn = 10;
     centerFocusedColumn = "never";
     alwaysCenterSingleColumn = false;
     infiniteLoop = false;
@@ -116,13 +115,13 @@ in
     (hk "Control+Option+Shift+Down Arrow" "moveWindowToWorkspaceDown")
     (hk "Control+Option+Shift+Up Arrow" "moveWindowToWorkspaceUp")
 
-    (hk "Control+Option+H" "setContainerPrimarySpan.decrease10Percent")
-    (hk "Control+Option+L" "setContainerPrimarySpan.increase10Percent")
-    (hk "Control+Option+Left Arrow" "setWindowPrimarySpan.decrease10Percent")
-    (hk "Control+Option+Right Arrow" "setWindowPrimarySpan.increase10Percent")
+    (hk "Control+Option+H" "resizeContainerPrimarySpan.shrink")
+    (hk "Control+Option+L" "resizeContainerPrimarySpan.grow")
+    (hk "Control+Option+Left Arrow" "resizeWindowPrimarySpan.shrink")
+    (hk "Control+Option+Right Arrow" "resizeWindowPrimarySpan.grow")
     (hk "Control+Option+F" "expandContainerToAvailablePrimarySpan")
-    (hk "Option+Shift+Minus" "setWindowSecondarySpan.decrease10Percent")
-    (hk "Option+Shift+Equal" "setWindowSecondarySpan.increase10Percent")
+    (hk "Option+Shift+Minus" "resizeWindowSecondarySpan.shrink")
+    (hk "Option+Shift+Equal" "resizeWindowSecondarySpan.grow")
     (hk "Option+Shift+B" "balanceSizes")
     (hk "Option+Period" "cycleSizeForward")
     (hk "Option+Comma" "cycleSizeBackward")

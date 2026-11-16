@@ -20,7 +20,7 @@ gen: self: prev: {
 
       meta = {
         description = "macOS tiling window manager inspired by Niri and Hyprland";
-        homepage = "https://github.com/BarutSRB/OmniWM";
+        homepage = "https://github.com/OmniNull/OmniWM";
         license = lib.licenses.gpl2Only;
         platforms = lib.platforms.darwin;
         sourceProvenance = [ lib.sourceTypes.binaryNativeCode ];

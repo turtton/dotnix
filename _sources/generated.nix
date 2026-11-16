@@ -54,10 +54,10 @@
   };
   omniwm = {
     pname = "omniwm";
-    version = "0.5.9";
+    version = "0.8.0";
     src = fetchurl {
-      url = "https://github.com/BarutSRB/OmniWM/releases/download/v0.5.9/OmniWM-v0.5.9.zip";
-      sha256 = "sha256-oaOCTpUQFQnrzlV2OSMsVwvaDcgefUTFFkKiRMB28nQ=";
+      url = "https://github.com/OmniNull/OmniWM/releases/download/v0.8.0/OmniWM-v0.8.0.zip";
+      sha256 = "sha256-b3+z4hHeOoPncrExgAaAyz0g1MY4gRofAhIP0iXwPMc=";
     };
   };
   wallpaper-springcity = {
