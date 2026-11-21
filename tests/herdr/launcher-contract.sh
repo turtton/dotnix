@@ -17,12 +17,12 @@ FAKE_HERDR_SRC="${FAKE_HERDR:-$SELF_DIR/fake-herdr.sh}"
 WORK=$(mktemp -d)
 http_pid=""
 cleanup() {
-  local f
-  for f in "$WORK"/herdr-state/sessions/*/server.pid; do
-    [[ -f $f ]] && kill "$(<"$f")" 2>/dev/null
-  done
-  [[ -n $http_pid ]] && kill "$http_pid" 2>/dev/null
-  rm -rf "$WORK"
+	local f
+	for f in "$WORK"/herdr-state/sessions/*/server.pid; do
+		[[ -f $f ]] && kill "$(<"$f")" 2>/dev/null
+	done
+	[[ -n $http_pid ]] && kill "$http_pid" 2>/dev/null
+	rm -rf "$WORK"
 }
 trap cleanup EXIT
 
@@ -54,55 +54,55 @@ TEST_SESSION="contract-session"
 
 tests=0 fails=0
 ok() {
-  tests=$((tests + 1))
-  printf 'ok %d - %s\n' "$tests" "$1"
+	tests=$((tests + 1))
+	printf 'ok %d - %s\n' "$tests" "$1"
 }
 not_ok() {
-  tests=$((tests + 1))
-  fails=$((fails + 1))
-  printf 'not ok %d - %s\n' "$tests" "$1"
-  dump_log
+	tests=$((tests + 1))
+	fails=$((fails + 1))
+	printf 'not ok %d - %s\n' "$tests" "$1"
+	dump_log
 }
 dump_log() {
-  if [[ -s $FAKE_HERDR_LOG ]]; then
-    sed 's/^/  fake-herdr log: /' "$FAKE_HERDR_LOG"
-  else
-    echo "  fake-herdr log: <empty — no herdr invocations logged>"
-  fi
+	if [[ -s $FAKE_HERDR_LOG ]]; then
+		sed 's/^/  fake-herdr log: /' "$FAKE_HERDR_LOG"
+	else
+		echo "  fake-herdr log: <empty — no herdr invocations logged>"
+	fi
 }
 
 reset_log() { : >"$FAKE_HERDR_LOG"; }
 
 run_tty() {
-  local dir=$1
-  shift
-  local runner
-  runner=$(mktemp "$WORK/runner.XXXXXX.sh")
-  {
-    printf '#!%s\ncd %q || exit 1\n' "$BASH_BIN" "$dir"
-    if [[ -x $LAUNCHER_ARG && $LAUNCHER_ARG == */bin/* ]]; then
-      printf 'exec %q' "$LAUNCHER_ARG"
-    else
-      printf 'exec bash %q' "$LAUNCHER"
-    fi
-    # $#=0 でも printf が空の '' を一度出力してしまうのを防ぐ
-    if [[ $# -gt 0 ]]; then printf ' %q' "$@"; fi
-    printf '\n'
-  } >"$runner"
-  chmod +x "$runner"
-  timeout 20 script -qec "$runner" /dev/null >/dev/null 2>&1
-  return 0
+	local dir=$1
+	shift
+	local runner
+	runner=$(mktemp "$WORK/runner.XXXXXX.sh")
+	{
+		printf '#!%s\ncd %q || exit 1\n' "$BASH_BIN" "$dir"
+		if [[ -x $LAUNCHER_ARG && $LAUNCHER_ARG == */bin/* ]]; then
+			printf 'exec %q' "$LAUNCHER_ARG"
+		else
+			printf 'exec bash %q' "$LAUNCHER"
+		fi
+		# $#=0 でも printf が空の '' を一度出力してしまうのを防ぐ
+		if [[ $# -gt 0 ]]; then printf ' %q' "$@"; fi
+		printf '\n'
+	} >"$runner"
+	chmod +x "$runner"
+	timeout 20 script -qec "$runner" /dev/null >/dev/null 2>&1
+	return 0
 }
 
 run_notty() {
-  local dir=$1
-  shift
-  if [[ -x $LAUNCHER_ARG && $LAUNCHER_ARG == */bin/* ]]; then
-    (cd "$dir" && timeout 20 "$LAUNCHER_ARG" "$@" </dev/null >/dev/null 2>&1)
-  else
-    (cd "$dir" && timeout 20 bash "$LAUNCHER" "$@" </dev/null >/dev/null 2>&1)
-  fi
-  return 0
+	local dir=$1
+	shift
+	if [[ -x $LAUNCHER_ARG && $LAUNCHER_ARG == */bin/* ]]; then
+		(cd "$dir" && timeout 20 "$LAUNCHER_ARG" "$@" </dev/null >/dev/null 2>&1)
+	else
+		(cd "$dir" && timeout 20 bash "$LAUNCHER" "$@" </dev/null >/dev/null 2>&1)
+	fi
+	return 0
 }
 
 create_count() { grep -c ' workspace create ' "$FAKE_HERDR_LOG"; }
@@ -112,27 +112,27 @@ server_count() { grep -c ' server$' "$FAKE_HERDR_LOG"; }
 attach_count() { grep -xc "session=$TEST_SESSION" "$FAKE_HERDR_LOG"; }
 
 start_fake_server() {
-  (exec herdr --session "$TEST_SESSION" server) >/dev/null 2>&1 &
-  local i
-  for i in $(seq 1 100); do
-    herdr --session "$TEST_SESSION" workspace list >/dev/null 2>&1 && break
-    sleep 0.05
-  done
+	(exec herdr --session "$TEST_SESSION" server) >/dev/null 2>&1 &
+	local i
+	for i in $(seq 1 100); do
+		herdr --session "$TEST_SESSION" workspace list >/dev/null 2>&1 && break
+		sleep 0.05
+	done
 }
 
 herdr_env() {
-  export HERDR_ENV=1
-  export HERDR_SESSION="$TEST_SESSION"
-  export HERDR_SOCKET_PATH="$HOME/.config/herdr/sessions/$TEST_SESSION/herdr.sock"
+	export HERDR_ENV=1
+	export HERDR_SESSION="$TEST_SESSION"
+	export HERDR_SOCKET_PATH="$HOME/.config/herdr/sessions/$TEST_SESSION/herdr.sock"
 }
 
 clear_herdr_env() {
-  unset HERDR_ENV HERDR_SESSION HERDR_SOCKET_PATH HERDR_PANE_ID HERDR_TAB_ID HERDR_WORKSPACE_ID
+	unset HERDR_ENV HERDR_SESSION HERDR_SOCKET_PATH HERDR_PANE_ID HERDR_TAB_ID HERDR_WORKSPACE_ID
 }
 
 expected_label() {
-  local dir=$1
-  printf 'opencode-%s' "$(basename "$dir" | LC_ALL=C sed 's/[^[:alnum:]]/-/g')"
+	local dir=$1
+	printf 'opencode-%s' "$(basename "$dir" | LC_ALL=C sed 's/[^[:alnum:]]/-/g')"
 }
 
 printf '# launcher under test: %s\n' "$LAUNCHER"
@@ -144,9 +144,9 @@ clear_herdr_env
 reset_log
 run_tty "$dir_a" /bin/true
 if [[ ! -s $FAKE_HERDR_LOG ]]; then
-  ok "outside herdr: never invokes herdr"
+	ok "outside herdr: never invokes herdr"
 else
-  not_ok "outside herdr: must not invoke herdr"
+	not_ok "outside herdr: must not invoke herdr"
 fi
 
 # 2: inside herdr, first launch → labeled workspace create + one injection,
@@ -157,27 +157,27 @@ reset_log
 run_tty "$dir_a" sleep 3
 want_label=$(expected_label "$dir_a")
 if [[ $(create_count) -eq 1 && $(run_count) -eq 1 && $(server_count) -eq 0 && $(attach_count) -eq 0 ]] &&
-  grep -q -- "--label $want_label" "$FAKE_HERDR_LOG"; then
-  ok "inside herdr: creates workspace $want_label and injects once (no server, no attach)"
+	grep -q -- "--label $want_label" "$FAKE_HERDR_LOG"; then
+	ok "inside herdr: creates workspace $want_label and injects once (no server, no attach)"
 else
-  not_ok "inside herdr: expected 1 create + 1 pane run, 0 server, 0 attach (create=$(create_count) run=$(run_count) server=$(server_count) attach=$(attach_count))"
+	not_ok "inside herdr: expected 1 create + 1 pane run, 0 server, 0 attach (create=$(create_count) run=$(run_count) server=$(server_count) attach=$(attach_count))"
 fi
 
 # 3: second launch while pane busy → own workspace + injection
 run_tty "$dir_a" sleep 3
 if [[ $(run_count) -eq 2 && $(create_count) -eq 2 ]] && grep -q -- "--label ${want_label}-2 --focus" "$FAKE_HERDR_LOG"; then
-  ok "busy pane: second instance gets its own workspace (${want_label}-2)"
+	ok "busy pane: second instance gets its own workspace (${want_label}-2)"
 else
-  not_ok "busy pane: expected run=2 create=2 with label ${want_label}-2 (run=$(run_count) create=$(create_count))"
+	not_ok "busy pane: expected run=2 create=2 with label ${want_label}-2 (run=$(run_count) create=$(create_count))"
 fi
 
 # 4: idle shell after agent exit → reuse without another workspace
 sleep 4
 run_tty "$dir_a" sleep 3
 if [[ $(run_count) -eq 3 && $(create_count) -eq 2 && $(focus_count) -ge 1 ]]; then
-  ok "idle shell after agent exit: focuses and reuses existing workspace"
+	ok "idle shell after agent exit: focuses and reuses existing workspace"
 else
-  not_ok "idle reuse: expected run=3 create=2 focus>=1 (run=$(run_count) create=$(create_count) focus=$(focus_count))"
+	not_ok "idle reuse: expected run=3 create=2 focus>=1 (run=$(run_count) create=$(create_count) focus=$(focus_count))"
 fi
 
 # 5: concurrent launches → lock serializes workspace selection and injection
@@ -190,11 +190,11 @@ run_tty "$dir_c" sleep 5 &
 p2=$!
 wait "$p1" "$p2"
 if [[ $(run_count) -eq 2 && $(create_count) -eq 2 ]] &&
-  grep -q -- "--label $(expected_label "$dir_c") --focus" "$FAKE_HERDR_LOG" &&
-  grep -q -- "--label $(expected_label "$dir_c")-2 --focus" "$FAKE_HERDR_LOG"; then
-  ok "concurrent launches: one workspace and injection each, with distinct labels"
+	grep -q -- "--label $(expected_label "$dir_c") --focus" "$FAKE_HERDR_LOG" &&
+	grep -q -- "--label $(expected_label "$dir_c")-2 --focus" "$FAKE_HERDR_LOG"; then
+	ok "concurrent launches: one workspace and injection each, with distinct labels"
 else
-  not_ok "concurrent launches: expected run=2 create=2 with base and -2 labels (run=$(run_count) create=$(create_count))"
+	not_ok "concurrent launches: expected run=2 create=2 with base and -2 labels (run=$(run_count) create=$(create_count))"
 fi
 
 # 6: same basename in different parents → separate workspaces by cwd match;
@@ -205,17 +205,17 @@ run_tty "$WORK/x/samebase" /bin/true
 run_tty "$WORK/y/samebase" /bin/true
 run_tty "$WORK/x/samebase" /bin/true
 if [[ $(create_count) -eq 2 && $(run_count) -eq 3 ]]; then
-  ok "same basename: distinct cwd gets own workspace; matching cwd reuses it"
+	ok "same basename: distinct cwd gets own workspace; matching cwd reuses it"
 else
-  not_ok "same basename: expected create=2 run=3 (create=$(create_count) run=$(run_count))"
+	not_ok "same basename: expected create=2 run=3 (create=$(create_count) run=$(run_count))"
 fi
 
 # 7: arguments with spaces/quotes/dollar/semicolons survive to the pane intact
 recorder="$WORK/argv-recorder.sh"
 argv_out="$WORK/argv.out"
 {
-  printf '#!%s\n' "$BASH_BIN"
-  cat <<'EOF'
+	printf '#!%s\n' "$BASH_BIN"
+	cat <<'EOF'
 out=$1; shift
 printf '%s\n' "$@" >"$out"
 EOF
@@ -224,8 +224,8 @@ chmod +x "$recorder"
 reset_log
 run_tty "$dir_a" "$recorder" "$argv_out" 'a b' '"quoted"' '$HOME' 'x;rm -rf /' "it's"
 for _ in $(seq 1 50); do
-  [[ -f $argv_out ]] && break
-  sleep 0.1
+	[[ -f $argv_out ]] && break
+	sleep 0.1
 done
 got=()
 [[ -f $argv_out ]] && mapfile -t got <"$argv_out"
@@ -233,12 +233,12 @@ want_args=('a b' '"quoted"' '$HOME' 'x;rm -rf /' "it's")
 match=1
 [[ ${#got[@]} -eq ${#want_args[@]} ]] || match=0
 for i in "${!want_args[@]}"; do
-  [[ ${got[$i]:-} == "${want_args[$i]}" ]] || match=0
+	[[ ${got[$i]:-} == "${want_args[$i]}" ]] || match=0
 done
 if [[ $match -eq 1 ]]; then
-  ok "special-character arguments survive to the pane command"
+	ok "special-character arguments survive to the pane command"
 else
-  not_ok "argument survival (pane argv: $(printf '<%s> ' "${got[@]:-}"))"
+	not_ok "argument survival (pane argv: $(printf '<%s> ' "${got[@]:-}"))"
 fi
 
 # 8-9: shared-server registry は廃止済み。~/.local/state/opencode/herdr-servers に
@@ -251,8 +251,8 @@ printf '{"healthy":true}' >"$docroot/global/health"
 python3 -m http.server "$SHARED_PORT" --bind 127.0.0.1 --directory "$docroot" >/dev/null 2>&1 &
 http_pid=$!
 for _ in $(seq 1 50); do
-  curl -sf -m 1 "http://127.0.0.1:$SHARED_PORT/global/health" >/dev/null 2>&1 && break
-  sleep 0.1
+	curl -sf -m 1 "http://127.0.0.1:$SHARED_PORT/global/health" >/dev/null 2>&1 && break
+	sleep 0.1
 done
 
 cat >"$FAKE_BIN/bwrap" <<EOF
@@ -262,12 +262,12 @@ EOF
 chmod +x "$FAKE_BIN/bwrap"
 
 write_registry() {
-  local dir=$1 url=$2 canon key regdir
-  canon=$(cd "$dir" && pwd -P)
-  key=$(printf %s "$canon" | sha1sum | cut -d' ' -f1)
-  regdir="$HOME/.local/state/opencode/herdr-servers"
-  mkdir -p "$regdir"
-  printf '{"url":"%s","cwd":"%s"}' "$url" "$canon" >"$regdir/$key.json"
+	local dir=$1 url=$2 canon key regdir
+	canon=$(cd "$dir" && pwd -P)
+	key=$(printf %s "$canon" | sha1sum | cut -d' ' -f1)
+	regdir="$HOME/.local/state/opencode/herdr-servers"
+	mkdir -p "$regdir"
+	printf '{"url":"%s","cwd":"%s"}' "$url" "$canon" >"$regdir/$key.json"
 }
 
 # 8: live registered server for the same cwd is ignored → herdr pane flow
@@ -276,9 +276,9 @@ reset_log
 rm -f "$WORK/bwrap.log"
 run_tty "$dir_a" /bin/true
 if [[ $(run_count) -eq 1 && $(create_count) -eq 0 && ! -s $WORK/bwrap.log ]]; then
-  ok "registered server ignored: reinjects into the herdr pane, no attach"
+	ok "registered server ignored: reinjects into the herdr pane, no attach"
 else
-  not_ok "registered server ignored: expected run=1 create=0 no bwrap (run=$(run_count) create=$(create_count) bwrap=$(<"$WORK/bwrap.log" 2>/dev/null))"
+	not_ok "registered server ignored: expected run=1 create=0 no bwrap (run=$(run_count) create=$(create_count) bwrap=$(<"$WORK/bwrap.log" 2>/dev/null))"
 fi
 
 # 9: dead registered server entry is equally ignored → normal herdr workspace flow
@@ -289,9 +289,9 @@ reset_log
 rm -f "$WORK/bwrap.log"
 run_tty "$dir_dead" /bin/true
 if [[ $(create_count) -eq 1 && $(run_count) -eq 1 && ! -s $WORK/bwrap.log ]]; then
-  ok "dead registered server: normal herdr workspace flow"
+	ok "dead registered server: normal herdr workspace flow"
 else
-  not_ok "dead registered server: expected create=1 run=1 no bwrap (create=$(create_count) run=$(run_count) bwrap=$(<"$WORK/bwrap.log" 2>/dev/null))"
+	not_ok "dead registered server: expected create=1 run=1 no bwrap (create=$(create_count) run=$(run_count) bwrap=$(<"$WORK/bwrap.log" 2>/dev/null))"
 fi
 
 # 10: subcommand launch goes through the normal pane injection even with a
@@ -300,9 +300,9 @@ reset_log
 rm -f "$WORK/bwrap.log"
 run_tty "$dir_a" run hello
 if [[ ! -s $WORK/bwrap.log && $(run_count) -eq 1 ]]; then
-  ok "subcommand: no attach, normal injection"
+	ok "subcommand: no attach, normal injection"
 else
-  not_ok "subcommand: expected no bwrap and 1 pane run (run=$(run_count) bwrap=$(<"$WORK/bwrap.log" 2>/dev/null))"
+	not_ok "subcommand: expected no bwrap and 1 pane run (run=$(run_count) bwrap=$(<"$WORK/bwrap.log" 2>/dev/null))"
 fi
 
 # 11: --help prints locally without touching herdr
@@ -310,9 +310,9 @@ reset_log
 rm -f "$WORK/bwrap.log"
 run_tty "$dir_a" --help
 if [[ ! -s $FAKE_HERDR_LOG ]] && grep -q -- "--help" "$WORK/bwrap.log" && ! grep -q attach "$WORK/bwrap.log"; then
-  ok "help flag: prints locally without herdr or attach"
+	ok "help flag: prints locally without herdr or attach"
 else
-  not_ok "help flag: expected local run with --help (bwrap=$(<"$WORK/bwrap.log" 2>/dev/null || :))"
+	not_ok "help flag: expected local run with --help (bwrap=$(<"$WORK/bwrap.log" 2>/dev/null || :))"
 fi
 
 # 12: session flags (-s <id>) go through the herdr pane flow (no shared attach)
@@ -320,9 +320,9 @@ reset_log
 rm -f "$WORK/bwrap.log"
 run_tty "$dir_a" -s ses_1
 if [[ ! -s $WORK/bwrap.log && $(run_count) -eq 1 && $(create_count) -eq 0 ]]; then
-  ok "session flags: herdr pane flow, no attach"
+	ok "session flags: herdr pane flow, no attach"
 else
-  not_ok "session flags: expected no bwrap and 1 pane run (run=$(run_count) create=$(create_count) bwrap=$(<"$WORK/bwrap.log" 2>/dev/null))"
+	not_ok "session flags: expected no bwrap and 1 pane run (run=$(run_count) create=$(create_count) bwrap=$(<"$WORK/bwrap.log" 2>/dev/null))"
 fi
 
 # 13: TUI-only flags (--model) go through the herdr workspace flow
@@ -330,9 +330,9 @@ reset_log
 rm -f "$WORK/bwrap.log"
 run_tty "$dir_a" --model foo
 if [[ ! -s $WORK/bwrap.log && $(run_count) -eq 1 ]]; then
-  ok "TUI-only flags: normal injection"
+	ok "TUI-only flags: normal injection"
 else
-  not_ok "TUI-only flags: expected no bwrap and 1 pane run (run=$(run_count) bwrap=$(<"$WORK/bwrap.log" 2>/dev/null))"
+	not_ok "TUI-only flags: expected no bwrap and 1 pane run (run=$(run_count) bwrap=$(<"$WORK/bwrap.log" 2>/dev/null))"
 fi
 
 printf '# %d/%d assertions failed\n' "$fails" "$tests"

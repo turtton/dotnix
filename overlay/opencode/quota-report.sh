@@ -4,12 +4,12 @@
 set -u
 
 if [[ -z ${HERDR_SESSION:-} || -z ${HERDR_PANE_ID:-} ]]; then
-  exit 0
+	exit 0
 fi
 
 if [[ $# -ne 2 ]]; then
-  echo "usage: quota-report.sh <provider> <value>" >&2
-  exit 2
+	echo "usage: quota-report.sh <provider> <value>" >&2
+	exit 2
 fi
 
 provider="$1"
@@ -17,26 +17,26 @@ case "$provider" in
 copilot | openai | crof | openrouter | claude | kimi) ;;
 opencode_port) ;;
 *)
-  echo "quota-report.sh: unknown provider: $provider" >&2
-  exit 2
-  ;;
+	echo "quota-report.sh: unknown provider: $provider" >&2
+	exit 2
+	;;
 esac
 
 value=$(printf '%s' "$2" | LC_ALL=C tr -d '\000-\037\177')
 if [[ $provider == opencode_port ]]; then
-  source=opencode:port
+	source=opencode:port
 else
-  source="quota:$provider"
+	source="quota:$provider"
 fi
 token="${provider}=${value}"
 token="${token:0:80}"
 
 output=$(env -u HERDR_ENV -u HERDR_PANE_ID -u HERDR_TAB_ID -u HERDR_WORKSPACE_ID \
-  herdr --session "$HERDR_SESSION" pane report-metadata "$HERDR_PANE_ID" \
-  --source "$source" --token "$token" --ttl-ms 200000 2>&1) && exit 0
+	herdr --session "$HERDR_SESSION" pane report-metadata "$HERDR_PANE_ID" \
+	--source "$source" --token "$token" --ttl-ms 200000 2>&1) && exit 0
 
 # pane 消失はポーラーの終了条件なので成功扱い。それ以外の失敗は metadata を捏造せず非ゼロ終了
 if grep -q pane_not_found <<<"$output"; then
-  exit 0
+	exit 0
 fi
 exit 1

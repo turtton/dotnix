@@ -13,9 +13,9 @@ WORK=$(mktemp -d)
 TEST_PORT=44568
 child_pid=""
 cleanup() {
-  [[ -n $child_pid ]] && kill -TERM -- -"$child_pid" 2>/dev/null
-  pkill -f "$WORK/fake-opencode" 2>/dev/null
-  rm -rf "$WORK"
+	[[ -n $child_pid ]] && kill -TERM -- -"$child_pid" 2>/dev/null
+	pkill -f "$WORK/fake-opencode" 2>/dev/null
+	rm -rf "$WORK"
 }
 trap cleanup EXIT
 
@@ -37,22 +37,22 @@ chmod +x "$FAKE_OC"
 
 tests=0 fails=0
 ok() {
-  tests=$((tests + 1))
-  printf 'ok %d - %s\n' "$tests" "$1"
+	tests=$((tests + 1))
+	printf 'ok %d - %s\n' "$tests" "$1"
 }
 not_ok() {
-  tests=$((tests + 1))
-  fails=$((fails + 1))
-  printf 'not ok %d - %s\n' "$tests" "$1"
-  [[ -s $WORK/child.err ]] && sed 's/^/  child stderr: /' "$WORK/child.err"
+	tests=$((tests + 1))
+	fails=$((fails + 1))
+	printf 'not ok %d - %s\n' "$tests" "$1"
+	[[ -s $WORK/child.err ]] && sed 's/^/  child stderr: /' "$WORK/child.err"
 }
 
 wait_for_argv() {
-  for _ in $(seq 1 100); do
-    [[ -s $FAKE_OC_LOG ]] && return 0
-    sleep 0.1
-  done
-  return 1
+	for _ in $(seq 1 100); do
+		[[ -s $FAKE_OC_LOG ]] && return 0
+		sleep 0.1
+	done
+	return 1
 }
 
 printf '# child wrapper under test: %s\n' "$CHILD"
@@ -60,14 +60,14 @@ printf '# child wrapper under test: %s\n' "$CHILD"
 # 1: the wrapper appends --port <OPENCODE_PORT> for the embedded server
 # setsid でプロセスグループを分け、pane 終了時の道連れ終了をグループ kill で再現する
 setsid env HERDR_SESSION=t HERDR_PANE_ID=1 OPENCODE_PORT=$TEST_PORT \
-  bash "$CHILD" "$projdir" "$FAKE_OC" >/dev/null 2>"$WORK/child.err" &
+	bash "$CHILD" "$projdir" "$FAKE_OC" >/dev/null 2>"$WORK/child.err" &
 child_pid=$!
 
 wait_for_argv
 if grep -qx -- "--port" "$FAKE_OC_LOG" && grep -qx "$TEST_PORT" "$FAKE_OC_LOG"; then
-  ok "tui mode: appends --port for the embedded server"
+	ok "tui mode: appends --port for the embedded server"
 else
-  not_ok "tui mode: expected --port $TEST_PORT in fake argv ($(paste -sd' ' "$FAKE_OC_LOG" 2>/dev/null))"
+	not_ok "tui mode: expected --port $TEST_PORT in fake argv ($(paste -sd' ' "$FAKE_OC_LOG" 2>/dev/null))"
 fi
 kill -TERM -- -"$child_pid" 2>/dev/null
 child_pid=""
@@ -75,13 +75,13 @@ child_pid=""
 # 2: attach mode never appends --port
 rm -f "$FAKE_OC_LOG"
 setsid env HERDR_SESSION=t HERDR_PANE_ID=1 OPENCODE_PORT=$TEST_PORT \
-  bash "$CHILD" "$projdir" "$FAKE_OC" attach "http://127.0.0.1:$TEST_PORT" >/dev/null 2>&1 &
+	bash "$CHILD" "$projdir" "$FAKE_OC" attach "http://127.0.0.1:$TEST_PORT" >/dev/null 2>&1 &
 child_pid=$!
 wait_for_argv
 if [[ $(head -n1 "$FAKE_OC_LOG" 2>/dev/null) == attach ]] && ! grep -qx -- "--port" "$FAKE_OC_LOG"; then
-  ok "attach mode: no --port appended"
+	ok "attach mode: no --port appended"
 else
-  not_ok "attach mode: expected no --port (argv: $(paste -sd' ' "$FAKE_OC_LOG" 2>/dev/null))"
+	not_ok "attach mode: expected no --port (argv: $(paste -sd' ' "$FAKE_OC_LOG" 2>/dev/null))"
 fi
 kill -TERM -- -"$child_pid" 2>/dev/null
 child_pid=""

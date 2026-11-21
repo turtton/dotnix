@@ -9,8 +9,8 @@ REPO_ROOT="$(git -C "$PROJECT_DIR" rev-parse --show-toplevel 2>/dev/null || echo
 OPENCODE_HOME="$(mktemp -d "${TMPDIR:-/tmp}/opencodebox-XXXXXXXX")"
 OPENCODE_CONFIG="${OPENCODE_CONFIG_DIR:-${HOME}/.config/opencode}"
 if [[ -n ${OPENCODE_CONFIG_DIR:-} && ${OPENCODE_CONFIG_DIR:0:1} != "/" ]]; then
-  echo "opencode-sandbox: ERROR: OPENCODE_CONFIG_DIR must be an absolute path" >&2
-  exit 1
+	echo "opencode-sandbox: ERROR: OPENCODE_CONFIG_DIR must be an absolute path" >&2
+	exit 1
 fi
 
 # HOME 変更前に実パスを確定 (後で HOME を OPENCODE_HOME に切り替えるため)
@@ -19,10 +19,10 @@ REAL_HOME="$(realpath "$HOME")"
 
 # Share tree: repo が $HOME 配下なら最上位ディレクトリまで公開
 if [[ $REAL_REPO == "$REAL_HOME/"* ]]; then
-  rel="${REAL_REPO#"$REAL_HOME"/}"
-  SHARE_TREE="${REAL_HOME}/${rel%%/*}"
+	rel="${REAL_REPO#"$REAL_HOME"/}"
+	SHARE_TREE="${REAL_HOME}/${rel%%/*}"
 else
-  SHARE_TREE="$REAL_REPO"
+	SHARE_TREE="$REAL_REPO"
 fi
 
 # =============================================================================
@@ -34,111 +34,111 @@ fi
 # sandbox-exec の subpath マッチャーはシンボリックリンクを辿った実パスで評価するため、
 # リンク先の実ディレクトリも SBPL プロファイルで書き込み許可する必要がある
 isolated_home() {
-  # OpenCode 設定ディレクトリ全体をマウント (opencode.json, AGENTS.md 等)
-  if [[ -d $OPENCODE_CONFIG ]]; then
-    local target_dir="${OPENCODE_HOME}${OPENCODE_CONFIG#"$REAL_HOME"}"
-    mkdir -p "$(dirname "$target_dir")"
-    ln -sfn "$OPENCODE_CONFIG" "$target_dir"
-  fi
+	# OpenCode 設定ディレクトリ全体をマウント (opencode.json, AGENTS.md 等)
+	if [[ -d $OPENCODE_CONFIG ]]; then
+		local target_dir="${OPENCODE_HOME}${OPENCODE_CONFIG#"$REAL_HOME"}"
+		mkdir -p "$(dirname "$target_dir")"
+		ln -sfn "$OPENCODE_CONFIG" "$target_dir"
+	fi
 
-  # OpenCode データディレクトリ (auth.json 等)
-  local opencode_data="${REAL_HOME}/.local/share/opencode"
-  if [[ -d $opencode_data ]]; then
-    mkdir -p "${OPENCODE_HOME}/.local/share"
-    ln -sfn "$opencode_data" "${OPENCODE_HOME}/.local/share/opencode"
-  fi
+	# OpenCode データディレクトリ (auth.json 等)
+	local opencode_data="${REAL_HOME}/.local/share/opencode"
+	if [[ -d $opencode_data ]]; then
+		mkdir -p "${OPENCODE_HOME}/.local/share"
+		ln -sfn "$opencode_data" "${OPENCODE_HOME}/.local/share/opencode"
+	fi
 
-  # OpenCode キャッシュ (プラグインの node_modules, models.json 等)
-  local opencode_cache="${REAL_HOME}/.cache/opencode"
-  if [[ -d $opencode_cache ]]; then
-    mkdir -p "${OPENCODE_HOME}/.cache"
-    ln -sfn "$opencode_cache" "${OPENCODE_HOME}/.cache/opencode"
-  fi
+	# OpenCode キャッシュ (プラグインの node_modules, models.json 等)
+	local opencode_cache="${REAL_HOME}/.cache/opencode"
+	if [[ -d $opencode_cache ]]; then
+		mkdir -p "${OPENCODE_HOME}/.cache"
+		ln -sfn "$opencode_cache" "${OPENCODE_HOME}/.cache/opencode"
+	fi
 
-  # OpenCode 状態 (frecency, model 選択, プロンプト履歴)
-  local opencode_state="${REAL_HOME}/.local/state/opencode"
-  if [[ -d $opencode_state ]]; then
-    mkdir -p "${OPENCODE_HOME}/.local/state"
-    ln -sfn "$opencode_state" "${OPENCODE_HOME}/.local/state/opencode"
-  fi
+	# OpenCode 状態 (frecency, model 選択, プロンプト履歴)
+	local opencode_state="${REAL_HOME}/.local/state/opencode"
+	if [[ -d $opencode_state ]]; then
+		mkdir -p "${OPENCODE_HOME}/.local/state"
+		ln -sfn "$opencode_state" "${OPENCODE_HOME}/.local/state/opencode"
+	fi
 
-  # Rust ツールチェーン: rustup + cargo
-  if [[ -d "${REAL_HOME}/.rustup" ]]; then
-    ln -sfn "${REAL_HOME}/.rustup" "${OPENCODE_HOME}/.rustup"
-  fi
-  if [[ -d "${REAL_HOME}/.cargo" ]]; then
-    ln -sfn "${REAL_HOME}/.cargo" "${OPENCODE_HOME}/.cargo"
-  fi
+	# Rust ツールチェーン: rustup + cargo
+	if [[ -d "${REAL_HOME}/.rustup" ]]; then
+		ln -sfn "${REAL_HOME}/.rustup" "${OPENCODE_HOME}/.rustup"
+	fi
+	if [[ -d "${REAL_HOME}/.cargo" ]]; then
+		ln -sfn "${REAL_HOME}/.cargo" "${OPENCODE_HOME}/.cargo"
+	fi
 }
 
 # Git 設定: ~/.gitconfig と ~/.config/git/ を読み取り専用で公開
 git_config() {
-  if [[ -f "${REAL_HOME}/.gitconfig" ]]; then
-    cp "${REAL_HOME}/.gitconfig" "${OPENCODE_HOME}/.gitconfig"
-  fi
-  if [[ -d "${REAL_HOME}/.config/git" ]]; then
-    mkdir -p "${OPENCODE_HOME}/.config"
-    ln -sfn "${REAL_HOME}/.config/git" "${OPENCODE_HOME}/.config/git"
-  fi
-  # SSH 署名鍵: user.signingkey = ~/.ssh/id_ed25519.pub が sandbox HOME を参照するため
-  if [[ -d "${REAL_HOME}/.ssh" ]]; then
-    ln -sfn "${REAL_HOME}/.ssh" "${OPENCODE_HOME}/.ssh"
-  fi
+	if [[ -f "${REAL_HOME}/.gitconfig" ]]; then
+		cp "${REAL_HOME}/.gitconfig" "${OPENCODE_HOME}/.gitconfig"
+	fi
+	if [[ -d "${REAL_HOME}/.config/git" ]]; then
+		mkdir -p "${OPENCODE_HOME}/.config"
+		ln -sfn "${REAL_HOME}/.config/git" "${OPENCODE_HOME}/.config/git"
+	fi
+	# SSH 署名鍵: user.signingkey = ~/.ssh/id_ed25519.pub が sandbox HOME を参照するため
+	if [[ -d "${REAL_HOME}/.ssh" ]]; then
+		ln -sfn "${REAL_HOME}/.ssh" "${OPENCODE_HOME}/.ssh"
+	fi
 }
 
 # GitHub CLI: ~/.config/gh/ を公開
 gh_cli() {
-  if [[ -d "${REAL_HOME}/.config/gh" ]]; then
-    mkdir -p "${OPENCODE_HOME}/.config"
-    ln -sfn "${REAL_HOME}/.config/gh" "${OPENCODE_HOME}/.config/gh"
-  fi
+	if [[ -d "${REAL_HOME}/.config/gh" ]]; then
+		mkdir -p "${OPENCODE_HOME}/.config"
+		ln -sfn "${REAL_HOME}/.config/gh" "${OPENCODE_HOME}/.config/gh"
+	fi
 }
 
 # GPG エージェント: macOS では gnupg ディレクトリを symlink で公開
 # macOS の GPG ソケットは ~/.gnupg/ 内にあるため、ディレクトリ全体を symlink する
 gpg_agent() {
-  gpgconf --launch gpg-agent 2>/dev/null || true
+	gpgconf --launch gpg-agent 2>/dev/null || true
 
-  if [[ -d "${REAL_HOME}/.gnupg" ]]; then
-    ln -sfn "${REAL_HOME}/.gnupg" "${OPENCODE_HOME}/.gnupg"
-  fi
+	if [[ -d "${REAL_HOME}/.gnupg" ]]; then
+		ln -sfn "${REAL_HOME}/.gnupg" "${OPENCODE_HOME}/.gnupg"
+	fi
 }
 
 # コンテナ設定: Docker/OrbStack の設定ディレクトリと Podman machine 接続を公開
 container_socket() {
-  if [[ -d "${REAL_HOME}/.docker" ]]; then
-    ln -sfn "${REAL_HOME}/.docker" "${OPENCODE_HOME}/.docker"
-  fi
+	if [[ -d "${REAL_HOME}/.docker" ]]; then
+		ln -sfn "${REAL_HOME}/.docker" "${OPENCODE_HOME}/.docker"
+	fi
 
-  if [[ -z ${CONTAINER_HOST:-} && -z ${DOCKER_HOST:-} ]] && command -v podman >/dev/null 2>&1; then
-    local podman_socket
-    podman_socket="$(HOME="$REAL_HOME" podman machine inspect --format '{{.ConnectionInfo.PodmanSocket.Path}}' 2>/dev/null || true)"
-    podman_socket="${podman_socket%%$'\n'*}"
-    if [[ -n $podman_socket && -S $podman_socket ]]; then
-      export CONTAINER_HOST="unix://${podman_socket}"
-    fi
-  fi
+	if [[ -z ${CONTAINER_HOST:-} && -z ${DOCKER_HOST:-} ]] && command -v podman >/dev/null 2>&1; then
+		local podman_socket
+		podman_socket="$(HOME="$REAL_HOME" podman machine inspect --format '{{.ConnectionInfo.PodmanSocket.Path}}' 2>/dev/null || true)"
+		podman_socket="${podman_socket%%$'\n'*}"
+		if [[ -n $podman_socket && -S $podman_socket ]]; then
+			export CONTAINER_HOST="unix://${podman_socket}"
+		fi
+	fi
 }
 
 # OMO 用ポート検出: macOS では lsof を使用 (Linux の ss に相当)
 opencode_port() {
-  if [[ -n ${OPENCODE_PORT:-} ]]; then
-    return
-  fi
+	if [[ -n ${OPENCODE_PORT:-} ]]; then
+		return
+	fi
 
-  local free_port=""
-  for port in $(seq 4097 4200); do
-    if ! lsof -iTCP:"${port}" -sTCP:LISTEN -n -P 2>/dev/null | grep -q .; then
-      free_port=$port
-      break
-    fi
-  done
+	local free_port=""
+	for port in $(seq 4097 4200); do
+		if ! lsof -iTCP:"${port}" -sTCP:LISTEN -n -P 2>/dev/null | grep -q .; then
+			free_port=$port
+			break
+		fi
+	done
 
-  if [[ -n $free_port ]]; then
-    export OPENCODE_PORT="$free_port"
-  else
-    echo "opencode-sandbox: WARNING: no free port found in range 4097-4200; OMO may connect to wrong server" >&2
-  fi
+	if [[ -n $free_port ]]; then
+		export OPENCODE_PORT="$free_port"
+	else
+		echo "opencode-sandbox: WARNING: no free port found in range 4097-4200; OMO may connect to wrong server" >&2
+	fi
 }
 
 # sandbox-exec SBPL プロファイルを生成して stdout に出力する
@@ -151,64 +151,64 @@ opencode_port() {
 # 注: Linux bwrap と異なり読み込みは制限しない (macOS ユーザー空間では実現困難)
 # sandbox-exec は proc ツリー全体に適用されるため、子プロセス (tmux, opencode) も保護対象
 build_sandbox_profile() {
-  # SBPL 文字列リテラル用に " と \ を escape
-  sbpl_escape() {
-    local s="$1"
-    s="${s//\\/\\\\}"
-    s="${s//\"/\\\"}"
-    printf '%s' "$s"
-  }
+	# SBPL 文字列リテラル用に " と \ を escape
+	sbpl_escape() {
+		local s="$1"
+		s="${s//\\/\\\\}"
+		s="${s//\"/\\\"}"
+		printf '%s' "$s"
+	}
 
-  local allow_writes=()
+	local allow_writes=()
 
-  # 常に許可: 隔離ホーム・プロジェクト・一時ディレクトリ
-  allow_writes+=("$OPENCODE_HOME")
-  allow_writes+=("$REAL_REPO")
-  allow_writes+=("/tmp")
-  allow_writes+=("/private/tmp")
-  # macOS の NSTemporaryDirectory は /private/var/folders 以下
-  # /var/folders は /private/var/folders へのシンボリックリンク
-  allow_writes+=("/private/var/folders")
-  allow_writes+=("/var/folders")
+	# 常に許可: 隔離ホーム・プロジェクト・一時ディレクトリ
+	allow_writes+=("$OPENCODE_HOME")
+	allow_writes+=("$REAL_REPO")
+	allow_writes+=("/tmp")
+	allow_writes+=("/private/tmp")
+	# macOS の NSTemporaryDirectory は /private/var/folders 以下
+	# /var/folders は /private/var/folders へのシンボリックリンク
+	allow_writes+=("/private/var/folders")
+	allow_writes+=("/var/folders")
 
-  # opencode 固有ディレクトリ
-  # symlink 越しのアクセスは sandbox-exec が実パスで評価するため、リンク先も許可必須
-  local rw_dirs=(
-    "${REAL_HOME}/.config/opencode"
-    "${REAL_HOME}/.local/share/opencode"
-    "${REAL_HOME}/.cache/opencode"
-    "${REAL_HOME}/.local/state/opencode"
-    "${REAL_HOME}/.cargo"
-    "${REAL_HOME}/.rustup"
-    "${REAL_HOME}/.docker"
-  )
-  for dir in "${rw_dirs[@]}"; do
-    [[ -d $dir ]] && allow_writes+=("$dir")
-  done
+	# opencode 固有ディレクトリ
+	# symlink 越しのアクセスは sandbox-exec が実パスで評価するため、リンク先も許可必須
+	local rw_dirs=(
+		"${REAL_HOME}/.config/opencode"
+		"${REAL_HOME}/.local/share/opencode"
+		"${REAL_HOME}/.cache/opencode"
+		"${REAL_HOME}/.local/state/opencode"
+		"${REAL_HOME}/.cargo"
+		"${REAL_HOME}/.rustup"
+		"${REAL_HOME}/.docker"
+	)
+	for dir in "${rw_dirs[@]}"; do
+		[[ -d $dir ]] && allow_writes+=("$dir")
+	done
 
-  # alt プロファイル対応: OPENCODE_CONFIG_DIR が異なるパスを指す場合も書き込み許可
-  local real_config_dir
-  if [[ -d $OPENCODE_CONFIG ]]; then
-    real_config_dir="$(realpath "$OPENCODE_CONFIG")"
-    [[ $real_config_dir != "$(realpath "${REAL_HOME}/.config/opencode")" ]] && allow_writes+=("$real_config_dir")
-  fi
+	# alt プロファイル対応: OPENCODE_CONFIG_DIR が異なるパスを指す場合も書き込み許可
+	local real_config_dir
+	if [[ -d $OPENCODE_CONFIG ]]; then
+		real_config_dir="$(realpath "$OPENCODE_CONFIG")"
+		[[ $real_config_dir != "$(realpath "${REAL_HOME}/.config/opencode")" ]] && allow_writes+=("$real_config_dir")
+	fi
 
-  {
-    echo "(version 1)"
-    echo ""
-    echo "; デフォルト: 全操作を許可"
-    echo "(allow default)"
-    echo ""
-    echo "; ホームディレクトリへの書き込みを拒否"
-    printf '(deny file-write* (subpath "%s"))\n' "$(sbpl_escape "${REAL_HOME}")"
-    echo ""
-    echo "; opencode が必要とするパスへの書き込みを許可"
-    echo "(allow file-write*"
-    for path in "${allow_writes[@]}"; do
-      printf '  (subpath "%s")\n' "$(sbpl_escape "$path")"
-    done
-    echo ")"
-  }
+	{
+		echo "(version 1)"
+		echo ""
+		echo "; デフォルト: 全操作を許可"
+		echo "(allow default)"
+		echo ""
+		echo "; ホームディレクトリへの書き込みを拒否"
+		printf '(deny file-write* (subpath "%s"))\n' "$(sbpl_escape "${REAL_HOME}")"
+		echo ""
+		echo "; opencode が必要とするパスへの書き込みを許可"
+		echo "(allow file-write*"
+		for path in "${allow_writes[@]}"; do
+			printf '  (subpath "%s")\n' "$(sbpl_escape "$path")"
+		done
+		echo ")"
+	}
 }
 
 # =============================================================================
@@ -233,18 +233,18 @@ container_socket
 # GH_TOKEN を設定しておくと gh は Keychain を経由せず直接トークンを使用する。
 # sandbox-extra.sh より前に実行することで、hook による PATH/GH_HOST 変更の影響を受けない。
 if [[ -z ${GH_TOKEN:-} ]]; then
-  _gh_token="$(gh auth token 2>/dev/null || true)"
-  if [[ -n $_gh_token ]]; then
-    export GH_TOKEN="$_gh_token"
-  fi
-  unset _gh_token
+	_gh_token="$(gh auth token 2>/dev/null || true)"
+	if [[ -n $_gh_token ]]; then
+		export GH_TOKEN="$_gh_token"
+	fi
+	unset _gh_token
 fi
 
 # プロジェクト固有のサンドボックス拡張: .opencode/sandbox-extra.sh があれば読み込む
 SANDBOX_EXTRA="${REPO_ROOT}/.opencode/sandbox-extra.sh"
 if [[ -f $SANDBOX_EXTRA ]]; then
-  # shellcheck source=/dev/null
-  source "$SANDBOX_EXTRA"
+	# shellcheck source=/dev/null
+	source "$SANDBOX_EXTRA"
 fi
 
 # sandbox-exec プロファイルを生成
@@ -255,7 +255,7 @@ opencode_port
 
 # OPENCODE_CONFIG_DIR を sandbox 側パスに書き換え (Linux 版と挙動を統一)
 if [[ -n ${OPENCODE_CONFIG_DIR:-} ]]; then
-  export OPENCODE_CONFIG_DIR="${OPENCODE_HOME}${OPENCODE_CONFIG#"$REAL_HOME"}"
+	export OPENCODE_CONFIG_DIR="${OPENCODE_HOME}${OPENCODE_CONFIG#"$REAL_HOME"}"
 fi
 
 # HOME を隔離ホームに切り替え (以降の $HOME は OPENCODE_HOME を指す)
@@ -408,4 +408,4 @@ exec "$@"
 '
 
 exec sandbox-exec -f "${OPENCODE_HOME}/.sandbox.sb" \
-  bash -c "$INNER_SCRIPT" bash "$PROJECT_DIR" "$OPENCODE_BIN" "$@"
+	bash -c "$INNER_SCRIPT" bash "$PROJECT_DIR" "$OPENCODE_BIN" "$@"

@@ -8,7 +8,7 @@ SENPI_BIN="@senpi-dir@/senpi"
 
 # バイパス条件: SENPI_NO_TMUX=1、非 TTY (パイプ/activation 等)
 if [ -n "${SENPI_NO_TMUX:-}" ] || [ ! -t 0 ] || [ ! -t 1 ]; then
-  exec "$SENPI_BIN" "$@"
+	exec "$SENPI_BIN" "$@"
 fi
 
 STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/senpi-tmux"
@@ -19,14 +19,14 @@ pids=()
 # quota ポーリングスクリプトをデプロイしてバックグラウンド起動する。
 # スクリプトは overlay/opencode/ 配下のものを共用 (__OUTPUT_PATH__ を置換)。
 start_poll() {
-  local name="$1" src="$2"
-  local out="$STATE_DIR/$name-quota"
-  local script="$STATE_DIR/$name-quota-poll.sh"
-  [ -f "$out" ] || : >"$out"
-  install -m 755 "$src" "$script"
-  sed -i "s|__OUTPUT_PATH__|$out|g" "$script"
-  "$script" &
-  pids+=($!)
+	local name="$1" src="$2"
+	local out="$STATE_DIR/$name-quota"
+	local script="$STATE_DIR/$name-quota-poll.sh"
+	[ -f "$out" ] || : >"$out"
+	install -m 755 "$src" "$script"
+	sed -i "s|__OUTPUT_PATH__|$out|g" "$script"
+	"$script" &
+	pids+=($!)
 }
 
 start_poll copilot "@quota-script@"
@@ -40,8 +40,8 @@ TMUX_CONF="$STATE_DIR/tmux.conf"
 install -m 644 "@tmux-conf@" "$TMUX_CONF"
 sed -i "s|__QUOTA_FILE__|$STATE_DIR/copilot-quota|g" "$TMUX_CONF"
 for name in openai crof openrouter claude kimi; do
-  upper=$(printf '%s' "$name" | tr '[:lower:]' '[:upper:]')
-  sed -i "s|__${upper}_QUOTA_FILE__|$STATE_DIR/$name-quota|g" "$TMUX_CONF"
+	upper=$(printf '%s' "$name" | tr '[:lower:]' '[:upper:]')
+	sed -i "s|__${upper}_QUOTA_FILE__|$STATE_DIR/$name-quota|g" "$TMUX_CONF"
 done
 
 # ネスト検出を防ぐためホスト側の tmux 環境変数を消す
@@ -60,6 +60,6 @@ dir_hash=$(printf '%s' "$PWD" | sha256sum | cut -c1-8)
 tmux -f "$TMUX_CONF" new-session -A -s "senpi-$dir_name-$dir_hash" -- "$SENPI_BIN" "$@"
 
 for pid in "${pids[@]}"; do
-  kill "$pid" 2>/dev/null || true
-  wait "$pid" 2>/dev/null || true
+	kill "$pid" 2>/dev/null || true
+	wait "$pid" 2>/dev/null || true
 done
