@@ -17,4 +17,6 @@
   services.journald.settings.Journal = {
     SystemMaxFileSize = "300M";
   };
+
+  services.bootvine.enable = true;
 }

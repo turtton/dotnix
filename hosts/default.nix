@@ -62,6 +62,7 @@ let
           ./../module
           sharedOptions
           inputs.sops-nix.nixosModules.sops
+          inputs.bootvine.nixosModules.default
         ]
         ++ (lib.optionals isWsl) [
           inputs.nixos-wsl.nixosModules.wsl

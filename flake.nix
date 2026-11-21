@@ -162,6 +162,13 @@
       url = "github:ezKEa/aagl-gtk-on-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    bootvine = {
+      url = "git+https://codeberg.org/wvhulle/bootvine";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        rust-overlay.follows = "rust-overlay";
+      };
+    };
   };
   outputs =
     inputs@{
@@ -274,6 +281,7 @@
             cachyos-kernel-latest = overlays.cachyosKernels.linuxPackages-cachyos-latest.kernel;
             noctalia-shell = noctalia.packages.${system}.default;
             xwayland-satellite = niri-flake.packages.${system}.xwayland-satellite-unstable;
+            bootvine = inputs.bootvine.packages.${system}.default;
           }
         );
         devShells.default = mkShell {
