@@ -119,10 +119,6 @@ isolated_home() {
 		BWRAP_ARGS+=(--bind "$claude_dir" "$claude_dir")
 	fi
 
-	if [[ -d "${HOME}/.rustup" ]]; then
-		mkdir -p "${SENPI_HOME}/.rustup"
-		BWRAP_ARGS+=(--bind "${HOME}/.rustup" "${HOME}/.rustup")
-	fi
 	if [[ -d "${HOME}/.cargo" ]]; then
 		mkdir -p "${SENPI_HOME}/.cargo"
 		BWRAP_ARGS+=(--bind "${HOME}/.cargo" "${HOME}/.cargo")

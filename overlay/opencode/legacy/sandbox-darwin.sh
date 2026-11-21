@@ -62,10 +62,6 @@ isolated_home() {
 		ln -sfn "$opencode_state" "${OPENCODE_HOME}/.local/state/opencode"
 	fi
 
-	# Rust ツールチェーン: rustup + cargo
-	if [[ -d "${REAL_HOME}/.rustup" ]]; then
-		ln -sfn "${REAL_HOME}/.rustup" "${OPENCODE_HOME}/.rustup"
-	fi
 	if [[ -d "${REAL_HOME}/.cargo" ]]; then
 		ln -sfn "${REAL_HOME}/.cargo" "${OPENCODE_HOME}/.cargo"
 	fi
@@ -179,7 +175,6 @@ build_sandbox_profile() {
 		"${REAL_HOME}/.cache/opencode"
 		"${REAL_HOME}/.local/state/opencode"
 		"${REAL_HOME}/.cargo"
-		"${REAL_HOME}/.rustup"
 		"${REAL_HOME}/.docker"
 	)
 	for dir in "${rw_dirs[@]}"; do

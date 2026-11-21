@@ -46,7 +46,6 @@ isolated_home() {
 	done
 
 	for source in \
-		"${REAL_HOME}/.rustup" \
 		"${REAL_HOME}/.cargo" \
 		"${REAL_HOME}/.ssh" \
 		"${REAL_HOME}/.gnupg" \
@@ -130,7 +129,6 @@ build_sandbox_profile() {
 		"${REAL_HOME}/.cache/opencode" \
 		"${REAL_HOME}/.local/state/opencode" \
 		"${REAL_HOME}/.cargo" \
-		"${REAL_HOME}/.rustup" \
 		"${REAL_HOME}/.docker"; do
 		[[ -d $dir ]] && allow_writes+=("$dir")
 	done

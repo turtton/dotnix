@@ -3,7 +3,12 @@
   home.packages =
     with pkgs;
     [
-      rustup
+      (rust-bin.stable.latest.default.override {
+        extensions = [
+          "rust-src"
+          "rust-analyzer"
+        ];
+      })
       cargo-deny # dependency license checker
       cargo-cache # cache management
       cargo-nextest # test runner

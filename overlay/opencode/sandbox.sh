@@ -278,11 +278,6 @@ isolated_home() {
 		BWRAP_ARGS+=(--bind "$claude_dir" "${HOME}/.claude")
 	fi
 
-	# Rust ツールチェーン: rustup + cargo を読み書きで公開
-	if [[ -d "${HOME}/.rustup" ]]; then
-		mkdir -p "${OPENCODE_HOME}/.rustup"
-		BWRAP_ARGS+=(--bind "${HOME}/.rustup" "${HOME}/.rustup")
-	fi
 	if [[ -d "${HOME}/.cargo" ]]; then
 		mkdir -p "${OPENCODE_HOME}/.cargo"
 		BWRAP_ARGS+=(--bind "${HOME}/.cargo" "${HOME}/.cargo")

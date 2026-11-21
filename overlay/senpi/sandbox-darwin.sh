@@ -38,7 +38,6 @@ isolated_home() {
 	done
 
 	for source in \
-		"${REAL_HOME}/.rustup" \
 		"${REAL_HOME}/.cargo" \
 		"${REAL_HOME}/.ssh" \
 		"${REAL_HOME}/.gnupg" \
@@ -106,7 +105,6 @@ build_sandbox_profile() {
 		"${REAL_HOME}/.omo" \
 		"${REAL_HOME}/.config/git" \
 		"${REAL_HOME}/.config/gh" \
-		"${REAL_HOME}/.rustup" \
 		"${REAL_HOME}/.cargo" \
 		"${REAL_HOME}/.ssh" \
 		"${REAL_HOME}/.gnupg" \
