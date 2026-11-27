@@ -321,8 +321,6 @@ in
             rust-rover.enable = true;
             datagrip.enable = true;
             pycharm.enable = true;
-            clion.enable = true;
-            rider.enable = true;
           };
         };
       };
@@ -383,8 +381,6 @@ in
             rust-rover.enable = true;
             datagrip.enable = true;
             pycharm.enable = true;
-            clion.enable = true;
-            rider.enable = true;
           };
         };
       };
